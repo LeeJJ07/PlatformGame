@@ -11,7 +11,7 @@ public class AttackState : MonoBehaviour, IState
         if (!animator) animator = GetComponent<Animator>();
         if (!monster) monster = GetComponent<Monster>();
 
-        animator.SetBool("Attack", true);
+        animator.SetBool("isAttack", true);
     }
     public void UpdateState()
     {
@@ -19,6 +19,6 @@ public class AttackState : MonoBehaviour, IState
     }
     public void ExitState()
     {
-        animator.SetBool("Attack", false);
+        animator.SetBool("isAttack", false);
     }
 }

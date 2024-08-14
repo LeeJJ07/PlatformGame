@@ -18,7 +18,7 @@ public class ChaseState : MonoBehaviour, IState
         if (!animator) animator = GetComponent<Animator>();
         if (!monster) monster = GetComponent<Monster>();
 
-        animator.SetBool("Chase", true);
+        animator.SetBool("isChase", true);
 
         monster.setSpeed(5f);
         flowTime = 0f;
@@ -50,7 +50,7 @@ public class ChaseState : MonoBehaviour, IState
     }
     public void ExitState()
     {
-        animator.SetBool("Chase", false);
+        animator.SetBool("isChase", false);
         exclamation.SetActive(false);
     }
 

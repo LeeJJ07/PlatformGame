@@ -56,13 +56,33 @@ public class Monster : MonoBehaviour
     {
         if (!isLiving)
             return;
+        if (Die())
+        {
+            isLiving = false;
+            UpdateState(EState.DEATH);
+            return;
+        }
         switch (curState)
         {
             case EState.PATROL:
+                if (CanSeePlayer())
+                {
+                    isDetect = true;
+                    UpdateState(EState.CHASE);
+                }
                 break;
             case EState.CHASE:
+                if (CantChase() && !CanSeePlayer())
+                    UpdateState(EState.PATROL);
+                if (CanAttackPlayer())
+                    UpdateState(EState.ATTACK);
                 break;
             case EState.ATTACK:
+                if (!CanAttackPlayer())
+                {
+                    isDetect = false;
+                    UpdateState(EState.CHASE);
+                }
                 break;
         }
 

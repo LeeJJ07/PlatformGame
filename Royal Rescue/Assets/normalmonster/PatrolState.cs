@@ -14,11 +14,11 @@ public class PatrolState : MonoBehaviour, IState
         if (!animator) animator = GetComponent<Animator>();
         if (!monster) monster = GetComponent<Monster>();
 
-        animator.SetBool("Patrol", true);
-        animator.SetBool("Chase", false);
-        animator.SetBool("Attack", false);
-        animator.SetBool("Die", false);
-        animator.SetBool("IsLive", true);
+        animator.SetBool("isPatrol", true);
+        animator.SetBool("isChase", false);
+        animator.SetBool("isAttack", false);
+        animator.SetBool("isDie", false);
+        animator.SetBool("isLive", true);
 
         monster.setSpeed(3f);
     }
@@ -33,6 +33,6 @@ public class PatrolState : MonoBehaviour, IState
     }
     public void ExitState()
     {
-        animator.SetBool("Patrol", false);
+        animator.SetBool("isPatrol", false);
     }
 }
