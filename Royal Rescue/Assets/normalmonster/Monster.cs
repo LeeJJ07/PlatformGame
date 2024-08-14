@@ -16,9 +16,11 @@ public class Monster : MonoBehaviour
 
     public GameObject player;
 
+    
     public bool isDetect { get; set; }
-    private bool isLiving;
-    private float hp { get; set; }
+    [SerializeField] private float hp = 100f;
+
+    [SerializeField] private float damage = 10f;
 
     private float checkObstacleDistance = 0.5f;
     private float toGroundDistance = 1f;
@@ -44,7 +46,6 @@ public class Monster : MonoBehaviour
         curState = EState.PATROL;
 
         isDetect = false;
-        isLiving = true;
         hp = 100f;
 
         groundLayerMask = 1 << LayerMask.NameToLayer("Ground");
@@ -54,45 +55,42 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
-        if (!isLiving)
-            return;
         if (Die())
-        {
-            isLiving = false;
             UpdateState(EState.DEATH);
-            return;
-        }
-        switch (curState)
+        else
         {
-            case EState.PATROL:
-                if (CanSeePlayer())
-                {
-                    isDetect = true;
-                    UpdateState(EState.CHASE);
-                }
-                break;
-            case EState.CHASE:
-                if (CantChase() && !CanSeePlayer())
-                    UpdateState(EState.PATROL);
-                if (CanAttackPlayer())
-                    UpdateState(EState.ATTACK);
-                break;
-            case EState.ATTACK:
-                if (!CanAttackPlayer())
-                {
-                    isDetect = false;
-                    UpdateState(EState.CHASE);
-                }
-                break;
+            switch (curState)
+            {
+                case EState.PATROL:
+                    if (CanSeePlayer())
+                    {
+                        isDetect = true;
+                        UpdateState(EState.CHASE);
+                    }
+                    break;
+                case EState.CHASE:
+                    if (CantChase() && !CanSeePlayer())
+                        UpdateState(EState.PATROL);
+                    if (CanAttackPlayer())
+                        UpdateState(EState.ATTACK);
+                    break;
+                case EState.ATTACK:
+                    if (!CanAttackPlayer())
+                    {
+                        isDetect = false;
+                        UpdateState(EState.CHASE);
+                    }
+                    break;
+            }
         }
-
         monsterStateContext.CurrentState.UpdateState();
     }
 
     private void UpdateState(EState nextState)
     {
-        if (curState != nextState)
-            curState = nextState;
+        if (curState == nextState)
+            return;
+        curState = nextState;
 
         switch (curState)
         {
@@ -110,9 +108,9 @@ public class Monster : MonoBehaviour
                 break;
         }
     }
-
     public float getSpeed() { return speed; }
     public void setSpeed(float speed) { this.speed = speed; }
+    public float getDamage() { return damage; }
     public float getFacingDir() { return facingDir; }
     public void setFacingDir(float dir) { this.facingDir = dir / Mathf.Abs(dir); }
     bool CanSeePlayer()
