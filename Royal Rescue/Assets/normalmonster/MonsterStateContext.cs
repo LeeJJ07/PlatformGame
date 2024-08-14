@@ -11,11 +11,11 @@ enum EState
     ATTACK,
     DEATH
 }
-public class EnemyStateContext
+public class MonsterStateContext
 {
     public IState CurrentState { get; set; }
-    private readonly Enemy controller;
-    public EnemyStateContext(Enemy controller)
+    private readonly Monster controller;
+    public MonsterStateContext(Monster controller)
     {
         this.controller = controller;
     }
