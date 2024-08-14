@@ -8,7 +8,7 @@ public class DeathState : MonoBehaviour, IState
     private Monster monster;
 
     private float span = 0f;
-    private float deactivateTime = 2.8f;
+    private float deactivateTime = 5f;
     public void EnterState()
     {
         if (!animator) animator = GetComponent<Animator>();
@@ -19,8 +19,10 @@ public class DeathState : MonoBehaviour, IState
     public void UpdateState()
     {
         span += Time.deltaTime;
-        if (span > deactivateTime){
+        if (animator.GetBool("isLive") && span > 1f)
             animator.SetBool("isLive", false);
+
+        if (span > deactivateTime){
             ExitState();
         }
     }
