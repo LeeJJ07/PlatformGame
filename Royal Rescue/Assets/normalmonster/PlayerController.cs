@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
 
     float speed = 10f;
     float jumpPower = 20f;
+    public float damage = 20f;
 
     public float h;
 

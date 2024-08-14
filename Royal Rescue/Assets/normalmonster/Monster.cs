@@ -174,4 +174,21 @@ public class Monster : MonoBehaviour
         checkObstacleDistance *= -1;
         facingDir *= -1;
     }
+
+
+
+    //데미지 입는거 임시 구현
+    private void takeAttack(float takeAttackDamage)
+    {
+        hp -= takeAttackDamage;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        float playerDamage = 20f;
+        if (other == null)
+            return;
+        if (other.gameObject.tag == "PlayerAttack")
+            takeAttack(playerDamage);
+    }
 }
