@@ -15,8 +15,9 @@ public class Monster : MonoBehaviour
     private EState curState;
 
     public GameObject player;
+    private Animator animator;
 
-    
+
     public bool isDetect { get; set; }
     [SerializeField] private float hp = 100f;
 
@@ -41,6 +42,7 @@ public class Monster : MonoBehaviour
 
     private void Start()
     {
+        if (!animator) animator = GetComponent<Animator>();
         monsterStateContext = new MonsterStateContext(this);
         monsterStateContext.Transition(patrolState);
         curState = EState.PATROL;
@@ -189,6 +191,12 @@ public class Monster : MonoBehaviour
         if (other == null)
             return;
         if (other.gameObject.tag == "PlayerAttack")
+        {
             takeAttack(playerDamage);
+            animator.SetTrigger("takeAttack");
+
+            Vector3 dir = (other.gameObject.transform.position - transform.position).normalized;
+            other.gameObject.GetComponent<Rigidbody>().AddForce(dir * 10f, ForceMode.Impulse);
+        }
     }
 }
