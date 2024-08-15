@@ -32,11 +32,10 @@ public class Selector : INode
                 index++;
                 return INode.NodeState.Success;
             case INode.NodeState.Failure:
-                index = 0;
+                index++;
                 return INode.NodeState.Failure;
         }
-        
-        
+
 
 
         return INode.NodeState.Running;
