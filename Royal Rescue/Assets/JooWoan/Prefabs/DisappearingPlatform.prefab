@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7608581952712125156}
   - component: {fileID: 5919032675358246261}
   - component: {fileID: 5587052670113688594}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: DisappearingPlatform
   m_TagString: Untagged
   m_Icon: {fileID: 0}
