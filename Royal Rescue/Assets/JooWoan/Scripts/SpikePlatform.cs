@@ -11,7 +11,8 @@ public class SpikePlatform : MonoBehaviour
         {
             Debug.Log("플레이어의 체력을 ?만큼 감소.");
 
-            PlayerController player = GameDirector.instance.PlayerControl;
+            //PlayerController player = GameDirector.instance.PlayerControl;
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
 
             // rigidbody 도 public으로 빼서 접근할 수 있으면 좋을 것 같습니다
             Rigidbody playerRb = player.GetComponent<Rigidbody>();
@@ -21,6 +22,8 @@ public class SpikePlatform : MonoBehaviour
             playerRb.AddForce(Vector3.up * 10f, ForceMode.Impulse);
 
             GameObject effect = Instantiate(hitEffect, transform.parent);
+            effect.transform.position = player.transform.position;
+
             effect.GetComponent<ParticleSystem>().Play();
             Destroy(effect, 0.4f);
         }
