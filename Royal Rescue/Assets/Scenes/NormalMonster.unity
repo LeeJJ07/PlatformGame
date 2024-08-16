@@ -571,7 +571,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 875073071404757921, guid: 35f16650380449c78eeac51057eaff2a, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1097,27 +1097,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6481475169841401275, guid: e1dea5348c257fa42a4b213475b0c3bf, type: 3}
       propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7411874321570426424, guid: e1dea5348c257fa42a4b213475b0c3bf, type: 3}
-      propertyPath: m_Height
-      value: 0.59
-      objectReference: {fileID: 0}
-    - target: {fileID: 7411874321570426424, guid: e1dea5348c257fa42a4b213475b0c3bf, type: 3}
-      propertyPath: m_Radius
-      value: 0.57
-      objectReference: {fileID: 0}
-    - target: {fileID: 7411874321570426424, guid: e1dea5348c257fa42a4b213475b0c3bf, type: 3}
-      propertyPath: m_Center.x
-      value: 0.02
-      objectReference: {fileID: 0}
-    - target: {fileID: 7411874321570426424, guid: e1dea5348c257fa42a4b213475b0c3bf, type: 3}
-      propertyPath: m_Center.y
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 7411874321570426424, guid: e1dea5348c257fa42a4b213475b0c3bf, type: 3}
-      propertyPath: m_Center.z
-      value: 0.48
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1176,6 +1156,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmileMushroom
       objectReference: {fileID: 0}
+    - target: {fileID: 3716874933376173074, guid: fa83a347fb338884199b08e6dd523a56, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8292799826052900844, guid: fa83a347fb338884199b08e6dd523a56, type: 3}
       propertyPath: player
       value: 
@@ -1196,10 +1180,6 @@ PrefabInstance:
     - target: {fileID: 3223769606541887397, guid: a005597e9cec7884a8a21e59c1e2dd48, type: 3}
       propertyPath: m_Name
       value: Slime
-      objectReference: {fileID: 0}
-    - target: {fileID: 3223769606541887397, guid: a005597e9cec7884a8a21e59c1e2dd48, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7544386845185424777, guid: a005597e9cec7884a8a21e59c1e2dd48, type: 3}
       propertyPath: player
