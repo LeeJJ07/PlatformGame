@@ -1,26 +1,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class SpinningPlatform : MonoBehaviour
 {
-    [SerializeField] float speedX = 1f;
-    [SerializeField] float speedY = 1f;
-    [SerializeField] float speedZ = 1f;
-    Rigidbody rb;
-    Vector3 EulerAngleVelocity;
+    [SerializeField] float angleX = 1f;
+    [SerializeField] float angleY = 1f;
+    [SerializeField] float angleZ = 1f;
+    [SerializeField] bool isLoop = true;
+    [SerializeField] float loopSpeed = 2.0f;
 
-    // Start is called before the first frame update
+    private Rigidbody rb;
+    Vector3 EulerAngleVelocity;
+    private Quaternion startPos;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        EulerAngleVelocity = new Vector3(speedX, speedY, speedZ);
+        EulerAngleVelocity = new Vector3(angleX, angleY, angleZ);
+        
+        startPos = transform.rotation;
     }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
-        Quaternion deltaRotation = Quaternion.Euler(EulerAngleVelocity * Time.fixedDeltaTime);
-        rb.MoveRotation(rb.rotation * deltaRotation);
+        if (isLoop)
+        {
+            Quaternion a = startPos;
+            Quaternion deltaRotation = Quaternion.Euler(EulerAngleVelocity * Mathf.Sin(Time.time * loopSpeed));
+            rb.MoveRotation(a * deltaRotation);
+        }
+        else
+        {
+            Quaternion deltaRotation = Quaternion.Euler(EulerAngleVelocity * Time.fixedDeltaTime);
+            rb.MoveRotation(rb.rotation * deltaRotation);
+        }
     }
+    public void ChangeDirection()
+    {
+        angleX *= -1;
+        angleY *= -1;
+        angleZ *= -1;
+        EulerAngleVelocity = new Vector3(angleX, angleY, angleZ);
+    }
+
 }
