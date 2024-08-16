@@ -15,7 +15,10 @@ public class DetectFloor : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Floor")
+        {
             playerCM.isFloor = true;
+         }
+            
     }
     private void OnTriggerExit(Collider other)
     {
