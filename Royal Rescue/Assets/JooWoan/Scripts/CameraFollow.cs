@@ -16,6 +16,8 @@ public class CameraFollow : MonoBehaviour
     private Vector3 nextPos;
     private Transform target;
 
+    private bool enableFollow = true;
+
     void Start()
     {
         if (followPlayer)
@@ -25,12 +27,12 @@ public class CameraFollow : MonoBehaviour
 
     void FixedUpdate()
     {
-       FollowTarget();
+        FollowTarget();
     }
 
     void FollowTarget()
     {
-        if (target == null)
+        if (target == null || !enableFollow)
             return;
         
         nextPos = Vector3.SmoothDamp(transform.position, target.position, ref velocity, smoothTime);
@@ -48,5 +50,10 @@ public class CameraFollow : MonoBehaviour
     public void ResetCameraPosition()
     {
         transform.localPosition = new Vector3(minCameraPos.x, minCameraPos.y, minCameraPos.z);
+    }
+
+    public void SetCameraFollow(bool isFollowing)
+    {
+        enableFollow = isFollowing;
     }
 }

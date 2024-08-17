@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5857613640802040770}
   - component: {fileID: 9177567670031930889}
   - component: {fileID: 5219704044757863691}
+  - component: {fileID: 7662112440246888290}
   m_Layer: 0
   m_Name: Wall_6
   m_TagString: Untagged
@@ -85,6 +86,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &7662112440246888290
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874837943683850465}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3.9860277, y: 1.5991766, z: 0.25140443}
+  m_Center: {x: 3.1896084e-24, y: -0.3997942, z: -0.01086317}
 --- !u!1 &8761517452427740182
 GameObject:
   m_ObjectHideFlags: 0
