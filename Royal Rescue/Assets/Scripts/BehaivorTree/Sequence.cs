@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using UnityEngine;
+
 
 public class Sequence : INode
 {
@@ -10,21 +12,19 @@ public class Sequence : INode
     {
         childNodes = new List<INode>();
     }
-    public void addNode(INode node)
-    {
-        childNodes.Add(node);
-    }
-    
     public void abort(bool isAbort)
     {
         abortState = isAbort;
     }
-    
+    public void AddNode(INode node)
+    {
+        childNodes.Add(node);
+    }
+
     public INode.NodeState Evaluate()
     {
         if (childNodes == null || childNodes.Count == 0) 
             return INode.NodeState.Failure;
-
         if (index >= childNodes.Count) 
             index = 0;
         if (abortState)
@@ -32,7 +32,6 @@ public class Sequence : INode
             index = 0;
             return INode.NodeState.Failure;
         }
-
         switch (childNodes[index].Evaluate())
         {
             case INode.NodeState.Running:
@@ -48,6 +47,8 @@ public class Sequence : INode
         }
 
 
-        return INode.NodeState.Success;
+        return INode.NodeState.Running;
     }
+
+    
 }

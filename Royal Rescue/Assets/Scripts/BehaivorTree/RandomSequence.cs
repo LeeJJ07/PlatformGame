@@ -15,7 +15,7 @@ public class RandomSequence : INode
         childNodes = new List<INode>();
         
     }
-    public void addNode(INode node)
+    public void AddNode(INode node)
     {
         childNodes.Add(node);
     }
@@ -43,4 +43,6 @@ public class RandomSequence : INode
         
         return INode.NodeState.Success;
     }
+
+  
 }

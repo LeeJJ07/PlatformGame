@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
 
 public class Selector : INode
 {
@@ -12,10 +10,12 @@ public class Selector : INode
     {
         childNodes = new List<INode>();
     }
-    public void addNode(INode node)
+
+    public void AddNode(INode node)
     {
         childNodes.Add(node);
     }
+
     public INode.NodeState Evaluate()
     {
         if (childNodes == null)
