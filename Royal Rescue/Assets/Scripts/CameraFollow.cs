@@ -16,13 +16,13 @@ public class CameraFollow : MonoBehaviour
     private Vector3 nextPos;
     private Transform target;
 
-    private bool enableFollow = true;
+    private bool enableFollow = false;
 
     void Start()
     {
         if (followPlayer)
             target = GameDirector.instance.PlayerControl.transform;
-        ResetCameraPosition();
+        SetCameraFollow(true);
     }
 
     void FixedUpdate()
