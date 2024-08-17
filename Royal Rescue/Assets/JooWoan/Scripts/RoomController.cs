@@ -18,7 +18,7 @@ public class RoomController : MonoBehaviour
         roomCamera.transform.SetParent(rooms[0].transform);
         roomCamera.ResetCameraPosition();
     }
-    
+
     public void SwitchRoom(int nextRoomId)
     {
         roomCamera.SetCameraFollow(false);
