@@ -6,13 +6,18 @@ public class PlayerControlManagerFix : MonoBehaviour
 {
     public float hAxis;
     public float vAxis;
+    public float dash = 5f;
 
     public float moveSpeed;
     public float JumpPower;
-    private bool dirRight = true;
+    [SerializeField]private bool dirRight = true;
     bool JDown;
     bool isJump;
+    bool dashbool;
+
     public bool isFloor = false;
+    private bool ground = false;
+    public LayerMask layer;
 
     int jumpCnt;
     public int jumpPossible;
@@ -22,6 +27,7 @@ public class PlayerControlManagerFix : MonoBehaviour
 
     Vector3 moveDir;
     Vector3 moveVec;
+    Vector3 dashPower;
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
@@ -34,6 +40,16 @@ public class PlayerControlManagerFix : MonoBehaviour
         GetInput();
         move();
         Jump();
+        if(Input.GetButtonDown("Dash"))
+        {
+            //rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y), ForceMode.Impulse);
+            Debug.Log("´ë½Ã");
+            dashPower = (dirRight ? Vector3.right : Vector3.left) * dash;
+            //rb.velocity = dashPower*moveSpeed;
+            rb.AddForce(dashPower, ForceMode.VelocityChange);
+            //rb.AddForce((dirRight ? Vector3.right : Vector3.left) * dash, ForceMode.Impulse);
+            anim.SetTrigger("Dash");
+        }
         //Trun();
         //Dodge();
     }
@@ -74,26 +90,25 @@ public class PlayerControlManagerFix : MonoBehaviour
         anim.SetBool("run", moveVec != Vector3.zero);
         anim.SetBool("Idle", moveVec == Vector3.zero);
     }
-    
     void Jump()
     {
-        if(JDown && jumpCnt > 0)
+        if(JDown && jumpCnt > 0 )
         {
             rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y), ForceMode.Impulse);
-            if (jumpCnt == 2 )
+            if (jumpCnt == 2 && isFloor)
             {
                 anim.SetTrigger("Jump");
                 anim.SetBool("isJump", true);
             }
-            else if (jumpCnt == 1)
+            else if (jumpCnt == 1 && !isFloor)
             {
                 anim.SetTrigger("DoubleJump");
                 anim.SetBool("isJJump", true);
             }
             jumpCnt--;
-            
         }
-        
+        //if(jumpCnt < 1)
+          //  checkGround();
             /*if (JDown && !isJump && isFloor)
             {
                 rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
@@ -109,6 +124,21 @@ public class PlayerControlManagerFix : MonoBehaviour
                 isJJDown = true;
             }*/
      }
+    void checkGround()
+    {
+        Debug.DrawRay(transform.position + Vector3.up, Vector3.down * 3f, Color.red);
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 0.1f))
+        {
+            //ground = true;
+            Debug.Log("ÂøÁö");
+            anim.SetTrigger("Land");
+        }
+        else
+        { 
+            //ground = false; 
+        }
+    }
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Floor")

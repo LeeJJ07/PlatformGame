@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 64422360}
   - component: {fileID: 64422359}
   - component: {fileID: 64422358}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor (5)
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -427,7 +427,7 @@ GameObject:
   - component: {fileID: 958892365}
   - component: {fileID: 958892364}
   - component: {fileID: 958892363}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor (3)
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -825,7 +825,7 @@ GameObject:
   - component: {fileID: 1265090673}
   - component: {fileID: 1265090672}
   - component: {fileID: 1265090671}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor (1)
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -1064,9 +1064,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hAxis: 0
   vAxis: 0
+  dash: 100
   moveSpeed: 5
   JumpPower: 5
+  dirRight: 1
   isFloor: 0
+  layer:
+    serializedVersion: 2
+    m_Bits: 0
   jumpPossible: 2
   anim: {fileID: 0}
 --- !u!1 &1666606551
@@ -1079,7 +1084,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1666606552}
   - component: {fileID: 1666606553}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FloorSet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1148,7 +1153,7 @@ GameObject:
   - component: {fileID: 1770991990}
   - component: {fileID: 1770991989}
   - component: {fileID: 1770991988}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor (4)
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -1281,7 +1286,7 @@ GameObject:
   - component: {fileID: 1887811084}
   - component: {fileID: 1887811083}
   - component: {fileID: 1887811082}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor (2)
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -1414,7 +1419,7 @@ GameObject:
   - component: {fileID: 1942664897}
   - component: {fileID: 1942664896}
   - component: {fileID: 1942664895}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
   m_TagString: Floor
   m_Icon: {fileID: 0}
@@ -1547,7 +1552,7 @@ GameObject:
   - component: {fileID: 2062967738}
   - component: {fileID: 2062967737}
   - component: {fileID: 2062967736}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor (6)
   m_TagString: Floor
   m_Icon: {fileID: 0}
