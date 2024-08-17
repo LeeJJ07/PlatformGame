@@ -9,7 +9,8 @@ public class CameraFollow : MonoBehaviour
         Room 게임 오브젝트를 기준으로 카메라가 이동할 x, y 경계를 정한다.
         Room 게임 오브젝트는 해당 방에 존재하는 모든 오브젝트들을 자식 오브젝트로 가진다.
     */
-    [SerializeField] private float minX, maxX, minY, maxY;
+    [SerializeField] private Vector3 minCameraPos, maxCameraPos;
+
     private float smoothTime = 0.25f;
     private Vector3 velocity = Vector3.zero;
     private Vector3 nextPos;
@@ -19,6 +20,7 @@ public class CameraFollow : MonoBehaviour
     {
         if (followPlayer)
             target = GameDirector.instance.PlayerControl.transform;
+        ResetCameraPosition();
     }
 
     void FixedUpdate()
@@ -38,8 +40,13 @@ public class CameraFollow : MonoBehaviour
         transform.position = nextPos;
 
         // x, y 한계점 설정
-        float limitX = Mathf.Clamp(transform.localPosition.x, minX, maxX);
-        float limitY = Mathf.Clamp(transform.localPosition.y, minY, maxY);
+        float limitX = Mathf.Clamp(transform.localPosition.x, minCameraPos.x, maxCameraPos.x);
+        float limitY = Mathf.Clamp(transform.localPosition.y, minCameraPos.y, maxCameraPos.y);
         transform.localPosition = new Vector3(limitX, limitY, transform.localPosition.z);
+    }
+
+    public void ResetCameraPosition()
+    {
+        transform.localPosition = new Vector3(minCameraPos.x, minCameraPos.y, minCameraPos.z);
     }
 }

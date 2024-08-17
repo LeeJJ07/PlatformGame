@@ -784,10 +784,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   followPlayer: 1
-  minX: -14.5
-  maxX: -3
-  minY: 5
-  maxY: 9
+  minCameraPos: {x: -14.5, y: 5, z: -10}
+  maxCameraPos: {x: -3, y: 9, z: -10}
 --- !u!1001 &338622167
 PrefabInstance:
   m_ObjectHideFlags: 0
