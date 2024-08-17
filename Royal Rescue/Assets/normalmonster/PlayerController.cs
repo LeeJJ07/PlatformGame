@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
     }
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(rigid.velocity.y) <= 1e-3)
+        if (Input.GetKeyDown(KeyCode.Space) && transform.position.y <= 1.1)
         {
             rigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
         }

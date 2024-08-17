@@ -15,6 +15,7 @@ public class DeathState : MonoBehaviour, IState
         if (!monster) monster = GetComponent<Monster>();
 
         animator.SetBool("isDie", true);
+        span = 0f;
     }
     public void UpdateState()
     {

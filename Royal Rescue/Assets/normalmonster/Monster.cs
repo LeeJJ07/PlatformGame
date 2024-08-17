@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
@@ -20,7 +21,6 @@ public class Monster : MonoBehaviour
 
     public bool isDetect { get; set; }
     [SerializeField] private float hp = 100f;
-
     [SerializeField] private float damage = 10f;
 
     private float checkObstacleDistance = 0.5f;
@@ -115,6 +115,10 @@ public class Monster : MonoBehaviour
     public float getDamage() { return damage; }
     public float getFacingDir() { return facingDir; }
     public void setFacingDir(float dir) { this.facingDir = dir / Mathf.Abs(dir); }
+    public float getDistanceOther(GameObject other)
+    {
+        return Mathf.Abs((other.transform.position - transform.position).magnitude);
+    }
     bool CanSeePlayer()
     {
         //player가 시야각 안에 있는가
@@ -136,7 +140,7 @@ public class Monster : MonoBehaviour
     }
     bool CantChase()
     {
-        return (player.transform.position - transform.position).magnitude > chaseDistance;
+        return getDistanceOther(player) > chaseDistance;
     }
     Vector3 AngleToDir(float angle)
     {
@@ -145,7 +149,7 @@ public class Monster : MonoBehaviour
     }
     private bool CanAttackPlayer()
     {
-        return (player.transform.position - transform.position).magnitude < attackDistance;
+        return getDistanceOther(player) < attackDistance;
     }
 
     private bool Die()
@@ -194,9 +198,20 @@ public class Monster : MonoBehaviour
         {
             takeAttack(playerDamage);
             animator.SetTrigger("takeAttack");
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other == null)
+            return;
+        if (other.gameObject.tag == "Player")
+        {
+            Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
+            rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
 
-            Vector3 dir = (other.gameObject.transform.position - transform.position).normalized;
-            other.gameObject.GetComponent<Rigidbody>().AddForce(dir * 10f, ForceMode.Impulse);
+            Vector3 dir = new Vector3(other.gameObject.transform.position.x - transform.position.x, 0f, 0f).normalized;
+            rb.AddForce(dir * 15f, ForceMode.Impulse);
+            Debug.Log("밀어내기");
         }
     }
 }
