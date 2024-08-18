@@ -7,7 +7,7 @@ public class IdleMonster : Monster
     [Header("Additional State")]
     [SerializeField] private IdleState idleState;
 
-    [SerializeField] float awakeDistance = 1.5f;
+    [SerializeField] float awakeDistance = 2.5f;
 
     bool isAwake = false;
 
