@@ -69,7 +69,8 @@ public class CameraFollow : MonoBehaviour
         
         limitX = roomControl.CurrentRoom.cameraLeftBound.position.x + cameraHorizontalOffset;
         limitY = roomControl.CurrentRoom.cameraLeftBound.position.y + cameraBotOffset;
-        transform.position = new Vector3(limitX, limitY, cameraDepth);
+        transform.position = new Vector3(limitX, limitY, transform.position.z);
+        transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, cameraDepth);
     }
 
     public void SetCameraFollow(bool isFollowing)
