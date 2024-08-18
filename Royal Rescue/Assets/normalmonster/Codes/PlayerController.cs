@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rigid;
     private Collider coll;
+    [SerializeField] private GameObject hand;
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
@@ -22,10 +23,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         h = Input.GetAxis("Horizontal");        // 가로축
-        transform.position += new Vector3(h, 0, 0) * speed * Time.deltaTime;
+        this.transform.position += new Vector3(h, 0, 0) * speed * Time.deltaTime;
         if (h > 1e-3 || h < -1e-3)
-            transform.rotation = Quaternion.Euler(0, h < 0 ? 0 : 180, 0);
+            this.transform.rotation = Quaternion.Euler(0, h < 0 ? 0 : 180, 0);
         Jump();
+        Attack();
     }
     void Jump()
     {
@@ -37,5 +39,22 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         rigid.AddForce(Vector3.down * forceGravity);
+    }
+    void Attack()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            StartCoroutine(Atk());
+        } 
+    }
+
+    IEnumerator Atk()
+    {
+        //90이 왼쪽, -90이 오른쪽
+
+
+        hand.transform.eulerAngles = new Vector3(0, 0, 50f);
+        yield return new WaitForSeconds(1f);
+        hand.transform.eulerAngles = new Vector3(0, 0, -8f);
     }
 }

@@ -11,6 +11,8 @@ public class Monster : MonoBehaviour
     [SerializeField] private ChaseState chaseState;
     [SerializeField] private AttackState attackState;
     [SerializeField] private DeathState deathState;
+    //[SerializeField] private HurtState hurtState;
+
 
     private MonsterStateContext monsterStateContext;
     private EState curState;
