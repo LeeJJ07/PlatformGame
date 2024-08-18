@@ -31,7 +31,6 @@ Transform:
   m_Children:
   - {fileID: 7723665864629464268}
   - {fileID: 9149457128138202903}
-  - {fileID: 1830561019782540648}
   m_Father: {fileID: 3565625867976681614}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2980288460826630001
@@ -88,7 +87,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8534990399413135992
 Transform:
   m_ObjectHideFlags: 0
@@ -153,8 +152,8 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
+  m_Radius: 0.31
+  m_Height: 0
   m_Direction: 1
   m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!95 &5672369051581265325
@@ -195,7 +194,8 @@ MonoBehaviour:
   attackState: {fileID: 5252150350831911848}
   deathState: {fileID: 5791550774509258435}
   player: {fileID: 0}
-  hp: 100
+  isDetect: 0
+  maxHp: 100
   damage: 10
   facingDir: 1
 --- !u!114 &4194283786953299098
@@ -278,6 +278,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3565625867976681614}
+  - {fileID: 1830561019782540648}
   m_Father: {fileID: 8534990399413135992}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4426863174279468600
@@ -578,13 +579,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6010536619420151452}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.49, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: -0.3420201, w: 0.9396927}
+  m_LocalPosition: {x: -0.413, y: 0.187, z: 0.009}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4125926009317101990}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 6854178231316643418}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -40}
 --- !u!136 &7286381337449601033
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -604,7 +605,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.06
+  m_Radius: 0.45
   m_Height: 0
   m_Direction: 1
   m_Center: {x: 0.11, y: 0.01, z: 0}

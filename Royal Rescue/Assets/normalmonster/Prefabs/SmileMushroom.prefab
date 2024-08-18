@@ -432,13 +432,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3306655781795474167}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.09, y: -0.56, z: -0.05}
+  m_LocalRotation: {x: 0, y: 0, z: -0.258819, w: 0.9659259}
+  m_LocalPosition: {x: -0.45, y: 0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 9176524656097743932}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 5501634744959459112}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -30}
 --- !u!136 &9112497514946603934
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -458,10 +458,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.06
+  m_Radius: 0.55
   m_Height: 0
   m_Direction: 1
-  m_Center: {x: 0.11, y: 0.01, z: 0}
+  m_Center: {x: 0, y: 0.09, z: 0}
 --- !u!114 &6801118952630912684
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -497,7 +497,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &416648054719592431
 Transform:
   m_ObjectHideFlags: 0
@@ -562,10 +562,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1
+  m_Radius: 0.21
+  m_Height: 0
   m_Direction: 1
-  m_Center: {x: 0, y: 0.49, z: 0}
+  m_Center: {x: 0.09, y: 0.45, z: 0}
 --- !u!95 &1923050693668496049
 Animator:
   serializedVersion: 5
@@ -604,7 +604,8 @@ MonoBehaviour:
   attackState: {fileID: 542880741005236856}
   deathState: {fileID: 8121356595128673969}
   player: {fileID: 0}
-  hp: 100
+  isDetect: 0
+  maxHp: 100
   damage: 10
   facingDir: 1
 --- !u!114 &3135753232880122200
@@ -816,7 +817,6 @@ Transform:
   - {fileID: 371261216005345249}
   - {fileID: 83866547195434952}
   - {fileID: 8631529830712717355}
-  - {fileID: 1954213159701832955}
   m_Father: {fileID: 1079971866837668826}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8435710559264582162
@@ -884,6 +884,7 @@ Transform:
   - {fileID: 6101460791696648181}
   - {fileID: 8399226281276078181}
   - {fileID: 1079971866837668826}
+  - {fileID: 1954213159701832955}
   m_Father: {fileID: 4288968062822383725}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8890446664902292916

@@ -21,7 +21,10 @@ public class AttackState : MonoBehaviour, IState
     }
     public void UpdateState()
     {
-        curDirX = (monster.transform.position.x - monster.player.transform.position.x)/Mathf.Abs(monster.transform.position.x - monster.player.transform.position.x);
+        float monsterX = monster.transform.position.x;
+        float playerX = monster.player.transform.position.x;
+        curDirX = (monsterX - playerX) /Mathf.Abs(monsterX - playerX);
+
         monster.transform.rotation = Quaternion.Euler(0, 180f + 90f * curDirX, 0);
     }
     public void ExitState()

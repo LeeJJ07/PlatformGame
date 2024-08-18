@@ -20,7 +20,7 @@ public class DeathState : MonoBehaviour, IState
     public void UpdateState()
     {
         span += Time.deltaTime;
-        if (animator.GetBool("isLive") && span > 1f)
+        if (animator.GetBool("isLive") && span > 0.5f)
             animator.SetBool("isLive", false);
 
         if (span > deactivateTime){

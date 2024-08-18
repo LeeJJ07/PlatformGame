@@ -8,23 +8,23 @@ using UnityEngine.Rendering;
 public class Monster : MonoBehaviour
 {
     [Header("Enemy States")]
-    [SerializeField] private PatrolState patrolState;
-    [SerializeField] private ChaseState chaseState;
-    [SerializeField] private AttackState attackState;
-    [SerializeField] private DeathState deathState;
+    [SerializeField] protected PatrolState patrolState;
+    [SerializeField] protected ChaseState chaseState;
+    [SerializeField] protected AttackState attackState;
+    [SerializeField] protected DeathState deathState;
 
-    private MonsterStateContext monsterStateContext;
-    private EState curState;
+    protected MonsterStateContext monsterStateContext;
+    protected EState curState;
 
     public GameObject player;
-    private Animator animator;
-    private Collider coll;
+    protected Animator animator;
+    protected Collider coll;
 
     public bool isDetect;
-    [SerializeField] 
-    private float maxHp = 100f;
-    private float curHp = 100f;
-    [SerializeField] private float damage = 10f;
+    [SerializeField]
+    protected float maxHp = 100f;
+    protected float curHp = 100f;
+    [SerializeField] protected float damage = 10f;
 
     private float checkObstacleDistance = 0.5f;
     private float toGroundDistance = 1f;
@@ -33,21 +33,21 @@ public class Monster : MonoBehaviour
     private float speed = 3f;
     public float facingDir = 1f;
 
-    private float detectingDistance = 4f;
+    private float detectingDistance = 10f;
     private float detectingAngle = 50f;
 
-    private float chaseDistance = 6f;
+    private float chaseDistance = 8f;
     private float attackDistance = 1.5f;
 
     private int groundLayerMask;
     private int wallLayerMask;
     private int playerMastk;
 
-    private void Start()
+    protected void Start()
     {
         if (!animator) animator = GetComponent<Animator>();
-        if(!coll) coll = GetComponent<Collider>();
-        
+        if (!coll) coll = GetComponent<Collider>();
+
         monsterStateContext = new MonsterStateContext(this);
         monsterStateContext.Transition(patrolState);
         curState = EState.PATROL;
@@ -61,7 +61,7 @@ public class Monster : MonoBehaviour
         playerMastk = 1 << LayerMask.NameToLayer("Player");
     }
 
-    private void Update()
+    protected void Update()
     {
         if (Die())
         {
@@ -69,7 +69,6 @@ public class Monster : MonoBehaviour
             monsterStateContext.CurrentState.UpdateState();
             return;
         }
-
         switch (curState)
         {
             case EState.PATROL:
@@ -96,7 +95,7 @@ public class Monster : MonoBehaviour
         monsterStateContext.CurrentState.UpdateState();
     }
 
-    private void UpdateState(EState nextState)
+    protected void UpdateState(EState nextState)
     {
         if (curState == nextState)
             return;
@@ -149,7 +148,7 @@ public class Monster : MonoBehaviour
     {
         return getDistanceOther(player) > chaseDistance;
     }
-    
+
     private bool CanAttackPlayer()
     {
         return getDistanceOther(player) < attackDistance;
@@ -172,7 +171,7 @@ public class Monster : MonoBehaviour
 
         if (other.gameObject.tag == "PlayerAttack")
             StartCoroutine(OnDamage());
-        
+
     }
     IEnumerator OnDamage()
     {
@@ -180,7 +179,7 @@ public class Monster : MonoBehaviour
         curHp -= player.GetComponent<PlayerController>().damage;
 
         coll.enabled = false;
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
         coll.enabled = true;
         Debug.Log("공격 받았음");
     }
@@ -205,7 +204,7 @@ public class Monster : MonoBehaviour
     }
     #endregion
 
-    #region 공용함수(각도->방향, 땅체크, 벽체크, Flip, 다른 오브젝트와의 거리)
+    #region 공용함수(각도->방향, 땅체크, 벽체크, Flip, 다른 오브젝트와의 거리) 캐릭터 컨트롤러
     Vector3 AngleToDir(float angle)
     {
         float radian = angle * Mathf.Deg2Rad;

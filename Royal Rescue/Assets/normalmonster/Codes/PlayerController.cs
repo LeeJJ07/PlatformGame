@@ -15,10 +15,13 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rigid;
     private Collider coll;
     [SerializeField] private GameObject hand;
+    [SerializeField] private GameObject sword;
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
         coll = GetComponent<Collider>();
+
+        sword.GetComponent<Collider>().enabled = false;
     }
     void Update()
     {
@@ -51,8 +54,10 @@ public class PlayerController : MonoBehaviour
     IEnumerator Atk()
     {
         //90이 왼쪽, -90이 오른쪽
+        sword.GetComponent<Collider>().enabled = true;
         hand.transform.localEulerAngles = new Vector3(0, 0, 50f);
         yield return new WaitForSeconds(0.2f);
         hand.transform.localEulerAngles = new Vector3(0, 0, -8f);
+        sword.GetComponent<Collider>().enabled = false;
     }
 }

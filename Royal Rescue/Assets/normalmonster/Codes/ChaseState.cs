@@ -27,6 +27,8 @@ public class ChaseState : MonoBehaviour, IState
             exclamation.transform.rotation = Quaternion.Euler(0f, monster.getFacingDir() * -50f, 0f);
             exclamation.SetActive(true);
         }
+        if (!monster.LookPlayer())
+            monster.FlipX();
     }
     public void UpdateState()
     {

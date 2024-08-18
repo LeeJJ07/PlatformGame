@@ -4,8 +4,9 @@ using UnityEditorInternal;
 using UnityEngine;
 using UnityEngine.XR;
 
-enum EState
+public enum EState
 {
+    IDLE,
     PATROL,
     CHASE,
     ATTACK,

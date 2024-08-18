@@ -211,6 +211,7 @@ Transform:
   - {fileID: 4267472898801145923}
   - {fileID: 7329707334964424968}
   - {fileID: 283851453297633635}
+  - {fileID: 8942994160253588307}
   m_Father: {fileID: 7992371129033490604}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2752043691187876330
@@ -301,13 +302,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3118795230975549407}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.000000050472334, y: 0.00000009249184, z: -0.000000039115545, w: 1}
-  m_LocalPosition: {x: -0.11, y: 0.82, z: -0.14}
+  m_LocalRotation: {x: 0, y: 0, z: -0.258819, w: 0.9659259}
+  m_LocalPosition: {x: -0.45, y: 0.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 283851453297633635}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Father: {fileID: 6839261104662552748}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -30}
 --- !u!136 &7787060069770629018
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -327,10 +328,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.63
+  m_Radius: 0.55
   m_Height: 0
   m_Direction: 1
-  m_Center: {x: 0.19, y: -0.7, z: 0}
+  m_Center: {x: 0, y: 0.09, z: 0}
 --- !u!114 &1465966934317905083
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -600,7 +601,8 @@ MonoBehaviour:
   attackState: {fileID: 974978444599367642}
   deathState: {fileID: 7767230435941515528}
   player: {fileID: 0}
-  hp: 100
+  isDetect: 0
+  maxHp: 100
   damage: 10
   facingDir: 1
 --- !u!114 &624741311341922641
@@ -781,7 +783,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7774499715029183970}
-  - {fileID: 8942994160253588307}
   m_Father: {fileID: 6839261104662552748}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7042167696944468501
