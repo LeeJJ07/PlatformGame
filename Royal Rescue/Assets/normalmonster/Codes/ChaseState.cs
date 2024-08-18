@@ -43,7 +43,7 @@ public class ChaseState : MonoBehaviour, IState
         if (!monster.CheckGround(monster.transform.position, Vector3.down))
             return;
 
-        if (!LookPlayer())
+        if (!monster.LookPlayer())
             monster.FlipX();
 
         monster.transform.position += new Vector3(monster.getSpeed() * monster.getFacingDir(), 0, 0) * Time.deltaTime;
@@ -52,15 +52,5 @@ public class ChaseState : MonoBehaviour, IState
     {
         animator.SetBool("isChase", false);
         exclamation.SetActive(false);
-    }
-
-    bool LookPlayer()
-    {
-        Vector3 direction = monster.player.transform.position - monster.transform.position;
-        if (monster.getFacingDir() > 0 && direction.x < 0)
-            return false;
-        if (monster.getFacingDir() < 0 && direction.x >= 0)
-            return false;
-        return true;
     }
 }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -237,6 +238,15 @@ public class Monster : MonoBehaviour
     public float getDistanceOther(GameObject other)
     {
         return (other.transform.position - transform.position).magnitude;
+    }
+    public bool LookPlayer()
+    {
+        Vector3 direction = player.transform.position - transform.position;
+        if (getFacingDir() > 0 && direction.x < 0)
+            return false;
+        if (getFacingDir() < 0 && direction.x >= 0)
+            return false;
+        return true;
     }
     #endregion
 }
