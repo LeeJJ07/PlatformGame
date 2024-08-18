@@ -51,10 +51,8 @@ public class PlayerController : MonoBehaviour
     IEnumerator Atk()
     {
         //90이 왼쪽, -90이 오른쪽
-
-
-        hand.transform.eulerAngles = new Vector3(0, 0, 50f);
-        yield return new WaitForSeconds(1f);
-        hand.transform.eulerAngles = new Vector3(0, 0, -8f);
+        hand.transform.localEulerAngles = new Vector3(0, 0, 50f);
+        yield return new WaitForSeconds(0.2f);
+        hand.transform.localEulerAngles = new Vector3(0, 0, -8f);
     }
 }

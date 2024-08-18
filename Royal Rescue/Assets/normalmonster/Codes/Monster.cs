@@ -19,10 +19,13 @@ public class Monster : MonoBehaviour
 
     public GameObject player;
     private Animator animator;
+    private Collider collider;
 
 
     public bool isDetect { get; set; }
-    [SerializeField] private float hp = 100f;
+    [SerializeField] 
+    private float maxHp = 100f;
+    private float curHp = 100f;
     [SerializeField] private float damage = 10f;
 
     private float checkObstacleDistance = 0.5f;
@@ -45,12 +48,14 @@ public class Monster : MonoBehaviour
     private void Start()
     {
         if (!animator) animator = GetComponent<Animator>();
+        if(!collider) collider = GetComponent<Collider>();
         monsterStateContext = new MonsterStateContext(this);
         monsterStateContext.Transition(patrolState);
         curState = EState.PATROL;
 
         isDetect = false;
-        hp = 100f;
+        maxHp = 100f;
+        curHp = maxHp;
 
         groundLayerMask = 1 << LayerMask.NameToLayer("Ground");
         wallLayerMask = 1 << LayerMask.NameToLayer("Wall");
@@ -144,11 +149,7 @@ public class Monster : MonoBehaviour
     {
         return getDistanceOther(player) > chaseDistance;
     }
-    Vector3 AngleToDir(float angle)
-    {
-        float radian = angle * Mathf.Deg2Rad;
-        return new Vector3(Mathf.Cos(radian), Mathf.Sin(radian), 0);
-    }
+    
     private bool CanAttackPlayer()
     {
         return getDistanceOther(player) < attackDistance;
@@ -156,7 +157,12 @@ public class Monster : MonoBehaviour
 
     private bool Die()
     {
-        return hp <= 0;
+        return curHp <= 0;
+    }
+    public Vector3 AngleToDir(float angle)
+    {
+        float radian = angle * Mathf.Deg2Rad;
+        return new Vector3(Mathf.Cos(radian), Mathf.Sin(radian), 0);
     }
     public bool CheckGround(Vector3 origin, Vector3 direction)
     {
@@ -184,26 +190,36 @@ public class Monster : MonoBehaviour
     }
 
 
-
-    //데미지 입는거 임시 구현
-    private void takeAttack(float takeAttackDamage)
-    {
-        hp -= takeAttackDamage;
-    }
-
+    #region 피격
     private void OnTriggerEnter(Collider other)
     {
-        float playerDamage = 20f;
+        if (!animator.GetBool("isLive"))
+            return;
+
         if (other == null)
             return;
+
         if (other.gameObject.tag == "PlayerAttack")
-        {
-            takeAttack(playerDamage);
-            animator.SetTrigger("takeAttack");
-        }
+            StartCoroutine(OnDamage());
+        
     }
+    IEnumerator OnDamage()
+    {
+        animator.SetTrigger("takeAttack");
+        curHp -= player.GetComponent<PlayerController>().damage;
+
+        collider.enabled = false;
+        yield return new WaitForSeconds(1f);
+        collider.enabled = true;
+        Debug.Log("공격 받았음");
+    }
+    #endregion
+
+    #region 지나치기
     private void OnTriggerStay(Collider other)
     {
+        if (!animator.GetBool("isLive"))
+            return;
         if (other == null)
             return;
         if (other.gameObject.tag == "Player")
@@ -216,4 +232,5 @@ public class Monster : MonoBehaviour
             Debug.Log("밀어내기");
         }
     }
+    #endregion
 }
