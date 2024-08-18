@@ -67,15 +67,7 @@ public class CameraFollow : MonoBehaviour
         if (this.roomControl == null)
             this.roomControl = roomControl;
         
-        leftLimit = roomControl.CurrentRoom.cameraLeftBound.position.x + cameraHorizontalOffset;
-        rightLimit = roomControl.CurrentRoom.cameraRightBound.position.x - cameraHorizontalOffset;
-
-        if (leftLimit > rightLimit)
-        {
-            Debug.LogWarning("카메라의 offset을 너무 크게 설정하셨습니다. 오른쪽 오프셋을 자동 설정합니다.");
-            rightLimit = leftLimit + 1;
-        }
-        limitX = Mathf.Clamp(transform.position.x, leftLimit, rightLimit);
+        limitX = roomControl.CurrentRoom.cameraLeftBound.position.x + cameraHorizontalOffset;
         limitY = roomControl.CurrentRoom.cameraLeftBound.position.y + cameraBotOffset;
         transform.position = new Vector3(limitX, limitY, cameraDepth);
     }
