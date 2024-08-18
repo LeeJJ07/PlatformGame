@@ -7,6 +7,9 @@ public class RoomController : MonoBehaviour
     public CameraFollow roomCamera;
     public Room[] rooms;
 
+    private Room currentRoom = null;
+    public Room CurrentRoom => currentRoom;
+
     void Awake()
     {
         rooms = GetComponentsInChildren<Room>(true);
@@ -16,13 +19,17 @@ public class RoomController : MonoBehaviour
         }
         // 현재 스테이지의 첫 번째 방(index: 0)이 hierarchy의 맨 위에 있어야 합니다.
         roomCamera.transform.SetParent(rooms[0].transform);
-        roomCamera.ResetCameraPosition();
+        currentRoom = rooms[0];
+
+        roomCamera.ResetCameraPosition(this);
     }
 
     public void SwitchRoom(int nextRoomId)
     {
         roomCamera.SetCameraFollow(false);
         roomCamera.transform.SetParent(rooms[nextRoomId].transform);
-        roomCamera.ResetCameraPosition();
+        roomCamera.ResetCameraPosition(this);
+
+        currentRoom = rooms[nextRoomId];
     }
 }

@@ -23,7 +23,7 @@ public class RoomPortal : MonoBehaviour
 
         if (linkedPortal == null)
         {
-            Debug.LogError("다음으로 이동할 포탈이 연동되지 않았습니다.");
+            Debug.LogWarning("다음으로 이동할 포탈이 연동되지 않았습니다.");
             return;
         }
         int nextRoomId = linkedPortal.CurrentRoom.RoomId;

@@ -7,8 +7,9 @@ public class Room : MonoBehaviour
     public RoomController RoomControl => roomControl;
     public int RoomId => roomId;
 
-    [SerializeField] private int roomId;
+    public Transform cameraLeftBound, cameraRightBound, cameraTopBound;
     private RoomController roomControl;
+    private int roomId;
 
     public void Init(RoomController control, int id)
     {
