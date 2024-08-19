@@ -7,24 +7,36 @@ public class PlayerControlManagerFix : MonoBehaviour
     public float hAxis;
     public float vAxis;
     public float dash = 5f;
-
+    public GameObject weapons;
+    [SerializeField] private int jumpPossible = 2;
+    [SerializeField] private float doubleTabTime = 0.5f;
+    [SerializeField] private float lastGroundTime;
+    [SerializeField] private float jumpPressTime;
+    private float attackDelay;
     public float moveSpeed;
     public float JumpPower;
-    [SerializeField]private bool dirRight = true;
-    bool JDown;
+    bool isJumpDown;
     bool isJump;
-    bool dashbool;
-
-    public bool isFloor = false;
+    bool isDashbool;
+    [SerializeField] private int jumpCnt = 0;
+    [SerializeField] private bool isDirRight = true;
+    [SerializeField] private bool isFloor = false;
+    [SerializeField] private bool isDoubleJump = false;
+    [SerializeField] private bool isFall = false;
+    [SerializeField] private bool isAttackButton = false;
+    [SerializeField] private bool isAttackPossible = false;
+    
     private bool ground = false;
     public LayerMask layer;
+    Touch touch;
 
-    int jumpCnt;
-    public int jumpPossible;
 
-    private Rigidbody rb;
-    [SerializeField] Animator anim;
 
+    Rigidbody rb;
+    Animator anim;
+    WeaponControl equipWeapon;
+
+    Vector2 inputDir;
     Vector3 moveDir;
     Vector3 moveVec;
     Vector3 dashPower;
@@ -40,62 +52,84 @@ public class PlayerControlManagerFix : MonoBehaviour
         GetInput();
         move();
         Jump();
-        if(Input.GetButtonDown("Dash"))
+        Swap();
+        Attack();
+        if (Input.GetButtonDown("Dash"))
         {
             //rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y), ForceMode.Impulse);
             Debug.Log("대시");
-            dashPower = (dirRight ? Vector3.right : Vector3.left) * dash;
+            dashPower = (isDirRight ? Vector3.right : Vector3.left) * dash;
             //rb.velocity = dashPower*moveSpeed;
             rb.AddForce(dashPower, ForceMode.VelocityChange);
             //rb.AddForce((dirRight ? Vector3.right : Vector3.left) * dash, ForceMode.Impulse);
-            anim.SetTrigger("Dash");
+            anim.SetTrigger("DashTr");
         }
-        //Trun();
-        //Dodge();
-    }
-    private void FixedUpdate()
-    {
-        rb.velocity = new Vector2(hAxis * moveSpeed, rb.velocity.y);//좌우이동
-
-        if (!dirRight && hAxis > 0.0f)
-        {
-            changeDir();
-        }
-        else if (dirRight && hAxis < 0.0f)
-        {
-            changeDir();
-        }
-
-    }
-    void changeDir()
-    {
-        dirRight = !dirRight;
-        transform.Rotate(Vector3.up, 180.0f, Space.World);
     }
     void GetInput()
     {
         hAxis = Input.GetAxis("Horizontal");
         vAxis = Input.GetAxis("Vertical");//
-        //wDown = Input.GetButton("Walk");//걷기
-        JDown = Input.GetKeyDown(KeyCode.Space);//점프
-        //JJDown = Input.GetButtonDown("Jump");//더블점프
-        //dDown = Input.GetButtonDown("Dodge");//회피
+        isJumpDown = Input.GetKeyDown(KeyCode.Space);//점프
+        isAttackButton = Input.GetButtonDown("Attack");//공격
     }
+    private void FixedUpdate()
+    {
+        rb.velocity = new Vector2(hAxis * moveSpeed, rb.velocity.y);//좌우이동
+                                                                    //rb.AddForce(moveDir, ForceMode.VelocityChange);//개빨라짐;;
+        if (!isDirRight && hAxis > 0.0f)
+        {
+            changeDir();
+        }
+        else if (isDirRight && hAxis < 0.0f)
+        {
+            changeDir();
+        }
+        /*if(rb.velocity.y > 0)
+        {
+            Debug.DrawRay(rb.position, Vector3.down * 3f, Color.red);
+            RaycastHit2D hit = Physics2D.Raycast(rb.position,Vector3.down, 1);
+            if (hit.collider != null)
+            {
+                if(hit.distance < 0.1f)
+                {
+                    anim.SetBool("isJump", false);
+                    anim.SetBool("isDoubleJump", false);
+                    anim.SetTrigger("Land");
+                }
+            }
+        }*/
+    }
+    void changeDir()
+    {
+        isDirRight = !isDirRight;
+        transform.Rotate(Vector3.up, 180.0f, Space.World);
+    }
+
     void move()
     {
-        moveDir = new Vector3(hAxis, 0, vAxis);
-        moveVec = new Vector3(hAxis, 0, vAxis).normalized;
+        if(!isAttackPossible)
+        {
+            moveDir = Vector3.zero;
+        }
+        else
+        {
+            moveDir = new Vector3(hAxis, 0, vAxis);
+            moveVec = new Vector3(hAxis, 0, vAxis).normalized;
 
-        //transform.position += moveVec * moveSpeed * Time.deltaTime;
-        anim.SetBool("run", moveVec != Vector3.zero);
-        anim.SetBool("Idle", moveVec == Vector3.zero);
+            anim.SetBool("Run", moveVec != Vector3.zero && isFloor);
+            anim.SetBool("Idle", moveVec == Vector3.zero && isFloor);
+
+        }
+        
     }
     void Jump()
     {
-        if(JDown && jumpCnt > 0 )
+        //touch = Input.GetTouch(0);
+        if (isJumpDown && jumpCnt > 0)
         {
+            //curTabTime = Time.time;
             rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y), ForceMode.Impulse);
-            if (jumpCnt == 2 && isFloor)
+            if (jumpCnt == 2)
             {
                 anim.SetTrigger("Jump");
                 anim.SetBool("isJump", true);
@@ -103,28 +137,34 @@ public class PlayerControlManagerFix : MonoBehaviour
             else if (jumpCnt == 1 && !isFloor)
             {
                 anim.SetTrigger("DoubleJump");
-                anim.SetBool("isJJump", true);
+                anim.SetBool("isDoubleJump", true);
             }
             jumpCnt--;
+            //lastTabTime = Time.time;
         }
-        //if(jumpCnt < 1)
-          //  checkGround();
-            /*if (JDown && !isJump && isFloor)
-            {
-                rb.AddForce(Vector3.up * JumpPower, ForceMode.Impulse);
-                anim.SetBool("isJump", true);
-                anim.SetTrigger("Jump");
-                isJump = true;
-            }
-            else if (JJDown  && !isJJDown && isJump)
-            {
-                rb.AddForce(Vector3.up * DJumpPower, ForceMode.Impulse);
-                //anim.SetBool("isJJump", true);
-                anim.SetTrigger("DoubleJump");
-                isJJDown = true;
-            }*/
-     }
-    void checkGround()
+
+    }
+    void Swap()
+    {
+        if (equipWeapon != null)
+            equipWeapon.gameObject.SetActive(false);
+        equipWeapon = weapons.GetComponent<WeaponControl>();
+        equipWeapon.gameObject.SetActive(true);
+    }
+    void Attack()
+    {
+        if (equipWeapon == null)
+            return;
+        attackDelay += Time.deltaTime;
+        isAttackPossible = equipWeapon.rate < attackDelay ? true : false;
+        if(isAttackButton && isAttackPossible && isFloor && moveDir == Vector3.zero)
+        {
+            equipWeapon.WeaponUse();
+            anim.SetTrigger("AttackTr");
+            attackDelay = 0;
+        }
+    }
+    /*void checkGround()
     {
         Debug.DrawRay(transform.position + Vector3.up, Vector3.down * 3f, Color.red);
         RaycastHit hit;
@@ -138,27 +178,32 @@ public class PlayerControlManagerFix : MonoBehaviour
         { 
             //ground = false; 
         }
-    }
+    }*/
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor")
+        Debug.DrawRay(transform.position + Vector3.up, Vector3.down * 1f, Color.red);
+        RaycastHit hit;
+        if (collision.gameObject.CompareTag("Floor") && Physics.Raycast(transform.position, Vector3.down, out hit, 1f))
         {
             isFloor = true;
-            //isFloor = true;
             anim.SetBool("isJump", false);
-            //isJump = false;
-            anim.SetBool("isJJump", false);
-            //isJJDown = false;
+            anim.SetBool("isDoubleJump", false);
+            anim.SetBool("isGround", false);
             jumpCnt = jumpPossible;
-            
         }
-
+        if (collision.gameObject.CompareTag("Enemy") && !isAttackButton)
+        {
+            Debug.Log("피격");
+        }
     }
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "Floor")
+        RaycastHit hit;
+        Debug.DrawRay(transform.position + Vector3.up, Vector3.down * 3f, Color.red);
+        if (collision.gameObject.tag == "Floor" && !Physics.Raycast(transform.position, Vector3.down, out hit, 0.1f))
         {
             isFloor = false;
+            anim.SetBool("isGround", true);
         }
     }
 }

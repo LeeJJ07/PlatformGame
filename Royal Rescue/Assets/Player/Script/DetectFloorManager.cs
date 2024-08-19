@@ -12,6 +12,7 @@ public class DetectFloor : MonoBehaviour
     }
 
     // Update is called once per frame
+    /*
     private void OnTriggerStay(Collider other)
     {
         if (other.tag == "Floor")
@@ -22,5 +23,5 @@ public class DetectFloor : MonoBehaviour
     {
         if (other.tag == "Floor")
             playerCM.isFloor = false;
-    }
+    }*/
 }
