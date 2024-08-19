@@ -31,8 +31,8 @@ public class CameraFollow : MonoBehaviour
     {
         if (target == null || !enableFollow)
             return;
-        
-        nextPos = Vector3.SmoothDamp(transform.position, target.position, ref velocity, smoothTime);
+
+        nextPos = Vector3.SmoothDamp(transform.position, AdjustTargetCameraLevel(), ref velocity, smoothTime);
 
         leftLimit = roomControl.CurrentRoom.cameraLeftBound.position.x + cameraHorizontalOffset;
         rightLimit = roomControl.CurrentRoom.cameraRightBound.position.x - cameraHorizontalOffset;
@@ -54,13 +54,19 @@ public class CameraFollow : MonoBehaviour
         transform.position = new Vector3(limitX, limitY, transform.position.z);
     }
 
-    public void ResetCameraPosition(RoomController roomControl)
+    public void Init(RoomController roomControl)
     {
         if (this.roomControl == null)
         {
             this.roomControl = roomControl;
             if (followPlayer) target = GameDirector.instance.PlayerControl.transform;
         }
+    }
+
+    public void ResetCameraPosition()
+    {
+        target.SetParent(roomControl.CurrentRoom.transform);
+
         limitX = roomControl.CurrentRoom.cameraLeftBound.position.x + cameraHorizontalOffset;
         limitY = roomControl.CurrentRoom.cameraLeftBound.position.y + cameraBotOffset;
         transform.position = new Vector3(limitX, limitY, transform.position.z);
@@ -70,5 +76,12 @@ public class CameraFollow : MonoBehaviour
     public void SetCameraFollow(bool isFollowing)
     {
         enableFollow = isFollowing;
+    }
+
+    public Vector3 AdjustTargetCameraLevel()
+    {
+        // 서 있는 땅의 높이 레벨에 따라 카메라를 좀 더 위로 올리도록 조정
+        int groundLevel = (int)(target.localPosition.y / 4);
+        return new Vector3(target.position.x, target.position.y + 2 * groundLevel, target.position.z);
     }
 }

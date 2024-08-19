@@ -24,7 +24,8 @@ public class RoomController : MonoBehaviour
         currentRoom = rooms[0];
         currentRoom.gameObject.SetActive(true);
 
-        roomCamera.ResetCameraPosition(this);
+        roomCamera.Init(this);
+        roomCamera.ResetCameraPosition();
         roomCamera.SetCameraFollow(true);
     }
 
@@ -37,7 +38,7 @@ public class RoomController : MonoBehaviour
         currentRoom = rooms[nextRoomId];
         currentRoom.gameObject.SetActive(true);
 
-        roomCamera.ResetCameraPosition(this);
+        roomCamera.ResetCameraPosition();
         previousRoom.gameObject.SetActive(false);
     }
 }
