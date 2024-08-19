@@ -22,14 +22,6 @@ public class CameraFollow : MonoBehaviour
     private bool enableFollow = false;
     private float leftLimit, rightLimit, botLimit, topLimit, limitX, limitY;
 
-    void Start()
-    {
-        SetCameraFollow(true);
-
-        if (followPlayer)
-            target = GameDirector.instance.PlayerControl.transform;
-    }
-
     void FixedUpdate()
     {
         FollowTarget();
@@ -65,8 +57,10 @@ public class CameraFollow : MonoBehaviour
     public void ResetCameraPosition(RoomController roomControl)
     {
         if (this.roomControl == null)
+        {
             this.roomControl = roomControl;
-        
+            if (followPlayer) target = GameDirector.instance.PlayerControl.transform;
+        }
         limitX = roomControl.CurrentRoom.cameraLeftBound.position.x + cameraHorizontalOffset;
         limitY = roomControl.CurrentRoom.cameraLeftBound.position.y + cameraBotOffset;
         transform.position = new Vector3(limitX, limitY, transform.position.z);
