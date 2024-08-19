@@ -487,11 +487,11 @@ GameObject:
   - component: {fileID: 686342220936800781}
   - component: {fileID: 1923050693668496049}
   - component: {fileID: 4770893935544151153}
+  - component: {fileID: 9044044893343706449}
   - component: {fileID: 3135753232880122200}
   - component: {fileID: 5863484967596832707}
   - component: {fileID: 542880741005236856}
   - component: {fileID: 8121356595128673969}
-  - component: {fileID: 9044044893343706449}
   m_Layer: 0
   m_Name: SmileMushroom
   m_TagString: Monster
@@ -611,6 +611,19 @@ MonoBehaviour:
   facingDir: 1
   idleState: {fileID: 9044044893343706449}
   awakeDistance: 2.5
+--- !u!114 &9044044893343706449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3716874933376173074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6196dcdb96d49f468b90524bd4979dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exclamation: {fileID: 19994613020363315}
 --- !u!114 &3135753232880122200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -661,19 +674,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0e90d9781fbb0144ac413c7c6dae451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &9044044893343706449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3716874933376173074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6196dcdb96d49f468b90524bd4979dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  exclamation: {fileID: 19994613020363315}
 --- !u!1 &4674611111747020358
 GameObject:
   m_ObjectHideFlags: 0

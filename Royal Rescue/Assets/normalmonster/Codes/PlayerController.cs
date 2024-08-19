@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(Atk());
         } 
     }
-
     IEnumerator Atk()
     {
         //90이 왼쪽, -90이 오른쪽
