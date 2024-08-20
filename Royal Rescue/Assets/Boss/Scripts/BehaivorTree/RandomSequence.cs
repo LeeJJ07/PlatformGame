@@ -1,11 +1,14 @@
-using System.Collections;
+
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RandomSequence : INode
 {
     List<INode> childNodes;
-    int randomState = 0;
+    int randomStateIndex = 0;
+    bool isSelectSkill = false;
+
+    string name = "";
     public RandomSequence(List<INode> childs)
     {
         childNodes = childs;
@@ -14,6 +17,11 @@ public class RandomSequence : INode
     {
         childNodes = new List<INode>();
         
+    }
+    public RandomSequence(string name)
+    {
+        childNodes = new List<INode>();
+        this.name = name;
     }
     public void AddNode(INode node)
     {
@@ -25,24 +33,27 @@ public class RandomSequence : INode
     {
         if (childNodes == null || childNodes.Count == 0)
             return INode.NodeState.Failure;
-        Debug.Log("randomState: " + randomState);
-        switch (childNodes[randomState].Evaluate())
+        SkillSelect();
+        Debug.Log(name);
+        Debug.Log("randomState: " + randomStateIndex);
+        switch (childNodes[randomStateIndex].Evaluate())
         {
-            case INode.NodeState.Running:
-                return INode.NodeState.Running;
-
             case INode.NodeState.Success:
-                randomState = Random.Range(0, childNodes.Count);
-                break;
+                isSelectSkill = false;
+                return INode.NodeState.Success;
 
             case INode.NodeState.Failure:
-                randomState = Random.Range(0, childNodes.Count);
+                isSelectSkill = false;
                 return INode.NodeState.Failure;
         }
-     
-        
-        return INode.NodeState.Success;
+
+        return INode.NodeState.Running;
     }
 
-  
+    void SkillSelect()
+    {
+        if (isSelectSkill) return;
+        isSelectSkill = true;
+        randomStateIndex = Random.Range(0, childNodes.Count);
+    }
 }

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +5,6 @@ public class ArraySequence : INode
 {
     List<INode> nodes;
     int index = 0;
-    
     public ArraySequence()
     {
         nodes = new List<INode>();
@@ -18,12 +16,13 @@ public class ArraySequence : INode
     public INode.NodeState Evaluate()
     {
         Debug.Log(index);
-        switch(nodes[index].Evaluate())
+        switch (nodes[index].Evaluate())
         {
             case INode.NodeState.Success:
                 index++;
                 break;
             case INode.NodeState.Failure:
+                
                 index = 0;
                 break;
             case INode.NodeState.Running:
@@ -38,4 +37,5 @@ public class ArraySequence : INode
         
         return INode.NodeState.Running;
     }
+    
 }

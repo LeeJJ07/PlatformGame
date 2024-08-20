@@ -6,15 +6,16 @@ public class Sequence : INode
 {
     List<INode> childNodes;
     int index = 0;
-    bool abortState = false;
-   
+    string name = "";
+
     public Sequence()
     {
         childNodes = new List<INode>();
     }
-    public void abort(bool isAbort)
+    public Sequence(string name)
     {
-        abortState = isAbort;
+        childNodes = new List<INode>();
+        this.name = name;
     }
     public void AddNode(INode node)
     {
@@ -25,21 +26,18 @@ public class Sequence : INode
     {
         if (childNodes == null || childNodes.Count == 0) 
             return INode.NodeState.Failure;
-        if (index >= childNodes.Count) 
-            index = 0;
-        if (abortState)
+        if (index >= childNodes.Count)
         {
             index = 0;
-            return INode.NodeState.Failure;
+            return INode.NodeState.Success;
         }
         switch (childNodes[index].Evaluate())
         {
-            case INode.NodeState.Running:
-                return INode.NodeState.Running;
-
             case INode.NodeState.Success:
                 index++;
                 break;
+                //리턴은 Failure일 때만
+                
 
             case INode.NodeState.Failure:
                 index = 0;
