@@ -6,8 +6,6 @@ public class DisappearingPlatformControl : MonoBehaviour
 {
     [SerializeField] private List<DisappearingPlatform> platforms;
     [SerializeField] private float interval;
-
-    private DisappearingPlatform previousPlatform, currentPlatform;
     private int index = 0;
 
     void OnEnable()

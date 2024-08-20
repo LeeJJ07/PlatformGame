@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7117258381017292954}
   - component: {fileID: 522173710977341304}
   - component: {fileID: 8608541999748378834}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: SpringBase
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,7 +157,7 @@ GameObject:
   m_Component:
   - component: {fileID: 555058779643726483}
   - component: {fileID: 5311343521011944967}
-  m_Layer: 7
+  m_Layer: 8
   m_Name: Spring
   m_TagString: Untagged
   m_Icon: {fileID: 0}
