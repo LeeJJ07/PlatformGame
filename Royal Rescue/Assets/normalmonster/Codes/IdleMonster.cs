@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 
 public class IdleMonster : Monster
@@ -7,13 +8,15 @@ public class IdleMonster : Monster
     [Header("Additional State")]
     [SerializeField] private IdleState idleState;
 
-    [SerializeField] float awakeDistance = 2.5f;
+    [SerializeField] float awakeDistance = 3f;
 
     bool isAwake = false;
 
     new void Start()
     {
         base.Start();
+
+        idleState = GetComponent<IdleState>(); 
 
         monsterStateContext.Transition(idleState);
         curState = EState.IDLE;

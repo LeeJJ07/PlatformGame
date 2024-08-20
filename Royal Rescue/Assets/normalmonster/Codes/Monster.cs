@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
+using Unity.IO.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -21,6 +22,7 @@ public class Monster : MonoBehaviour
     protected Collider coll;
 
     public bool isDetect;
+    public bool isAttack;
     [SerializeField]
     protected float maxHp = 100f;
     protected float curHp = 100f;
@@ -37,7 +39,7 @@ public class Monster : MonoBehaviour
     private float detectingAngle = 50f;
 
     private float chaseDistance = 8f;
-    private float attackDistance = 1.5f;
+    [SerializeField] private float attackDistance = 1.5f;
 
     private int groundLayerMask;
     private int wallLayerMask;
@@ -48,11 +50,26 @@ public class Monster : MonoBehaviour
         if (!animator) animator = GetComponent<Animator>();
         if (!coll) coll = GetComponent<Collider>();
 
+        patrolState = GetComponent<PatrolState>();
+        chaseState = GetComponent<ChaseState>();
+        deathState = GetComponent<DeathState>();
+
+        switch (this.tag)
+        {
+            case "ChestMonster":
+                attackState = GetComponent<ChestAttackState>();
+                break;
+            default:
+                attackState = GetComponent<AttackState>(); 
+                break;
+        }
+
         monsterStateContext = new MonsterStateContext(this);
         monsterStateContext.Transition(patrolState);
         curState = EState.PATROL;
 
         isDetect = false;
+        isAttack = false;
         maxHp = 100f;
         curHp = maxHp;
 

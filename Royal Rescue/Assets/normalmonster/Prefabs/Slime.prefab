@@ -198,6 +198,7 @@ MonoBehaviour:
   maxHp: 100
   damage: 10
   facingDir: 1
+  attackDistance: 3
 --- !u!114 &4194283786953299098
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -498,7 +498,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &416648054719592431
 Transform:
   m_ObjectHideFlags: 0
@@ -609,6 +609,7 @@ MonoBehaviour:
   maxHp: 100
   damage: 10
   facingDir: 1
+  attackDistance: 3
   idleState: {fileID: 9044044893343706449}
   awakeDistance: 2.5
 --- !u!114 &9044044893343706449
