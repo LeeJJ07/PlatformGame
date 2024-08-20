@@ -17,7 +17,6 @@ public class ChecktoTargetDistance : INode
     {
         //float distance = Vector3.Distance(enemyAI.transform.position, enemyAI.Target.position);
         float distance = XDistance(enemyAI.transform.position.x, enemyAI.Target.position.x);
-        Debug.Log("distance: " + distance);
         if (distance >= targetDistance)
         {
             Debug.Log("distance Success");

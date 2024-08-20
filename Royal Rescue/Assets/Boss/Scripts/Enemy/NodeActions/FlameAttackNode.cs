@@ -6,32 +6,48 @@ using UnityEngine;
 public class FlameAttackNode : INode
 {
     EnemyAI enemyAI;
+    float phaseHpCondition = 0;
     float animationDuration = 100;
-    float time = 0;
+    float skillActiveTime = 0;
     bool isActiveAnime = false;
+
+    string name = "";
     public FlameAttackNode(EnemyAI enemyAI)
     {
         this.enemyAI = enemyAI;
+    }
+    public FlameAttackNode(EnemyAI enemyAI, float phaseHpCondition, string name)
+    {
+        this.enemyAI = enemyAI;
+        this.phaseHpCondition = phaseHpCondition;
+        this.name = name;
+    }
+    public FlameAttackNode(EnemyAI enemyAI, float phaseHpCondition)
+    {
+        this.enemyAI = enemyAI;
+        this.phaseHpCondition = phaseHpCondition;
     }
     public void AddNode(INode node) { }
 
     public INode.NodeState Evaluate()
     {
-        if(!enemyAI)
+        if (!enemyAI || enemyAI.Hp <= phaseHpCondition) 
         {
             Debug.Log("FlameAttack Failure");
             return INode.NodeState.Failure;
         }
-        Debug.Log("FlameAttack Running");
+        Debug.Log(name);
+        skillActiveTime += Time.deltaTime;
         ActiveAnimation();
-        time += Time.deltaTime;
-        if (time >= animationDuration)
+        if (skillActiveTime >= animationDuration)
         {
-            time = 0;
             Debug.Log("FlameAttack Success");
+            
             isActiveAnime = false;
+            skillActiveTime = 0;
             return INode.NodeState.Success;
         }
+
         return INode.NodeState.Running;
     }
     void ActiveAnimation()
@@ -41,6 +57,7 @@ public class FlameAttackNode : INode
         if (enemyAI.EnemyAnimation.GetCurrentAnimatorStateInfo(0).IsName("Flame Attack"))
         {
             animationDuration = enemyAI.EnemyAnimation.GetCurrentAnimatorStateInfo(0).length;
+
             Vector3 dir = enemyAI.Target.position - enemyAI.transform.position;
             if (dir.normalized.x < 0)
                 enemyAI.transform.rotation = Quaternion.Euler(0, -90, 0);

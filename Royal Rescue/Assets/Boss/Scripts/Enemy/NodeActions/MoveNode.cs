@@ -31,7 +31,7 @@ public class MoveNode : INode
         }
 
         Vector3 dir= enemyAI.Target.position - enemyAI.transform.position;
-        enemyAI.transform.position += new Vector3(dir.normalized.x,0,0) * enemyAI.Phase1MoveSpeed * Time.deltaTime;
+        enemyAI.transform.position += new Vector3(dir.normalized.x,0,0) * enemyAI.Phase2moveSpeed1 * Time.deltaTime;
         if(dir.normalized.x<0)
             enemyAI.transform.rotation= Quaternion.Euler(0,-90,0);
         else

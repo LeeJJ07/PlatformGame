@@ -1,46 +1,39 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicAttackNode : INode
+public class DieNode : INode
 {
     EnemyAI enemyAI;
-    float phaseHpCondition = 0;
     float animationDuration = 100;
     float time = 0;
     bool isActiveAnime = false;
-
-    string name = "";
-    public BasicAttackNode(EnemyAI enemyAI)
+    
+    public DieNode(EnemyAI enemyAI)
     {
         this.enemyAI = enemyAI;
     }
-    public BasicAttackNode(EnemyAI enemyAI, float phaseHpCondition)
+    public void AddNode(INode node)
     {
-        this.enemyAI = enemyAI;
-        this.phaseHpCondition = phaseHpCondition;
     }
-    public BasicAttackNode(EnemyAI enemyAI, float phaseHpCondition, string name)
-    {
-        this.enemyAI = enemyAI;
-        this.phaseHpCondition = phaseHpCondition;
-        this.name = name;
-    }
-    public void AddNode(INode node) { }
 
     public INode.NodeState Evaluate()
     {
-        if (!enemyAI || enemyAI.Hp <= 0)
+        Debug.Log("test");
+        if(!enemyAI)
         {
-            Debug.Log("BasicAttack Failure");
+            Debug.Log("Die Failure");
             return INode.NodeState.Failure;
         }
-        Debug.Log(name);
         ActiveAnimation();
         time += Time.deltaTime;
-        if(time>=animationDuration)
+        Debug.Log("Die Running");
+        if (time>animationDuration)
         {
-            time = 0;
-            Debug.Log("BasicAttack Success");
+            Debug.Log("Die Success");
+            animationDuration = 0;
             isActiveAnime = false;
+            enemyAI.DeActivateObj();
             return INode.NodeState.Success;
         }
         return INode.NodeState.Running;
@@ -48,8 +41,8 @@ public class BasicAttackNode : INode
     void ActiveAnimation()
     {
         if (isActiveAnime) return;
-        enemyAI.EnemyAnimation.SetTrigger("BasicAttackTrigger");
-        if (enemyAI.EnemyAnimation.GetCurrentAnimatorStateInfo(0).IsName("Basic Attack"))
+        enemyAI.EnemyAnimation.SetTrigger("DieTrigger");
+        if (enemyAI.EnemyAnimation.GetCurrentAnimatorStateInfo(0).IsName("Die"))
         {
             animationDuration = enemyAI.EnemyAnimation.GetCurrentAnimatorStateInfo(0).length;
             Vector3 dir = enemyAI.Target.position - enemyAI.transform.position;
