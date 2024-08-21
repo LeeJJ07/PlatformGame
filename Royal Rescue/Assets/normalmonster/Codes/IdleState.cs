@@ -17,7 +17,7 @@ public class IdleState : MonoBehaviour, IState
         animator.SetBool("isChase", false);
         animator.SetBool("isAttack", false);
         animator.SetBool("isDie", false);
-        animator.SetBool("isLive", true);
+        animator.SetBool("isLive", false);
 
         monster.GetComponent<Collider>().enabled = false;
     }
@@ -29,6 +29,7 @@ public class IdleState : MonoBehaviour, IState
         StartCoroutine(ActiveExclamation());
         monster.transform.rotation = Quaternion.Euler(0f, 180f - monster.getFacingDir() * 60f, 0f);
         monster.GetComponent<Collider>().enabled = true;
+        animator.SetBool("isLive", true);
     }
     IEnumerator ActiveExclamation()
     {

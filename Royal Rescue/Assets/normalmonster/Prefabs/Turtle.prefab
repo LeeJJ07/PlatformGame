@@ -1168,9 +1168,11 @@ MonoBehaviour:
   deathState: {fileID: 4881946437025466508}
   player: {fileID: 0}
   isDetect: 0
+  isAttack: 0
   maxHp: 100
   damage: 10
   facingDir: 1
+  attackDistance: 1.5
 --- !u!114 &1340548730802780211
 MonoBehaviour:
   m_ObjectHideFlags: 0

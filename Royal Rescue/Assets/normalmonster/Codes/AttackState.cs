@@ -35,5 +35,4 @@ public class AttackState : MonoBehaviour, IState
         curRotY = 195f + curDirX * 75f;
         monster.transform.rotation = Quaternion.Euler(0, curRotY, 0);
     }
-    
 }

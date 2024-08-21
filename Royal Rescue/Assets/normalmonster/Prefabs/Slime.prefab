@@ -195,6 +195,7 @@ MonoBehaviour:
   deathState: {fileID: 5791550774509258435}
   player: {fileID: 0}
   isDetect: 0
+  isAttack: 0
   maxHp: 100
   damage: 10
   facingDir: 1

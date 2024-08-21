@@ -52,17 +52,8 @@ public class Monster : MonoBehaviour
 
         patrolState = GetComponent<PatrolState>();
         chaseState = GetComponent<ChaseState>();
+        attackState = GetComponent<AttackState>();
         deathState = GetComponent<DeathState>();
-
-        switch (this.tag)
-        {
-            case "ChestMonster":
-                attackState = GetComponent<ChestAttackState>();
-                break;
-            default:
-                attackState = GetComponent<AttackState>(); 
-                break;
-        }
 
         monsterStateContext = new MonsterStateContext(this);
         monsterStateContext.Transition(patrolState);
