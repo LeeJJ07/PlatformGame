@@ -4,122 +4,135 @@ using UnityEngine;
 
 public class PlayerControlManager : MonoBehaviour
 {
-    public float moveSpeed = 1;//속도
-    public float moveDir;//x축 방향
-    public float jumpDir;//y축 방향
-    public float jumpPower = 10.0f;
-    float v = 0.0f;
-    float h = 0.0f;
-    private int jumpCnt = 0;
-    private bool dirRight = true;
-    public bool isFloor = false;
-    private bool isDoubleJump = false;
-    private Rigidbody rb;
+    public float rotationSpeed = 720;
+    public float jumpSpeed = 5;
 
+    public float jumpButtonGracePeriod = 0.2f;
 
-    public Animator anim;
-    // Start is called before the first frame update
-    void Start()
+    public Transform cameraTransform;
+
+    private CharacterController characterController;
+    private Animator animator;
+
+    private float ySpeed;
+    private float originalStepOffset;
+
+    private float? lastGroundedTime;
+    private float? jumpButtonPressedTime;
+
+    private bool isJumping;
+    private bool isGrounded;
+    public float jumpHorizontalSpeed = 3;
+
+    private void Start()
     {
-        rb = this.GetComponent<Rigidbody>();
-        anim = GetComponentInChildren<Animator>();
+        characterController = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
+        originalStepOffset = characterController.stepOffset;
     }
-    
-    // Update is called once per frame
+
     void Update()
     {
-        //PlayerMove();
-        moveDir = Input.GetAxis("Horizontal");
-        if(moveDir != 0 && !Input.GetButtonDown("Jump"))
-        {
-            anim.SetTrigger("run");
-        }
-        else if (moveDir == 0 && !Input.GetButtonDown("Jump"))
-        {
-            anim.SetTrigger("Idle");
-        }
-        /*if (Input.GetButtonDown("Jump") && (isFloor || !isDoubleJump))//플레이어가 점프를 눌렀고 바닥에 있거나 더블 점프중이 아닐때
-        {
-            rb.AddForce(new Vector2(0, jumpPower), ForceMode.Impulse);//
-            
-            if (!isDoubleJump && !isFloor)//더블점프중이 아니고 바닥이 아니면
-                isDoubleJump = true;//더블점프 가능
-        }
-        if(Input.GetButtonDown("Jump"))
-        {
-            anim.SetTrigger("Jump");
-        }*/
-        tryJump();
-        
-        /*
-        else if(Input.GetButtonDown("Jump") && isDoubleJump)
-        {
-            anim.SetTrigger("DoubleJump");
-        }*/
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
 
-        
-    }
-    private void tryJump()
-    {
-        if(Input.GetButtonDown("Jump"))//점프가 눌렸고
+        Vector3 movementDirection = new Vector3(horizontalInput, 0, verticalInput);
+
+        float inputMagnitude = Mathf.Clamp01(movementDirection.magnitude);
+
+        if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift))
         {
-            jumpCnt += 1;
-            Jump();
-        }
-    }
-    private void Jump()
-    {
-        if(isFloor || !isDoubleJump)//바닥이 ture거나 더블점프가 false면
-        {
-            rb.velocity = transform.up * jumpPower;
-            if (!isDoubleJump && !isFloor)//더블점프중이 아니고 바닥이 아니면
-                isDoubleJump = true;//더블점프 가능
-        }
-        anim.SetTrigger("Jump");
-      
-        if (isDoubleJump)
-        {
-            anim.SetTrigger("DoubleJump");
+            inputMagnitude *= 0.5f;
         }
 
-    }
-    /*void PlayerMove()
-    {
-        float h = Input.GetAxis("Horizontal");//좌우
-        float v = Input.GetAxis("Vertical");//앞,뒤
-        Vector3 dir = new Vector3(h, 0, v);
-        transform.position += dir * moveSpeed * Time.deltaTime;
-        //transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
-    }*/
-    private void FixedUpdate()
-    {
-        rb.velocity = new Vector2(moveDir * moveSpeed, rb.velocity.y);//좌우이동
+        animator.SetFloat("Input Magnitude", inputMagnitude, 0.05f, Time.deltaTime);
 
-        if(isFloor)//플레이어가 바닥에 있다면
+        movementDirection = Quaternion.AngleAxis(cameraTransform.rotation.eulerAngles.y, Vector3.up) * movementDirection;
+        movementDirection.Normalize();
+
+        ySpeed += Physics.gravity.y * Time.deltaTime;
+
+        if (characterController.isGrounded)
         {
-            isDoubleJump = false;//더블점프 다시 꺼둠
-            jumpCnt = 0;
+            lastGroundedTime = Time.time;
         }
-        if(!dirRight && moveDir > 0.0f)
+        if (Input.GetButtonDown("Jump"))
         {
-            changeDir();
-        }
-        else if (dirRight && moveDir < 0.0f)
-        {
-            changeDir();
+            jumpButtonPressedTime = Time.time;
         }
 
-    }
-    void changeDir()
-    {
-        dirRight = !dirRight;
-        transform.Rotate(Vector3.up, 180.0f, Space.World);
-    }
-    /*private void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.tag == "Floor")
+        if (Time.time - lastGroundedTime <= jumpButtonGracePeriod)
         {
-            isJump = false;
+            characterController.stepOffset = originalStepOffset;
+            ySpeed = -0.8f;
+
+            animator.SetBool("isGround", true);
+            isGrounded = true;
+            animator.SetBool("isJumping", false);
+            isJumping = false;
+            animator.SetBool("isFalling", false);
+
+            if (Time.time - jumpButtonPressedTime <= jumpButtonGracePeriod)
+            {
+                ySpeed = jumpSpeed;
+
+                animator.SetBool("isJumping", true);
+                isJumping = true;
+
+                lastGroundedTime = null;
+                jumpButtonPressedTime = null;
+            }
         }
-    }*/
+        else
+        {
+            characterController.stepOffset = 0;
+
+            animator.SetBool("isGrounded", false);
+            isGrounded = false;
+
+            /* 낙하 애니메이션 전환 처리 */
+            if ((isJumping && ySpeed < 0) || (ySpeed < -2))
+            {
+                animator.SetBool("isFalling", true);
+            }
+        }
+
+        if (movementDirection != Vector3.zero)
+        {
+            animator.SetBool("isMoving", true);
+            Quaternion toRotation = Quaternion.LookRotation(movementDirection, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, rotationSpeed * Time.deltaTime);
+        }
+        else
+        {
+            animator.SetBool("isMoving", false);
+        }
+        if (isGrounded == false)
+        {
+            Vector3 velocity = movementDirection * inputMagnitude * jumpHorizontalSpeed;
+            velocity.y = ySpeed;
+
+            characterController.Move(velocity * Time.deltaTime);
+        }
+    }
+
+    private void OnAnimatorMove()
+    {
+        Vector3 velocity = animator.deltaPosition;
+        velocity.y = ySpeed * Time.deltaTime;
+
+        characterController.Move(velocity);
+    }
+
+    private void OnApplicationFocus(bool focus)
+    {
+        if (focus)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
+    }
 }

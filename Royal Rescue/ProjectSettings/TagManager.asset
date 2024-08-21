@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Floor
   - CameraTarget
+  - weapon
   layers:
   - Default
   - TransparentFX
