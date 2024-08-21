@@ -9,7 +9,6 @@ public class PlayerControlManagerFix : MonoBehaviour
     public float dash = 5f;
     public GameObject weapons;
     [SerializeField] private int jumpPossible = 2;
-    [SerializeField] private float doubleTabTime = 0.5f;
     [SerializeField] private float lastGroundTime;
     [SerializeField] private float jumpPressTime;
     private float attackDelay;
@@ -22,20 +21,16 @@ public class PlayerControlManagerFix : MonoBehaviour
     [SerializeField] private bool isDirRight = true;
     [SerializeField] private bool isFloor = false;
     [SerializeField] private bool isDoubleJump = false;
-    [SerializeField] private bool isFall = false;
     [SerializeField] private bool isAttackButton = false;
     [SerializeField] private bool isAttackPossible = false;
     
     private bool ground = false;
     public LayerMask layer;
-    Touch touch;
-
-
 
     Rigidbody rb;
     Animator anim;
     WeaponControl equipWeapon;
-
+ 
     Vector2 inputDir;
     Vector3 moveDir;
     Vector3 moveVec;
@@ -43,6 +38,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
+        rb.useGravity = true;
         anim = GetComponentInChildren<Animator>();
     }
 
@@ -128,7 +124,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         if (isJumpDown && jumpCnt > 0)
         {
             //curTabTime = Time.time;
-            rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y), ForceMode.Impulse);
+            rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y) * 1.3f, ForceMode.Impulse);
             if (jumpCnt == 2)
             {
                 anim.SetTrigger("Jump");
@@ -191,6 +187,18 @@ public class PlayerControlManagerFix : MonoBehaviour
             anim.SetBool("isGround", false);
             jumpCnt = jumpPossible;
         }
+        else if(!collision.gameObject.CompareTag("Floor") && !isFloor &&Physics.Raycast(transform.position, Vector3.down, out hit, 1f))
+        {
+            jumpCnt = 0;
+        }
+        /*
+        if(collision.gameObject.CompareTag("Floor") && Physics.Raycast(transform.position, isDirRight ? Vector3.right : Vector3.left, out hit, 1f) && !isFloor)
+        {
+            if (isDirRight)
+                this.transform.position += new Vector3(-0.1f, 0, 0 );
+            else
+                this.transform.position += new Vector3(0.1f, 0, 0);
+        }*/
         if (collision.gameObject.CompareTag("Enemy") && !isAttackButton)
         {
             Debug.Log("ÇÇ°Ý");

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//HP,피격,사망애니메이션, 무기충돌처리
 public class WeaponControl : MonoBehaviour
 {
     public enum Type { Melee, Range };
@@ -36,7 +36,7 @@ public class WeaponControl : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("몬스터피격");
+            Debug.Log("몬스터공격");
         }
     }
 }
