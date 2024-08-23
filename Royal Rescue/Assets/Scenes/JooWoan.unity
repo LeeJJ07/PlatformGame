@@ -4721,7 +4721,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4524408878894392914, guid: fbb56a7e5abc38c41ac37cc053a73190, type: 3}
       propertyPath: m_Name
-      value: Room (5)
+      value: Room_Altar
       objectReference: {fileID: 0}
     - target: {fileID: 4524408878894392914, guid: fbb56a7e5abc38c41ac37cc053a73190, type: 3}
       propertyPath: m_IsActive
@@ -4805,9 +4805,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2656930955937171106, guid: fbb56a7e5abc38c41ac37cc053a73190, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2116612921}
-    - targetCorrespondingSourceObject: {fileID: 2656930955937171106, guid: fbb56a7e5abc38c41ac37cc053a73190, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 543450653360205760}
     - targetCorrespondingSourceObject: {fileID: 7505480673856728307, guid: fbb56a7e5abc38c41ac37cc053a73190, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1344188995}
@@ -5118,7 +5115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfe9c0091613b1a409ce8466a47c667a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  followPlayer: 1
+  enableFollow: 0
   cameraDepth: -10
   cameraHorizontalOffset: 10
   cameraBotOffset: 8
@@ -18460,7 +18457,7 @@ GameObject:
   - component: {fileID: 1350136683}
   - component: {fileID: 1350136682}
   m_Layer: 0
-  m_Name: coffin (1)
+  m_Name: Portal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18501,7 +18498,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 269b3b46620a8e14992ea9411e55635f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -27013,6 +27010,7 @@ Transform:
   - {fileID: 525629454}
   - {fileID: 172109707}
   - {fileID: 1723291967}
+  - {fileID: 543450653360205760}
   m_Father: {fileID: 323479096}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2116612922
@@ -27027,6 +27025,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a738c80f58e9de8488ac8dd09d6758b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stagePortal: {fileID: 543450653360205760}
+  coffinAnim: {fileID: 8928409438602020662}
+  test: 0
 --- !u!1001 &2117802551
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27529,13 +27530,13 @@ Transform:
   m_GameObject: {fileID: 919132149369369978}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -8.64, y: 1.76, z: 1.39}
+  m_LocalPosition: {x: -8.639999, y: 1.76, z: 1.39}
   m_LocalScale: {x: 3.5, y: 3.5, z: 3.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1350136681}
   - {fileID: 1044505077303631724}
-  m_Father: {fileID: 323479096}
+  m_Father: {fileID: 2116612921}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &652852057476792672
 Transform:
@@ -27634,7 +27635,7 @@ Transform:
   m_GameObject: {fileID: 6796790201813939022}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.37541014, y: 0.14711517, z: -0.18160631}
+  m_LocalPosition: {x: 0.3754101, y: 0.14711517, z: -0.1816063}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -28128,8 +28129,9 @@ GameObject:
   - component: {fileID: 1044505077303631724}
   - component: {fileID: 5257266270845628791}
   - component: {fileID: 8928409438602020661}
+  - component: {fileID: 8928409438602020662}
   m_Layer: 0
-  m_Name: coffindoor
+  m_Name: CoffinDoor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28301,6 +28303,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!95 &8928409438602020662
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6796790201813939022}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 24e5a474077a4bb4fabf534805ba356b, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
