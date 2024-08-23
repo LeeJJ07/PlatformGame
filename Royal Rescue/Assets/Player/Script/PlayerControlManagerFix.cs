@@ -1,13 +1,18 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerControlManagerFix : MonoBehaviour
 {
+    public int playerHP = 500;
     public float hAxis;
     public float vAxis;
     public float dash = 5f;
+    public int skillCount = 5;
     public GameObject weapons;
+    public GameObject fireBallPrefabs;
+    public Transform fireBallSpawnPoint;
     [SerializeField] private int jumpPossible = 2;
     [SerializeField] private float lastGroundTime;
     [SerializeField] private float jumpPressTime;
@@ -18,12 +23,13 @@ public class PlayerControlManagerFix : MonoBehaviour
     bool isJump;
     bool isDashbool;
     [SerializeField] private int jumpCnt = 0;
-    [SerializeField] private bool isDirRight = true;
+    [SerializeField] public bool isDirRight = true;
     [SerializeField] private bool isFloor = false;
     [SerializeField] private bool isDoubleJump = false;
-    [SerializeField] private bool isAttackButton = false;
+    [SerializeField] public bool isAttackButton = false;
     [SerializeField] private bool isAttackPossible = false;
-    
+    [SerializeField] private bool isDie = false;
+
     private bool ground = false;
     public LayerMask layer;
 
@@ -45,33 +51,43 @@ public class PlayerControlManagerFix : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetInput();
-        move();
-        Jump();
-        Swap();
-        Attack();
-        if (Input.GetButtonDown("Dash"))
+        if(!isDie)
         {
-            //rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y), ForceMode.Impulse);
-            Debug.Log("���");
-            dashPower = (isDirRight ? Vector3.right : Vector3.left) * dash;
-            //rb.velocity = dashPower*moveSpeed;
-            rb.AddForce(dashPower, ForceMode.VelocityChange);
-            //rb.AddForce((dirRight ? Vector3.right : Vector3.left) * dash, ForceMode.Impulse);
-            anim.SetTrigger("DashTr");
+            GetInput();
+            move();
+            Jump();
+            Swap();
+            Attack();
+            if (Input.GetButtonDown("Dash"))
+            {
+                //rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y), ForceMode.Impulse);
+                Debug.Log("대시");
+                dashPower = (isDirRight ? Vector3.right : Vector3.left) * dash;
+                //rb.velocity = dashPower*moveSpeed;
+                rb.AddForce(dashPower, ForceMode.VelocityChange);
+                //rb.AddForce((dirRight ? Vector3.right : Vector3.left) * dash, ForceMode.Impulse);
+                anim.SetTrigger("DashTr");
+            }
+            if (Input.GetButtonDown("FireBallKey"))
+            {
+                ThrowBall();
+            }
         }
+        
+        playerDie();
+        
     }
     void GetInput()
     {
         hAxis = Input.GetAxis("Horizontal");
         vAxis = Input.GetAxis("Vertical");//
-        isJumpDown = Input.GetKeyDown(KeyCode.Space);//����
-        isAttackButton = Input.GetButtonDown("Attack");//����
+        isJumpDown = Input.GetKeyDown(KeyCode.Space);//점프
+        isAttackButton = Input.GetButtonDown("Attack");//공격
     }
     private void FixedUpdate()
     {
-        rb.velocity = new Vector2(hAxis * moveSpeed, rb.velocity.y);//�¿��̵�
-                                                                    //rb.AddForce(moveDir, ForceMode.VelocityChange);//��������;;
+        rb.velocity = new Vector2(hAxis * moveSpeed, rb.velocity.y);//좌우이동
+                                                                    //rb.AddForce(moveDir, ForceMode.VelocityChange);//개빨라짐;;
         if (!isDirRight && hAxis > 0.0f)
         {
             changeDir();
@@ -152,29 +168,53 @@ public class PlayerControlManagerFix : MonoBehaviour
         if (equipWeapon == null)
             return;
         attackDelay += Time.deltaTime;
-        isAttackPossible = equipWeapon.rate < attackDelay ? true : false;
+        isAttackPossible = equipWeapon.rate < attackDelay ? true : false;//공격 딜레이 시간이 공격 쿨타임(rate)을 넘었다면 ? 공격 함 : 공격 눌러도 안써짐
         if(isAttackButton && isAttackPossible && isFloor && moveDir == Vector3.zero)
         {
+            weapons.GetComponent<WeaponControl>().isAttackWeapon = true;
             equipWeapon.WeaponUse();
             anim.SetTrigger("AttackTr");
             attackDelay = 0;
+            StopCoroutine("Swing");
+            StartCoroutine("Swing");
         }
+
     }
-    /*void checkGround()
+    IEnumerator Swing()
     {
-        Debug.DrawRay(transform.position + Vector3.up, Vector3.down * 3f, Color.red);
-        RaycastHit hit;
-        if(Physics.Raycast(transform.position + Vector3.up, Vector3.down, out hit, 0.1f))
+        yield return new WaitForSeconds(0.05f);//0.05초 후
+        weapons.GetComponent<WeaponControl>().isAttackWeapon = false;//무기 공격 트리거 상태를 false로 바꿔 공격중이지 않을때는 충돌 트리거 이벤트가 발생하지 않게
+
+    }
+
+    void ThrowBall()
+    {
+        if(skillCount > 0)
         {
-            //ground = true;
-            Debug.Log("����");
-            anim.SetTrigger("Land");
+            GameObject fBall = Instantiate(fireBallPrefabs, fireBallSpawnPoint.position, fireBallSpawnPoint.rotation);
+            fBall.GetComponent<FireBallControl>().ballDir = isDirRight ? Vector3.right : Vector3.left;
+            //Vector3 throwDir = (isDirRight ? Vector3.right : Vector3.left) + Vector3.up * 0.5f; // 약간 위로 던짐 (포물선 효과)
+            //fBall.GetComponent<FireBallControl>().Throw(throwDir);
+            //fBall.transform.position = fireBallSpawnPoint.transform.position;
+            anim.SetTrigger("FireBallTr");
+            skillCount -= 1;
         }
         else
-        { 
-            //ground = false; 
+        {
+            Debug.Log("파이어볼 횟수 모두 사용");
+            return;
         }
-    }*/
+        
+    }
+    void playerDie()
+    {
+        if(playerHP <= 0)
+        {
+            moveDir = Vector3.zero;
+            isDie = true;
+            anim.SetBool("isDiePlayer", isDie ? true : false);
+        }
+    }
     void OnCollisionEnter(Collision collision)
     {
         Debug.DrawRay(transform.position + Vector3.up, Vector3.down * 1f, Color.red);
@@ -201,7 +241,9 @@ public class PlayerControlManagerFix : MonoBehaviour
         }*/
         if (collision.gameObject.CompareTag("Enemy") && !isAttackButton)
         {
-            Debug.Log("�ǰ�");
+            EnemyControler enemy = collision.gameObject.GetComponent<EnemyControler>();
+            playerHP -= enemy.enemyAtk;
+            Debug.Log("피격");
         }
     }
     private void OnCollisionExit(Collision collision)
@@ -215,3 +257,49 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
     }
 }
+/*
+ * private Rigidbody rigid;
+    private Collider coll;
+    [SerializeField] private GameObject hand;
+    void Start()
+    {
+        rigid = GetComponent<Rigidbody>();
+
+@@ -22,10 +23,11 @@ public class PlayerController : MonoBehaviour
+    void Update()
+    {
+        h = Input.GetAxis("Horizontal");        // ������
+        transform.position += new Vector3(h, 0, 0) * speed * Time.deltaTime;
+        this.transform.position += new Vector3(h, 0, 0) * speed * Time.deltaTime;
+        if (h > 1e-3 || h < -1e-3)
+            transform.rotation = Quaternion.Euler(0, h < 0 ? 0 : 180, 0);
+            this.transform.rotation = Quaternion.Euler(0, h < 0 ? 0 : 180, 0);
+        Jump();
+        Attack();
+    }
+    void Jump()
+    {
+
+@@ -38,4 +40,21 @@ public class PlayerController : MonoBehaviour
+    {
+        rigid.AddForce(Vector3.down * forceGravity);
+    }
+    void Attack()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            StartCoroutine(Atk());
+        } 
+    }
+
+    IEnumerator Atk()
+    {
+        //90�� ����, -90�� ������
+
+
+        hand.transform.eulerAngles = new Vector3(0, 0, 50f);
+        yield return new WaitForSeconds(1f);
+        hand.transform.eulerAngles = new Vector3(0, 0, -8f);
+    }
+}
+ */

@@ -272,7 +272,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 255920206}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: a7d5a3d95c8ad0e4daf5846c7671abc9, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -284,8 +284,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.71, z: 0.01}
+  m_Size: {x: 0.5, y: 2, z: 0.5}
+  m_Center: {x: 0, y: 1.4, z: 0.01}
 --- !u!114 &255920210
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,8 +301,10 @@ MonoBehaviour:
   type: 0
   damage: 25
   rate: 0.5
+  isAttackWeapon: 0
   meleeArea: {fileID: 255920209}
   trailEffect: {fileID: 795955784}
+  player: {fileID: 1461445033}
 --- !u!54 &255920211
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -342,9 +344,33 @@ PrefabInstance:
       propertyPath: m_TagString
       value: weapon
       objectReference: {fileID: 0}
+    - target: {fileID: 6508871864379605767, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6508871864379605767, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6508871864379605767, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7229817629626485462, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
       propertyPath: m_TagString
       value: weapon
+      objectReference: {fileID: 0}
+    - target: {fileID: 8007022423781019756, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8007022423781019756, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8007022423781019756, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8189980434977739222, guid: 2dfbb63c9cdf7504faf4ff26b0581598, type: 3}
       propertyPath: m_Name
@@ -948,6 +974,7 @@ GameObject:
   - component: {fileID: 1054115403}
   - component: {fileID: 1054115407}
   - component: {fileID: 1054115408}
+  - component: {fileID: 1054115409}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Enemy
@@ -1070,6 +1097,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 4
   m_CollisionDetection: 0
+--- !u!114 &1054115409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1054115400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72d0d91720615414b8e90283b5989f0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 500
+  enemyAtk: 500
+  player: {fileID: 1461445033}
 --- !u!1 &1155769613
 GameObject:
   m_ObjectHideFlags: 0
@@ -1405,6 +1447,7 @@ Transform:
   m_Children:
   - {fileID: 1048428360}
   - {fileID: 975626972}
+  - {fileID: 1807878592}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1461445037
@@ -1436,10 +1479,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56651de20f41c2b4585754ed8a6e8644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerHP: 500
   hAxis: 0
   vAxis: 0
   dash: 100
+  skillCount: 5
   weapons: {fileID: 255920206}
+  fireBallPrefabs: {fileID: 1431150921175369799, guid: 2f824c5b801c31e4faa701c8f58014f2, type: 3}
+  fireBallSpawnPoint: {fileID: 1807878592}
   jumpPossible: 2
   lastGroundTime: 0
   jumpPressTime: 0
@@ -1451,6 +1498,7 @@ MonoBehaviour:
   isDoubleJump: 0
   isAttackButton: 0
   isAttackPossible: 0
+  isDie: 0
   layer:
     serializedVersion: 2
     m_Bits: 0
@@ -1653,6 +1701,37 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1770991986}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1807878591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1807878592}
+  m_Layer: 0
+  m_Name: FireBallPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1807878592
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807878591}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1461445036}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1887811080
 GameObject:
   m_ObjectHideFlags: 0
