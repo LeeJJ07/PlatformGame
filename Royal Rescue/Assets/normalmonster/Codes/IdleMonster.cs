@@ -6,7 +6,7 @@ using UnityEngine;
 public class IdleMonster : Monster
 {
     [Header("Additional State")]
-    [SerializeField] private IdleState idleState;
+    [SerializeField] private IState idleState;
 
     [SerializeField] float awakeDistance = 3f;
 
@@ -16,7 +16,15 @@ public class IdleMonster : Monster
     {
         base.Start();
 
-        idleState = GetComponent<IdleState>(); 
+        switch (this.tag)
+        {
+            case "ChestMonster":
+                idleState = GetComponent<ChestIdleState>();
+                break;
+            default:
+                idleState = GetComponent<IdleState>();
+                break;
+        }
 
         monsterStateContext.Transition(idleState);
         curState = EState.IDLE;
@@ -35,6 +43,6 @@ public class IdleMonster : Monster
 
     bool IsPossibleAwake()
     {
-        return awakeDistance > getDistanceOther(player);
+        return awakeDistance > getDistancePlayer();
     }
 }

@@ -29,9 +29,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _InvFade: 0.01
+    - _InvFade: 3
     m_Colors:
-    - _TintColor: {r: 0.35857958, g: 0.9622642, b: 0.35857958, a: 0.8352941}
+    - _TintColor: {r: 0.36644578, g: 1, b: 0, a: 1}
   m_BuildTextureStacks: []
 --- !u!1002 &2100001
 EditorExtensionImpl:

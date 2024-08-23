@@ -5,6 +5,8 @@ using Unity.IO.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Monster : MonoBehaviour
 {
@@ -17,7 +19,7 @@ public class Monster : MonoBehaviour
     protected MonsterStateContext monsterStateContext;
     protected EState curState;
 
-    public GameObject player;
+    protected GameObject player;
     protected Animator animator;
     protected Collider coll;
 
@@ -44,6 +46,11 @@ public class Monster : MonoBehaviour
     private int groundLayerMask;
     private int wallLayerMask;
     private int playerMastk;
+
+    private void Awake()
+    {
+        player = GameObject.FindWithTag("Player");
+    }
 
     protected void Start()
     {
@@ -154,12 +161,12 @@ public class Monster : MonoBehaviour
     }
     bool CantChase()
     {
-        return getDistanceOther(player) > chaseDistance;
+        return getDistancePlayer() > chaseDistance;
     }
 
     private bool CanAttackPlayer()
     {
-        return getDistanceOther(player) < attackDistance;
+        return getDistancePlayer() < attackDistance;
     }
 
     private bool Die()
@@ -242,9 +249,15 @@ public class Monster : MonoBehaviour
         checkObstacleDistance *= -1;
         facingDir *= -1;
     }
-    public float getDistanceOther(GameObject other)
+    public float getDistancePlayer()
     {
-        return (other.transform.position - transform.position).magnitude;
+        return (player.transform.position - transform.position).magnitude;
+    }
+    public float getDirectionPlayer()
+    {
+        float monsterX = transform.position.x;
+        float playerX = player.transform.position.x;
+        return (playerX - monsterX) / Mathf.Abs(playerX - monsterX);
     }
     public bool LookPlayer()
     {

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,12 +17,19 @@ public class PlayerController : MonoBehaviour
     private Collider coll;
     [SerializeField] private GameObject hand;
     [SerializeField] private GameObject sword;
+
+    bool isAddicted;
+    [SerializeField] PostProcessVolume fieldView;
+
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
         coll = GetComponent<Collider>();
 
         sword.GetComponent<Collider>().enabled = false;
+
+        isAddicted = false;
+        fieldView.weight = 0f;
     }
     void Update()
     {
@@ -58,5 +66,32 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         hand.transform.localEulerAngles = new Vector3(0, 0, -8f);
         sword.GetComponent<Collider>().enabled = false;
+    }
+
+    private void OnParticleCollision(GameObject other)
+    {
+        Debug.Log("Ãæµ¹");
+        switch (other.tag)
+        {
+            case "Poison":
+                ReduceFieldOfView();
+                break;
+        }
+    }
+
+    void ReduceFieldOfView()
+    {
+        if (isAddicted) return;
+        isAddicted = true;
+
+        StartCoroutine(ReduceReduceFieldOfViewSlowly());
+    }
+    IEnumerator ReduceReduceFieldOfViewSlowly()
+    {
+        for(int i = 0; i < 100; i++)
+        {
+            fieldView.weight += 0.01f;
+            yield return new WaitForSeconds(0.02f);
+        }
     }
 }

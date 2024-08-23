@@ -21,18 +21,16 @@ public class AttackState : MonoBehaviour, IState
     }
     public virtual void UpdateState()
     {
-        float monsterX = monster.transform.position.x;
-        float playerX = monster.player.transform.position.x;
-        curDirX = (monsterX - playerX) /Mathf.Abs(monsterX - playerX);
+        curDirX = monster.getDirectionPlayer();
 
-        monster.transform.rotation = Quaternion.Euler(0, 180f + 90f * curDirX, 0);
+        monster.transform.rotation = Quaternion.Euler(0, 180f - 90f * curDirX, 0);
     }
     public virtual void ExitState()
     {
         hitPoint.SetActive(false);
         animator.SetBool("isAttack", false);
 
-        curRotY = 195f + curDirX * 75f;
+        curRotY = 195f - curDirX * 75f;
         monster.transform.rotation = Quaternion.Euler(0, curRotY, 0);
     }
 }
