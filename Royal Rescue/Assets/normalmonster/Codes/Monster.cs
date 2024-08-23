@@ -153,6 +153,11 @@ public class Monster : MonoBehaviour
             Vector3 targetPos = player.transform.position;
             Vector3 targetDir = (targetPos - myPos).normalized;
 
+            RaycastHit hit;
+            if (!Physics.Raycast(myPos, targetDir, out hit, detectingDistance)
+                || (hit.collider.gameObject != player))
+                return false;
+
             float targetAngle = Mathf.Acos(Vector3.Dot(lookDir, targetDir)) * Mathf.Rad2Deg;
             if (targetAngle <= detectingAngle * 0.5f)
                 return true;
