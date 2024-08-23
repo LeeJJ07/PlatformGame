@@ -16,7 +16,7 @@ public class SpringPlatform : MonoBehaviour
             playerRb.velocity = new Vector3(0, 0, 0);
             playerRb.AddForce(Vector3.up * springForce, ForceMode.Impulse);
 
-            springAnim.Play("Spring", -1, 0f);
+            springAnim.Play(AnimationHash.SPRING, -1, 0f);
         }
     }
 }
