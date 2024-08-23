@@ -18,7 +18,7 @@ public class GemInteraction : MonoBehaviour
             effect.GetComponent<ParticleSystem>().Play();
             Destroy(effect, 0.9f);
 
-            // 임시 코드 ... 추후에 아이템을 늘려서 개수 확인하는 식으로 변경 ////
+            // 임시 코드 ... 추후에 인벤토리 내 아이템을 늘려서 개수 확인하는 식으로 변경 ////
             switch (gemType)
             {
                 case GemType.RED:
@@ -32,7 +32,6 @@ public class GemInteraction : MonoBehaviour
                 case GemType.GREEN:
                     AltarControl.greenGem++;
                     break;
-
             }
             /////////////////////////////////////////////////////////////////
         }
