@@ -153,9 +153,7 @@ public class Monster : MonoBehaviour
             Vector3 targetPos = player.transform.position;
             Vector3 targetDir = (targetPos - myPos).normalized;
 
-            RaycastHit hit;
-            if (!Physics.Raycast(myPos, targetDir, out hit, detectingDistance)
-                || (hit.collider.gameObject != player))
+            if (CheckWallWithDistance(transform.position, detectingDistance))
                 return false;
 
             float targetAngle = Mathf.Acos(Vector3.Dot(lookDir, targetDir)) * Mathf.Rad2Deg;
@@ -248,6 +246,15 @@ public class Monster : MonoBehaviour
         }
         return false;
     }
+    public bool CheckWallWithDistance(Vector3 origin, float distance)
+    {
+        Debug.DrawRay(origin, new Vector3(facingDir, 0f, 0f), Color.red);
+        if (Physics.Raycast(origin, new Vector3(facingDir, 0f, 0f), distance, wallLayerMask))
+        {
+            return true;
+        }
+        return false;
+    }
     public void FlipX()
     {
         transform.rotation = Quaternion.Euler(0f, 180f + facingDir * 60f, 0f);
@@ -258,7 +265,7 @@ public class Monster : MonoBehaviour
     {
         return (player.transform.position - transform.position).magnitude;
     }
-    public float getDirectionPlayer()
+    public float getDirectionPlayerX()
     {
         float monsterX = transform.position.x;
         float playerX = player.transform.position.x;

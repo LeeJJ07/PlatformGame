@@ -21,7 +21,7 @@ public class AttackState : MonoBehaviour, IState
     }
     public virtual void UpdateState()
     {
-        curDirX = monster.getDirectionPlayer();
+        curDirX = monster.getDirectionPlayerX();
 
         monster.transform.rotation = Quaternion.Euler(0, 180f - 90f * curDirX, 0);
     }
