@@ -8,6 +8,7 @@ public class AltarControl : MonoBehaviour
 
     [SerializeField] private Transform stagePortal;
     [SerializeField] private Animator coffinAnim;
+    [SerializeField] private ParticleSystem portalTrailEffect, portalSparkleEffect;
 
     private CameraFollow cameraFollow;
     private int activatedAltars = 0;
@@ -38,6 +39,15 @@ public class AltarControl : MonoBehaviour
         }
     }
 
+    void Update()
+    {
+        if (test)
+        {
+            test = false;
+            StartCoroutine(PlayPortalAnimation());
+        }
+    }
+
     public void ActivateAltar()
     {
         ++activatedAltars;
@@ -58,7 +68,15 @@ public class AltarControl : MonoBehaviour
         cameraFollow.SetFollowTarget(stagePortal);
         coffinAnim.Play(AnimationHash.COFFINDOOR_OPEN);
 
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(0.2f);
+
+        portalTrailEffect.gameObject.SetActive(true);
+        portalSparkleEffect.gameObject.SetActive(true);
+
+        portalTrailEffect.Play();
+        portalSparkleEffect.Play();
+
+        yield return new WaitForSeconds(2.3f);
 
         cameraFollow.SetFollowTarget();
     }
