@@ -495,7 +495,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4527950698494496593
 Transform:
   m_ObjectHideFlags: 0
@@ -601,14 +601,12 @@ MonoBehaviour:
   chaseState: {fileID: 2702174801716283572}
   attackState: {fileID: 974978444599367642}
   deathState: {fileID: 7767230435941515528}
-  player: {fileID: 0}
   isDetect: 0
   isAttack: 0
   maxHp: 100
   damage: 10
   facingDir: 1
   attackDistance: 3
-  idleState: {fileID: 610916787665460490}
   awakeDistance: 2.5
 --- !u!114 &610916787665460490
 MonoBehaviour:

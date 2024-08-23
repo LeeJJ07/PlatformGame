@@ -10,7 +10,7 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Monster : MonoBehaviour
 {
-    [Header("Enemy States")]
+    [Header("Monster States")]
     [SerializeField] protected PatrolState patrolState;
     [SerializeField] protected ChaseState chaseState;
     [SerializeField] protected AttackState attackState;
@@ -43,9 +43,9 @@ public class Monster : MonoBehaviour
     private float chaseDistance = 8f;
     [SerializeField] private float attackDistance = 1.5f;
 
-    private int groundLayerMask;
-    private int wallLayerMask;
-    private int playerMastk;
+    protected int groundLayerMask;
+    protected int wallLayerMask;
+    protected int playerMastk;
 
     private void Awake()
     {
@@ -153,7 +153,9 @@ public class Monster : MonoBehaviour
             Vector3 targetPos = player.transform.position;
             Vector3 targetDir = (targetPos - myPos).normalized;
 
-            if (CheckWallWithDistance(transform.position, detectingDistance))
+            if (CheckWall(transform.position, detectingDistance))
+                return false;
+            if (CheckGround(transform.position, targetDir, detectingDistance))
                 return false;
 
             float targetAngle = Mathf.Acos(Vector3.Dot(lookDir, targetDir)) * Mathf.Rad2Deg;
@@ -172,7 +174,7 @@ public class Monster : MonoBehaviour
         return getDistancePlayer() < attackDistance;
     }
 
-    private bool Die()
+    protected bool Die()
     {
         return curHp <= 0;
     }
@@ -223,7 +225,7 @@ public class Monster : MonoBehaviour
     #endregion
 
     #region 공용함수(각도->방향, 땅체크, 벽체크, Flip, 다른 오브젝트와의 거리) 캐릭터 컨트롤러
-    Vector3 AngleToDir(float angle)
+    public Vector3 AngleToDir(float angle)
     {
         float radian = angle * Mathf.Deg2Rad;
         return new Vector3(Mathf.Cos(radian), Mathf.Sin(radian), 0);
@@ -232,6 +234,15 @@ public class Monster : MonoBehaviour
     {
         Debug.DrawRay(origin + new Vector3(checkObstacleDistance, 0f, 0f), Vector3.down, Color.red);
         if (Physics.Raycast(origin + new Vector3(checkObstacleDistance, 0f, 0f), direction, toGroundDistance, groundLayerMask))
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool CheckGround(Vector3 origin, Vector3 direction, float distance)
+    {
+        Debug.DrawRay(origin + new Vector3(checkObstacleDistance, 0f, 0f), Vector3.down, Color.red);
+        if (Physics.Raycast(origin + new Vector3(checkObstacleDistance, 0f, 0f), direction, distance, groundLayerMask))
         {
             return true;
         }
@@ -246,7 +257,7 @@ public class Monster : MonoBehaviour
         }
         return false;
     }
-    public bool CheckWallWithDistance(Vector3 origin, float distance)
+    public bool CheckWall(Vector3 origin, float distance)
     {
         Debug.DrawRay(origin, new Vector3(facingDir, 0f, 0f), Color.red);
         if (Physics.Raycast(origin, new Vector3(facingDir, 0f, 0f), distance, wallLayerMask))
