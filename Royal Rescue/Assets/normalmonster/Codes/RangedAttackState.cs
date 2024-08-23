@@ -4,15 +4,35 @@ using UnityEngine;
 
 public class RangedAttackState : AttackState
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private GameObject projectile;
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] private float attackSpeed = 0.5f;
+    float afterShootTime = 0f;
+    new void EnterState()
     {
-        
+        if (!animator) animator = GetComponent<Animator>();
+        if (!monster) monster = GetComponent<RangedMonster>();
+
+        animator.SetBool("isAttack", true);
+        afterShootTime = 0f;
+    }
+    new void UpdateState()
+    {
+        curDirX = monster.getDirectionPlayerX();
+        monster.transform.rotation = Quaternion.Euler(0, 180f - 90f * curDirX, 0);
+
+        afterShootTime += Time.deltaTime;
+        if(afterShootTime > attackSpeed)
+        {
+            afterShootTime = 0;
+            Instantiate(projectile, monster.transform);
+        }
+    }
+    new void ExitState()
+    {
+        animator.SetBool("isAttack", false);
+
+        curRotY = 195f - curDirX * 75f;
+        monster.transform.rotation = Quaternion.Euler(0, curRotY, 0);
     }
 }

@@ -31,16 +31,15 @@ public class Monster : MonoBehaviour
     [SerializeField] protected float damage = 10f;
 
     private float checkObstacleDistance = 0.5f;
-    private float toGroundDistance = 1f;
-    private float toWallDistance = 0.5f;
+    [SerializeField] float toGroundDistance = 1f;
+    [SerializeField] float toWallDistance = 0.5f;
 
     private float speed = 3f;
     public float facingDir = 1f;
 
-    private float detectingDistance = 10f;
-    private float detectingAngle = 50f;
+    [SerializeField] private float detectingDistance = 10f;
+    [SerializeField] private float detectingAngle = 50f;
 
-    private float chaseDistance = 8f;
     [SerializeField] private float attackDistance = 1.5f;
 
     protected int groundLayerMask;
@@ -140,7 +139,7 @@ public class Monster : MonoBehaviour
     #endregion
 
     #region 전이조건
-    bool CanSeePlayer()
+    protected bool CanSeePlayer()
     {
         //player가 시야각 안에 있는가
         Vector3 myPos = transform.position + Vector3.up * 0.5f;
@@ -164,12 +163,12 @@ public class Monster : MonoBehaviour
         }
         return false;
     }
-    bool CantChase()
+    protected bool CantChase()
     {
-        return getDistancePlayer() > chaseDistance;
+        return getDistancePlayer() > detectingDistance;
     }
 
-    private bool CanAttackPlayer()
+    protected bool CanAttackPlayer()
     {
         return getDistancePlayer() < attackDistance;
     }
