@@ -9,6 +9,7 @@ TagManager:
   - weapon
   - Enemy
   - Scroll
+  - AltarControl
   layers:
   - Default
   - TransparentFX
@@ -16,9 +17,9 @@ TagManager:
   - 
   - Water
   - UI
-  - ground
-  - 
-  - 
+  - Player
+  - Ground
+  - Wall
   - 
   - 
   - 
