@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class ChaseState : MonoBehaviour, IState
 {
@@ -42,9 +43,10 @@ public class ChaseState : MonoBehaviour, IState
             if (exclamation.activeSelf)
                 exclamation.SetActive(false);
         }
+        if (monster.CheckWall(monster.transform.position, new Vector3(monster.facingDir, 0f, 0f)))
+            return ;
+
         if (!monster.CheckGround(monster.transform.position, Vector3.down))
-            return;
-        if (monster.CheckWall(monster.transform.position))
             return;
 
         if (!monster.LookPlayer())

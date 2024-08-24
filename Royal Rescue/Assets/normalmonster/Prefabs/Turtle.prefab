@@ -1170,8 +1170,13 @@ MonoBehaviour:
   isAttack: 0
   maxHp: 100
   damage: 10
-  facingDir: 1
+  toGroundDistance: 1
+  toWallDistance: 0.5
+  speed: 3
+  detectingDistance: 10
+  detectingAngle: 50
   attackDistance: 1.5
+  facingDir: 1
 --- !u!114 &1340548730802780211
 MonoBehaviour:
   m_ObjectHideFlags: 0

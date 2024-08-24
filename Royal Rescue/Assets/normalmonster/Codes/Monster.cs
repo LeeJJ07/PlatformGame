@@ -34,17 +34,16 @@ public class Monster : MonoBehaviour
     [SerializeField] float toGroundDistance = 1f;
     [SerializeField] float toWallDistance = 0.5f;
 
-    private float speed = 3f;
-    public float facingDir = 1f;
-
+    [SerializeField] private float speed = 3f;
+    
     [SerializeField] private float detectingDistance = 10f;
     [SerializeField] private float detectingAngle = 50f;
 
     [SerializeField] private float attackDistance = 1.5f;
-
+    public float facingDir = 1f;
     protected int groundLayerMask;
     protected int wallLayerMask;
-    protected int playerMastk;
+    protected int playerMask;
 
     private void Awake()
     {
@@ -72,7 +71,7 @@ public class Monster : MonoBehaviour
 
         groundLayerMask = 1 << LayerMask.NameToLayer("Ground");
         wallLayerMask = 1 << LayerMask.NameToLayer("Wall");
-        playerMastk = 1 << LayerMask.NameToLayer("Player");
+        playerMask = 1 << LayerMask.NameToLayer("Player");
     }
 
     protected void Update()
@@ -86,14 +85,14 @@ public class Monster : MonoBehaviour
         switch (curState)
         {
             case EState.PATROL:
-                if (CanSeePlayer())
+                if (CanSeePlayer(0.5f))
                 {
                     isDetect = true;
                     UpdateState(EState.CHASE);
                 }
                 break;
             case EState.CHASE:
-                if (CantChase() && !CanSeePlayer())
+                if (CantChase() || !CanSeePlayer(0.5f))
                     UpdateState(EState.PATROL);
                 if (CanAttackPlayer())
                     UpdateState(EState.ATTACK);
@@ -136,25 +135,25 @@ public class Monster : MonoBehaviour
     public void setSpeed(float speed) { this.speed = speed; }
     public float getDamage() { return damage; }
     public float getFacingDir() { return facingDir; }
+    public float getToGroundDistance() { return toGroundDistance; }
     #endregion
 
     #region 전이조건
-    protected bool CanSeePlayer()
+    protected bool CanSeePlayer(float eyeHeight)
     {
-        //player가 시야각 안에 있는가
-        Vector3 myPos = transform.position + Vector3.up * 0.5f;
+        Vector3 myPos = transform.position + Vector3.up * eyeHeight;
 
-        float lookingAngle = transform.eulerAngles.x + (90f - 90f * facingDir);  //캐릭터가 바라보는 방향의 각도
+        float lookingAngle = transform.eulerAngles.x + (90f - 90f * facingDir);
         Vector3 lookDir = AngleToDir(lookingAngle);
 
-        if (Physics.CheckSphere(myPos, detectingDistance, playerMastk))
+        if (Physics.CheckSphere(myPos, detectingDistance, playerMask))
         {
             Vector3 targetPos = player.transform.position;
             Vector3 targetDir = (targetPos - myPos).normalized;
 
-            if (CheckWall(transform.position, detectingDistance))
+            if (CheckWall(transform.position, targetDir, (targetPos - myPos).magnitude))
                 return false;
-            if (CheckGround(transform.position, targetDir, detectingDistance))
+            if (CheckGround(transform.position, targetDir, (targetPos - myPos).magnitude / 2.5f))
                 return false;
 
             float targetAngle = Mathf.Acos(Vector3.Dot(lookDir, targetDir)) * Mathf.Rad2Deg;
@@ -218,7 +217,6 @@ public class Monster : MonoBehaviour
 
             Vector3 dir = new Vector3(other.gameObject.transform.position.x - transform.position.x, 0f, 0f).normalized;
             rb.AddForce(dir * 15f, ForceMode.Impulse);
-            Debug.Log("밀어내기");
         }
     }
     #endregion
@@ -231,7 +229,6 @@ public class Monster : MonoBehaviour
     }
     public bool CheckGround(Vector3 origin, Vector3 direction)
     {
-        Debug.DrawRay(origin + new Vector3(checkObstacleDistance, 0f, 0f), Vector3.down, Color.red);
         if (Physics.Raycast(origin + new Vector3(checkObstacleDistance, 0f, 0f), direction, toGroundDistance, groundLayerMask))
         {
             return true;
@@ -240,26 +237,23 @@ public class Monster : MonoBehaviour
     }
     public bool CheckGround(Vector3 origin, Vector3 direction, float distance)
     {
-        Debug.DrawRay(origin + new Vector3(checkObstacleDistance, 0f, 0f), Vector3.down, Color.red);
         if (Physics.Raycast(origin + new Vector3(checkObstacleDistance, 0f, 0f), direction, distance, groundLayerMask))
         {
             return true;
         }
         return false;
     }
-    public bool CheckWall(Vector3 origin)
+    public bool CheckWall(Vector3 origin, Vector3 direction)
     {
-        Debug.DrawRay(origin, new Vector3(facingDir, 0f, 0f), Color.red);
-        if (Physics.Raycast(origin, new Vector3(facingDir, 0f, 0f), toWallDistance, wallLayerMask))
+        if (Physics.Raycast(origin, direction, toWallDistance, wallLayerMask))
         {
             return true;
         }
         return false;
     }
-    public bool CheckWall(Vector3 origin, float distance)
+    public bool CheckWall(Vector3 origin, Vector3 direction, float distance)
     {
-        Debug.DrawRay(origin, new Vector3(facingDir, 0f, 0f), Color.red);
-        if (Physics.Raycast(origin, new Vector3(facingDir, 0f, 0f), distance, wallLayerMask))
+        if (Physics.Raycast(origin, direction, distance, wallLayerMask))
         {
             return true;
         }

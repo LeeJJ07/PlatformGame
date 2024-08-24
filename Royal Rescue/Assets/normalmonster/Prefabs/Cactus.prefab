@@ -587,8 +587,13 @@ MonoBehaviour:
   isAttack: 0
   maxHp: 100
   damage: 10
-  facingDir: 1
+  toGroundDistance: 1
+  toWallDistance: 0.5
+  speed: 3
+  detectingDistance: 10
+  detectingAngle: 50
   attackDistance: 1.8
+  facingDir: 1
   awakeDistance: 3
 --- !u!114 &1199399024559461376
 MonoBehaviour:

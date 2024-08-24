@@ -23,7 +23,7 @@ public class RangedMonster : Monster
 
         groundLayerMask = 1 << LayerMask.NameToLayer("Ground");
         wallLayerMask = 1 << LayerMask.NameToLayer("Wall");
-        playerMastk = 1 << LayerMask.NameToLayer("Player");
+        playerMask = 1 << LayerMask.NameToLayer("Player");
     }
 
     new void Update()
@@ -37,14 +37,14 @@ public class RangedMonster : Monster
         switch (curState)
         {
             case EState.PATROL:
-                if (CanSeePlayer())
+                if (CanSeePlayer(1.4f))
                 {
                     isDetect = true;
                     UpdateState(EState.ATTACK);
                 }
                 break;
             case EState.ATTACK:
-                if (!CanSeePlayer())
+                if (!CanSeePlayer(1.4f))
                 {
                     isDetect = false;
                     UpdateState(EState.PATROL);

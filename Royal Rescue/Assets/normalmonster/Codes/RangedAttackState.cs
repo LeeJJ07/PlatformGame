@@ -6,9 +6,9 @@ public class RangedAttackState : AttackState
 {
     [SerializeField] private GameObject projectile;
 
-    [SerializeField] private float attackSpeed = 0.5f;
+    [SerializeField] private float attackSpeed = 1f;
     float afterShootTime = 0f;
-    new void EnterState()
+    public override void EnterState()
     {
         if (!animator) animator = GetComponent<Animator>();
         if (!monster) monster = GetComponent<RangedMonster>();
@@ -16,7 +16,7 @@ public class RangedAttackState : AttackState
         animator.SetBool("isAttack", true);
         afterShootTime = 0f;
     }
-    new void UpdateState()
+    public override void UpdateState()
     {
         curDirX = monster.getDirectionPlayerX();
         monster.transform.rotation = Quaternion.Euler(0, 180f - 90f * curDirX, 0);
@@ -25,10 +25,10 @@ public class RangedAttackState : AttackState
         if(afterShootTime > attackSpeed)
         {
             afterShootTime = 0;
-            Instantiate(projectile, monster.transform);
+            Instantiate(projectile, monster.transform.position + new Vector3(0f, 1.3f, 0f), monster.transform.rotation);
         }
     }
-    new void ExitState()
+    public override void ExitState()
     {
         animator.SetBool("isAttack", false);
 
