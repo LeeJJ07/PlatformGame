@@ -7,8 +7,8 @@ public class GameDirector : MonoBehaviour
     private static GameDirector _instance = null;
     public static GameDirector instance => _instance;
 
-    public PlayerControlManagerFix PlayerControl => playerControl;
-    private PlayerControlManagerFix playerControl;
+    //public PlayerControlManagerFix PlayerControl => playerControl;
+    //private PlayerControlManagerFix playerControl;
 
     [SerializeField] private GameObject loadingScreen, loadScreenFade;
     [SerializeField] private Camera loadingScreenCam;
@@ -30,7 +30,7 @@ public class GameDirector : MonoBehaviour
 
     private void Init()
     {
-        playerControl = GameObject.FindWithTag("Player").GetComponent<PlayerControlManagerFix>();
+        //playerControl = GameObject.FindWithTag("Player").GetComponent<PlayerControlManagerFix>();
         loadingScreen.SetActive(false);
         loadScreenFade.SetActive(true);
     }

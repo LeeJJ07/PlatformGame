@@ -10,11 +10,11 @@ public class SpringPlatform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            PlayerControlManagerFix player = GameDirector.instance.PlayerControl;
-            Rigidbody playerRb = player.GetComponent<Rigidbody>();
+            //PlayerControlManagerFix player = GameDirector.instance.PlayerControl;
+            //Rigidbody playerRb = player.GetComponent<Rigidbody>();
 
-            playerRb.velocity = new Vector3(0, 0, 0);
-            playerRb.AddForce(Vector3.up * springForce, ForceMode.Impulse);
+            //playerRb.velocity = new Vector3(0, 0, 0);
+            //playerRb.AddForce(Vector3.up * springForce, ForceMode.Impulse);
 
             springAnim.Play(AnimationHash.SPRING, -1, 0f);
         }

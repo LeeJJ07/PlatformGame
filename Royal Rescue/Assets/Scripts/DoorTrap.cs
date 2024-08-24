@@ -9,22 +9,22 @@ public class DoorTrap : MonoBehaviour
     [SerializeField] private RoomPortal portal;
     [SerializeField] private Transform monsterHub;
     [SerializeField] private GameObject reward;
-    private Monster[] monsters;
+    //private Monster[] monsters;
     private bool isTrapActivated = false;
     private bool hasClearedRoom = false;
 
     void Start()
     {
-        monsters = monsterHub.GetComponentsInChildren<Monster>(true);
+        //monsters = monsterHub.GetComponentsInChildren<Monster>(true);
     }
 
     void Update()
     {
-        if (!hasClearedRoom && CheckRoomClear())
-        {
-            hasClearedRoom = true;
-            StartCoroutine(ReleasePlayer());
-        }
+        //if (!hasClearedRoom && CheckRoomClear())
+        //{
+        //    hasClearedRoom = true;
+        //    StartCoroutine(ReleasePlayer());
+        //}
     }
     
     void OnTriggerEnter(Collider other)
@@ -72,14 +72,14 @@ public class DoorTrap : MonoBehaviour
         currentCamera.enabled = !currentCamera.enabled;
         subCamera.enabled = !doorCamera.enabled;
     }
-    bool CheckRoomClear()
-    {
-        foreach (Monster monster in monsters)
-        {
-            if (monster.gameObject.activeSelf)
-                return false;
-        }
-        return true;
-    }
+    //bool CheckRoomClear()
+    //{
+    //    //foreach (Monster monster in monsters)
+    //    //{
+    //    //    if (monster.gameObject.activeSelf)
+    //    //        return false;
+    //    //}
+    //    //return true;
+    //}
 }
 

@@ -57,13 +57,13 @@ public class CameraFollow : MonoBehaviour
         if (this.roomControl == null)
         {
             this.roomControl = roomControl;
-            target = GameDirector.instance.PlayerControl.transform;
+            //target = GameDirector.instance.PlayerControl.transform;
         }
     }
 
     public void ResetCameraPosition()
     {
-        target.SetParent(roomControl.CurrentRoom.transform);
+        //target.SetParent(roomControl.CurrentRoom.transform);
 
         limitX = roomControl.CurrentRoom.cameraLeftBound.position.x + cameraHorizontalOffset;
         limitY = roomControl.CurrentRoom.cameraLeftBound.position.y + cameraBotOffset;
@@ -85,6 +85,6 @@ public class CameraFollow : MonoBehaviour
 
     public void SetFollowTarget(Transform newTarget = null)
     {
-        target = newTarget ? newTarget : GameDirector.instance.PlayerControl.transform;
+        //target = newTarget ? newTarget : GameDirector.instance.PlayerControl.transform;
     }
 }

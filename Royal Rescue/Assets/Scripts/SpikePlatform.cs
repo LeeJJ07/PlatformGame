@@ -12,20 +12,20 @@ public class SpikePlatform : MonoBehaviour
         {
             Debug.Log("플레이어의 체력을 ?만큼 감소.");
 
-            PlayerControlManagerFix player = GameDirector.instance.PlayerControl;
+            //PlayerControlManagerFix player = GameDirector.instance.PlayerControl;
 
             // rigidbody 도 public으로 빼서 접근할 수 있으면 좋을 것 같습니다
-            Rigidbody playerRb = player.GetComponent<Rigidbody>();
+            //Rigidbody playerRb = player.GetComponent<Rigidbody>();
 
-            playerRb.velocity = new Vector3(0, 0, 0);
-            playerRb.AddForce(Vector3.left * horizontalForce, ForceMode.Impulse);
-            playerRb.AddForce(Vector3.up * verticalForce, ForceMode.Impulse);
+            //playerRb.velocity = new Vector3(0, 0, 0);
+            //playerRb.AddForce(Vector3.left * horizontalForce, ForceMode.Impulse);
+            //playerRb.AddForce(Vector3.up * verticalForce, ForceMode.Impulse);
 
-            GameObject effect = Instantiate(hitEffect, transform.parent);
-            effect.transform.position = player.transform.position;
+            //GameObject effect = Instantiate(hitEffect, transform.parent);
+            //effect.transform.position = player.transform.position;
 
-            effect.GetComponent<ParticleSystem>().Play();
-            Destroy(effect, 0.4f);
+            //effect.GetComponent<ParticleSystem>().Play();
+            //Destroy(effect, 0.4f);
         }
     }
 }

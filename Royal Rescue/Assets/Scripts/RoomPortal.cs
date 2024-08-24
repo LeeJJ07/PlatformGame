@@ -32,7 +32,7 @@ public class RoomPortal : MonoBehaviour
     }
     public void TeleportPlayer()
     {
-        GameDirector.instance.PlayerControl.transform.position = linkedPortal.TeleportPosition.position;
+        //GameDirector.instance.PlayerControl.transform.position = linkedPortal.TeleportPosition.position;
         linkedPortal.CurrentRoom.RoomControl.roomCamera.SetCameraFollow(true);
     }
 }
