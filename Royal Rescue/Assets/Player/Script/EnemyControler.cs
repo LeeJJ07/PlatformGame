@@ -4,12 +4,27 @@ using UnityEngine;
 
 public class EnemyControler : MonoBehaviour
 {
-    
+    public int health = 500;
+    public int enemyAtk = 500;
+    public GameObject player;
+    private void Update()
+    {
+        TakeDamage();
+    }
+    public void TakeDamage()
+    {
+        if (health <= 0)
+        {
+            Die();
+        }
+    }
+    void Die()
+    {
+        // 적 오브젝트를 파괴
+        Destroy(gameObject);
+    }
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("weapon"))
-        {
-            Debug.Log("몬스터피격");
-        }
+       
     }
 }

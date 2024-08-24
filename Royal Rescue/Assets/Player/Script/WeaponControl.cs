@@ -8,9 +8,10 @@ public class WeaponControl : MonoBehaviour
     public Type type;
     public int damage;
     public float rate;
+    public bool isAttackWeapon;
     public BoxCollider meleeArea;
     public TrailRenderer trailEffect;
-
+    public GameObject player;
 
     public void WeaponUse()
     {
@@ -32,10 +33,13 @@ public class WeaponControl : MonoBehaviour
         yield return new WaitForSeconds(0.3f);//0.3초 대기
         trailEffect.enabled = false;
     }
-    void OnCollisionEnter(Collision collision)
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Enemy") && isAttackWeapon)
         {
+            EnemyControler enemyHP = other.gameObject.GetComponent<EnemyControler>();
+            enemyHP.health -= damage;
             Debug.Log("몬스터공격");
         }
     }

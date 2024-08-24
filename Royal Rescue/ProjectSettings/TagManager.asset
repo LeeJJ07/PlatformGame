@@ -7,6 +7,8 @@ TagManager:
   - Floor
   - CameraTarget
   - weapon
+  - Enemy
+  - Scroll
   layers:
   - Default
   - TransparentFX
