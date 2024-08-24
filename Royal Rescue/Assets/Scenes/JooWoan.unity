@@ -20249,7 +20249,6 @@ MonoBehaviour:
   portalCamAnim: {fileID: 1044186810}
   portalTrailEffect: {fileID: 1123939250}
   portalSparkleEffect: {fileID: 1879797318}
-  test_openPortal: 0
 --- !u!65 &1047490812
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41401,7 +41400,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8efd9390b1512a34fb3249c3bc8cefbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerControl: {fileID: 980022392}
   loadingScreen: {fileID: 602244756}
   loadScreenFade: {fileID: 522680124}
   loadingScreenCam: {fileID: 1363522252}
@@ -41409,6 +41407,8 @@ MonoBehaviour:
   stageNames:
   - JooWoan
   - Stage1
+  - Stage2
+  - Stage3
 --- !u!4 &2067759612
 Transform:
   m_ObjectHideFlags: 0
