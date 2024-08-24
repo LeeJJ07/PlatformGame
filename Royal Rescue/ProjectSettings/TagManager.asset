@@ -9,6 +9,7 @@ TagManager:
   - Monster
   - ChestMonster
   - Poison
+  - BeholderMonster
   layers:
   - Default
   - TransparentFX
