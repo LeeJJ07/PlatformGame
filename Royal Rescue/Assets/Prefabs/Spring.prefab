@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   springAnim: {fileID: 522173710977341304}
-  springForce: 10
+  springForce: 15
 --- !u!137 &7117258381017292954
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0

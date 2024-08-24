@@ -6,9 +6,8 @@ using UnityEngine;
 
 public class CameraFollow : MonoBehaviour
 {
-    [SerializeField] private bool followPlayer;
-
     private RoomController roomControl;
+    [SerializeField] private bool enableFollow = false;
     [SerializeField] private float cameraDepth, cameraHorizontalOffset, cameraBotOffset, cameraTopOffset;
     /*
         Room 게임 오브젝트를 기준으로 카메라가 이동할 x, y 경계를 정한다.
@@ -19,7 +18,6 @@ public class CameraFollow : MonoBehaviour
     private Vector3 nextPos;
     private Transform target;
 
-    private bool enableFollow = false;
     private float leftLimit, rightLimit, botLimit, topLimit, limitX, limitY;
 
     void FixedUpdate()
@@ -59,7 +57,7 @@ public class CameraFollow : MonoBehaviour
         if (this.roomControl == null)
         {
             this.roomControl = roomControl;
-            if (followPlayer) target = GameDirector.instance.PlayerControl.transform;
+            target = GameDirector.instance.PlayerControl.transform;
         }
     }
 
@@ -83,5 +81,10 @@ public class CameraFollow : MonoBehaviour
         // 서 있는 땅의 높이 레벨에 따라 카메라를 좀 더 위로 올리도록 조정
         int groundLevel = (int)(target.localPosition.y / 4);
         return new Vector3(target.position.x, target.position.y + 2 * groundLevel, target.position.z);
+    }
+
+    public void SetFollowTarget(Transform newTarget = null)
+    {
+        target = newTarget ? newTarget : GameDirector.instance.PlayerControl.transform;
     }
 }
