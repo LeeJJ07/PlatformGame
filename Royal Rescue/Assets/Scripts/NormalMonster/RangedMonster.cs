@@ -6,6 +6,9 @@ public class RangedMonster : Monster
 {
     new void Start()
     {
+        playerControl = GameDirector.instance.PlayerControl;
+        player = playerControl.gameObject;// GameObject.FindWithTag("Player");
+
         if (!animator) animator = GetComponent<Animator>();
         if (!coll) coll = GetComponent<Collider>();
         

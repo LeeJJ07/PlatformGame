@@ -19,7 +19,7 @@ MonoBehaviour:
   transform: {fileID: 0}
   playerLayer:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 0
   WallLayer:
     serializedVersion: 2
     m_Bits: 256

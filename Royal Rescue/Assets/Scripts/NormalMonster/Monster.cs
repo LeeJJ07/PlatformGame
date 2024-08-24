@@ -19,7 +19,9 @@ public class Monster : MonoBehaviour
     protected MonsterStateContext monsterStateContext;
     protected EState curState;
 
+    protected PlayerControlManagerFix playerControl;
     protected GameObject player;
+
     protected Animator animator;
     protected Collider coll;
 
@@ -47,11 +49,14 @@ public class Monster : MonoBehaviour
 
     private void Awake()
     {
-        player = GameObject.FindWithTag("Player");
+        
     }
 
     protected void Start()
     {
+        playerControl = GameDirector.instance.PlayerControl;
+        player = playerControl.gameObject;// GameObject.FindWithTag("Player");
+        
         if (!animator) animator = GetComponent<Animator>();
         if (!coll) coll = GetComponent<Collider>();
 
@@ -194,7 +199,7 @@ public class Monster : MonoBehaviour
     IEnumerator OnDamage()
     {
         animator.SetTrigger("takeAttack");
-        curHp -= player.GetComponent<PlayerController>().damage;
+        curHp -= 10f; //playerControl.getDamage();
 
         coll.enabled = false;
         yield return new WaitForSeconds(0.5f);

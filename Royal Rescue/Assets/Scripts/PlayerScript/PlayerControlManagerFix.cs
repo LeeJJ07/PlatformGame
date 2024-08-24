@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class PlayerControlManagerFix : MonoBehaviour
 {
@@ -44,11 +45,17 @@ public class PlayerControlManagerFix : MonoBehaviour
     Vector3 moveDir;
     Vector3 moveVec;
     Vector3 dashPower;
+
+    bool isAddicted;
+    [SerializeField] PostProcessVolume fieldView;
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
         rb.useGravity = true;
         anim = GetComponentInChildren<Animator>();
+
+        isAddicted = false;
+        fieldView.weight = 0f;
     }
 
     // Update is called once per frame
@@ -296,6 +303,36 @@ public class PlayerControlManagerFix : MonoBehaviour
         Debug.Log("스킬 키 입력 가능");
         isFbPossible = false;
     }
+
+
+    /****************************************************/
+    private void OnParticleCollision(GameObject other)
+    {
+        Debug.Log("충돌");
+        switch (other.tag)
+        {
+            case "Poison":
+                ReduceFieldOfView();
+                break;
+        }
+    }
+
+    void ReduceFieldOfView()
+    {
+        if (isAddicted) return;
+        isAddicted = true;
+
+        StartCoroutine(ReduceReduceFieldOfViewSlowly());
+    }
+    IEnumerator ReduceReduceFieldOfViewSlowly()
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            fieldView.weight += 0.01f;
+            yield return new WaitForSeconds(0.02f);
+        }
+    }
+    /****************************************************/
 }
 /*
  * private Rigidbody rigid;

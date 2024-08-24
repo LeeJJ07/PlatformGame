@@ -10,6 +10,17 @@ TagManager:
   - Enemy
   - Scroll
   - AltarControl
+  - Item
+  - Monster
+  - ChestMonster
+  - Poison
+  - BeholderMonster
+  - Wall
+  - Ground
+  - Skill
+  - DropObject
+  - DangerZone
+  - Director
   layers:
   - Default
   - TransparentFX
@@ -20,7 +31,7 @@ TagManager:
   - Player
   - Ground
   - Wall
-  - 
+  - Post Process
   - 
   - 
   - 

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class DetectFloor : MonoBehaviour
 {
-    private PlayerControlManager playerCM;
+    private PlayerControlManagerFix playerCM;
     // Start is called before the first frame update
     void Start()
     {
-        playerCM = GameObject.FindWithTag("Player").GetComponent<PlayerControlManager>();
+        playerCM = GameObject.FindWithTag("Player").GetComponent<PlayerControlManagerFix>();
     }
 
     // Update is called once per frame

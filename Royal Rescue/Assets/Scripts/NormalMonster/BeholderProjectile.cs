@@ -10,12 +10,10 @@ public class BeholderProjectile : MonoBehaviour
     [SerializeField] GameObject explosion;
     [SerializeField] float speed = 10f;
 
-    private void Awake()
-    {
-        player = GameObject.FindWithTag("Player");
-    }
     void Start()
     {
+        player = GameDirector.instance.PlayerControl.gameObject;
+
         moveDir = player.transform.position - transform.position;
 
         transform.rotation = Quaternion.LookRotation(moveDir).normalized;
