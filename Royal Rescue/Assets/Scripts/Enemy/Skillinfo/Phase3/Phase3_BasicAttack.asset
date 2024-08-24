@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3a23579a95e32b40a64c1a7d1d88d34, type: 3}
+  m_Name: Phase3_BasicAttack
+  m_EditorClassIdentifier: 
+  transform: {fileID: 0}
+  BasicAttackDistance: 7
+  damage: 5
