@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class DropObjBehavior : MonoBehaviour
 {
-    PlayerController playerController;
+    //PlayerController playerController;
     PullingDirector pulling;
     [SerializeField] GameObject dangerZoneObj;
     [SerializeField] float delayTime = 0;
@@ -21,7 +21,7 @@ public class DropObjBehavior : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody>();
         
-        playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        //playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         pulling = GameObject.FindWithTag("Director").GetComponent<PullingDirector>();
     }
     private void OnEnable()

@@ -741,22 +741,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8318849989829502705, guid: 082bb750b02e06c408db81e4d5d9fd7c, type: 3}
   m_PrefabInstance: {fileID: 1962908396854425405}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1138977425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 705250163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5270e4d2678e4e940bcd2c43818e91f9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 20
-  h: 0
-  hand: {fileID: 1971355955}
-  sword: {fileID: 871291520}
 --- !u!54 &1138977426
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -932,37 +916,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8698746927659638952, guid: 5a59340ccc9ea2f4b8c2a16cfd964a35, type: 3}
   m_PrefabInstance: {fileID: 284590718}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1560538046
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1560538047}
-  m_Layer: 0
-  m_Name: PullingParent
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1560538047
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1560538046}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.40638578, y: 1.61759, z: -3.0182762}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1902145200 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5715398428786621852, guid: 5a59340ccc9ea2f4b8c2a16cfd964a35, type: 3}
@@ -1123,9 +1076,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 4675750158729713771, guid: 082bb750b02e06c408db81e4d5d9fd7c, type: 3}
       insertIndex: 3
       addedObject: {fileID: 1138977426}
-    - targetCorrespondingSourceObject: {fileID: 4675750158729713771, guid: 082bb750b02e06c408db81e4d5d9fd7c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1138977425}
   m_SourcePrefab: {fileID: 100100000, guid: 082bb750b02e06c408db81e4d5d9fd7c, type: 3}
 --- !u!1001 &6337988049908402593
 PrefabInstance:
@@ -1194,7 +1144,6 @@ SceneRoots:
   - {fileID: 1298751685}
   - {fileID: 1962908396854425405}
   - {fileID: 288808571}
-  - {fileID: 1560538047}
   - {fileID: 284590718}
   - {fileID: 1947727069}
   - {fileID: 628370662}
