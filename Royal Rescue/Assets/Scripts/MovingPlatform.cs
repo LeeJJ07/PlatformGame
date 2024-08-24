@@ -26,6 +26,8 @@ public class MovingPlatform : MonoBehaviour
         if ((transform.position - startPos).magnitude >= area)
         {
             speedX *= -1;
+            speedY *= -1;
+            speedZ *= -1;
 
             if (bspin)
             {
