@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
 public class ChaseState : MonoBehaviour, IState
 {
@@ -27,6 +28,8 @@ public class ChaseState : MonoBehaviour, IState
             exclamation.transform.rotation = Quaternion.Euler(0f, monster.getFacingDir() * -50f, 0f);
             exclamation.SetActive(true);
         }
+        if (!monster.LookPlayer())
+            monster.FlipX();
     }
     public void UpdateState()
     {
@@ -40,10 +43,13 @@ public class ChaseState : MonoBehaviour, IState
             if (exclamation.activeSelf)
                 exclamation.SetActive(false);
         }
+        if (monster.CheckWall(monster.transform.position, new Vector3(monster.facingDir, 0f, 0f)))
+            return ;
+
         if (!monster.CheckGround(monster.transform.position, Vector3.down))
             return;
 
-        if (!LookPlayer())
+        if (!monster.LookPlayer())
             monster.FlipX();
 
         monster.transform.position += new Vector3(monster.getSpeed() * monster.getFacingDir(), 0, 0) * Time.deltaTime;
@@ -52,15 +58,5 @@ public class ChaseState : MonoBehaviour, IState
     {
         animator.SetBool("isChase", false);
         exclamation.SetActive(false);
-    }
-
-    bool LookPlayer()
-    {
-        Vector3 direction = monster.player.transform.position - monster.transform.position;
-        if (monster.getFacingDir() > 0 && direction.x < 0)
-            return false;
-        if (monster.getFacingDir() < 0 && direction.x >= 0)
-            return false;
-        return true;
     }
 }

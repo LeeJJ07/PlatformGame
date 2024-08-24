@@ -1,94 +1,114 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using Unity.IO.LowLevel.Unsafe;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
+using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Monster : MonoBehaviour
 {
-    [Header("Enemy States")]
-    [SerializeField] private PatrolState patrolState;
-    [SerializeField] private ChaseState chaseState;
-    [SerializeField] private AttackState attackState;
-    [SerializeField] private DeathState deathState;
+    [Header("Monster States")]
+    [SerializeField] protected PatrolState patrolState;
+    [SerializeField] protected ChaseState chaseState;
+    [SerializeField] protected AttackState attackState;
+    [SerializeField] protected DeathState deathState;
 
-    private MonsterStateContext monsterStateContext;
-    private EState curState;
+    protected MonsterStateContext monsterStateContext;
+    protected EState curState;
 
-    public GameObject player;
-    private Animator animator;
+    protected GameObject player;
+    protected Animator animator;
+    protected Collider coll;
 
-
-    public bool isDetect { get; set; }
-    [SerializeField] private float hp = 100f;
-
-    [SerializeField] private float damage = 10f;
+    public bool isDetect;
+    public bool isAttack;
+    [SerializeField]
+    protected float maxHp = 100f;
+    protected float curHp = 100f;
+    [SerializeField] protected float damage = 10f;
 
     private float checkObstacleDistance = 0.5f;
-    private float toGroundDistance = 1f;
-    private float toWallDistance = 0.5f;
+    [SerializeField] float toGroundDistance = 1f;
+    [SerializeField] float toWallDistance = 0.5f;
 
-    private float speed = 3f;
+    [SerializeField] private float speed = 3f;
+    
+    [SerializeField] private float detectingDistance = 10f;
+    [SerializeField] private float detectingAngle = 50f;
+
+    [SerializeField] private float attackDistance = 1.5f;
     public float facingDir = 1f;
+    protected int groundLayerMask;
+    protected int wallLayerMask;
+    protected int playerMask;
 
-    private float detectingDistance = 4f;
-    private float detectingAngle = 50f;
+    private void Awake()
+    {
+        player = GameObject.FindWithTag("Player");
+    }
 
-    private float chaseDistance = 6f;
-    private float attackDistance = 1.5f;
-
-    private int groundLayerMask;
-    private int wallLayerMask;
-    private int playerMastk;
-
-    private void Start()
+    protected void Start()
     {
         if (!animator) animator = GetComponent<Animator>();
+        if (!coll) coll = GetComponent<Collider>();
+
+        patrolState = GetComponent<PatrolState>();
+        chaseState = GetComponent<ChaseState>();
+        attackState = GetComponent<AttackState>();
+        deathState = GetComponent<DeathState>();
+
         monsterStateContext = new MonsterStateContext(this);
         monsterStateContext.Transition(patrolState);
         curState = EState.PATROL;
 
         isDetect = false;
-        hp = 100f;
+        isAttack = false;
+        maxHp = 100f;
+        curHp = maxHp;
 
         groundLayerMask = 1 << LayerMask.NameToLayer("Ground");
         wallLayerMask = 1 << LayerMask.NameToLayer("Wall");
-        playerMastk = 1 << LayerMask.NameToLayer("Player");
+        playerMask = 1 << LayerMask.NameToLayer("Player");
     }
 
-    private void Update()
+    protected void Update()
     {
         if (Die())
-            UpdateState(EState.DEATH);
-        else
         {
-            switch (curState)
-            {
-                case EState.PATROL:
-                    if (CanSeePlayer())
-                    {
-                        isDetect = true;
-                        UpdateState(EState.CHASE);
-                    }
-                    break;
-                case EState.CHASE:
-                    if (CantChase() && !CanSeePlayer())
-                        UpdateState(EState.PATROL);
-                    if (CanAttackPlayer())
-                        UpdateState(EState.ATTACK);
-                    break;
-                case EState.ATTACK:
-                    if (!CanAttackPlayer())
-                    {
-                        isDetect = false;
-                        UpdateState(EState.CHASE);
-                    }
-                    break;
-            }
+            UpdateState(EState.DEATH);
+            monsterStateContext.CurrentState.UpdateState();
+            return;
+        }
+        switch (curState)
+        {
+            case EState.PATROL:
+                if (CanSeePlayer(0.5f))
+                {
+                    isDetect = true;
+                    UpdateState(EState.CHASE);
+                }
+                break;
+            case EState.CHASE:
+                if (CantChase() || !CanSeePlayer(0.5f))
+                    UpdateState(EState.PATROL);
+                if (CanAttackPlayer())
+                    UpdateState(EState.ATTACK);
+                break;
+            case EState.ATTACK:
+                if (!CanAttackPlayer())
+                {
+                    isDetect = false;
+                    UpdateState(EState.CHASE);
+                }
+                break;
         }
         monsterStateContext.CurrentState.UpdateState();
     }
 
-    private void UpdateState(EState nextState)
+    protected void UpdateState(EState nextState)
     {
         if (curState == nextState)
             return;
@@ -110,23 +130,31 @@ public class Monster : MonoBehaviour
                 break;
         }
     }
+    #region ï¿½Ê¿ï¿½ï¿½ï¿½ setter, getter
     public float getSpeed() { return speed; }
     public void setSpeed(float speed) { this.speed = speed; }
     public float getDamage() { return damage; }
     public float getFacingDir() { return facingDir; }
-    public void setFacingDir(float dir) { this.facingDir = dir / Mathf.Abs(dir); }
-    bool CanSeePlayer()
-    {
-        //player°¡ ½Ã¾ß°¢ ¾È¿¡ ÀÖ´Â°¡
-        Vector3 myPos = transform.position + Vector3.up * 0.5f;
+    public float getToGroundDistance() { return toGroundDistance; }
+    #endregion
 
-        float lookingAngle = transform.eulerAngles.x + (90f - 90f * facingDir);  //Ä³¸¯ÅÍ°¡ ¹Ù¶óº¸´Â ¹æÇâÀÇ °¢µµ
+    #region ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    protected bool CanSeePlayer(float eyeHeight)
+    {
+        Vector3 myPos = transform.position + Vector3.up * eyeHeight;
+
+        float lookingAngle = transform.eulerAngles.x + (90f - 90f * facingDir);
         Vector3 lookDir = AngleToDir(lookingAngle);
 
-        if (Physics.CheckSphere(myPos, detectingDistance, playerMastk))
+        if (Physics.CheckSphere(myPos, detectingDistance, playerMask))
         {
             Vector3 targetPos = player.transform.position;
             Vector3 targetDir = (targetPos - myPos).normalized;
+
+            if (CheckWall(transform.position, targetDir, (targetPos - myPos).magnitude))
+                return false;
+            if (CheckGround(transform.position, targetDir, (targetPos - myPos).magnitude / 2.5f))
+                return false;
 
             float targetAngle = Mathf.Acos(Vector3.Dot(lookDir, targetDir)) * Mathf.Rad2Deg;
             if (targetAngle <= detectingAngle * 0.5f)
@@ -134,37 +162,98 @@ public class Monster : MonoBehaviour
         }
         return false;
     }
-    bool CantChase()
+    protected bool CantChase()
     {
-        return (player.transform.position - transform.position).magnitude > chaseDistance;
+        return getDistancePlayer() > detectingDistance;
     }
-    Vector3 AngleToDir(float angle)
+
+    protected bool CanAttackPlayer()
+    {
+        return getDistancePlayer() < attackDistance;
+    }
+
+    protected bool Die()
+    {
+        return curHp <= 0;
+    }
+    #endregion
+
+    #region ï¿½Ç°ï¿½
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!animator.GetBool("isLive"))
+            return;
+
+        if (other == null)
+            return;
+
+        if (other.gameObject.tag == "PlayerAttack")
+            StartCoroutine(OnDamage());
+
+    }
+    IEnumerator OnDamage()
+    {
+        animator.SetTrigger("takeAttack");
+        curHp -= player.GetComponent<PlayerController>().damage;
+
+        coll.enabled = false;
+        yield return new WaitForSeconds(0.5f);
+        coll.enabled = true;
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾ï¿½ï¿½ï¿½");
+    }
+    #endregion
+
+    #region ï¿½ï¿½ï¿½ï¿½Ä¥ ï¿½ï¿½
+    private void OnTriggerStay(Collider other)
+    {
+        if (!animator.GetBool("isLive"))
+            return;
+        if (other == null)
+            return;
+        if (other.gameObject.tag == "Player")
+        {
+            Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
+            rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
+
+            Vector3 dir = new Vector3(other.gameObject.transform.position.x - transform.position.x, 0f, 0f).normalized;
+            rb.AddForce(dir * 15f, ForceMode.Impulse);
+        }
+    }
+    #endregion
+
+    #region ï¿½ï¿½ï¿½ï¿½ï¿½Ô¼ï¿½(ï¿½ï¿½ï¿½ï¿½->ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½Ã¼Å©, ï¿½ï¿½Ã¼Å©, Flip, ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½Å¸ï¿½) Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ®ï¿½Ñ·ï¿½
+    public Vector3 AngleToDir(float angle)
     {
         float radian = angle * Mathf.Deg2Rad;
         return new Vector3(Mathf.Cos(radian), Mathf.Sin(radian), 0);
     }
-    private bool CanAttackPlayer()
-    {
-        return (player.transform.position - transform.position).magnitude < attackDistance;
-    }
-
-    private bool Die()
-    {
-        return hp <= 0;
-    }
     public bool CheckGround(Vector3 origin, Vector3 direction)
     {
-        Debug.DrawRay(origin + new Vector3(checkObstacleDistance, 0f, 0f), Vector3.down, Color.red);
         if (Physics.Raycast(origin + new Vector3(checkObstacleDistance, 0f, 0f), direction, toGroundDistance, groundLayerMask))
         {
             return true;
         }
         return false;
     }
-    public bool CheckWall(Vector3 origin)
+    public bool CheckGround(Vector3 origin, Vector3 direction, float distance)
     {
-        Debug.DrawRay(origin, new Vector3(facingDir, 0f, 0f), Color.red);
-        if (Physics.Raycast(origin, new Vector3(facingDir, 0f, 0f), toWallDistance, wallLayerMask))
+        if (Physics.Raycast(origin + new Vector3(checkObstacleDistance, 0f, 0f), direction, distance, groundLayerMask))
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool CheckWall(Vector3 origin, Vector3 direction)
+    {
+        if (Physics.Raycast(origin, direction, toWallDistance, wallLayerMask))
+        {
+            return true;
+        }
+        return false;
+    }
+    public bool CheckWall(Vector3 origin, Vector3 direction, float distance)
+    {
+        if (Physics.Raycast(origin, direction, distance, wallLayerMask))
         {
             return true;
         }
@@ -176,27 +265,24 @@ public class Monster : MonoBehaviour
         checkObstacleDistance *= -1;
         facingDir *= -1;
     }
-
-
-
-    //µ¥¹ÌÁö ÀÔ´Â°Å ÀÓ½Ã ±¸Çö
-    private void takeAttack(float takeAttackDamage)
+    public float getDistancePlayer()
     {
-        hp -= takeAttackDamage;
+        return (player.transform.position - transform.position).magnitude;
     }
-
-    private void OnTriggerEnter(Collider other)
+    public float getDirectionPlayerX()
     {
-        float playerDamage = 20f;
-        if (other == null)
-            return;
-        if (other.gameObject.tag == "PlayerAttack")
-        {
-            takeAttack(playerDamage);
-            animator.SetTrigger("takeAttack");
-
-            Vector3 dir = (other.gameObject.transform.position - transform.position).normalized;
-            other.gameObject.GetComponent<Rigidbody>().AddForce(dir * 10f, ForceMode.Impulse);
-        }
+        float monsterX = transform.position.x;
+        float playerX = player.transform.position.x;
+        return (playerX - monsterX) / Mathf.Abs(playerX - monsterX);
     }
+    public bool LookPlayer()
+    {
+        Vector3 direction = player.transform.position - transform.position;
+        if (getFacingDir() > 0 && direction.x < 0)
+            return false;
+        if (getFacingDir() < 0 && direction.x >= 0)
+            return false;
+        return true;
+    }
+    #endregion
 }

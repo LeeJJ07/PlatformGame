@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,22 +15,34 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody rigid;
     private Collider coll;
+    [SerializeField] private GameObject hand;
+    [SerializeField] private GameObject sword;
+
+    bool isAddicted;
+    [SerializeField] PostProcessVolume fieldView;
+
     void Start()
     {
         rigid = GetComponent<Rigidbody>();
         coll = GetComponent<Collider>();
+
+        sword.GetComponent<Collider>().enabled = false;
+
+        isAddicted = false;
+        fieldView.weight = 0f;
     }
     void Update()
     {
-        h = Input.GetAxis("Horizontal");        // °¡·ÎÃà
-        transform.position += new Vector3(h, 0, 0) * speed * Time.deltaTime;
+        h = Input.GetAxis("Horizontal");        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        this.transform.position += new Vector3(h, 0, 0) * speed * Time.deltaTime;
         if (h > 1e-3 || h < -1e-3)
-            transform.rotation = Quaternion.Euler(0, h < 0 ? 0 : 180, 0);
+            this.transform.rotation = Quaternion.Euler(0, h < 0 ? 0 : 180, 0);
         Jump();
+        Attack();
     }
     void Jump()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && Mathf.Abs(rigid.velocity.y) <= 1e-3)
+        if (Input.GetKeyDown(KeyCode.Space) && transform.position.y <= 1.1)
         {
             rigid.AddForce(Vector3.up * jumpPower, ForceMode.Impulse);
         }
@@ -37,5 +50,48 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         rigid.AddForce(Vector3.down * forceGravity);
+    }
+    void Attack()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            StartCoroutine(Atk());
+        } 
+    }
+    IEnumerator Atk()
+    {
+        //90ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, -90ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        sword.GetComponent<Collider>().enabled = true;
+        hand.transform.localEulerAngles = new Vector3(0, 0, 50f);
+        yield return new WaitForSeconds(0.2f);
+        hand.transform.localEulerAngles = new Vector3(0, 0, -8f);
+        sword.GetComponent<Collider>().enabled = false;
+    }
+
+    private void OnParticleCollision(GameObject other)
+    {
+        Debug.Log("ï¿½æµ¹");
+        switch (other.tag)
+        {
+            case "Poison":
+                ReduceFieldOfView();
+                break;
+        }
+    }
+
+    void ReduceFieldOfView()
+    {
+        if (isAddicted) return;
+        isAddicted = true;
+
+        StartCoroutine(ReduceReduceFieldOfViewSlowly());
+    }
+    IEnumerator ReduceReduceFieldOfViewSlowly()
+    {
+        for(int i = 0; i < 100; i++)
+        {
+            fieldView.weight += 0.01f;
+            yield return new WaitForSeconds(0.02f);
+        }
     }
 }

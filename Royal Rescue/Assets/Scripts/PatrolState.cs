@@ -19,14 +19,12 @@ public class PatrolState : MonoBehaviour, IState
         animator.SetBool("isAttack", false);
         animator.SetBool("isDie", false);
         animator.SetBool("isLive", true);
-
-        monster.setSpeed(3f);
     }
     public void UpdateState()
     {
-        monster.transform.position += new Vector3(monster.getSpeed() * monster.getFacingDir(), 0, 0) * Time.deltaTime;
-        if (!monster.CheckGround(monster.transform.position, Vector3.down)
-            || monster.CheckWall(monster.transform.position))
+        monster.transform.position += new Vector3(monster.getSpeed() * monster.getFacingDir(), 0f, 0f) * Time.deltaTime;
+        if (!monster.CheckGround(monster.transform.position, Vector3.down, monster.getToGroundDistance())
+            || monster.CheckWall(monster.transform.position, new Vector3(monster.facingDir, 0f, 0f)))
         {
             monster.FlipX();
         }

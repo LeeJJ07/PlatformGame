@@ -4,30 +4,33 @@ using UnityEngine;
 
 public class AttackState : MonoBehaviour, IState
 {
-    private Animator animator;
-    private Monster monster;
+    protected Animator animator;
+    protected Monster monster;
 
-    private float curDirX;
-    [SerializeField] GameObject hitPoint;
-    public void EnterState()
+    protected float curDirX;
+    protected float curRotY;
+    [SerializeField] protected GameObject hitPoint;
+    
+    public virtual void EnterState()
     {
         if (!animator) animator = GetComponent<Animator>();
         if (!monster) monster = GetComponent<Monster>();
 
-        curDirX = monster.transform.eulerAngles.y;
-        monster.transform.rotation = Quaternion.Euler(0, curDirX + (curDirX - 180f)/2, 0);
-
         animator.SetBool("isAttack", true);
         hitPoint.SetActive(true);
     }
-    public void UpdateState()
+    public virtual void UpdateState()
     {
+        curDirX = monster.getDirectionPlayerX();
 
+        monster.transform.rotation = Quaternion.Euler(0, 180f - 90f * curDirX, 0);
     }
-    public void ExitState()
+    public virtual void ExitState()
     {
         hitPoint.SetActive(false);
         animator.SetBool("isAttack", false);
-        monster.transform.rotation = Quaternion.Euler(0, curDirX, 0);
+
+        curRotY = 195f - curDirX * 75f;
+        monster.transform.rotation = Quaternion.Euler(0, curRotY, 0);
     }
 }
