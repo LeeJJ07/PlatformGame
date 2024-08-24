@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2a224dd1785bb2547bbcfeb2c30b3ded, type: 3}
+  m_Name: Phase3_RushAttack
+  m_EditorClassIdentifier: 
+  objs:
+  - {fileID: 7839642434157458917, guid: fe8b3b1a5e7d4f24b8cb90f2fdb46135, type: 3}
+  - {fileID: 8383780294630944465, guid: c66a9869b912f204b84929127277fd4c, type: 3}
+  - {fileID: 1254819242936617488, guid: f32fa6f158412484eb48e7996a3516c0, type: 3}
+  transform: {fileID: 0}
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  WallLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  playerTag: Player
+  wallTag: Wall
+  warningDelay: 3
+  RushAttackDelay: 5
+  RushAttackDuration: 6
+  damage: 5
+  pushPower: 3
+  rushSpeed: 20
+  subSequenceDelay: 5

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5206759575dd8bc459b7a516f0257a39, type: 3}
+  m_Name: Phase2_ScreamAttack
+  m_EditorClassIdentifier: 
+  transform: {fileID: 0}
+  objs:
+  - {fileID: 7152337332152818099, guid: 6b0d7834836fa044ca718a5e21c5ca06, type: 3}
+  objSpawnCount: 3
+  ScreamAttackDistance: 30
+  damage: 0
+  pushPower: 10
+  subSequenceDelay: 3
