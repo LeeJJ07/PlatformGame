@@ -1,51 +1,66 @@
 using System.Collections;
 using UnityEngine;
-public class FlameBehavior : MonoBehaviour
+public class FlameBehavior : MonoBehaviour,ITag
 {
+    [Header("Detail Tag"), SerializeField]
+    string detailTag = "";
     [SerializeField] ParticleSystem flameParticle;
     [SerializeField] ParticleSystem explosionParticle;
+    [SerializeField] string[] ignoreTagList;
     [SerializeField] float moveSpeed;
+
     Coroutine skillCoroutine;
     Transform target;
-    bool isPlayExposion = false;
     Vector3 dir;
-    private void Start()
+    bool isExplosion = false;
+    public void OnEnable()
     {
         target = GameObject.FindWithTag("Player").transform;
-    }
-    public void SetTarget(Transform target)
-    {
-        this.target = target;
-    }
-
-    public void ActiveSkill()
-    {   
         flameParticle.Play();
         explosionParticle.Stop();
-        dir = target.position - transform.position;
         skillCoroutine = StartCoroutine("ActiveFlameSkill");
+     
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Equals("Skill")) 
+        if (other.CompareTag("Boss")||other.CompareTag("Skill"))
             return;
         StopCoroutine(skillCoroutine);
         flameParticle.Stop();
-        if(!isPlayExposion)
+        if(!isExplosion)
         {
             explosionParticle.Play();
-            isPlayExposion = true;
+            isExplosion = true;
         }
-        Destroy(gameObject, 2f);
+
+        StartCoroutine("WaitDeActiveFlameSkill");
     }
     IEnumerator ActiveFlameSkill()
     {
-        while(true)
+        yield return new WaitForSeconds(0.1f);
+        dir = target.position - transform.position;
+        while (true)
         {
-            
             transform.position += dir.normalized * moveSpeed * Time.deltaTime;
             yield return null;
         }
     }
-    
+    IEnumerator WaitDeActiveFlameSkill()
+    {
+        yield return new WaitForSeconds(explosionParticle.duration);
+        
+        explosionParticle.Stop();
+        isExplosion = false;
+        gameObject.SetActive(false);
+    }
+
+    public string GetTag()
+    {
+        return detailTag;
+    }
+
+    public bool CompareToTag(string detailTag)
+    {
+        return this.detailTag == detailTag;
+    }
 }

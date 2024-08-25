@@ -794,35 +794,7 @@ ModelImporter:
       mirror: 0
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
-      events:
-      - time: 0.25979674
-        functionName: ActiveSpawnFlame
-        data: 
-        objectReferenceParameter: {fileID: 296312535592555926, guid: 5c1325be632445247ac5ba44fdb10d98, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.37590703
-        functionName: ActiveSpawnFlame
-        data: 
-        objectReferenceParameter: {fileID: 296312535592555926, guid: 5c1325be632445247ac5ba44fdb10d98, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.50943387
-        functionName: ActiveSpawnFlame
-        data: 
-        objectReferenceParameter: {fileID: 296312535592555926, guid: 5c1325be632445247ac5ba44fdb10d98, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.62554413
-        functionName: ActiveSpawnFlame
-        data: 
-        objectReferenceParameter: {fileID: 296312535592555926, guid: 5c1325be632445247ac5ba44fdb10d98, type: 3}
-        floatParameter: 0
-        intParameter: 0
-        messageOptions: 0
+      events: []
       transformMask:
       - path: 
         weight: 1

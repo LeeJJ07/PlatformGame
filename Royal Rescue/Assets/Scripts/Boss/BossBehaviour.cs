@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static BreathAttackNode;
 //살려줘...
 
-public class BossAI : MonoBehaviour
+public class BossBehaviour : MonoBehaviour
 {
     
     [Header("Common Component")]
@@ -13,7 +14,7 @@ public class BossAI : MonoBehaviour
     [SerializeField] Animator aniController;
     [SerializeField] float hp = 100;
     [SerializeField] float moveSpeed = 0;
-    [SerializeField] ParticleSystem shockWave;
+    [SerializeField] GameObject shockWave;
 
     [Header("Phase1")]
     [SerializeField] float Phase1HpCondition;
@@ -27,6 +28,7 @@ public class BossAI : MonoBehaviour
 
     [Header("PHASE2 Skill Info")]
     [SerializeField] FlameAttackScriptableObject Phase2flameAttackInfo;
+    [SerializeField] BreathAttackScriptableObject Phase2breathAttackInfo;
     [SerializeField] ScreamAttackScriptableObject Phase2screamAttackInfo;
     [SerializeField] BasicAttackScriptableObject Phase2basicAttackInfo;
 
@@ -43,6 +45,7 @@ public class BossAI : MonoBehaviour
     [SerializeField] float basicAttackDistance;
     [SerializeField] float screamAttackDistance;
     [SerializeField] float flameAttackDistance;
+    [SerializeField] float breathAttackDistance;
 
     PullingDirector pullingDirector;
 
@@ -60,6 +63,7 @@ public class BossAI : MonoBehaviour
     INode targetinFlameAttackRange;
     INode targetinScreamAttackRange;
     INode targetinBasicAttackRange;
+    INode targetinBreathAttackRange;
     /// ///////////////////////
 
     INode phase1HpConditionDecorator;
@@ -75,11 +79,13 @@ public class BossAI : MonoBehaviour
     INode phase2FlameAttackNode;
     INode phase2ScreamAttackNode;
     INode phase2BasicAttackNode;
+    INode phase2BreathAttackNode;
     INode phase2EntryNode;
     INode checkIncomingPhase2;
     INode phase2BasicAttackDelay;
     INode phase2FlameAttackDelay;
     INode phase2ScreamAttackDelay;
+    INode phase2BreathAttackDelay;
 
     INode phase3HpConditionDecorator;
     INode phase3FlameAttackNode;
@@ -110,14 +116,17 @@ public class BossAI : MonoBehaviour
     Parallel phase2;//보스체력>30%    Sequence EntryPhase2Sequence;
     Parallel phase2basicAttackmoveParallel;
     Parallel phase2screamAttackmoveParallel;
+    Parallel phase2breathAttackmoveParallel;
     Parallel phase2flameAttackmoveParallel;
     Sequence entryPhase2Sequence;
     RandomSelector phase2AttackRandomSelector;
     Selector phase2ActionSelector;
     Selector phase2BasicAttackSelector;
+    Selector phase2BreathAttackSelector;
     Selector phase2FlameAttackSelector;
     Selector phase2ScreamAttackSelector;
     Sequence phase2BasicAttackSequence;
+    Sequence phase2BreathAttackSequence;
     Sequence phase2FlameAttackSequence;
     Sequence phase2ScreamAttackSequence;
 
@@ -147,9 +156,9 @@ public class BossAI : MonoBehaviour
         //조건 노드들
         
         DieHpConditionDecorator = new CheckHp(GetHp, 0,-100);
-        phase1HpConditionDecorator = new CheckHp(GetHp, Phase1HpCondition1, Phase2HpCondition1);
-        phase2HpConditionDecorator = new CheckHp(GetHp, Phase2HpCondition1, Phase3HpCondition1);
-        phase3HpConditionDecorator = new CheckHp(GetHp, Phase3HpCondition1, 0);
+        phase1HpConditionDecorator = new CheckHp(GetHp, Phase1HpCondition, Phase2HpCondition);
+        phase2HpConditionDecorator = new CheckHp(GetHp, Phase2HpCondition, Phase3HpCondition);
+        phase3HpConditionDecorator = new CheckHp(GetHp, Phase3HpCondition, 0);
         checkIncomingPhase1 = new CheckIncomingPhase();
         checkIncomingPhase2 = new CheckIncomingPhase();
         checkIncomingPhase3 = new CheckIncomingPhase();
@@ -157,12 +166,15 @@ public class BossAI : MonoBehaviour
         targetinFlameAttackRange = new ChecktoTargetDistance(transform, target, flameAttackDistance);
         targetinScreamAttackRange = new ChecktoTargetDistance(transform, target, screamAttackDistance);
         targetinBasicAttackRange = new ChecktoTargetDistance(transform, target, basicAttackDistance);
+        targetinBreathAttackRange = new ChecktoTargetDistance(transform, target, breathAttackDistance);
+
         phase1FlameAttackDelay = new NodeDelay(Phase1flameAttackInfo.subSequenceDelay,aniController);
         phase1ScreamAttackDelay = new NodeDelay(Phase1screamAttackInfo.subSequenceDelay,aniController);
 
         phase2BasicAttackDelay = new NodeDelay(Phase2basicAttackInfo.subSequenceDelay,aniController);
         phase2FlameAttackDelay = new NodeDelay(Phase2flameAttackInfo.subSequenceDelay,aniController);
         phase2ScreamAttackDelay = new NodeDelay(Phase2screamAttackInfo.subSequenceDelay,aniController);
+        phase2BreathAttackDelay = new NodeDelay(Phase2breathAttackInfo.subSequenceDelay, aniController);
 
         phase3BasicAttackDelay = new NodeDelay(Phase3basicAttackInfo.subSequenceDelay,aniController);
         phase3FlameAttackDelay = new NodeDelay(Phase3flameAttackInfo.subSequenceDelay,aniController);
@@ -172,23 +184,23 @@ public class BossAI : MonoBehaviour
         //행동 노드들
         moveNode = new MoveNode(transform, target, aniController, moveSpeed);
         DieNode = new DieNode(DeActivateObj, transform, target, aniController);
-        phase1FlameAttackNode = new FlameAttackNode(Phase1flameAttackInfo,aniController,transform,target);
-        phase1ScreamAttackNode = new ScreamAttackNode(Phase1screamAttackInfo,aniController, shockWave, RandomSpawnObjects, transform,target);
+        phase1FlameAttackNode = new FlameAttackNode(Phase1flameAttackInfo, SpawnObjects, flamePosition, aniController,transform,target);
+        phase1ScreamAttackNode = new ScreamAttackNode(Phase1screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase1EntryLandNode = new EntryPhase1LandNode(transform, target, aniController);
-        phase1EntryScreamNode = new EntryPhase1ScreamNode(transform, target, aniController,shockWave);
+        phase1EntryScreamNode = new EntryPhase1ScreamNode(transform, target, aniController,shockWave,flamePosition, SpawnObjectWithITag);
 
-        phase2EntryNode = new EntryPhase2Node(transform, target, aniController);
-        phase2FlameAttackNode = new FlameAttackNode(Phase2flameAttackInfo, aniController, transform, target);
-        phase2ScreamAttackNode = new ScreamAttackNode(Phase2screamAttackInfo, aniController, shockWave, RandomSpawnObjects, transform, target);
+        phase2EntryNode = new EntryPhase2Node(transform, target, shockWave, aniController);
+        phase2FlameAttackNode = new FlameAttackNode(Phase2flameAttackInfo, SpawnObjects, flamePosition, aniController, transform, target);
+        phase2ScreamAttackNode = new ScreamAttackNode(Phase2screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase2BasicAttackNode = new BasicAttackNode(Phase2basicAttackInfo, aniController, transform, target);
-      
+        phase2BreathAttackNode = new BreathAttackNode(SpawnObjects, Phase2breathAttackInfo, aniController, flamePosition, transform, target);
 
-        phase3EntryNode = new EntryPhase3Node(angryLight, transform, target, aniController);
-        phase3FlameAttackNode = new FlameAttackNode(Phase3flameAttackInfo,aniController,transform,target);
-        phase3ScreamAttackNode = new ScreamAttackNode(Phase3screamAttackInfo, aniController,shockWave, RandomSpawnObjects, transform, target);
+        phase3EntryNode = new EntryPhase3Node(angryLight, transform, target, shockWave, aniController);
+        phase3FlameAttackNode = new FlameAttackNode(Phase3flameAttackInfo,SpawnObjects, flamePosition, aniController,transform,target);
+        phase3ScreamAttackNode = new ScreamAttackNode(Phase3screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase3BasicAttackNode = new BasicAttackNode(Phase3basicAttackInfo, aniController, transform, target);
-        phase3RushAttackNode = new RushAttackNode(Phase3RushAttackInfo, RandomSpawnObjects, aniController, transform, target);
-        phase3WarningRushAttack = new WarningRushAttack(SpawnObject, angryLight, warningPrefab, transform.position, Phase3RushAttackInfo.warningDelay);
+        phase3RushAttackNode = new RushAttackNode(Phase3RushAttackInfo, RandomSpawnObjectsWithITag, aniController, transform, target);
+        phase3WarningRushAttack = new WarningRushAttack(SpawnObjects, angryLight, warningPrefab, transform.position, Phase3RushAttackInfo.warningDelay);
 
 
         //시퀀스, 셀렉터 노드들
@@ -206,11 +218,14 @@ public class BossAI : MonoBehaviour
         phase2ActionSelector = new Selector("phase2ActionSelector");
         phase2FlameAttackSelector = new Selector();
         phase2BasicAttackSelector = new Selector();
+        phase2BreathAttackSelector = new Selector();
         phase2basicAttackmoveParallel = new Parallel ();
         phase2screamAttackmoveParallel = new Parallel();
+        phase2breathAttackmoveParallel = new Parallel();
         phase2flameAttackmoveParallel = new Parallel();
         phase2ScreamAttackSelector = new Selector();
         phase2BasicAttackSequence = new Sequence();
+        phase2BreathAttackSequence = new Sequence();
         phase2ScreamAttackSequence = new Sequence();
         phase2FlameAttackSequence = new Sequence();
 
@@ -265,6 +280,8 @@ public class BossAI : MonoBehaviour
         //페이지2 트리
         phase2ScreamAttackSequence.AddNode(phase2ScreamAttackNode);
         phase2ScreamAttackSequence.AddNode(phase2ScreamAttackDelay);
+        phase2BreathAttackSequence.AddNode(phase2BreathAttackNode);
+        phase2BreathAttackSequence.AddNode(phase2BreathAttackDelay);
         phase2BasicAttackSequence.AddNode(phase2BasicAttackNode);
         phase2BasicAttackSequence.AddNode(phase2BasicAttackDelay);
         phase2FlameAttackSequence.AddNode(phase2FlameAttackNode);
@@ -285,9 +302,15 @@ public class BossAI : MonoBehaviour
         phase2BasicAttackSelector.AddNode(phase2basicAttackmoveParallel);
         phase2BasicAttackSelector.AddNode(phase2BasicAttackSequence);
 
+        phase2breathAttackmoveParallel.AddNode(targetinBreathAttackRange);
+        phase2breathAttackmoveParallel.AddNode(moveNode);
+        phase2BreathAttackSelector.AddNode(phase2breathAttackmoveParallel);
+        phase2BreathAttackSelector.AddNode(phase2BreathAttackSequence);
+
         phase2AttackRandomSelector.AddNode(phase2BasicAttackSelector);
         phase2AttackRandomSelector.AddNode(phase2ScreamAttackSelector);
         phase2AttackRandomSelector.AddNode(phase2FlameAttackSelector);
+        phase2AttackRandomSelector.AddNode(phase2BreathAttackSelector);
         entryPhase2Sequence.AddNode(checkIncomingPhase2);
         entryPhase2Sequence.AddNode(phase2EntryNode);
         phase2ActionSelector.AddNode(entryPhase2Sequence);
@@ -324,10 +347,10 @@ public class BossAI : MonoBehaviour
         
         entryPhase3Sequence.AddNode(checkIncomingPhase3);
         entryPhase3Sequence.AddNode(phase3EntryNode);
-        //phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
         phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
+        phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
 
         phase3ActionSelector.AddNode(entryPhase3Sequence);
         phase3ActionSelector.AddNode(phase3AttackRandomSelector);
@@ -377,7 +400,7 @@ public class BossAI : MonoBehaviour
     }
     
 
-    //정해진 범위 안에 랜덤한 적스폰
+    //정해진 범위 안에 랜덤한 객체 활성화
     public void RandomSpawnObjects(GameObject[] objs,int spawnCount)
     {
         for(int i=0; i<spawnCount; i++)
@@ -385,22 +408,35 @@ public class BossAI : MonoBehaviour
             float randomPosiX = Random.Range(spawnRange[0].position.x, spawnRange[1].position.x);
 
             Vector3 pos = new Vector3(randomPosiX, spawnRange[0].position.y, 0);
-            int randomIndex = Random.Range(0, objs.Length);
+            int randomIndex = Random.Range(0, objs.Length-1);
             pullingDirector.SpawnObject(objs[randomIndex].tag, pos);
         }
     }
 
-    //지정한 위치로 적 종류별로 스폰
-    public void SpawnObjects(GameObject[] objs,Vector3 posi)
+    //지정한 위치로 객체 활성화
+    public GameObject SpawnObjects(GameObject obj,Vector3 posi)
     {
-        foreach(GameObject obj in objs)
-        {
-            pullingDirector.SpawnObject(obj.tag, posi);
-        }
+        return pullingDirector.SpawnObject(obj.tag, posi);
     }
 
-    //지정한 위치와 갯수만큼 적 스폰
-    public GameObject[] SpawnObject(GameObject obj, Vector3 posi ,int count)
+    public void RandomSpawnObjectsWithITag(GameObject[] objs, int spawnCount)
+    {
+        for (int i = 0; i < spawnCount; i++)
+        {
+            float randomPosiX = Random.Range(spawnRange[0].position.x, spawnRange[1].position.x);
+
+            Vector3 posi = new Vector3(randomPosiX, spawnRange[0].position.y, 0);
+            int randomIndex = Random.Range(0, objs.Length - 1);
+            pullingDirector.SpawnObjectwithITag(objs[randomIndex].tag, objs[randomIndex].GetComponent<ITag>(), posi);
+        }
+    }
+    public GameObject SpawnObjectWithITag(GameObject obj, Vector3 posi)
+    {
+        return pullingDirector.SpawnObjectwithITag(obj.tag, obj.GetComponent<ITag>(), posi);
+    }
+
+    //지정한 위치와 갯수만큼 객체 활성화
+    public GameObject[] SpawnObjects(GameObject obj, Vector3 posi ,int count)
     {
         GameObject[] spawnObjs = new GameObject[count];
         for(int i=0; i<count; i++)
@@ -415,17 +451,5 @@ public class BossAI : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, 5);
 
     }
-    #region 변수 캡슐화(region)
-    public Transform FlamePosition { get => flamePosition; }
-    public Animator EnemyAnimation { get => aniController; }
-    public float BasicAttackRange { get => basicAttackDistance; }
-    public float ScreamSkillRange { get => screamAttackDistance; }
-    public float FlameSkillRange { get => flameAttackDistance; }
-    public float Phase1HpCondition1 { get => Phase1HpCondition; }
-    public float Phase2HpCondition1 { get => Phase2HpCondition; }
-    public float Phase3HpCondition1 { get => Phase3HpCondition; }
-    public GameObject AngryLight { get => angryLight; }
-
-    #endregion
 }
 

@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class EntryPhase1ScreamNode : INode
 {
+    public delegate GameObject SpawnObj(GameObject obj, Vector3 posi);
+    SpawnObj SpawnObject;
     Transform transform;
     Transform target;
+    Transform spawnPosi;
     Animator aniController;
-    ParticleSystem shockWave;
+    GameObject shockWaveObj;
+    GameObject shockWaveParticleObj;
     float shockWaveStartTime = 1f;
     float shockWaveSpan = 0;
     float time = 0;
@@ -15,12 +19,15 @@ public class EntryPhase1ScreamNode : INode
     bool isStartParticle = false;
     bool isActiveAnime = false;
 
-    public EntryPhase1ScreamNode(Transform transform, Transform target, Animator aniController, ParticleSystem shockWave)
+    //오브젝트 스폰할 델리게이트 매개변수 생성, ScriptableObject 고려해보기
+    public EntryPhase1ScreamNode(Transform transform, Transform target, Animator aniController, GameObject shockWave,Transform spawnPosi, SpawnObj SpawnObject)
     {
         this.transform = transform;
         this.target = target;
         this.aniController = aniController;
-        this.shockWave = shockWave;
+        this.shockWaveObj = shockWave;
+        this.spawnPosi = spawnPosi;
+        this.SpawnObject = SpawnObject;
     }
     public void AddNode(INode node) { }
 
@@ -29,16 +36,19 @@ public class EntryPhase1ScreamNode : INode
         ActiveAnimation();
         time += Time.deltaTime;
         shockWaveSpan += Time.deltaTime;
-        if (shockWaveSpan>=shockWaveStartTime&& !isStartParticle)
+        if(shockWaveParticleObj!=null)
+            shockWaveParticleObj.transform.position = spawnPosi.position;
+        if ((shockWaveSpan>=shockWaveStartTime)&& !isStartParticle)
         {
-            shockWave.Play();
+            shockWaveParticleObj.GetComponent<ParticleSystem>().Play();
             isStartParticle = true;
         }
         if (time >= animationDuration)
         {
-            shockWave.Stop();
+            shockWaveParticleObj.GetComponent<ParticleSystem>().Stop();
             shockWaveSpan = 0;
             time = 0;
+            isStartParticle = false;
             isActiveAnime = false;
             return INode.NodeState.Success;
         }
@@ -52,6 +62,7 @@ public class EntryPhase1ScreamNode : INode
         if (aniController.GetCurrentAnimatorStateInfo(0).IsName("Scream"))
         {
             animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length;
+            shockWaveParticleObj = SpawnObject(shockWaveObj, spawnPosi.position);
             Vector3 dir = target.position - transform.position;
             if (dir.normalized.x < 0)
                 transform.rotation = Quaternion.Euler(0, -90, 0);

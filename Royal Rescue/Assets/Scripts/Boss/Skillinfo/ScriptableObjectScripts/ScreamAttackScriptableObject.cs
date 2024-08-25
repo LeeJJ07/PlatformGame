@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.EditorTools;
 using UnityEngine;
 [CreateAssetMenu(fileName = "BossSkills_ScreamAttack", menuName = "BossSkills/ScreamAttack")]
 public class ScreamAttackScriptableObject : ScriptableObject
 {
-    public ParticleSystem shockWave;
     public Transform transform;
+    public GameObject shockWaveObj;
     public GameObject[] objs;
     public int objSpawnCount = 0;
     public float ScreamAttackDistance = 0;

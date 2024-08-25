@@ -1,8 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public class DropObjBehavior : MonoBehaviour
+public class DropObjBehavior : MonoBehaviour,ITag
 {
+    [Header("Detail Tag"), SerializeField]
+    string detailTag="";
     //PlayerController playerController;
     PullingDirector pulling;
     [SerializeField] GameObject dangerZoneObj;
@@ -12,6 +14,7 @@ public class DropObjBehavior : MonoBehaviour
     [SerializeField] float detectGroundRayDistance;
     [SerializeField] bool destroyObj = false;
     [SerializeField] LayerMask[] detectLayers;
+
     Ray dangerZoneSpawnRay;
     RaycastHit dangerZoneSpawnHit;
     GameObject deactiveDangerZoneObj;
@@ -81,5 +84,14 @@ public class DropObjBehavior : MonoBehaviour
             deactiveDangerZoneObj.SetActive(false);
             isEndDelay = false;
         }
+    }
+
+    public string GetTag()
+    {
+        return detailTag;
+    }
+    public bool CompareToTag(string detailTag)
+    {
+        return this.detailTag == detailTag;
     }
 }
