@@ -177,13 +177,13 @@ public class BossAI : MonoBehaviour
         phase1EntryLandNode = new EntryPhase1LandNode(transform, target, aniController);
         phase1EntryScreamNode = new EntryPhase1ScreamNode(transform, target, aniController,shockWave);
 
-        phase2EntryNode = new EntryPhase2Node(transform, target, aniController);
+        phase2EntryNode = new EntryPhase2Node(transform, target, shockWave, aniController);
         phase2FlameAttackNode = new FlameAttackNode(Phase2flameAttackInfo, SpawnObjects, flamePosition, aniController, transform, target);
         phase2ScreamAttackNode = new ScreamAttackNode(Phase2screamAttackInfo, aniController, shockWave, RandomSpawnObjects, transform, target);
         phase2BasicAttackNode = new BasicAttackNode(Phase2basicAttackInfo, aniController, transform, target);
-      
 
-        phase3EntryNode = new EntryPhase3Node(angryLight, transform, target, aniController);
+
+        phase3EntryNode = new EntryPhase3Node(angryLight, transform, target, shockWave, aniController);
         phase3FlameAttackNode = new FlameAttackNode(Phase3flameAttackInfo,SpawnObjects, flamePosition, aniController,transform,target);
         phase3ScreamAttackNode = new ScreamAttackNode(Phase3screamAttackInfo, aniController,shockWave, RandomSpawnObjects, transform, target);
         phase3BasicAttackNode = new BasicAttackNode(Phase3basicAttackInfo, aniController, transform, target);
@@ -255,7 +255,7 @@ public class BossAI : MonoBehaviour
         entryPhase1Sequence.AddNode(checkIncomingPhase1);
         entryPhase1Sequence.AddNode(entryPhase1ActionSequence);
         phase1AttackRandomSelector.AddNode(phase1FlameAttackSequence);
-       // phase1AttackRandomSelector.AddNode(phase1ScreamAttackSequence);
+        phase1AttackRandomSelector.AddNode(phase1ScreamAttackSequence);
         phase1ActionSelector.AddNode(entryPhase1Sequence);
         phase1ActionSelector.AddNode(phase1AttackRandomSelector);
         phase1.AddNode(phase1HpConditionDecorator);
@@ -324,10 +324,10 @@ public class BossAI : MonoBehaviour
         
         entryPhase3Sequence.AddNode(checkIncomingPhase3);
         entryPhase3Sequence.AddNode(phase3EntryNode);
-        //phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
         phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
+        phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
 
         phase3ActionSelector.AddNode(entryPhase3Sequence);
         phase3ActionSelector.AddNode(phase3AttackRandomSelector);

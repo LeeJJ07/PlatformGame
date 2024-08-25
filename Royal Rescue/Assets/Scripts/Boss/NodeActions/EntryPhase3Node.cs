@@ -7,26 +7,30 @@ public class EntryPhase3Node : INode
     GameObject angryLight;
     Transform transform;
     Transform target;
+    ParticleSystem shockWave;
     Animator aniController;
-    
+    float shockWaveStartTime = 1f;
+    float shockWaveSpan = 0;
+
     float time = 0;
     float animationDuration = 100;
     bool isActiveAnime = false;
-    public EntryPhase3Node(GameObject light, Transform transform, Transform target, Animator aniController)
+    bool isStartParticle = false;
+    public EntryPhase3Node(GameObject light, Transform transform, Transform target,ParticleSystem shockWave, Animator aniController)
     {
         angryLight = light;
         this.transform = transform;
         this.target = target;
+        this.shockWave = shockWave;
         this.aniController = aniController;
     }
-    public void AddNode(INode node)
-    {
-    }
+    public void AddNode(INode node) { }
 
     public INode.NodeState Evaluate()
     {
         Debug.Log("entryPhase3 Running");
         time += Time.deltaTime;
+        shockWaveSpan += Time.deltaTime;
         ActiveAnimation();
         Collider[] colliders = Physics.OverlapSphere(transform.position, 15, LayerMask.GetMask("Player"));
         if (colliders != null)
@@ -45,10 +49,18 @@ public class EntryPhase3Node : INode
                 }
             }
         }
+        if (shockWaveSpan >= shockWaveStartTime && !isStartParticle) 
+        {
+            isStartParticle=true;
+            shockWave.Play();
+        }
+
         if (time > animationDuration)
         {
-            Debug.Log("entryPhase2 Success");
+            Debug.Log("entryPhase3 Success");
+            shockWave.Stop();
             time = 0;
+            shockWaveSpan = 0;
             isActiveAnime = false;
             return INode.NodeState.Success;
         }

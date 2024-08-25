@@ -7,25 +7,30 @@ public class EntryPhase2Node : INode
     Transform transform;
     Transform target;
     Animator aniController;
+    ParticleSystem shockWave;
+    float shockWaveStartTime = 1f;
+    float shockWaveSpan = 0;
     float time = 0;
     float animationDuration = 100;
+    bool isStartParticle = false;
     bool isActiveAnime = false;
-    public EntryPhase2Node(Transform transform, Transform target, Animator aniController)
+    public EntryPhase2Node(Transform transform, Transform target, ParticleSystem shockWave ,Animator aniController)
     {
         this.transform = transform;
         this.target = target;
+        this.shockWave = shockWave;
         this.aniController = aniController;
     }
-    public void AddNode(INode node)
-    {
-    }
+    public void AddNode(INode node) { }
 
     public INode.NodeState Evaluate()
     {
         Debug.Log("entryPhase2 Running");
         time += Time.deltaTime;
+        shockWaveSpan += Time.deltaTime;
         ActiveAnimation();
         Collider[] colliders = Physics.OverlapSphere(transform.position, 15,LayerMask.GetMask("Player"));
+
         if(colliders!=null)
         {
             
@@ -42,10 +47,17 @@ public class EntryPhase2Node : INode
                 }
             }
         }
+        if (shockWaveSpan >= shockWaveStartTime && !isStartParticle)
+        {
+            shockWave.Play();
+            isStartParticle = true;
+        }
         if (time > animationDuration) 
         {
             Debug.Log("entryPhase2 Success");
+            shockWave.Stop();
             time = 0;
+            shockWaveSpan = 0;
             isActiveAnime = false;
             return INode.NodeState.Success;
         }
