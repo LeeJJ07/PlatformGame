@@ -48,14 +48,18 @@ public class PlayerControlManagerFix : MonoBehaviour
 
     bool isAddicted;
     [SerializeField] PostProcessVolume fieldView;
+    private Vignette vignette; // 비네팅 효과
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
         rb.useGravity = true;
         anim = GetComponentInChildren<Animator>();
 
+
+        // 종진: 확인 되셨으면 주석 지워주세요
         isAddicted = false;
         fieldView.weight = 0f;
+        fieldView.profile.TryGetSettings(out vignette);
     }
 
     // Update is called once per frame
@@ -76,6 +80,8 @@ public class PlayerControlManagerFix : MonoBehaviour
             {
                 ThrowBall();
             }
+
+            setPostProcessCenter(); //포스트 프로세싱 중심 설정(종진) 확인 하셨으면 주석 지워 주세요
         }
         
         playerDie();
@@ -306,6 +312,14 @@ public class PlayerControlManagerFix : MonoBehaviour
 
 
     /****************************************************/
+    // 포스트 프로세싱 부분 (확인하시구 주석만 지워주세요)
+    void setPostProcessCenter() {
+        Vector3 playerWorldPosition = transform.position;
+
+        Vector3 viewportPosition = Camera.main.WorldToViewportPoint(playerWorldPosition);
+
+        vignette.center.value = viewportPosition;
+    }
     private void OnParticleCollision(GameObject other)
     {
         Debug.Log("충돌");
