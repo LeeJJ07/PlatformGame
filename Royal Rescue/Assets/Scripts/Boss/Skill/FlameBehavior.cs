@@ -9,20 +9,11 @@ public class FlameBehavior : MonoBehaviour
     Transform target;
     bool isPlayExposion = false;
     Vector3 dir;
-    private void Start()
+    public void OnEnable()
     {
         target = GameObject.FindWithTag("Player").transform;
-    }
-    public void SetTarget(Transform target)
-    {
-        this.target = target;
-    }
-
-    public void ActiveSkill()
-    {   
         flameParticle.Play();
         explosionParticle.Stop();
-        dir = target.position - transform.position;
         skillCoroutine = StartCoroutine("ActiveFlameSkill");
     }
     private void OnTriggerEnter(Collider other)
@@ -36,11 +27,13 @@ public class FlameBehavior : MonoBehaviour
             explosionParticle.Play();
             isPlayExposion = true;
         }
-        Destroy(gameObject, 2f);
+        gameObject.SetActive(false);
     }
     IEnumerator ActiveFlameSkill()
     {
-        while(true)
+        yield return new WaitForSeconds(0.1f);
+        dir = target.position - transform.position;
+        while (true)
         {
             
             transform.position += dir.normalized * moveSpeed * Time.deltaTime;

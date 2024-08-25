@@ -172,23 +172,23 @@ public class BossAI : MonoBehaviour
         //행동 노드들
         moveNode = new MoveNode(transform, target, aniController, moveSpeed);
         DieNode = new DieNode(DeActivateObj, transform, target, aniController);
-        phase1FlameAttackNode = new FlameAttackNode(Phase1flameAttackInfo,aniController,transform,target);
+        phase1FlameAttackNode = new FlameAttackNode(Phase1flameAttackInfo, SpawnObjects, flamePosition, aniController,transform,target);
         phase1ScreamAttackNode = new ScreamAttackNode(Phase1screamAttackInfo,aniController, shockWave, RandomSpawnObjects, transform,target);
         phase1EntryLandNode = new EntryPhase1LandNode(transform, target, aniController);
         phase1EntryScreamNode = new EntryPhase1ScreamNode(transform, target, aniController,shockWave);
 
         phase2EntryNode = new EntryPhase2Node(transform, target, aniController);
-        phase2FlameAttackNode = new FlameAttackNode(Phase2flameAttackInfo, aniController, transform, target);
+        phase2FlameAttackNode = new FlameAttackNode(Phase2flameAttackInfo, SpawnObjects, flamePosition, aniController, transform, target);
         phase2ScreamAttackNode = new ScreamAttackNode(Phase2screamAttackInfo, aniController, shockWave, RandomSpawnObjects, transform, target);
         phase2BasicAttackNode = new BasicAttackNode(Phase2basicAttackInfo, aniController, transform, target);
       
 
         phase3EntryNode = new EntryPhase3Node(angryLight, transform, target, aniController);
-        phase3FlameAttackNode = new FlameAttackNode(Phase3flameAttackInfo,aniController,transform,target);
+        phase3FlameAttackNode = new FlameAttackNode(Phase3flameAttackInfo,SpawnObjects, flamePosition, aniController,transform,target);
         phase3ScreamAttackNode = new ScreamAttackNode(Phase3screamAttackInfo, aniController,shockWave, RandomSpawnObjects, transform, target);
         phase3BasicAttackNode = new BasicAttackNode(Phase3basicAttackInfo, aniController, transform, target);
         phase3RushAttackNode = new RushAttackNode(Phase3RushAttackInfo, RandomSpawnObjects, aniController, transform, target);
-        phase3WarningRushAttack = new WarningRushAttack(SpawnObject, angryLight, warningPrefab, transform.position, Phase3RushAttackInfo.warningDelay);
+        phase3WarningRushAttack = new WarningRushAttack(SpawnObjects, angryLight, warningPrefab, transform.position, Phase3RushAttackInfo.warningDelay);
 
 
         //시퀀스, 셀렉터 노드들
@@ -255,7 +255,7 @@ public class BossAI : MonoBehaviour
         entryPhase1Sequence.AddNode(checkIncomingPhase1);
         entryPhase1Sequence.AddNode(entryPhase1ActionSequence);
         phase1AttackRandomSelector.AddNode(phase1FlameAttackSequence);
-        phase1AttackRandomSelector.AddNode(phase1ScreamAttackSequence);
+       // phase1AttackRandomSelector.AddNode(phase1ScreamAttackSequence);
         phase1ActionSelector.AddNode(entryPhase1Sequence);
         phase1ActionSelector.AddNode(phase1AttackRandomSelector);
         phase1.AddNode(phase1HpConditionDecorator);
@@ -377,7 +377,7 @@ public class BossAI : MonoBehaviour
     }
     
 
-    //정해진 범위 안에 랜덤한 적스폰
+    //정해진 범위 안에 랜덤한 객체 활성화
     public void RandomSpawnObjects(GameObject[] objs,int spawnCount)
     {
         for(int i=0; i<spawnCount; i++)
@@ -390,17 +390,14 @@ public class BossAI : MonoBehaviour
         }
     }
 
-    //지정한 위치로 적 종류별로 스폰
-    public void SpawnObjects(GameObject[] objs,Vector3 posi)
+    //지정한 위치로 객체 활성화
+    public void SpawnObjects(GameObject obj,Vector3 posi)
     {
-        foreach(GameObject obj in objs)
-        {
-            pullingDirector.SpawnObject(obj.tag, posi);
-        }
+        pullingDirector.SpawnObject(obj.tag, posi);
     }
 
-    //지정한 위치와 갯수만큼 적 스폰
-    public GameObject[] SpawnObject(GameObject obj, Vector3 posi ,int count)
+    //지정한 위치와 갯수만큼 객체 활성화
+    public GameObject[] SpawnObjects(GameObject obj, Vector3 posi ,int count)
     {
         GameObject[] spawnObjs = new GameObject[count];
         for(int i=0; i<count; i++)

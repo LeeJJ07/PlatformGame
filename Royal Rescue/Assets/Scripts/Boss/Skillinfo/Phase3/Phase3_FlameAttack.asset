@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de5d219ae565ffa47b67f5e0c538fb2d, type: 3}
   m_Name: Phase3_FlameAttack
   m_EditorClassIdentifier: 
-  transform: {fileID: 0}
+  flameObj: {fileID: 296312535592555926, guid: 5c1325be632445247ac5ba44fdb10d98, type: 3}
   flameAttackDistance: 25
+  flameCount: 8
   damage: 5
   flameSpeed: 5
   subSequenceDelay: 1

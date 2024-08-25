@@ -5,21 +5,30 @@ using UnityEngine;
 
 public class FlameAttackNode : INode
 {
+    public delegate void SpawnObj(GameObject obj, Vector3 posi);
+    SpawnObj SpawnFlame;
     FlameAttackScriptableObject flameAttackInfo;
+    Transform flameSpawntransform;
     Animator aniController;
     Transform transform;
     Transform target;
+    float flameShootStartTime = 0.2f;
+    float shootGap = 0;
+    float shootTime = 0;
     float animationDuration = 100;
-    float skillActiveTime = 0;
+    float skillActiveSpan = 0;
     bool isActiveAnime = false;
 
 
-    public FlameAttackNode(FlameAttackScriptableObject flameAttackInfo, Animator aniController, Transform transform, Transform target)
+    public FlameAttackNode(FlameAttackScriptableObject flameAttackInfo,SpawnObj SpawnFlame,Transform flameSpawntransform, Animator aniController, Transform transform, Transform target)
     {
         this.flameAttackInfo = flameAttackInfo;
+        this.SpawnFlame = SpawnFlame;
+        this.flameSpawntransform = flameSpawntransform;
         this.aniController = aniController;
         this.transform = transform;
         this.target = target;
+        shootTime = flameShootStartTime;
     }
     public void AddNode(INode node) { }
 
@@ -30,14 +39,20 @@ public class FlameAttackNode : INode
             Debug.Log("FlameAttack Failure");
             return INode.NodeState.Failure;
         }
-        skillActiveTime += Time.deltaTime;
+        skillActiveSpan += Time.deltaTime;
         ActiveAnimation();
-        if (skillActiveTime >= animationDuration)
+        if (skillActiveSpan >= shootTime)
+        {
+            SpawnFlame(flameAttackInfo.flameObj, flameSpawntransform.position);
+            shootTime += shootGap;
+        }
+        if (skillActiveSpan >= animationDuration)
         {
             Debug.Log("FlameAttack Success");
             
             isActiveAnime = false;
-            skillActiveTime = 0;
+            shootTime = flameShootStartTime;
+            skillActiveSpan = 0;
             return INode.NodeState.Success;
         }
 
@@ -50,7 +65,7 @@ public class FlameAttackNode : INode
         if (aniController.GetCurrentAnimatorStateInfo(0).IsName("Flame Attack"))
         {
             animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length;
-
+            shootGap = animationDuration / (float)(flameAttackInfo.flameCount+1);
             Vector3 dir = target.position - transform.position;
             if (dir.normalized.x < 0)
                 transform.rotation = Quaternion.Euler(0, -90, 0);
