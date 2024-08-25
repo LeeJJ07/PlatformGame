@@ -316,6 +316,9 @@ public class PlayerControlManagerFix : MonoBehaviour
     void setPostProcessCenter() {
         Vector3 playerWorldPosition = transform.position;
 
+        if (!Camera.main || !vignette)
+            return;
+
         Vector3 viewportPosition = Camera.main.WorldToViewportPoint(playerWorldPosition);
 
         vignette.center.value = viewportPosition;
