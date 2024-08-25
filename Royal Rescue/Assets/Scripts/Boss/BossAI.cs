@@ -6,15 +6,14 @@ public class BossAI : MonoBehaviour
 {
     
     [Header("Common Component")]
-    [SerializeField] List<GameObject> objectPrefabs = new List<GameObject>();
     [SerializeField] GameObject warningPrefab;
-    [SerializeField] GameObject flamePrefab;
     [SerializeField] Transform[] spawnRange;
     [SerializeField] Transform target;
     [SerializeField] Transform flamePosition;
     [SerializeField] Animator aniController;
     [SerializeField] float hp = 100;
     [SerializeField] float moveSpeed = 0;
+    [SerializeField] ParticleSystem shockWave;
 
     [Header("Phase1")]
     [SerializeField] float Phase1HpCondition;
@@ -174,19 +173,19 @@ public class BossAI : MonoBehaviour
         moveNode = new MoveNode(transform, target, aniController, moveSpeed);
         DieNode = new DieNode(DeActivateObj, transform, target, aniController);
         phase1FlameAttackNode = new FlameAttackNode(Phase1flameAttackInfo,aniController,transform,target);
-        phase1ScreamAttackNode = new ScreamAttackNode(Phase1screamAttackInfo,aniController, RandomSpawnObjects, transform,target);
+        phase1ScreamAttackNode = new ScreamAttackNode(Phase1screamAttackInfo,aniController, shockWave, RandomSpawnObjects, transform,target);
         phase1EntryLandNode = new EntryPhase1LandNode(transform, target, aniController);
-        phase1EntryScreamNode = new EntryPhase1ScreamNode(transform, target, aniController);
+        phase1EntryScreamNode = new EntryPhase1ScreamNode(transform, target, aniController,shockWave);
 
         phase2EntryNode = new EntryPhase2Node(transform, target, aniController);
         phase2FlameAttackNode = new FlameAttackNode(Phase2flameAttackInfo, aniController, transform, target);
-        phase2ScreamAttackNode = new ScreamAttackNode(Phase2screamAttackInfo, aniController, RandomSpawnObjects, transform, target);
+        phase2ScreamAttackNode = new ScreamAttackNode(Phase2screamAttackInfo, aniController, shockWave, RandomSpawnObjects, transform, target);
         phase2BasicAttackNode = new BasicAttackNode(Phase2basicAttackInfo, aniController, transform, target);
       
 
         phase3EntryNode = new EntryPhase3Node(angryLight, transform, target, aniController);
         phase3FlameAttackNode = new FlameAttackNode(Phase3flameAttackInfo,aniController,transform,target);
-        phase3ScreamAttackNode = new ScreamAttackNode(Phase3screamAttackInfo, aniController, RandomSpawnObjects, transform, target);
+        phase3ScreamAttackNode = new ScreamAttackNode(Phase3screamAttackInfo, aniController,shockWave, RandomSpawnObjects, transform, target);
         phase3BasicAttackNode = new BasicAttackNode(Phase3basicAttackInfo, aniController, transform, target);
         phase3RushAttackNode = new RushAttackNode(Phase3RushAttackInfo, RandomSpawnObjects, aniController, transform, target);
         phase3WarningRushAttack = new WarningRushAttack(SpawnObject, angryLight, warningPrefab, transform.position, Phase3RushAttackInfo.warningDelay);
@@ -327,8 +326,8 @@ public class BossAI : MonoBehaviour
         entryPhase3Sequence.AddNode(phase3EntryNode);
         //phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
         //phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
+        phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
 
         phase3ActionSelector.AddNode(entryPhase3Sequence);
         phase3ActionSelector.AddNode(phase3AttackRandomSelector);
@@ -425,8 +424,6 @@ public class BossAI : MonoBehaviour
     public float Phase1HpCondition1 { get => Phase1HpCondition; }
     public float Phase2HpCondition1 { get => Phase2HpCondition; }
     public float Phase3HpCondition1 { get => Phase3HpCondition; }
-    public List<GameObject> ObjectPrefabs { get => objectPrefabs; }
-    public GameObject FlamePrefab { get => flamePrefab; }
     public GameObject AngryLight { get => angryLight; }
 
     #endregion
