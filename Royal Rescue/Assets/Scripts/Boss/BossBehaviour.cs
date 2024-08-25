@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 //ªÏ∑¡¡‡...
 
-public class BossAI : MonoBehaviour
+public class BossBehaviour : MonoBehaviour
 {
     
     [Header("Common Component")]
