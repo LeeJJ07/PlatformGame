@@ -24,7 +24,7 @@ public class GameDirector : MonoBehaviour
 
     [SerializeField] private GameObject loadingScreen, loadScreenFade;
     [SerializeField] private Camera loadingScreenCam;
-    [SerializeField] private Animator loadscreenFadeAnim;
+    [SerializeField] private Animator loadscreenFadeAnim, shroomAnim;
     [SerializeField] private List<string> stageNames;
     private int stageIndex = 0;
 
@@ -63,6 +63,7 @@ public class GameDirector : MonoBehaviour
     {
         loadingScreen.gameObject.SetActive(true);
         loadingScreenCam.enabled = true;
+        shroomAnim.Play(AnimationHash.SHROOM_CHASE, -1, 0f);
     }
 
     IEnumerator ExitLoadingScreen()
