@@ -71,12 +71,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   throwForce: 10
-  player: {fileID: 0}
-  isDirPlayer: 0
+  isFireball: 0
   ballDir: {x: 0, y: 0, z: 0}
   damage: 50
   explosionEffect: {fileID: 1947871717301538, guid: 8adf38b6e7db9bb438db2454776ea086, type: 3}
-  fireBallPrefab: {fileID: 6959329553843891577, guid: b0d0ca90c78126f409bb2589a3fa7c26, type: 3}
+  target: {fileID: 0}
 --- !u!23 &-8729927729515319274
 MeshRenderer:
   m_ObjectHideFlags: 0

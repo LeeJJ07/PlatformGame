@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireBallControl : MonoBehaviour
+public class SwordWindControl : MonoBehaviour
 {
     //Rigidbody rigidbody;
-    public float throwForce = 10;
+    public float throwForce = 20;
     public bool isFireball = false;
     public Vector3 ballDir;
     public int damage = 50; // 폭탄이 적에게 주는 데미지
@@ -19,7 +19,7 @@ public class FireBallControl : MonoBehaviour
     private void Update()
     {
         transform.position += throwForce * ballDir * Time.deltaTime;
-        Destroy(this.gameObject, 2f);
+        Destroy(this.gameObject, 1f);
         //포물선
         //rigidbody.AddForce(ballDir + Vector3.up * 0.5f * throwForce, ForceMode.Impulse);
     }
@@ -34,8 +34,7 @@ public class FireBallControl : MonoBehaviour
             //if (enemyHealth != null)
             //enemyHealth.TakeDamage(damage);
             EnemyControler enemyHP = other.gameObject.GetComponent<EnemyControler>();
-            enemyHP.health -= damage;
-            Debug.Log("적에게 파이어볼 명중");
+            Debug.Log("적에게 검기 명중");
         }
         if (other.gameObject.CompareTag("Player"))
         {
