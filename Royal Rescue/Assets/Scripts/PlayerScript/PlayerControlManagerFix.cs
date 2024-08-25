@@ -1,4 +1,4 @@
-﻿using System.Collections;
+﻿    using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -27,14 +27,12 @@ public class PlayerControlManagerFix : MonoBehaviour
     [SerializeField] private int jumpCnt = 0;
     [SerializeField] public bool isDirRight = true;
     [SerializeField] private bool isFloor = false;
-    [SerializeField] private bool isDoubleJump = false;
     [SerializeField] public bool isAttackButton = false;
     [SerializeField] private bool isAttackPossible = false;
     [SerializeField] private bool isDashPossible = false;
     [SerializeField] private bool isFbPossible = false;
     [SerializeField] private bool isDie = false;
 
-    private bool ground = false;
     public LayerMask layer;
 
     Rigidbody rb;
@@ -168,7 +166,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         if (isJumpDown && jumpCnt > 0)
         {
             //curTabTime = Time.time;
-            rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y) * 1.3f, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y) * 1.5f, ForceMode.Impulse);
             if (jumpCnt == 2)
             {
                 anim.SetTrigger("Jump");
@@ -304,8 +302,6 @@ public class PlayerControlManagerFix : MonoBehaviour
         isFbPossible = false;
     }
 
-
-    /****************************************************/
     private void OnParticleCollision(GameObject other)
     {
         Debug.Log("충돌");
@@ -332,7 +328,7 @@ public class PlayerControlManagerFix : MonoBehaviour
             yield return new WaitForSeconds(0.02f);
         }
     }
-    /****************************************************/
+
 }
 /*
  * private Rigidbody rigid;
