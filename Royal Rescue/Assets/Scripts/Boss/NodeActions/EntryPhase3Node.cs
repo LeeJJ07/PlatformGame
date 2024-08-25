@@ -7,7 +7,7 @@ public class EntryPhase3Node : INode
     GameObject angryLight;
     Transform transform;
     Transform target;
-    ParticleSystem shockWave;
+    ParticleSystem shockWaveParticle;
     Animator aniController;
     float shockWaveStartTime = 1f;
     float shockWaveSpan = 0;
@@ -21,7 +21,7 @@ public class EntryPhase3Node : INode
         angryLight = light;
         this.transform = transform;
         this.target = target;
-        this.shockWave = shockWave;
+        this.shockWaveParticle = shockWave;
         this.aniController = aniController;
     }
     public void AddNode(INode node) { }
@@ -52,13 +52,13 @@ public class EntryPhase3Node : INode
         if (shockWaveSpan >= shockWaveStartTime && !isStartParticle) 
         {
             isStartParticle=true;
-            shockWave.Play();
+            shockWaveParticle.Play();
         }
 
         if (time > animationDuration)
         {
             Debug.Log("entryPhase3 Success");
-            shockWave.Stop();
+            shockWaveParticle.Stop();
             time = 0;
             shockWaveSpan = 0;
             isActiveAnime = false;

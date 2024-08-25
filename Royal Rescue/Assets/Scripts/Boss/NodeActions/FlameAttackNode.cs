@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FlameAttackNode : INode
 {
-    public delegate void SpawnObj(GameObject obj, Vector3 posi);
+    public delegate GameObject SpawnObj(GameObject obj, Vector3 posi);
     SpawnObj SpawnFlame;
     FlameAttackScriptableObject flameAttackInfo;
     Transform flameSpawntransform;

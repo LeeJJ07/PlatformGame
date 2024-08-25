@@ -910,11 +910,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8318849989829502705, guid: 082bb750b02e06c408db81e4d5d9fd7c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -16.94
+      value: -8.8
       objectReference: {fileID: 0}
     - target: {fileID: 8318849989829502705, guid: 082bb750b02e06c408db81e4d5d9fd7c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.3
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 8318849989829502705, guid: 082bb750b02e06c408db81e4d5d9fd7c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -972,9 +972,21 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1138977421}
     - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: hp
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
       propertyPath: target
       value: 
       objectReference: {fileID: 1138977421}
+    - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: breathAttackDistance
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: Phase2breathAttackInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: 37dc83238470a9246a06b4fb9b86454c, type: 2}
     - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
       propertyPath: spawnRange.Array.data[0]
       value: 
@@ -1027,7 +1039,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1190110568995413838, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1040,6 +1053,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 924924314801418418, guid: aae54180ea0f2d342a8be784d2e84542, type: 3}
+      propertyPath: objectList.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 924924314801418418, guid: aae54180ea0f2d342a8be784d2e84542, type: 3}
+      propertyPath: objectList.Array.data[6]
+      value: 
+      objectReference: {fileID: 1634767862067424, guid: 007c57e2df8e9b144b99f471b84f3d56, type: 3}
     - target: {fileID: 974479818523085481, guid: aae54180ea0f2d342a8be784d2e84542, type: 3}
       propertyPath: m_Name
       value: PullingDirector

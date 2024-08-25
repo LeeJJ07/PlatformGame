@@ -7,7 +7,7 @@ public class EntryPhase1ScreamNode : INode
     Transform transform;
     Transform target;
     Animator aniController;
-    ParticleSystem shockWave;
+    ParticleSystem shockWaveParticle;
     float shockWaveStartTime = 1f;
     float shockWaveSpan = 0;
     float time = 0;
@@ -20,7 +20,7 @@ public class EntryPhase1ScreamNode : INode
         this.transform = transform;
         this.target = target;
         this.aniController = aniController;
-        this.shockWave = shockWave;
+        this.shockWaveParticle = shockWave;
     }
     public void AddNode(INode node) { }
 
@@ -31,12 +31,12 @@ public class EntryPhase1ScreamNode : INode
         shockWaveSpan += Time.deltaTime;
         if (shockWaveSpan>=shockWaveStartTime&& !isStartParticle)
         {
-            shockWave.Play();
+            shockWaveParticle.Play();
             isStartParticle = true;
         }
         if (time >= animationDuration)
         {
-            shockWave.Stop();
+            shockWaveParticle.Stop();
             shockWaveSpan = 0;
             time = 0;
             isActiveAnime = false;

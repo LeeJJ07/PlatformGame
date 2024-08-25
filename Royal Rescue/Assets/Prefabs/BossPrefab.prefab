@@ -4983,6 +4983,7 @@ MonoBehaviour:
   Phase1screamAttackInfo: {fileID: 11400000, guid: 2b5637f32b346b8429e8fc667a707c30, type: 2}
   Phase2HpCondition: 7
   Phase2flameAttackInfo: {fileID: 11400000, guid: 50ba72bdb4f666a45a01afa405db7a53, type: 2}
+  Phase2breathAttackInfo: {fileID: 0}
   Phase2screamAttackInfo: {fileID: 11400000, guid: 9ffed9975c3ee944f856fd456714d550, type: 2}
   Phase2basicAttackInfo: {fileID: 11400000, guid: 958b84fc75e413844979f431c4803667, type: 2}
   angryLight: {fileID: 8121658675680668182}
@@ -4994,6 +4995,7 @@ MonoBehaviour:
   basicAttackDistance: 7
   screamAttackDistance: 50
   flameAttackDistance: 50
+  breathAttackDistance: 0
 --- !u!1 &8121658675680668182
 GameObject:
   m_ObjectHideFlags: 0
@@ -6276,7 +6278,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8299470050138854895}
   - component: {fileID: 8299470050131196015}
-  - component: {fileID: 1190110568995413838}
   m_Layer: 0
   m_Name: Red
   m_TagString: Untagged
@@ -6322,20 +6323,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1190110568995413838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8299470050138545291}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84a2a5e039721fc468b3db583ef9c3fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  flameSpawnPoint: {fileID: 8299470050138800909}
-  target: {fileID: 0}
 --- !u!1 &8299470050138548263
 GameObject:
   m_ObjectHideFlags: 0

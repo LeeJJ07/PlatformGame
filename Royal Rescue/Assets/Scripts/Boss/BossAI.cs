@@ -27,6 +27,7 @@ public class BossAI : MonoBehaviour
 
     [Header("PHASE2 Skill Info")]
     [SerializeField] FlameAttackScriptableObject Phase2flameAttackInfo;
+    [SerializeField] BreathAttackScriptableObject Phase2breathAttackInfo;
     [SerializeField] ScreamAttackScriptableObject Phase2screamAttackInfo;
     [SerializeField] BasicAttackScriptableObject Phase2basicAttackInfo;
 
@@ -43,6 +44,7 @@ public class BossAI : MonoBehaviour
     [SerializeField] float basicAttackDistance;
     [SerializeField] float screamAttackDistance;
     [SerializeField] float flameAttackDistance;
+    [SerializeField] float breathAttackDistance;
 
     PullingDirector pullingDirector;
 
@@ -60,6 +62,7 @@ public class BossAI : MonoBehaviour
     INode targetinFlameAttackRange;
     INode targetinScreamAttackRange;
     INode targetinBasicAttackRange;
+    INode targetinBreathAttackRange;
     /// ///////////////////////
 
     INode phase1HpConditionDecorator;
@@ -75,11 +78,13 @@ public class BossAI : MonoBehaviour
     INode phase2FlameAttackNode;
     INode phase2ScreamAttackNode;
     INode phase2BasicAttackNode;
+    INode phase2BreathAttackNode;
     INode phase2EntryNode;
     INode checkIncomingPhase2;
     INode phase2BasicAttackDelay;
     INode phase2FlameAttackDelay;
     INode phase2ScreamAttackDelay;
+    INode phase2BreathAttackDelay;
 
     INode phase3HpConditionDecorator;
     INode phase3FlameAttackNode;
@@ -110,14 +115,17 @@ public class BossAI : MonoBehaviour
     Parallel phase2;//보스체력>30%    Sequence EntryPhase2Sequence;
     Parallel phase2basicAttackmoveParallel;
     Parallel phase2screamAttackmoveParallel;
+    Parallel phase2breathAttackmoveParallel;
     Parallel phase2flameAttackmoveParallel;
     Sequence entryPhase2Sequence;
     RandomSelector phase2AttackRandomSelector;
     Selector phase2ActionSelector;
     Selector phase2BasicAttackSelector;
+    Selector phase2BreathAttackSelector;
     Selector phase2FlameAttackSelector;
     Selector phase2ScreamAttackSelector;
     Sequence phase2BasicAttackSequence;
+    Sequence phase2BreathAttackSequence;
     Sequence phase2FlameAttackSequence;
     Sequence phase2ScreamAttackSequence;
 
@@ -157,12 +165,15 @@ public class BossAI : MonoBehaviour
         targetinFlameAttackRange = new ChecktoTargetDistance(transform, target, flameAttackDistance);
         targetinScreamAttackRange = new ChecktoTargetDistance(transform, target, screamAttackDistance);
         targetinBasicAttackRange = new ChecktoTargetDistance(transform, target, basicAttackDistance);
+        targetinBreathAttackRange = new ChecktoTargetDistance(transform, target, breathAttackDistance);
+
         phase1FlameAttackDelay = new NodeDelay(Phase1flameAttackInfo.subSequenceDelay,aniController);
         phase1ScreamAttackDelay = new NodeDelay(Phase1screamAttackInfo.subSequenceDelay,aniController);
 
         phase2BasicAttackDelay = new NodeDelay(Phase2basicAttackInfo.subSequenceDelay,aniController);
         phase2FlameAttackDelay = new NodeDelay(Phase2flameAttackInfo.subSequenceDelay,aniController);
         phase2ScreamAttackDelay = new NodeDelay(Phase2screamAttackInfo.subSequenceDelay,aniController);
+        phase2BreathAttackDelay = new NodeDelay(Phase2breathAttackInfo.subSequenceDelay, aniController);
 
         phase3BasicAttackDelay = new NodeDelay(Phase3basicAttackInfo.subSequenceDelay,aniController);
         phase3FlameAttackDelay = new NodeDelay(Phase3flameAttackInfo.subSequenceDelay,aniController);
@@ -181,7 +192,7 @@ public class BossAI : MonoBehaviour
         phase2FlameAttackNode = new FlameAttackNode(Phase2flameAttackInfo, SpawnObjects, flamePosition, aniController, transform, target);
         phase2ScreamAttackNode = new ScreamAttackNode(Phase2screamAttackInfo, aniController, shockWave, RandomSpawnObjects, transform, target);
         phase2BasicAttackNode = new BasicAttackNode(Phase2basicAttackInfo, aniController, transform, target);
-
+        phase2BreathAttackNode = new BreathAttackNode(SpawnObjects, Phase2breathAttackInfo, aniController, flamePosition, transform, target);
 
         phase3EntryNode = new EntryPhase3Node(angryLight, transform, target, shockWave, aniController);
         phase3FlameAttackNode = new FlameAttackNode(Phase3flameAttackInfo,SpawnObjects, flamePosition, aniController,transform,target);
@@ -206,11 +217,14 @@ public class BossAI : MonoBehaviour
         phase2ActionSelector = new Selector("phase2ActionSelector");
         phase2FlameAttackSelector = new Selector();
         phase2BasicAttackSelector = new Selector();
+        phase2BreathAttackSelector = new Selector();
         phase2basicAttackmoveParallel = new Parallel ();
         phase2screamAttackmoveParallel = new Parallel();
+        phase2breathAttackmoveParallel = new Parallel();
         phase2flameAttackmoveParallel = new Parallel();
         phase2ScreamAttackSelector = new Selector();
         phase2BasicAttackSequence = new Sequence();
+        phase2BreathAttackSequence = new Sequence();
         phase2ScreamAttackSequence = new Sequence();
         phase2FlameAttackSequence = new Sequence();
 
@@ -265,6 +279,8 @@ public class BossAI : MonoBehaviour
         //페이지2 트리
         phase2ScreamAttackSequence.AddNode(phase2ScreamAttackNode);
         phase2ScreamAttackSequence.AddNode(phase2ScreamAttackDelay);
+        phase2BreathAttackSequence.AddNode(phase2BreathAttackNode);
+        phase2BreathAttackSequence.AddNode(phase2BreathAttackDelay);
         phase2BasicAttackSequence.AddNode(phase2BasicAttackNode);
         phase2BasicAttackSequence.AddNode(phase2BasicAttackDelay);
         phase2FlameAttackSequence.AddNode(phase2FlameAttackNode);
@@ -285,9 +301,15 @@ public class BossAI : MonoBehaviour
         phase2BasicAttackSelector.AddNode(phase2basicAttackmoveParallel);
         phase2BasicAttackSelector.AddNode(phase2BasicAttackSequence);
 
-        phase2AttackRandomSelector.AddNode(phase2BasicAttackSelector);
-        phase2AttackRandomSelector.AddNode(phase2ScreamAttackSelector);
-        phase2AttackRandomSelector.AddNode(phase2FlameAttackSelector);
+        phase2breathAttackmoveParallel.AddNode(targetinBreathAttackRange);
+        phase2breathAttackmoveParallel.AddNode(moveNode);
+        phase2BreathAttackSelector.AddNode(phase2breathAttackmoveParallel);
+        phase2BreathAttackSelector.AddNode(phase2BreathAttackSequence);
+
+        //phase2AttackRandomSelector.AddNode(phase2BasicAttackSelector);
+        //phase2AttackRandomSelector.AddNode(phase2ScreamAttackSelector);
+        //phase2AttackRandomSelector.AddNode(phase2FlameAttackSelector);
+        phase2AttackRandomSelector.AddNode(phase2BreathAttackSelector);
         entryPhase2Sequence.AddNode(checkIncomingPhase2);
         entryPhase2Sequence.AddNode(phase2EntryNode);
         phase2ActionSelector.AddNode(entryPhase2Sequence);
@@ -391,9 +413,9 @@ public class BossAI : MonoBehaviour
     }
 
     //지정한 위치로 객체 활성화
-    public void SpawnObjects(GameObject obj,Vector3 posi)
+    public GameObject SpawnObjects(GameObject obj,Vector3 posi)
     {
-        pullingDirector.SpawnObject(obj.tag, posi);
+        return pullingDirector.SpawnObject(obj.tag, posi);
     }
 
     //지정한 위치와 갯수만큼 객체 활성화
