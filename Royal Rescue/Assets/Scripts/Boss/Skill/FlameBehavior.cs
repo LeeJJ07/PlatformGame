@@ -6,31 +6,34 @@ public class FlameBehavior : MonoBehaviour,ITag
     string detailTag = "";
     [SerializeField] ParticleSystem flameParticle;
     [SerializeField] ParticleSystem explosionParticle;
+    [SerializeField] string[] ignoreTagList;
     [SerializeField] float moveSpeed;
+
     Coroutine skillCoroutine;
     Transform target;
-    bool isPlayExposion = false;
     Vector3 dir;
+    bool isExplosion = false;
     public void OnEnable()
     {
         target = GameObject.FindWithTag("Player").transform;
         flameParticle.Play();
         explosionParticle.Stop();
         skillCoroutine = StartCoroutine("ActiveFlameSkill");
+     
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Equals("Skill")) 
+        if (other.CompareTag("Boss")||other.CompareTag("Skill"))
             return;
         StopCoroutine(skillCoroutine);
         flameParticle.Stop();
-        if(!isPlayExposion)
+        if(!isExplosion)
         {
             explosionParticle.Play();
-            Debug.Log($"explosionParticle: {explosionParticle.duration}");
-            isPlayExposion = true;
+            isExplosion = true;
         }
-        gameObject.SetActive(false);
+
+        StartCoroutine("WaitDeActiveFlameSkill");
     }
     IEnumerator ActiveFlameSkill()
     {
@@ -38,10 +41,17 @@ public class FlameBehavior : MonoBehaviour,ITag
         dir = target.position - transform.position;
         while (true)
         {
-            
             transform.position += dir.normalized * moveSpeed * Time.deltaTime;
             yield return null;
         }
+    }
+    IEnumerator WaitDeActiveFlameSkill()
+    {
+        yield return new WaitForSeconds(explosionParticle.duration);
+        
+        explosionParticle.Stop();
+        isExplosion = false;
+        gameObject.SetActive(false);
     }
 
     public string GetTag()

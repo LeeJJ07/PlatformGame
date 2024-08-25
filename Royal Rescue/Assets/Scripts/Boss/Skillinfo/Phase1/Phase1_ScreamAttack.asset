@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5206759575dd8bc459b7a516f0257a39, type: 3}
   m_Name: Phase1_ScreamAttack
   m_EditorClassIdentifier: 
-  shockWave: {fileID: 9123670791413073259, guid: 0ca9b61117dfe9a489792a44806bdd5e, type: 3}
   transform: {fileID: 0}
+  shockWaveObj: {fileID: 3257248776282636964, guid: 0ca9b61117dfe9a489792a44806bdd5e, type: 3}
   objs:
   - {fileID: 7152337332152818099, guid: 6b0d7834836fa044ca718a5e21c5ca06, type: 3}
   objSpawnCount: 3

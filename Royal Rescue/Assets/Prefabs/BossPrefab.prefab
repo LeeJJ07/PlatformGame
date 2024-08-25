@@ -4911,7 +4911,7 @@ GameObject:
   - component: {fileID: 5634215112690301091}
   - component: {fileID: 2424326631092252458}
   - component: {fileID: 4123994617682032421}
-  m_Layer: 6
+  m_Layer: 10
   m_Name: BossPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4968,32 +4968,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ce6174997df7994f817c15c17e74009, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  warningPrefab: {fileID: 0}
-  spawnRange: []
+  warningPrefab: {fileID: 7360912941218823822, guid: 8e99ae799f6f16243aeb4a94dfced891, type: 3}
+  spawnRange:
+  - {fileID: 0}
+  - {fileID: 0}
   target: {fileID: 0}
   flamePosition: {fileID: 8299470050138828525}
   aniController: {fileID: 8299470050131196015}
-  hp: 100
+  hp: 7
   moveSpeed: 5
-  shockWave: {fileID: 0}
+  shockWave: {fileID: 3257248776282636964, guid: 0ca9b61117dfe9a489792a44806bdd5e, type: 3}
   Phase1HpCondition: 10
-  Phase1flameAttackInfo: {fileID: 0}
-  Phase1screamAttackInfo: {fileID: 0}
+  Phase1flameAttackInfo: {fileID: 11400000, guid: b7ed442ee7a98d743baac1d0978ac10a, type: 2}
+  Phase1screamAttackInfo: {fileID: 11400000, guid: 2b5637f32b346b8429e8fc667a707c30, type: 2}
   Phase2HpCondition: 7
-  Phase2flameAttackInfo: {fileID: 0}
-  Phase2breathAttackInfo: {fileID: 0}
-  Phase2screamAttackInfo: {fileID: 0}
-  Phase2basicAttackInfo: {fileID: 0}
+  Phase2flameAttackInfo: {fileID: 11400000, guid: 50ba72bdb4f666a45a01afa405db7a53, type: 2}
+  Phase2breathAttackInfo: {fileID: 11400000, guid: 37dc83238470a9246a06b4fb9b86454c, type: 2}
+  Phase2screamAttackInfo: {fileID: 11400000, guid: 9ffed9975c3ee944f856fd456714d550, type: 2}
+  Phase2basicAttackInfo: {fileID: 11400000, guid: 958b84fc75e413844979f431c4803667, type: 2}
   angryLight: {fileID: 8121658675680668182}
   Phase3HpCondition: 5
-  Phase3flameAttackInfo: {fileID: 0}
-  Phase3screamAttackInfo: {fileID: 0}
-  Phase3basicAttackInfo: {fileID: 0}
-  Phase3RushAttackInfo: {fileID: 0}
+  Phase3flameAttackInfo: {fileID: 11400000, guid: 2c7a365421c32b94f86d04c61a264c36, type: 2}
+  Phase3screamAttackInfo: {fileID: 11400000, guid: 26db39c48611e2e49908f648c900e88b, type: 2}
+  Phase3basicAttackInfo: {fileID: 11400000, guid: 96ae2a5270ef06042a257d54ca4f511a, type: 2}
+  Phase3RushAttackInfo: {fileID: 11400000, guid: 8c62a58717d6bf64d9f8ad056a1ec55d, type: 2}
   basicAttackDistance: 7
   screamAttackDistance: 50
   flameAttackDistance: 50
-  breathAttackDistance: 18
+  breathAttackDistance: 30
 --- !u!1 &8121658675680668182
 GameObject:
   m_ObjectHideFlags: 0

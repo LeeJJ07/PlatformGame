@@ -42,18 +42,15 @@ public class BreathAttackNode : INode
         if (breathObj!=null)
             breathObj.transform.position = particlSpawnPosi.position;
         skillActiveSpan += Time.deltaTime;
-        /*Debug.Log($"skillStartTime: {skillStartTime}, skillEndTime: {skillEndTime},animationDuration: {animationDuration}");
-        Debug.Log($"skillActiveSpan: {skillActiveSpan}");*/
+
         ActiveAnimation();
         if ((skillActiveSpan >= skillStartTime) && !isStartParticle)
         {
-            Debug.Log("particle Play");
             breathObj.GetComponent<ParticleSystem>().Play();
             isStartParticle = true;
         }
         else if ((skillActiveSpan >= skillEndTime) && isStartParticle)
         {
-            Debug.Log("particle Stop");
             breathObj.GetComponent<ParticleSystem>().Stop();
         }
 
@@ -78,9 +75,13 @@ public class BreathAttackNode : INode
         if (aniController.GetCurrentAnimatorStateInfo(0).IsName("Flame Attack"))
         {
             breathObj = SpawnBreathParticle(breathAttackInfo.breathObj, particlSpawnPosi.position);
-            breathObj.transform.rotation = Quaternion.Euler(0,-90,0);
+
+            Vector3 breathShootDir = target.position - breathObj.transform.position;
+
+            breathObj.transform.rotation = Quaternion.LookRotation(breathShootDir.normalized);
+            
             animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length;
-            skillEndTime = animationDuration - 0.5f;
+            skillEndTime = animationDuration - 0.6f;
             Vector3 dir = target.position - transform.position;
             if (dir.normalized.x < 0)
                 transform.rotation = Quaternion.Euler(0, -90, 0);

@@ -43,7 +43,6 @@ public class ScreamAttackNode : INode
             shockWaveObj.transform.position = particlePosi.position;
         if(shockWaveSpan>=shockWaveStartTime&&!isStartParticle)
         {
-            Debug.Log("particle start");
             shockWaveObj.GetComponent<ParticleSystem>().Play();
             isStartParticle = true;
         }

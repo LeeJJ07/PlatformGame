@@ -187,7 +187,7 @@ public class BossBehaviour : MonoBehaviour
         phase1FlameAttackNode = new FlameAttackNode(Phase1flameAttackInfo, SpawnObjects, flamePosition, aniController,transform,target);
         phase1ScreamAttackNode = new ScreamAttackNode(Phase1screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase1EntryLandNode = new EntryPhase1LandNode(transform, target, aniController);
-        phase1EntryScreamNode = new EntryPhase1ScreamNode(transform, target, aniController,shockWave);
+        phase1EntryScreamNode = new EntryPhase1ScreamNode(transform, target, aniController,shockWave,flamePosition, SpawnObjectWithITag);
 
         phase2EntryNode = new EntryPhase2Node(transform, target, shockWave, aniController);
         phase2FlameAttackNode = new FlameAttackNode(Phase2flameAttackInfo, SpawnObjects, flamePosition, aniController, transform, target);
@@ -307,9 +307,9 @@ public class BossBehaviour : MonoBehaviour
         phase2BreathAttackSelector.AddNode(phase2breathAttackmoveParallel);
         phase2BreathAttackSelector.AddNode(phase2BreathAttackSequence);
 
-        //phase2AttackRandomSelector.AddNode(phase2BasicAttackSelector);
-        //phase2AttackRandomSelector.AddNode(phase2ScreamAttackSelector);
-        //phase2AttackRandomSelector.AddNode(phase2FlameAttackSelector);
+        phase2AttackRandomSelector.AddNode(phase2BasicAttackSelector);
+        phase2AttackRandomSelector.AddNode(phase2ScreamAttackSelector);
+        phase2AttackRandomSelector.AddNode(phase2FlameAttackSelector);
         phase2AttackRandomSelector.AddNode(phase2BreathAttackSelector);
         entryPhase2Sequence.AddNode(checkIncomingPhase2);
         entryPhase2Sequence.AddNode(phase2EntryNode);

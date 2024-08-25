@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eed1eb23141bafe4f9ba279941b5bee1, type: 3}
   m_Name: Phase2_BreathAttack
   m_EditorClassIdentifier: 
-  breathObj: {fileID: 5512514789101413374, guid: 117f0364ce8bd6f498ba497d7f8b46ea, type: 3}
+  breathObj: {fileID: 4556307209356250449, guid: 117f0364ce8bd6f498ba497d7f8b46ea, type: 3}
   damage: 5
   subSequenceDelay: 3

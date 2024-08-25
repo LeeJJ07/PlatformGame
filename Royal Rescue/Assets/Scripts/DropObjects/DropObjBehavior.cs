@@ -14,6 +14,7 @@ public class DropObjBehavior : MonoBehaviour,ITag
     [SerializeField] float detectGroundRayDistance;
     [SerializeField] bool destroyObj = false;
     [SerializeField] LayerMask[] detectLayers;
+
     Ray dangerZoneSpawnRay;
     RaycastHit dangerZoneSpawnHit;
     GameObject deactiveDangerZoneObj;

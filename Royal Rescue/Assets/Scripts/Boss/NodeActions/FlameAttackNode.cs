@@ -12,11 +12,13 @@ public class FlameAttackNode : INode
     Animator aniController;
     Transform transform;
     Transform target;
-    float flameShootStartTime = 0.2f;
+    float flameShootStartTime = 0.5f;
     float shootGap = 0;
-    float shootTime = 0;
+    float startShootTime = 100;
     float animationDuration = 100;
     float skillActiveSpan = 0;
+    int shootCount = 0;
+
     bool isActiveAnime = false;
 
 
@@ -28,7 +30,6 @@ public class FlameAttackNode : INode
         this.aniController = aniController;
         this.transform = transform;
         this.target = target;
-        shootTime = flameShootStartTime;
     }
     public void AddNode(INode node) { }
 
@@ -39,19 +40,21 @@ public class FlameAttackNode : INode
             Debug.Log("FlameAttack Failure");
             return INode.NodeState.Failure;
         }
-        skillActiveSpan += Time.deltaTime;
         ActiveAnimation();
-        if (skillActiveSpan >= shootTime)
+        Debug.Log($"startShootTime: {startShootTime}");
+        skillActiveSpan += Time.deltaTime;
+        if (skillActiveSpan >= startShootTime&& shootCount<flameAttackInfo.flameCount)
         {
             SpawnFlame(flameAttackInfo.flameObj, flameSpawntransform.position);
-            shootTime += shootGap;
+            startShootTime += shootGap;
+            shootCount++;
         }
         if (skillActiveSpan >= animationDuration)
         {
             Debug.Log("FlameAttack Success");
-            
             isActiveAnime = false;
-            shootTime = flameShootStartTime;
+            startShootTime = 100;
+            shootCount = 0;
             skillActiveSpan = 0;
             return INode.NodeState.Success;
         }
@@ -65,7 +68,8 @@ public class FlameAttackNode : INode
         if (aniController.GetCurrentAnimatorStateInfo(0).IsName("Flame Attack"))
         {
             animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length;
-            shootGap = animationDuration / (float)(flameAttackInfo.flameCount+1);
+            shootGap = (animationDuration - flameShootStartTime-1f) / (float)(flameAttackInfo.flameCount);
+            startShootTime = flameShootStartTime;
             Vector3 dir = target.position - transform.position;
             if (dir.normalized.x < 0)
                 transform.rotation = Quaternion.Euler(0, -90, 0);
