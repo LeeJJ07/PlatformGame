@@ -345,6 +345,12 @@ public class PlayerControlManagerFix : MonoBehaviour
             fieldView.weight += 0.01f;
             yield return new WaitForSeconds(0.02f);
         }
+        yield return new WaitForSeconds(8f);
+        for(int i = 0; i < 100; i++) 
+        {
+            fieldView.weight -= 0.01f;
+            yield return new WaitForSeconds(0.02f);
+        }
     }
     /****************************************************/
 }
