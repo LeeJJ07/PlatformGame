@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd836d94d3f57f54c8e88b316146570a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detailTag: flame
   flameParticle: {fileID: 27911454026559427}
   explosionParticle: {fileID: 3599827170578653174}
   moveSpeed: 20

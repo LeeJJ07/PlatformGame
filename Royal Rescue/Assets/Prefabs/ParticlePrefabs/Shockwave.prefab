@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 7943698580335787731}
   - component: {fileID: 9123670791413073259}
   - component: {fileID: 6487534290857816420}
+  - component: {fileID: 2486483057738839693}
   m_Layer: 0
   m_Name: Shockwave
-  m_TagString: Untagged
+  m_TagString: Skill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -287,7 +288,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 50
+      scalar: 1
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4900,3 +4901,16 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
+--- !u!114 &2486483057738839693
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3257248776282636964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0cd8b88c486cf341a4542cd62e11ed7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detailTag: hockWave

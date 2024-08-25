@@ -7,18 +7,18 @@ public class EntryPhase2Node : INode
     Transform transform;
     Transform target;
     Animator aniController;
-    ParticleSystem shockWaveParticle;
+    GameObject shockWaveObj;
     float shockWaveStartTime = 1f;
     float shockWaveSpan = 0;
     float time = 0;
     float animationDuration = 100;
     bool isStartParticle = false;
     bool isActiveAnime = false;
-    public EntryPhase2Node(Transform transform, Transform target, ParticleSystem shockWave ,Animator aniController)
+    public EntryPhase2Node(Transform transform, Transform target, GameObject shockWave ,Animator aniController)
     {
         this.transform = transform;
         this.target = target;
-        this.shockWaveParticle = shockWave;
+        this.shockWaveObj = shockWave;
         this.aniController = aniController;
     }
     public void AddNode(INode node) { }
@@ -49,13 +49,13 @@ public class EntryPhase2Node : INode
         }
         if (shockWaveSpan >= shockWaveStartTime && !isStartParticle)
         {
-            shockWaveParticle.Play();
+            shockWaveObj.GetComponent<ParticleSystem>().Play();
             isStartParticle = true;
         }
         if (time > animationDuration) 
         {
             Debug.Log("entryPhase2 Success");
-            shockWaveParticle.Stop();
+            shockWaveObj.GetComponent<ParticleSystem>().Stop();
             time = 0;
             shockWaveSpan = 0;
             isActiveAnime = false;

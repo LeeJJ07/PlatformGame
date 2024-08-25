@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static BreathAttackNode;
 //살려줘...
 
 public class BossBehaviour : MonoBehaviour
@@ -13,7 +14,7 @@ public class BossBehaviour : MonoBehaviour
     [SerializeField] Animator aniController;
     [SerializeField] float hp = 100;
     [SerializeField] float moveSpeed = 0;
-    [SerializeField] ParticleSystem shockWave;
+    [SerializeField] GameObject shockWave;
 
     [Header("Phase1")]
     [SerializeField] float Phase1HpCondition;
@@ -155,9 +156,9 @@ public class BossBehaviour : MonoBehaviour
         //조건 노드들
         
         DieHpConditionDecorator = new CheckHp(GetHp, 0,-100);
-        phase1HpConditionDecorator = new CheckHp(GetHp, Phase1HpCondition1, Phase2HpCondition1);
-        phase2HpConditionDecorator = new CheckHp(GetHp, Phase2HpCondition1, Phase3HpCondition1);
-        phase3HpConditionDecorator = new CheckHp(GetHp, Phase3HpCondition1, 0);
+        phase1HpConditionDecorator = new CheckHp(GetHp, Phase1HpCondition, Phase2HpCondition);
+        phase2HpConditionDecorator = new CheckHp(GetHp, Phase2HpCondition, Phase3HpCondition);
+        phase3HpConditionDecorator = new CheckHp(GetHp, Phase3HpCondition, 0);
         checkIncomingPhase1 = new CheckIncomingPhase();
         checkIncomingPhase2 = new CheckIncomingPhase();
         checkIncomingPhase3 = new CheckIncomingPhase();
@@ -184,21 +185,21 @@ public class BossBehaviour : MonoBehaviour
         moveNode = new MoveNode(transform, target, aniController, moveSpeed);
         DieNode = new DieNode(DeActivateObj, transform, target, aniController);
         phase1FlameAttackNode = new FlameAttackNode(Phase1flameAttackInfo, SpawnObjects, flamePosition, aniController,transform,target);
-        phase1ScreamAttackNode = new ScreamAttackNode(Phase1screamAttackInfo,aniController, shockWave, RandomSpawnObjects, transform,target);
+        phase1ScreamAttackNode = new ScreamAttackNode(Phase1screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase1EntryLandNode = new EntryPhase1LandNode(transform, target, aniController);
         phase1EntryScreamNode = new EntryPhase1ScreamNode(transform, target, aniController,shockWave);
 
         phase2EntryNode = new EntryPhase2Node(transform, target, shockWave, aniController);
         phase2FlameAttackNode = new FlameAttackNode(Phase2flameAttackInfo, SpawnObjects, flamePosition, aniController, transform, target);
-        phase2ScreamAttackNode = new ScreamAttackNode(Phase2screamAttackInfo, aniController, shockWave, RandomSpawnObjects, transform, target);
+        phase2ScreamAttackNode = new ScreamAttackNode(Phase2screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase2BasicAttackNode = new BasicAttackNode(Phase2basicAttackInfo, aniController, transform, target);
         phase2BreathAttackNode = new BreathAttackNode(SpawnObjects, Phase2breathAttackInfo, aniController, flamePosition, transform, target);
 
         phase3EntryNode = new EntryPhase3Node(angryLight, transform, target, shockWave, aniController);
         phase3FlameAttackNode = new FlameAttackNode(Phase3flameAttackInfo,SpawnObjects, flamePosition, aniController,transform,target);
-        phase3ScreamAttackNode = new ScreamAttackNode(Phase3screamAttackInfo, aniController,shockWave, RandomSpawnObjects, transform, target);
+        phase3ScreamAttackNode = new ScreamAttackNode(Phase3screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase3BasicAttackNode = new BasicAttackNode(Phase3basicAttackInfo, aniController, transform, target);
-        phase3RushAttackNode = new RushAttackNode(Phase3RushAttackInfo, RandomSpawnObjects, aniController, transform, target);
+        phase3RushAttackNode = new RushAttackNode(Phase3RushAttackInfo, RandomSpawnObjectsWithITag, aniController, transform, target);
         phase3WarningRushAttack = new WarningRushAttack(SpawnObjects, angryLight, warningPrefab, transform.position, Phase3RushAttackInfo.warningDelay);
 
 
@@ -407,7 +408,7 @@ public class BossBehaviour : MonoBehaviour
             float randomPosiX = Random.Range(spawnRange[0].position.x, spawnRange[1].position.x);
 
             Vector3 pos = new Vector3(randomPosiX, spawnRange[0].position.y, 0);
-            int randomIndex = Random.Range(0, objs.Length);
+            int randomIndex = Random.Range(0, objs.Length-1);
             pullingDirector.SpawnObject(objs[randomIndex].tag, pos);
         }
     }
@@ -416,6 +417,22 @@ public class BossBehaviour : MonoBehaviour
     public GameObject SpawnObjects(GameObject obj,Vector3 posi)
     {
         return pullingDirector.SpawnObject(obj.tag, posi);
+    }
+
+    public void RandomSpawnObjectsWithITag(GameObject[] objs, int spawnCount)
+    {
+        for (int i = 0; i < spawnCount; i++)
+        {
+            float randomPosiX = Random.Range(spawnRange[0].position.x, spawnRange[1].position.x);
+
+            Vector3 posi = new Vector3(randomPosiX, spawnRange[0].position.y, 0);
+            int randomIndex = Random.Range(0, objs.Length - 1);
+            pullingDirector.SpawnObjectwithITag(objs[randomIndex].tag, objs[randomIndex].GetComponent<ITag>(), posi);
+        }
+    }
+    public GameObject SpawnObjectWithITag(GameObject obj, Vector3 posi)
+    {
+        return pullingDirector.SpawnObjectwithITag(obj.tag, obj.GetComponent<ITag>(), posi);
     }
 
     //지정한 위치와 갯수만큼 객체 활성화
@@ -434,17 +451,5 @@ public class BossBehaviour : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, 5);
 
     }
-    #region 변수 캡슐화(region)
-    public Transform FlamePosition { get => flamePosition; }
-    public Animator EnemyAnimation { get => aniController; }
-    public float BasicAttackRange { get => basicAttackDistance; }
-    public float ScreamSkillRange { get => screamAttackDistance; }
-    public float FlameSkillRange { get => flameAttackDistance; }
-    public float Phase1HpCondition1 { get => Phase1HpCondition; }
-    public float Phase2HpCondition1 { get => Phase2HpCondition; }
-    public float Phase3HpCondition1 { get => Phase3HpCondition; }
-    public GameObject AngryLight { get => angryLight; }
-
-    #endregion
 }
 

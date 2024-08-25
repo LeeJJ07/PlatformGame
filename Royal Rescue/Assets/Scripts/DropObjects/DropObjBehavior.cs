@@ -1,8 +1,10 @@
 using System.Collections;
 using UnityEngine;
 
-public class DropObjBehavior : MonoBehaviour
+public class DropObjBehavior : MonoBehaviour,ITag
 {
+    [Header("Detail Tag"), SerializeField]
+    string detailTag="";
     //PlayerController playerController;
     PullingDirector pulling;
     [SerializeField] GameObject dangerZoneObj;
@@ -81,5 +83,14 @@ public class DropObjBehavior : MonoBehaviour
             deactiveDangerZoneObj.SetActive(false);
             isEndDelay = false;
         }
+    }
+
+    public string GetTag()
+    {
+        return detailTag;
+    }
+    public bool CompareToTag(string detailTag)
+    {
+        return this.detailTag == detailTag;
     }
 }

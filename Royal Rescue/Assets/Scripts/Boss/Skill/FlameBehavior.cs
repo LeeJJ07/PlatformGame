@@ -1,7 +1,9 @@
 using System.Collections;
 using UnityEngine;
-public class FlameBehavior : MonoBehaviour
+public class FlameBehavior : MonoBehaviour,ITag
 {
+    [Header("Detail Tag"), SerializeField]
+    string detailTag = "";
     [SerializeField] ParticleSystem flameParticle;
     [SerializeField] ParticleSystem explosionParticle;
     [SerializeField] float moveSpeed;
@@ -25,6 +27,7 @@ public class FlameBehavior : MonoBehaviour
         if(!isPlayExposion)
         {
             explosionParticle.Play();
+            Debug.Log($"explosionParticle: {explosionParticle.duration}");
             isPlayExposion = true;
         }
         gameObject.SetActive(false);
@@ -40,5 +43,14 @@ public class FlameBehavior : MonoBehaviour
             yield return null;
         }
     }
-    
+
+    public string GetTag()
+    {
+        return detailTag;
+    }
+
+    public bool CompareToTag(string detailTag)
+    {
+        return this.detailTag == detailTag;
+    }
 }
