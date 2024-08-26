@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class MiniBossBaseAttack : INode
 {
+    public MiniBossBaseAttack()
+    {
+
+    }
     public void AddNode(INode node)
     {
     }
 
     public INode.NodeState Evaluate()
     {
-        throw new System.NotImplementedException();
+        return INode.NodeState.Failure;
     }
 }

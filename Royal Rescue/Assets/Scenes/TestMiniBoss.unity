@@ -122,6 +122,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &70391157
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 70391158}
+  m_Layer: 0
+  m_Name: StartPlayerPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &70391158
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 70391157}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -24, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &258309100
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,15 +259,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8318849989829502705, guid: 082bb750b02e06c408db81e4d5d9fd7c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -21.66
+      value: -16.83
       objectReference: {fileID: 0}
     - target: {fileID: 8318849989829502705, guid: 082bb750b02e06c408db81e4d5d9fd7c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.87
+      value: 2.36
       objectReference: {fileID: 0}
     - target: {fileID: 8318849989829502705, guid: 082bb750b02e06c408db81e4d5d9fd7c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.11177254
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8318849989829502705, guid: 082bb750b02e06c408db81e4d5d9fd7c, type: 3}
       propertyPath: m_LocalRotation.w
@@ -299,6 +330,23 @@ CapsuleCollider:
   m_Height: 1.44
   m_Direction: 1
   m_Center: {x: 0, y: 0.49, z: 0.29}
+--- !u!114 &1036795357
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1036795354}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0644a0546a65dca41ba499fc4c541400, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
+  player: {fileID: 1476518723}
+  startPosition: {fileID: 1988662463}
+  startPlayerPosition: {fileID: 70391158}
+  x: 0
 --- !u!1 &1152196022
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,6 +441,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1476518723 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4675750158729713771, guid: 082bb750b02e06c408db81e4d5d9fd7c, type: 3}
+  m_PrefabInstance: {fileID: 508024441}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1988662462
 GameObject:
   m_ObjectHideFlags: 0
@@ -547,7 +600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4172131224096474963, guid: b9278a55f9c25a1419cabe52f613380d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.69
+      value: 8.3
       objectReference: {fileID: 0}
     - target: {fileID: 4172131224096474963, guid: b9278a55f9c25a1419cabe52f613380d, type: 3}
       propertyPath: m_LocalPosition.y
@@ -592,6 +645,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3624100848521550685, guid: b9278a55f9c25a1419cabe52f613380d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1036795355}
+    - targetCorrespondingSourceObject: {fileID: 3624100848521550685, guid: b9278a55f9c25a1419cabe52f613380d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1036795357}
   m_SourcePrefab: {fileID: 100100000, guid: b9278a55f9c25a1419cabe52f613380d, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -603,3 +659,4 @@ SceneRoots:
   - {fileID: 8750313078140707371}
   - {fileID: 508024441}
   - {fileID: 1988662463}
+  - {fileID: 70391158}

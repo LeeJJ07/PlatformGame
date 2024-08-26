@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class CheckProbability : INode
 {
+    public CheckProbability()
+    {
+
+    }
     public void AddNode(INode node)
     {
     }
 
     public INode.NodeState Evaluate()
     {
-        throw new System.NotImplementedException();
+        return INode.NodeState.Failure;
     }
 }

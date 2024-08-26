@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class CheckMiniBossHp : INode
 {
+    public CheckMiniBossHp()
+    {
+
+    }
     public void AddNode(INode node)
     {
     }
 
     public INode.NodeState Evaluate()
     {
-        throw new System.NotImplementedException();
+        return INode.NodeState.Failure;
     }
 }

@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class MiniBossAI : MonoBehaviour
 {
+    [SerializeField] float speed;
+
+    [SerializeField] GameObject player;
+    [SerializeField] Transform startPosition;
+    [SerializeField] Transform startPlayerPosition;
+
+    public float x;
 
     INode checkDead;
     INode deadAction;
@@ -34,8 +41,8 @@ public class MiniBossAI : MonoBehaviour
     {
         checkDead = new CheckMiniBossHp();
         deadAction = new DeadAction();
-        detectPlayer = new DetectPlayer();
-        returnAction = new ReturnAction();
+        detectPlayer = new DetectPlayer(player.transform, startPlayerPosition);
+        returnAction = new ReturnAction(transform, startPosition, speed, x);
         checkSkill1Probability = new CheckProbability();
         checkSkill1Range = new CheckAttackRange();
         skill1AttackAction = new MiniBossSkill1Attack();
@@ -46,16 +53,15 @@ public class MiniBossAI : MonoBehaviour
         baseAttackAction = new MiniBossBaseAttack();
         followPlayer = new FollowPlayer();
 
-        Selector root = new Selector();
-        Sequence deadSequence= new Sequence();
-        Sequence returnSequence = new Sequence();
-        Selector attackSelector = new Selector();
-        Sequence skill1Sequence = new Sequence();
-        Sequence skill2Sequence = new Sequence();
-        Sequence baseAttackSequence = new Sequence();
+        root = new Selector();
+        deadSequence= new Sequence();
+        returnSequence = new Sequence();
+        attackSelector = new Selector();
+        skill1Sequence = new Sequence();
+        skill2Sequence = new Sequence();
+        baseAttackSequence = new Sequence();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         deadSequence.AddNode(checkDead);
@@ -84,11 +90,11 @@ public class MiniBossAI : MonoBehaviour
         bt = new BehaviorTreeRunner(root);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isDie)
             return;
+
         bt.Operator();
     }
 }
