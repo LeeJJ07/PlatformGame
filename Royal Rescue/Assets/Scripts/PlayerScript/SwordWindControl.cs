@@ -19,7 +19,7 @@ public class SwordWindControl : MonoBehaviour
     private void Update()
     {
         transform.position += throwForce * ballDir * Time.deltaTime;
-        Destroy(this.gameObject, 1f);
+        Destroy(this.gameObject, 0.3f);
         //Æ÷¹°¼±
         //rigidbody.AddForce(ballDir + Vector3.up * 0.5f * throwForce, ForceMode.Impulse);
     }
@@ -53,7 +53,7 @@ public class SwordWindControl : MonoBehaviour
             ParticleSystem ps = explosion.GetComponent<ParticleSystem>();
             if (ps != null)
             {
-                Destroy(explosion, 1.0f);
+                Destroy(explosion, 1f);
             }
             else
             {

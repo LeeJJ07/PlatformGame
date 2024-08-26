@@ -38,10 +38,11 @@ public class PlayerControlManagerFix : MonoBehaviour
     [SerializeField] public bool isAttackSecond = false;
     [SerializeField] public bool isSwordWindPossible = false;
     [SerializeField] private bool isAttackPossible = false;
+    public bool isAttackEnhance = false;
+    public bool isJumpEnhance = false;
     [SerializeField] private bool isDashPossible = false;
     [SerializeField] private bool isFbPossible = false;
     [SerializeField] private bool isDie = false;
-    [SerializeField] private bool isDamage = false;
 
     public LayerMask layer;
 
@@ -56,16 +57,16 @@ public class PlayerControlManagerFix : MonoBehaviour
 
     bool isAddicted;
     [SerializeField] PostProcessVolume fieldView;
+    private Vignette vignette; // 비네팅 효과
     void Start()
     {
         playerHP = playerMaxHP;
         rb = this.GetComponent<Rigidbody>();
         rb.useGravity = true;
         anim = GetComponentInChildren<Animator>();
-        
+
         isAddicted = false;
         fieldView.weight = 0f;
-
     }
 
     // Update is called once per frame
@@ -85,10 +86,6 @@ public class PlayerControlManagerFix : MonoBehaviour
             if (Input.GetButtonDown("FireBallKey"))
             {
                 ThrowBall();
-            }
-            if (Input.GetButtonDown("Attack2"))
-            {
-                SwordWind();
             }
         }
         
@@ -211,11 +208,15 @@ public class PlayerControlManagerFix : MonoBehaviour
             return;
         attackDelay += Time.deltaTime;
         isAttackPossible = equipWeapon.rate < attackDelay ? true : false;//공격 딜레이 시간이 공격 쿨타임(rate)을 넘었다면 ? 공격 함 : 공격 눌러도 안써짐
-        if(isAttackButton && isAttackPossible && isFloor && moveDir == Vector3.zero)
+        if(isAttackButton && isAttackPossible )
         {
+            
             weapons.GetComponent<WeaponControl>().isAttackWeapon = true;
             equipWeapon.WeaponUse();
-            anim.SetTrigger("AttackTr");
+            if (!isAttackEnhance)
+                anim.SetTrigger("AttackTr");
+            else if (isAttackEnhance)
+                SwordWind();
             attackDelay = 0;
             StopCoroutine("Swing");
             StartCoroutine("Swing");
@@ -377,6 +378,12 @@ public class PlayerControlManagerFix : MonoBehaviour
         for (int i = 0; i < 100; i++)
         {
             fieldView.weight += 0.01f;
+            yield return new WaitForSeconds(0.02f);
+        }
+        yield return new WaitForSeconds(8f);
+        for(int i = 0; i < 100; i++) 
+        {
+            fieldView.weight -= 0.01f;
             yield return new WaitForSeconds(0.02f);
         }
     }

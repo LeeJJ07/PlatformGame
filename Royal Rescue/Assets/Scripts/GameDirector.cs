@@ -7,12 +7,24 @@ public class GameDirector : MonoBehaviour
     private static GameDirector _instance = null;
     public static GameDirector instance => _instance;
 
-    public PlayerControlManagerFix PlayerControl => playerControl;
+    public PlayerControlManagerFix PlayerControl
+    {
+        get
+        {
+            if (playerControl == null)
+                playerControl = GameObject.FindWithTag("Player").GetComponent<PlayerControlManagerFix>();
+            return playerControl;
+        }
+        private set
+        {
+            ;
+        }
+    }
     private PlayerControlManagerFix playerControl;
 
     [SerializeField] private GameObject loadingScreen, loadScreenFade;
     [SerializeField] private Camera loadingScreenCam;
-    [SerializeField] private Animator loadscreenFadeAnim;
+    [SerializeField] private Animator loadscreenFadeAnim, shroomAnim;
     [SerializeField] private List<string> stageNames;
     private int stageIndex = 0;
 
@@ -21,18 +33,14 @@ public class GameDirector : MonoBehaviour
         if (_instance == null)
         {
             _instance = this;
-            Init();
+
+            loadingScreen.SetActive(false);
+            loadScreenFade.SetActive(true);
+
             DontDestroyOnLoad(gameObject);
         }
         else
             Destroy(gameObject);
-    }
-
-    private void Init()
-    {
-        playerControl = GameObject.FindWithTag("Player").GetComponent<PlayerControlManagerFix>();
-        loadingScreen.SetActive(false);
-        loadScreenFade.SetActive(true);
     }
 
     public IEnumerator LoadNextStage()
@@ -55,6 +63,7 @@ public class GameDirector : MonoBehaviour
     {
         loadingScreen.gameObject.SetActive(true);
         loadingScreenCam.enabled = true;
+        shroomAnim.Play(AnimationHash.SHROOM_CHASE, -1, 0f);
     }
 
     IEnumerator ExitLoadingScreen()
@@ -64,9 +73,8 @@ public class GameDirector : MonoBehaviour
         loadscreenFadeAnim.Play(AnimationHash.LOADSCREEN_FADEOUT);
         yield return new WaitForSeconds(1.5f);
 
-        Camera mainCam = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         loadingScreenCam.enabled = false;
-        mainCam.enabled = true;
+        Camera.main.enabled = true;
         loadingScreen.gameObject.SetActive(false);
     }
 }

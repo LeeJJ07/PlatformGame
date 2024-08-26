@@ -1,27 +1,32 @@
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ScreamAttackNode : INode
 {
-    public delegate void SpawnObjs(GameObject[] objs,int count);
-    SpawnObjs SpawnEnemies;
+    public delegate void SpawnRandomObjs(GameObject[] objs,int count);
+    public delegate GameObject SpawnObjs(GameObject objs, Vector3 spawnPosi);
+    SpawnRandomObjs SpawnRandomObject;
+    SpawnObjs SpawnObject;
     ScreamAttackScriptableObject screamAttackInfo;
     Animator aniController;
-    Transform transform;
-    Transform target;
+
+    GameObject shockWaveObj;
+    Transform particlePosi;
     float animationDuration = 100;
+    float shockWaveStartTime = 1f;
+    float shockWaveSpan = 0;
     float time = 0;
 
     bool isActiveAnime = false;
+    bool isStartParticle = false;
     bool isSpawnEnemy = false;
 
-    public ScreamAttackNode(ScreamAttackScriptableObject screamAttackInfo,Animator aniController, SpawnObjs spawnEnemies,Transform transform, Transform target)
+    public ScreamAttackNode(ScreamAttackScriptableObject screamAttackInfo, SpawnRandomObjs SpawnRandomObject,SpawnObjs SpawnObject, Animator aniController,Transform particlePosi)
     {
         this.screamAttackInfo = screamAttackInfo;
         this.aniController = aniController;
-        SpawnEnemies = spawnEnemies;
-        this.transform = transform;
-        this.target = target;
+        this.SpawnRandomObject = SpawnRandomObject;
+        this.SpawnObject = SpawnObject;
+        this.particlePosi = particlePosi;
     }
     public void AddNode(INode node) { }
 
@@ -33,11 +38,22 @@ public class ScreamAttackNode : INode
         ActiveAnimation();
         objectSpawn();
         time += Time.deltaTime;
+        shockWaveSpan += Time.deltaTime;
+        if (shockWaveObj != null)
+            shockWaveObj.transform.position = particlePosi.position;
+        if(shockWaveSpan>=shockWaveStartTime&&!isStartParticle)
+        {
+            shockWaveObj.GetComponent<ParticleSystem>().Play();
+            isStartParticle = true;
+        }
         if (time >= animationDuration)
         {
+            shockWaveObj.GetComponent<ParticleSystem>().Stop();
             Debug.Log("Scream Success");
 
+            shockWaveSpan = 0;
             time = 0;
+            isStartParticle = false;
             isSpawnEnemy = false;
             isActiveAnime = false;
             return INode.NodeState.Success;
@@ -47,7 +63,7 @@ public class ScreamAttackNode : INode
     void objectSpawn()
     {
         if (isSpawnEnemy) return;
-        SpawnEnemies(screamAttackInfo.objs,screamAttackInfo.objSpawnCount);
+        SpawnRandomObject(screamAttackInfo.objs,screamAttackInfo.objSpawnCount);
         isSpawnEnemy = true;
     }
     void ActiveAnimation()
@@ -57,14 +73,9 @@ public class ScreamAttackNode : INode
         if (aniController.GetCurrentAnimatorStateInfo(0).IsName("Scream"))
         {
             animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length;
-            Vector3 dir = target.position - transform.position;
-            if (dir.normalized.x < 0)
-                transform.rotation = Quaternion.Euler(0, -90, 0);
-            else
-                transform.rotation = Quaternion.Euler(0, 90, 0);
-
-
+            shockWaveObj = SpawnObject(screamAttackInfo.shockWaveObj, particlePosi.position);
             isActiveAnime = true;
         }
     }
+    
 }

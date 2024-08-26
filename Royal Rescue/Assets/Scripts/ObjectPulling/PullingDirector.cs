@@ -16,7 +16,23 @@ public class PullingDirector : MonoBehaviour
             }
         }
     }
-
+    public GameObject SpawnObjectwithITag(string tag, ITag detailTag, Vector3 position)
+    {
+        for (int i = 0; i < objectList.Count; i++)
+        {
+            if (objectList[i].CompareTag(tag))
+            {
+                if (objectList[i].GetComponent<ITag>().CompareToTag(detailTag.GetTag()))
+                {
+                    GameObject obj = pullingList[i].GetObject();
+                    obj.SetActive(true);
+                    obj.transform.position = position;
+                    return obj;
+                }
+            }
+        }
+        return null;
+    }
     public GameObject SpawnObject(string tag,Vector3 position)
     {
         for(int i=0; i<objectList.Count; i++)

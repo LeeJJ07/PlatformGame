@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Phase3_ScreamAttack
   m_EditorClassIdentifier: 
   transform: {fileID: 0}
+  shockWaveObj: {fileID: 3257248776282636964, guid: 0ca9b61117dfe9a489792a44806bdd5e, type: 3}
   objs: []
   objSpawnCount: 0
   ScreamAttackDistance: 50

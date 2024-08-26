@@ -5,4 +5,5 @@ using UnityEngine;
 public interface ITag
 {
     public string GetTag();
+    public bool CompareToTag(string detailTag);
 }

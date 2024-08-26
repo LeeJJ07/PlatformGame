@@ -4,11 +4,21 @@ using UnityEngine;
 
 public class PlayerHpBar : MonoBehaviour
 {
-    [SerializeField]
-    private UnityEngine.UI.Slider _slider;
+    public UnityEngine.UI.Slider hpBar;
+    public float maxHp;
+    public float currentHp;
+    public GameObject player;
 
-    public void SetValue(float value)
+    private void Start()
     {
-        _slider.value = value;
+        maxHp = player.GetComponent<PlayerControlManagerFix>().playerMaxHP;
+        currentHp = player.GetComponent<PlayerControlManagerFix>().playerHP;
+        hpBar.value = currentHp / maxHp;
+    }
+    void Update()
+    {
+        maxHp = player.GetComponent<PlayerControlManagerFix>().playerMaxHP;
+        currentHp = player.GetComponent<PlayerControlManagerFix>().playerHP;
+        hpBar.value = Mathf.Lerp(hpBar.value, currentHp / maxHp, Time.deltaTime * 10);
     }
 }

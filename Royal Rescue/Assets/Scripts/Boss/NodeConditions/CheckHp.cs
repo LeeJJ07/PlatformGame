@@ -4,7 +4,7 @@ public class CheckHp : INode
 {
     public delegate float Hp();
     Hp hp;
-    BossAI enemyAI;
+    BossBehaviour enemyAI;
     float hpSection1;
     float hpSectino2;
     /// <summary>

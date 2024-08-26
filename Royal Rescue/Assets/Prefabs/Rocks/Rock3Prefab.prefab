@@ -139,6 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a17048ae8917fe0428d823471471850b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detailTag: rock3
   dangerZoneObj: {fileID: 7360912941218823822, guid: 8e99ae799f6f16243aeb4a94dfced891, type: 3}
   delayTime: 0.3
   dropSpeed: 20

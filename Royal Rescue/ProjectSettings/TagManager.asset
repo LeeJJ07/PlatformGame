@@ -18,9 +18,9 @@ TagManager:
   - Wall
   - Ground
   - Skill
-  - DropObject
-  - DangerZone
   - Director
+  - Zone
+  - Boss
   layers:
   - Default
   - TransparentFX
