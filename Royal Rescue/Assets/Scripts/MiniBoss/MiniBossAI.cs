@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class MiniBossAI : MonoBehaviour
 {
+    [SerializeField] float hp;
+    [SerializeField] float maxHp;
     [SerializeField] float speed;
 
     [SerializeField] GameObject player;
     [SerializeField] Transform startPosition;
     [SerializeField] Transform startPlayerPosition;
 
-    INode checkDead;
-    INode deadAction;
+    [SerializeField] Animator animator;
+
+    INode checkDie;
+    INode dieAction;
     INode detectPlayer;
     INode returnAction;
     INode lookPlayer;
@@ -38,8 +42,8 @@ public class MiniBossAI : MonoBehaviour
 
     private void Awake()
     {
-        checkDead = new CheckMiniBossHp();
-        deadAction = new DeadAction();
+        checkDie = new CheckMiniBossHp(Hp);
+        dieAction = new DieAction(Die, animator);
         detectPlayer = new DetectPlayer(player.transform, startPlayerPosition);
         returnAction = new ReturnAction(transform, startPosition, speed);
         lookPlayer = new LookPlayer(transform, player.transform);
@@ -64,9 +68,11 @@ public class MiniBossAI : MonoBehaviour
 
     void Start()
     {
+        maxHp = 100f;
+        hp = maxHp;
 
-        deadSequence.AddNode(checkDead);
-        deadSequence.AddNode(deadAction);
+        deadSequence.AddNode(checkDie);
+        deadSequence.AddNode(dieAction);
 
         returnSequence.AddNode(detectPlayer);
         returnSequence.AddNode(returnAction);
@@ -98,5 +104,13 @@ public class MiniBossAI : MonoBehaviour
             return;
 
         bt.Operator();
+    }
+    public float Hp()
+    {
+        return hp;
+    }
+    public void Die()
+    {
+        isDie = true;
     }
 }

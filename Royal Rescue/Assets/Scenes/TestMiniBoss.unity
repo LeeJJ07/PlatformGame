@@ -259,11 +259,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8318849989829502705, guid: 082bb750b02e06c408db81e4d5d9fd7c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.63
+      value: -17.7
       objectReference: {fileID: 0}
     - target: {fileID: 8318849989829502705, guid: 082bb750b02e06c408db81e4d5d9fd7c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.18
+      value: 5.89
       objectReference: {fileID: 0}
     - target: {fileID: 8318849989829502705, guid: 082bb750b02e06c408db81e4d5d9fd7c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -342,10 +342,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0644a0546a65dca41ba499fc4c541400, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hp: 0
+  maxHp: 0
   speed: 3
   player: {fileID: 1476518723}
   startPosition: {fileID: 1988662463}
   startPlayerPosition: {fileID: 70391158}
+  animator: {fileID: 0}
 --- !u!1 &1152196022
 GameObject:
   m_ObjectHideFlags: 0
