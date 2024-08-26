@@ -10,12 +10,11 @@ public class MiniBossAI : MonoBehaviour
     [SerializeField] Transform startPosition;
     [SerializeField] Transform startPlayerPosition;
 
-    public float x;
-
     INode checkDead;
     INode deadAction;
     INode detectPlayer;
     INode returnAction;
+    INode lookPlayer;
     INode checkSkill1Probability;
     INode checkSkill1Range;
     INode skill1AttackAction;
@@ -42,7 +41,8 @@ public class MiniBossAI : MonoBehaviour
         checkDead = new CheckMiniBossHp();
         deadAction = new DeadAction();
         detectPlayer = new DetectPlayer(player.transform, startPlayerPosition);
-        returnAction = new ReturnAction(transform, startPosition, speed, x);
+        returnAction = new ReturnAction(transform, startPosition, speed);
+        lookPlayer = new LookPlayer(transform, player.transform);
         checkSkill1Probability = new CheckProbability();
         checkSkill1Range = new CheckAttackRange();
         skill1AttackAction = new MiniBossSkill1Attack();
@@ -64,6 +64,7 @@ public class MiniBossAI : MonoBehaviour
 
     void Start()
     {
+
         deadSequence.AddNode(checkDead);
         deadSequence.AddNode(deadAction);
 
@@ -84,6 +85,7 @@ public class MiniBossAI : MonoBehaviour
 
         root.AddNode(deadSequence);
         root.AddNode(returnSequence);
+        root.AddNode(lookPlayer);
         root.AddNode(attackSelector);
         root.AddNode(followPlayer);
 

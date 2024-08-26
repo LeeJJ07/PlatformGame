@@ -17,7 +17,7 @@ public class DetectPlayer : INode
 
     public INode.NodeState Evaluate()
     {
-        if (Mathf.Abs(playerPos.position.x - startPlayerPosition.position.x) < 1e-3)
+        if (playerPos.position.x >= startPlayerPosition.position.x)
             return INode.NodeState.Failure;
         return INode.NodeState.Success;
     }

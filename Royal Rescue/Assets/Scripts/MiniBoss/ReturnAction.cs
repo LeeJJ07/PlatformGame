@@ -10,7 +10,6 @@ public class ReturnAction : INode
     Transform transform;
     Transform target;
     Vector3 dir;
-    public float x;
     public ReturnAction(Transform transform, Transform startPos, float speed)
     {
         this.speed = speed;
@@ -18,17 +17,7 @@ public class ReturnAction : INode
         this.target = startPos;
 
         dir = this.target.position - this.transform.position;
-        this.speed = speed;
-    }
-    public ReturnAction(Transform transform, Transform startPos, float speed, float x)
-    {
-        this.speed = speed;
-        this.transform = transform;
-        this.target = startPos;
-        this.x = x;
-
-        dir = this.target.position - this.transform.position;
-        this.speed = speed;
+        this.speed = speed * 10;
     }
     public void AddNode(INode node)
     {
@@ -40,8 +29,7 @@ public class ReturnAction : INode
             return INode.NodeState.Success;
 
         transform.position += dir.normalized * Time.deltaTime * speed;
-        
 
-        return INode.NodeState.Running;
+        return INode.NodeState.Failure;
     }
 }
