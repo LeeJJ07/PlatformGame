@@ -25,6 +25,11 @@ public class MiniBossAI : MonoBehaviour
     [SerializeField] float skill2Range = 10f;
     [SerializeField] float baseAttackRange = 5f;
 
+    [Header("°ø°Ý µô·¹ÀÌ")]
+    [SerializeField] float skill1DelayTime = 0.5f;
+    [SerializeField] float skill2DelayTime = 0.5f;
+    [SerializeField] float baseAttackDelayTime = 0.5f;
+
     INode checkDie;
     INode dieAction;
     INode detectPlayer;
@@ -33,12 +38,16 @@ public class MiniBossAI : MonoBehaviour
     INode checkSkill1Probability;
     INode checkSkill1Range;
     INode skill1AttackAction;
+    INode skill1AttackActionDelay;
     INode checkSkill2Probability;
     INode checkSkill2Range;
     INode skill2AttackAction;
+    INode skill2AttackActionDelay;
     INode checkBaseAttackRange;
     INode baseAttackAction;
+    INode baseAttackActionDelay;
     INode followPlayer;
+    INode followPlayerDelay;
 
     Selector root;
     Sequence deadSequence;
@@ -47,6 +56,7 @@ public class MiniBossAI : MonoBehaviour
     Sequence skill1Sequence;
     Sequence skill2Sequence;
     Sequence baseAttackSequence;
+    Sequence followPlayerSequence;
 
     bool isDie = false;
     BehaviorTreeRunner bt;
@@ -61,12 +71,16 @@ public class MiniBossAI : MonoBehaviour
         checkSkill1Probability = new CheckProbability(skill1Probability);
         checkSkill1Range = new CheckAttackRange(transform, player.transform, skill1Range);
         skill1AttackAction = new MiniBossSkill1Attack();
+        skill1AttackActionDelay = new ActionDelay(animator, skill1DelayTime);
         checkSkill2Probability = new CheckProbability(skill2Probability);
         checkSkill2Range = new CheckAttackRange(transform, player.transform, skill2Range);
         skill2AttackAction = new MiniBossSkill2Attack();
+        skill2AttackActionDelay = new ActionDelay(animator, skill2DelayTime);
         checkBaseAttackRange = new CheckAttackRange(transform, player.transform, baseAttackRange);
         baseAttackAction = new MiniBossBaseAttack(animator);
+        baseAttackActionDelay = new ActionDelay(animator, baseAttackDelayTime);
         followPlayer = new FollowPlayer(transform, player.transform, animator, walkSpeed, Hp);
+        followPlayerDelay = new ActionDelay(animator, 1f);
 
         root = new Selector();
         deadSequence= new Sequence();
@@ -75,6 +89,7 @@ public class MiniBossAI : MonoBehaviour
         skill1Sequence = new Sequence();
         skill2Sequence = new Sequence();
         baseAttackSequence = new Sequence();
+        followPlayerSequence = new Sequence();
     }
 
     void Start()
@@ -91,20 +106,29 @@ public class MiniBossAI : MonoBehaviour
         skill1Sequence.AddNode(checkSkill1Probability);
         skill1Sequence.AddNode(checkSkill1Range);
         skill1Sequence.AddNode(skill1AttackAction);
+        skill1Sequence.AddNode(skill1AttackActionDelay);
+
         skill2Sequence.AddNode(checkSkill2Probability);
         skill2Sequence.AddNode(checkSkill2Range);
         skill2Sequence.AddNode(skill2AttackAction);
+        skill2Sequence.AddNode(skill2AttackActionDelay);
+
         baseAttackSequence.AddNode(checkBaseAttackRange);
         baseAttackSequence.AddNode(baseAttackAction);
+        baseAttackSequence.AddNode(baseAttackActionDelay);
+
         attackSelector.AddNode(skill1Sequence);
         attackSelector.AddNode(skill2Sequence);
         attackSelector.AddNode(baseAttackSequence);
+
+        followPlayerSequence.AddNode(followPlayer);
+        followPlayerSequence.AddNode(followPlayerDelay);
 
         root.AddNode(deadSequence);
         root.AddNode(returnSequence);
         root.AddNode(lookPlayer);
         root.AddNode(attackSelector);
-        root.AddNode(followPlayer);
+        root.AddNode(followPlayerSequence);
 
         bt = new BehaviorTreeRunner(root);
     }

@@ -13,7 +13,6 @@ public class FollowPlayer : INode
 
     float speed;
     float time = 0f;
-    bool isIdle = false;
     public FollowPlayer(Transform transform, Transform playerTransform, Animator animator, float speed, Hp hp)
     {
         this.hp = hp;
@@ -30,25 +29,13 @@ public class FollowPlayer : INode
     {
         if (hp() <= 0)
             return INode.NodeState.Success;
-        if (time > 3f)
+        if (time > 2f)
         {
-            time = 0f;
+            time = 0;
             return INode.NodeState.Success;
-        }else if(time > 2f)
-        {
-            if (!isIdle)
-            {
-                isIdle = true;
-                animator.SetTrigger("idle");
-            }
-            time += Time.deltaTime;
-            return INode.NodeState.Running;
         }
         if (time == 0)
-        {
             animator.SetTrigger("walk");
-            isIdle = false;
-        }
 
         float lookDir = (transform.position.x - playerTransform.position.x) / Mathf.Abs(transform.position.x - playerTransform.position.x);
         transform.rotation = Quaternion.Euler(0f, 180f + 60f * lookDir, 0f);
