@@ -10,6 +10,9 @@ public class ShrinkPlatform : MonoBehaviour
     [SerializeField] float speedZ = 0.1f;
     [SerializeField] float minimunSize = 0.1f;
     [SerializeField] float maximunSize = 1f;
+    [SerializeField] bool useX = false;
+    [SerializeField] bool useY = false;
+    [SerializeField] bool useZ = false;
 
     private Rigidbody rb;
     private Vector3 scaleChange;
@@ -25,18 +28,33 @@ public class ShrinkPlatform : MonoBehaviour
     {
         transform.localScale += scaleChange;
         rb.MovePosition(transform.position + scaleChange/2);
+        ChangeDirection();
+        
+    }
 
-        if (transform.localScale.x < minimunSize || transform.localScale.x > maximunSize)
+    void ChangeDirection()
+    {
+        if(useX)
         {
-            scaleChange = -scaleChange;
+            if (transform.localScale.x < minimunSize || transform.localScale.x > maximunSize)
+            {
+                scaleChange = -scaleChange;
+            }
+
         }
-        else if (transform.localScale.y < minimunSize || transform.localScale.y > maximunSize)
+        if(useY)
         {
-            scaleChange = -scaleChange;
+            if (transform.localScale.y < minimunSize || transform.localScale.y > maximunSize)
+            {
+                scaleChange = -scaleChange;
+            }
         }
-        else if (transform.localScale.z < minimunSize || transform.localScale.z > maximunSize)
+        if (useZ)
         {
-            scaleChange = -scaleChange;
+            if (transform.localScale.z < minimunSize || transform.localScale.z > maximunSize)
+            {
+                scaleChange = -scaleChange;
+            }
         }
     }
 }
