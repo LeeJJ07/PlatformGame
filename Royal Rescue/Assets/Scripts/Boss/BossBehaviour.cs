@@ -6,8 +6,9 @@ using static BreathAttackNode;
 public class BossBehaviour : MonoBehaviour
 {
     
-    [Header("Common Component")]
+    [Header("Boss Values")]
     [SerializeField] GameObject warningPrefab;
+    [SerializeField] Transform[] wallTransforms;
     [SerializeField] Transform[] spawnRange;
     [SerializeField] Transform target;
     [SerializeField] Transform flamePosition;
@@ -200,7 +201,7 @@ public class BossBehaviour : MonoBehaviour
         phase3ScreamAttackNode = new ScreamAttackNode(Phase3screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase3BasicAttackNode = new BasicAttackNode(Phase3basicAttackInfo, aniController, transform, target);
         phase3RushAttackNode = new RushAttackNode(Phase3RushAttackInfo, RandomSpawnObjectsWithITag, aniController, transform, target);
-        phase3WarningRushAttack = new WarningRushAttack(SpawnObjects, angryLight, warningPrefab, transform.position, Phase3RushAttackInfo.warningDelay);
+        phase3WarningRushAttack = new WarningRushAttack(SpawnObjects, angryLight, warningPrefab,transform, Phase3RushAttackInfo.warningDelay);
 
 
         //½ÃÄö½º, ¼¿·ºÅÍ ³ëµåµé
@@ -347,9 +348,9 @@ public class BossBehaviour : MonoBehaviour
         
         entryPhase3Sequence.AddNode(checkIncomingPhase3);
         entryPhase3Sequence.AddNode(phase3EntryNode);
-        phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
         phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
 
         phase3ActionSelector.AddNode(entryPhase3Sequence);

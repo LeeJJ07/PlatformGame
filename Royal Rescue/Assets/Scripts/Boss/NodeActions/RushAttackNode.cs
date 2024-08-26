@@ -38,6 +38,8 @@ public class RushAttackNode : INode
         ActiveAnimation();
         Debug.Log("RushAttack Running");
         skillSpan += Time.deltaTime;
+
+        //스킬 종료
         if (skillSpan >= rushAttackInfo.RushAttackDuration) 
         {
             aniController.SetBool("isRushAttack", false);
@@ -52,6 +54,8 @@ public class RushAttackNode : INode
         Collider[] colliders =  Physics.OverlapSphere(transform.position, 5, rushAttackInfo.playerLayer); 
         Physics.Raycast(ray,out hit, 5, rushAttackInfo.WallLayer);
         
+
+        //드래곤 회전(벽에 닿았을 시)
         if(hit.collider != null)
         {
             if (hit.collider.tag.Equals(rushAttackInfo.wallTag))
@@ -64,6 +68,7 @@ public class RushAttackNode : INode
                 ray = new Ray((transform.position + new Vector3(7, 3, 0)) * transform.forward.x, (transform.position + new Vector3(10, 3, 0)) * transform.forward.x);
             }
         }
+        //플레이어 넉백
         if(colliders!= null)
         {
             foreach(Collider collider in colliders)
@@ -83,33 +88,6 @@ public class RushAttackNode : INode
             }
         }
 
-        /*Collider[] colliders = Physics.OverlapBox(transform.position + new Vector3(0, 3, 0), new Vector3(10, 5, 1),
-                                                    Quaternion.identity, layers);
-        
-        if (colliders!=null&&!isCollisionWall)
-        {
-            foreach(Collider collider in colliders)
-            {
-                Debug.Log($"collision: {collider.name}");
-                if (collider.tag.Equals("Player"))
-                {
-                    Vector3 dir = target.position+transform.position;
-                    collider.GetComponent<Rigidbody>().AddForce(dir.normalized, ForceMode.Impulse);
-                }
-                else if(collider.tag.Equals("Wall"))
-                {
-                    Quaternion curRot = transform.rotation;
-                    curRot.y += 180;
-                    transform.Rotate(new Vector3(0, -curRot.y, 0));
-                    spawnRocks(rushAttackInfo.objs,5);
-                }
-            }
-            isCollisionWall = true;
-        }
-        else
-        {
-            isCollisionWall = false;
-        }*/
         return INode.NodeState.Running;
     }
     void ActiveAnimation()

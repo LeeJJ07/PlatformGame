@@ -69,12 +69,9 @@ public class FlameAttackNode : INode
             animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length;
             shootGap = (animationDuration - flameShootStartTime-1f) / (float)(flameAttackInfo.flameCount);
             startShootTime = flameShootStartTime;
-            Vector3 dir = target.position - transform.position;
-            if (dir.normalized.x < 0)
-                transform.rotation = Quaternion.Euler(0, -90, 0);
-            else
-                transform.rotation = Quaternion.Euler(0, 90, 0);
+            float dir = (target.position.x - transform.position.x)/Mathf.Abs((target.position.x - transform.position.x));
 
+            transform.rotation = Quaternion.Euler(0, 90*dir, 0);
 
             isActiveAnime = true;
         }

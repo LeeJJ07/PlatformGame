@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.Build;
 using UnityEngine;
 using static ScreamAttackNode;
 
@@ -19,18 +15,25 @@ public class WarningRushAttack : INode
     GameObject[] spawnObjs;
     GameObject angryLight;
     GameObject WarningPrefab;
-    Vector3 center;
+    Transform[] wallTransforms;
+    Vector3 warningZoneCenter;
+    Transform transform;
     float duration;
     float span;
     bool isSpawnZonePrefab;
-    public WarningRushAttack(SpawnZonePrefab spawnFunc, GameObject angryLight, GameObject WarningPrefab, Vector3 center ,float duration)
+    Ray forwardRay;
+    Ray backRay;
+    RaycastHit forwardHit;
+    RaycastHit backHit;
+
+    public WarningRushAttack(SpawnZonePrefab spawnFunc, GameObject angryLight, GameObject WarningPrefab, Transform transform,float duration)
     {
         spawnObjs = new GameObject[1];
         this.spawnFunc = spawnFunc;
         this.angryLight = angryLight;
         this.WarningPrefab = WarningPrefab;
         this.duration = duration;
-        this.center = center;
+        this.transform = transform;
         warningPrefabOrignScale = WarningPrefab.transform.localScale;
         span = 0;
     }
@@ -40,6 +43,9 @@ public class WarningRushAttack : INode
     {
         spawnDangerZone();
         span += Time.deltaTime;
+        
+        Debug.DrawRay(forwardRay.origin, forwardRay.direction,Color.blue);
+        Debug.DrawRay(backRay.origin, backRay.direction,Color.green);
         if(span>=duration)
         {
             span = 0;
@@ -56,10 +62,25 @@ public class WarningRushAttack : INode
     void spawnDangerZone()
     {
         if (isSpawnZonePrefab) return;
-        spawnObjs = spawnFunc(WarningPrefab, center, 1);
+        forwardRay = new Ray(transform.position, Vector3.left);
+        backRay = new Ray(transform.position, Vector3.right);
+        Physics.Raycast(forwardRay, out forwardHit, 100, LayerMask.GetMask("Wall"));
+        Physics.Raycast(backRay, out backHit, 100, LayerMask.GetMask("Wall"));
+        float size = 0;
+        if (forwardHit.collider != null && backHit.collider != null) 
+        {
+            float center = ((forwardHit.point.x+backHit.point.x)/2);
+            size = Mathf.Abs(backHit.point.x- forwardHit.point.x)/2;
+            warningZoneCenter = new Vector3(center, transform.position.y, 0);
+            Debug.Log($"wall1: {forwardHit.collider.name}, wall2: {backHit.collider.name}");
+            Debug.Log($"center: {center}, size: {size}");
+
+        }
+        spawnObjs = spawnFunc(WarningPrefab, warningZoneCenter, 1);
         foreach(GameObject obj in spawnObjs)
         {
-            obj.transform.localScale = new Vector3(20, 1, 5);
+            Debug.Log($"size: {size}");
+            obj.transform.localScale = new Vector3(size, 1, 5);
         }
         isSpawnZonePrefab = true;
     }

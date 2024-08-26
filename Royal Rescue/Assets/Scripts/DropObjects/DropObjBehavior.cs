@@ -14,9 +14,9 @@ public class DropObjBehavior : MonoBehaviour,ITag
     [SerializeField] float detectGroundRayDistance;
     [SerializeField] bool destroyObj = false;
     [SerializeField] LayerMask[] detectLayers;
-
-    Ray dangerZoneSpawnRay;
-    RaycastHit dangerZoneSpawnHit;
+    int detectLayer = 0;
+    Ray warningZoneSpawnRay;
+    RaycastHit warningZoneSpawnHit;
     GameObject deactiveDangerZoneObj;
     Rigidbody rigid;
     bool isEndDelay = false;
@@ -24,8 +24,11 @@ public class DropObjBehavior : MonoBehaviour,ITag
     {
         rigid = GetComponent<Rigidbody>();
         
-        //playerController = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         pulling = GameObject.FindWithTag("Director").GetComponent<PullingDirector>();
+        foreach(LayerMask layer in detectLayers)
+        {
+            detectLayer |= layer;
+        }
     }
     private void OnEnable()
     {
@@ -44,9 +47,9 @@ public class DropObjBehavior : MonoBehaviour,ITag
     IEnumerator DropCoroutine()
     {
         yield return new WaitForSeconds(delayTime);
-        dangerZoneSpawnRay = new Ray(transform.position, Vector3.down);
-        Physics.Raycast(dangerZoneSpawnRay, out dangerZoneSpawnHit, 30, LayerMask.GetMask("Ground"));
-        deactiveDangerZoneObj = pulling.SpawnObject(dangerZoneObj.tag, dangerZoneSpawnHit.point);
+        warningZoneSpawnRay = new Ray(transform.position, Vector3.down);
+        Physics.Raycast(warningZoneSpawnRay, out warningZoneSpawnHit, 50, detectLayer);
+        deactiveDangerZoneObj = pulling.SpawnObject(dangerZoneObj.tag, warningZoneSpawnHit.point);
         yield return new WaitForSeconds(delayTime);
         isEndDelay = true;
     }
