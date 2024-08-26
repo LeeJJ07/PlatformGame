@@ -1,12 +1,17 @@
-﻿using System.Collections;
+﻿    using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.Rendering.PostProcessing;
 
 public class PlayerControlManagerFix : MonoBehaviour
 {
-    public int playerHP = 500;
+    public GameObject[] PlayerHeart = new GameObject[5];
+    public GameObject DamageEffect;
+    public int playerMaxHP = 500;
+    public int playerHP;
     public float hAxis;
     public float vAxis;
     public float dash = 5f;
@@ -14,6 +19,8 @@ public class PlayerControlManagerFix : MonoBehaviour
     public float dashCoolDown;
     public GameObject weapons;
     public GameObject fireBallPrefabs;
+    public GameObject SwordWindPrefabsR;
+    public GameObject SwordWindPrefabsL;
     public Transform fireBallSpawnPoint;
     [SerializeField] private int jumpPossible = 2;
     [SerializeField] private float lastGroundTime;
@@ -27,14 +34,16 @@ public class PlayerControlManagerFix : MonoBehaviour
     [SerializeField] private int jumpCnt = 0;
     [SerializeField] public bool isDirRight = true;
     [SerializeField] private bool isFloor = false;
-    [SerializeField] private bool isDoubleJump = false;
     [SerializeField] public bool isAttackButton = false;
+    [SerializeField] public bool isAttackSecond = false;
+    [SerializeField] public bool isSwordWindPossible = false;
     [SerializeField] private bool isAttackPossible = false;
+    public bool isAttackEnhance = false;
+    public bool isJumpEnhance = false;
     [SerializeField] private bool isDashPossible = false;
     [SerializeField] private bool isFbPossible = false;
     [SerializeField] private bool isDie = false;
 
-    private bool ground = false;
     public LayerMask layer;
 
     Rigidbody rb;
@@ -51,15 +60,13 @@ public class PlayerControlManagerFix : MonoBehaviour
     private Vignette vignette; // 비네팅 효과
     void Start()
     {
+        playerHP = playerMaxHP;
         rb = this.GetComponent<Rigidbody>();
         rb.useGravity = true;
         anim = GetComponentInChildren<Animator>();
 
-
-        // 종진: 확인 되셨으면 주석 지워주세요
         isAddicted = false;
         fieldView.weight = 0f;
-        fieldView.profile.TryGetSettings(out vignette);
     }
 
     // Update is called once per frame
@@ -80,8 +87,6 @@ public class PlayerControlManagerFix : MonoBehaviour
             {
                 ThrowBall();
             }
-
-            setPostProcessCenter(); //포스트 프로세싱 중심 설정(종진) 확인 하셨으면 주석 지워 주세요
         }
         
         playerDie();
@@ -174,7 +179,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         if (isJumpDown && jumpCnt > 0)
         {
             //curTabTime = Time.time;
-            rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y) * 1.3f, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y) * 1.5f, ForceMode.Impulse);
             if (jumpCnt == 2)
             {
                 anim.SetTrigger("Jump");
@@ -203,11 +208,15 @@ public class PlayerControlManagerFix : MonoBehaviour
             return;
         attackDelay += Time.deltaTime;
         isAttackPossible = equipWeapon.rate < attackDelay ? true : false;//공격 딜레이 시간이 공격 쿨타임(rate)을 넘었다면 ? 공격 함 : 공격 눌러도 안써짐
-        if(isAttackButton && isAttackPossible && isFloor && moveDir == Vector3.zero)
+        if(isAttackButton && isAttackPossible )
         {
+            
             weapons.GetComponent<WeaponControl>().isAttackWeapon = true;
             equipWeapon.WeaponUse();
-            anim.SetTrigger("AttackTr");
+            if (!isAttackEnhance)
+                anim.SetTrigger("AttackTr");
+            else if (isAttackEnhance)
+                SwordWind();
             attackDelay = 0;
             StopCoroutine("Swing");
             StartCoroutine("Swing");
@@ -215,13 +224,15 @@ public class PlayerControlManagerFix : MonoBehaviour
     }
     
 
-    void ThrowBall()
+    public void ThrowBall()
     {
         if(skillCount > 0 && !isFbPossible)
         {
+            GameObject fBall;
             isFbPossible = true;
-            GameObject fBall = Instantiate(fireBallPrefabs, fireBallSpawnPoint.position, fireBallSpawnPoint.rotation);
+            fBall = Instantiate(fireBallPrefabs, fireBallSpawnPoint.position, fireBallSpawnPoint.rotation);
             fBall.GetComponent<FireBallControl>().ballDir = isDirRight ? Vector3.right : Vector3.left;
+            //fBall.GetComponent<FireBallControl>().isFireball = true;
             //Vector3 throwDir = (isDirRight ? Vector3.right : Vector3.left) + Vector3.up * 0.5f; // 약간 위로 던짐 (포물선 효과)
             //fBall.GetComponent<FireBallControl>().Throw(throwDir);
             //fBall.transform.position = fireBallSpawnPoint.transform.position;
@@ -234,6 +245,34 @@ public class PlayerControlManagerFix : MonoBehaviour
             Debug.Log("파이어볼 횟수 모두 사용");
             return;
         }
+        
+    }
+    public void SwordWind()
+    {
+        
+        if (!isSwordWindPossible)
+        {
+            GameObject fBall;
+            isSwordWindPossible = true;
+            if (isDirRight)
+            {
+                fBall = Instantiate(SwordWindPrefabsR, fireBallSpawnPoint.position, fireBallSpawnPoint.rotation);
+            }
+            else
+            {
+                fBall = Instantiate(SwordWindPrefabsL, fireBallSpawnPoint.position, fireBallSpawnPoint.rotation);
+            }
+            //fBall = Instantiate(fireBallPrefabs, fireBallSpawnPoint.position, fireBallSpawnPoint.rotation);
+            fBall.GetComponent<SwordWindControl>().ballDir = isDirRight ? Vector3.right : Vector3.left;
+            //fBall.GetComponent<FireBallControl>().isFireball = true;
+            //Vector3 throwDir = (isDirRight ? Vector3.right : Vector3.left) + Vector3.up * 0.5f; // 약간 위로 던짐 (포물선 효과)
+            //fBall.GetComponent<FireBallControl>().Throw(throwDir);
+            //fBall.transform.position = fireBallSpawnPoint.transform.position;
+            anim.SetTrigger("FireBallTr");
+            StartCoroutine("CheckAttack2");
+        }
+        else
+            return;
         
     }
     void playerDie()
@@ -309,20 +348,13 @@ public class PlayerControlManagerFix : MonoBehaviour
         Debug.Log("스킬 키 입력 가능");
         isFbPossible = false;
     }
-
-
-    /****************************************************/
-    // 포스트 프로세싱 부분 (확인하시구 주석만 지워주세요)
-    void setPostProcessCenter() {
-        Vector3 playerWorldPosition = transform.position;
-
-        if (!Camera.main || !vignette)
-            return;
-
-        Vector3 viewportPosition = Camera.main.WorldToViewportPoint(playerWorldPosition);
-
-        vignette.center.value = viewportPosition;
+    IEnumerator CheckAttack2()
+    {
+        yield return new WaitForSeconds(0.5f);//1초 후
+        Debug.Log("스킬 키 입력 가능");
+        isSwordWindPossible = false;
     }
+
     private void OnParticleCollision(GameObject other)
     {
         Debug.Log("충돌");
@@ -355,7 +387,7 @@ public class PlayerControlManagerFix : MonoBehaviour
             yield return new WaitForSeconds(0.02f);
         }
     }
-    /****************************************************/
+
 }
 /*
  * private Rigidbody rigid;
