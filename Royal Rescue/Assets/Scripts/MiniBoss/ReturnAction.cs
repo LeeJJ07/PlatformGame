@@ -30,6 +30,6 @@ public class ReturnAction : INode
 
         transform.position += dir.normalized * Time.deltaTime * speed;
 
-        return INode.NodeState.Failure;
+        return INode.NodeState.Success;
     }
 }

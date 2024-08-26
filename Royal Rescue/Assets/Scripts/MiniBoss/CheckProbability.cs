@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class CheckProbability : INode
 {
-    public CheckProbability()
+    int probability;
+    public CheckProbability(int  probability)
     {
-
+        this.probability = probability;
     }
     public void AddNode(INode node)
     {
@@ -14,6 +15,12 @@ public class CheckProbability : INode
 
     public INode.NodeState Evaluate()
     {
-        return INode.NodeState.Failure;
+        float temp = Time.time * 100f;
+        Random.InitState((int)temp);
+        int ran = Random.Range(0, 100);
+
+        if (ran < probability)
+            return INode.NodeState.Failure;
+        return INode.NodeState.Success;
     }
 }

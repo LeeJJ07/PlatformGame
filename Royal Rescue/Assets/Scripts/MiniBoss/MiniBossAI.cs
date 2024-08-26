@@ -4,15 +4,26 @@ using UnityEngine;
 
 public class MiniBossAI : MonoBehaviour
 {
+    [Header("중간보스 능력치")]
     [SerializeField] float hp;
     [SerializeField] float maxHp;
-    [SerializeField] float speed;
+    [SerializeField] float walkSpeed;
+    [SerializeField] float runSpeed;
 
+    [Header("설정")]
     [SerializeField] GameObject player;
     [SerializeField] Transform startPosition;
     [SerializeField] Transform startPlayerPosition;
-
     [SerializeField] Animator animator;
+
+    [Header("스킬 사용 확률")]
+    [SerializeField] int skill1Probability = 25;
+    [SerializeField] int skill2Probability = 33;
+
+    [Header("스킬 범위")]
+    [SerializeField] float skill1Range= 20f;
+    [SerializeField] float skill2Range = 10f;
+    [SerializeField] float baseAttackRange = 5f;
 
     INode checkDie;
     INode dieAction;
@@ -45,17 +56,17 @@ public class MiniBossAI : MonoBehaviour
         checkDie = new CheckMiniBossHp(Hp);
         dieAction = new DieAction(Die, animator);
         detectPlayer = new DetectPlayer(player.transform, startPlayerPosition);
-        returnAction = new ReturnAction(transform, startPosition, speed);
+        returnAction = new ReturnAction(transform, startPosition, walkSpeed);
         lookPlayer = new LookPlayer(transform, player.transform);
-        checkSkill1Probability = new CheckProbability();
-        checkSkill1Range = new CheckAttackRange();
+        checkSkill1Probability = new CheckProbability(skill1Probability);
+        checkSkill1Range = new CheckAttackRange(transform, player.transform, skill1Range);
         skill1AttackAction = new MiniBossSkill1Attack();
-        checkSkill2Probability = new CheckProbability();
-        checkSkill2Range = new CheckAttackRange();
+        checkSkill2Probability = new CheckProbability(skill2Probability);
+        checkSkill2Range = new CheckAttackRange(transform, player.transform, skill2Range);
         skill2AttackAction = new MiniBossSkill2Attack();
-        checkBaseAttackRange = new CheckAttackRange();
+        checkBaseAttackRange = new CheckAttackRange(transform, player.transform, baseAttackRange);
         baseAttackAction = new MiniBossBaseAttack();
-        followPlayer = new FollowPlayer();
+        followPlayer = new FollowPlayer(transform, player.transform, walkSpeed);
 
         root = new Selector();
         deadSequence= new Sequence();
