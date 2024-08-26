@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class MiniBossBaseAttack : INode
 {
-    public MiniBossBaseAttack()
+    Animator animator;
+    float time = 0f;
+    public MiniBossBaseAttack(Animator animator)
     {
-
+        this.animator = animator;
     }
     public void AddNode(INode node)
     {
@@ -14,6 +16,14 @@ public class MiniBossBaseAttack : INode
 
     public INode.NodeState Evaluate()
     {
-        return INode.NodeState.Failure;
+        if (time > 1f)
+        {
+            time = 0f;
+            return INode.NodeState.Success;
+        }
+        if(time == 0f)
+            animator.SetTrigger("baseAttack");
+        time += Time.deltaTime;
+        return INode.NodeState.Running;
     }
 }

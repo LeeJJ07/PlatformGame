@@ -65,7 +65,7 @@ public class MiniBossAI : MonoBehaviour
         checkSkill2Range = new CheckAttackRange(transform, player.transform, skill2Range);
         skill2AttackAction = new MiniBossSkill2Attack();
         checkBaseAttackRange = new CheckAttackRange(transform, player.transform, baseAttackRange);
-        baseAttackAction = new MiniBossBaseAttack();
+        baseAttackAction = new MiniBossBaseAttack(animator);
         followPlayer = new FollowPlayer(transform, player.transform, animator, walkSpeed, Hp);
 
         root = new Selector();
