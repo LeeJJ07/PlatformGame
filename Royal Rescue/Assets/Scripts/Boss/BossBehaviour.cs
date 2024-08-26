@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using UnityEngine;
-using static BreathAttackNode;
 //ªÏ∑¡¡‡...
 
 public class BossBehaviour : MonoBehaviour

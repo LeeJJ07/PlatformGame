@@ -79,6 +79,7 @@ public class RushAttackNode : INode
                     Mathf.Clamp(dir.x, 0, 1);
                     Mathf.Clamp(dir.y, 0, 1);
                     dir.z = 0;
+                    collider.GetComponent<PlayerControlManagerFix>();
                     Rigidbody rigid = collider.GetComponent<Rigidbody>();
                     if (rigid != null)
                     {
