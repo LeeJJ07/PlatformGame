@@ -66,7 +66,7 @@ public class MiniBossAI : MonoBehaviour
         skill2AttackAction = new MiniBossSkill2Attack();
         checkBaseAttackRange = new CheckAttackRange(transform, player.transform, baseAttackRange);
         baseAttackAction = new MiniBossBaseAttack();
-        followPlayer = new FollowPlayer(transform, player.transform, walkSpeed);
+        followPlayer = new FollowPlayer(transform, player.transform, animator, walkSpeed, Hp);
 
         root = new Selector();
         deadSequence= new Sequence();
@@ -112,7 +112,10 @@ public class MiniBossAI : MonoBehaviour
     void Update()
     {
         if (isDie)
+        {
+            StartCoroutine(DeActive());
             return;
+        }
 
         bt.Operator();
     }
@@ -123,5 +126,10 @@ public class MiniBossAI : MonoBehaviour
     public void Die()
     {
         isDie = true;
+    }
+    IEnumerator DeActive()
+    {
+        yield return new WaitForSeconds(3f);
+        gameObject.SetActive(false);
     }
 }

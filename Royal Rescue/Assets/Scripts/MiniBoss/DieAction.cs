@@ -6,6 +6,7 @@ public class DieAction : INode
 {
     public delegate void Die();
     Die die;
+    float time = 0f;
 
     Animator animator;
     public DieAction(Die die, Animator animator)
@@ -19,7 +20,13 @@ public class DieAction : INode
 
     public INode.NodeState Evaluate()
     {
-        die();
-        return INode.NodeState.Success;
+        if(time > 2f)
+        {
+            die();
+            return INode.NodeState.Success;
+        }
+        if (time == 0f) animator.SetTrigger("die");
+        time += Time.deltaTime;
+        return INode.NodeState.Running;
     }
 }
