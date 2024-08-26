@@ -41,7 +41,6 @@ public class FlameAttackNode : INode
             return INode.NodeState.Failure;
         }
         ActiveAnimation();
-        Debug.Log($"startShootTime: {startShootTime}");
         skillActiveSpan += Time.deltaTime;
         if (skillActiveSpan >= startShootTime&& shootCount<flameAttackInfo.flameCount)
         {

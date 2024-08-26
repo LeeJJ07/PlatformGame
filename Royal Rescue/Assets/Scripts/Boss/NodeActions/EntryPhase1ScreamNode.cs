@@ -46,6 +46,7 @@ public class EntryPhase1ScreamNode : INode
         if (time >= animationDuration)
         {
             shockWaveParticleObj.GetComponent<ParticleSystem>().Stop();
+            shockWaveParticleObj.SetActive(false);
             shockWaveSpan = 0;
             time = 0;
             isStartParticle = false;
