@@ -13,6 +13,7 @@ public class FollowPlayer : INode
 
     float speed;
     float time = 0f;
+    int groundLayerMask;
     public FollowPlayer(Transform transform, Transform playerTransform, Animator animator, float speed, Hp hp)
     {
         this.hp = hp;
@@ -20,6 +21,8 @@ public class FollowPlayer : INode
         this.playerTransform = playerTransform;
         this.animator = animator;
         this.speed = speed;
+
+        this.groundLayerMask = 1 << LayerMask.NameToLayer("Ground");
     }
     public void AddNode(INode node)
     {
@@ -29,7 +32,12 @@ public class FollowPlayer : INode
     {
         if (hp() <= 0)
             return INode.NodeState.Success;
-        if (time > 2f)
+        if(playerTransform.position.y >= 5f)
+        {
+            time = 0;
+            return INode.NodeState.Success;
+        }
+        if (time > 2f || !CheckGround())
         {
             time = 0;
             return INode.NodeState.Success;
@@ -52,5 +60,15 @@ public class FollowPlayer : INode
         time += Time.deltaTime;
 
         return INode.NodeState.Running;
+    }
+
+    private bool CheckGround()
+    {
+        Debug.DrawRay(transform.position + new Vector3(2f, 0f, 0f), Vector3.down, Color.red);
+        if (Physics.Raycast(transform.position + new Vector3(2f, 0f, 0f), Vector3.down, 3f, groundLayerMask))
+        {
+            return true;
+        }
+        return false;
     }
 }

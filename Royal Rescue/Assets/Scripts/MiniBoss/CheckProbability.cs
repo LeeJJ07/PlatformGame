@@ -20,7 +20,7 @@ public class CheckProbability : INode
         int ran = Random.Range(0, 100);
 
         if (ran < probability)
-            return INode.NodeState.Failure;
-        return INode.NodeState.Success;
+            return INode.NodeState.Success;
+        return INode.NodeState.Failure;
     }
 }

@@ -30,6 +30,8 @@ public class MiniBossAI : MonoBehaviour
     [SerializeField] float skill2DelayTime = 0.5f;
     [SerializeField] float baseAttackDelayTime = 0.5f;
 
+    [SerializeField] float followDelayTime = 0f;
+
     INode checkDie;
     INode dieAction;
     INode detectPlayer;
@@ -70,7 +72,7 @@ public class MiniBossAI : MonoBehaviour
         lookPlayer = new LookPlayer(transform, player.transform);
         checkSkill1Probability = new CheckProbability(skill1Probability);
         checkSkill1Range = new CheckAttackRange(transform, player.transform, skill1Range);
-        skill1AttackAction = new MiniBossSkill1Attack();
+        skill1AttackAction = new MiniBossSkill1Attack(transform, player.transform, animator, runSpeed);
         skill1AttackActionDelay = new ActionDelay(animator, skill1DelayTime);
         checkSkill2Probability = new CheckProbability(skill2Probability);
         checkSkill2Range = new CheckAttackRange(transform, player.transform, skill2Range);
@@ -80,7 +82,7 @@ public class MiniBossAI : MonoBehaviour
         baseAttackAction = new MiniBossBaseAttack(animator);
         baseAttackActionDelay = new ActionDelay(animator, baseAttackDelayTime);
         followPlayer = new FollowPlayer(transform, player.transform, animator, walkSpeed, Hp);
-        followPlayerDelay = new ActionDelay(animator, 1f);
+        followPlayerDelay = new ActionDelay(animator, followDelayTime);
 
         root = new Selector();
         deadSequence= new Sequence();
