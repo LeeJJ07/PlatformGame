@@ -165,3 +165,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gemEffect: {fileID: 8271400594001470412, guid: 403ca708a5dfee14d915b21ed6f85bcb, type: 3}
+  gemType: 2
