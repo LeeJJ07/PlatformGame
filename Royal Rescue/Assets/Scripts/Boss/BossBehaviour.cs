@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class BossBehaviour : MonoBehaviour
 {
-    
+    [Header("Boss Activate")]
+    bool isActivate = false;
     [Header("Boss Values")]
     [SerializeField] GameObject warningPrefab;
     [SerializeField] Transform[] wallTransforms;
@@ -306,9 +307,9 @@ public class BossBehaviour : MonoBehaviour
         phase2BreathAttackSelector.AddNode(phase2breathAttackmoveParallel);
         phase2BreathAttackSelector.AddNode(phase2BreathAttackSequence);
 
-        phase2AttackRandomSelector.AddNode(phase2BasicAttackSelector);
-        phase2AttackRandomSelector.AddNode(phase2ScreamAttackSelector);
-        phase2AttackRandomSelector.AddNode(phase2FlameAttackSelector);
+        //phase2AttackRandomSelector.AddNode(phase2BasicAttackSelector);
+        //phase2AttackRandomSelector.AddNode(phase2ScreamAttackSelector);
+        //phase2AttackRandomSelector.AddNode(phase2FlameAttackSelector);
         phase2AttackRandomSelector.AddNode(phase2BreathAttackSelector);
         entryPhase2Sequence.AddNode(checkIncomingPhase2);
         entryPhase2Sequence.AddNode(phase2EntryNode);
@@ -346,9 +347,9 @@ public class BossBehaviour : MonoBehaviour
         
         entryPhase3Sequence.AddNode(checkIncomingPhase3);
         entryPhase3Sequence.AddNode(phase3EntryNode);
-        //phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
         phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
 
         phase3ActionSelector.AddNode(entryPhase3Sequence);
@@ -367,19 +368,30 @@ public class BossBehaviour : MonoBehaviour
     }
     void Update()
     {
+        if (!isActivate) return;
         if (isDie) return;
         Bt.Operator();
     }
 
-    public float GetHp()
+    public void ActivateBoss()
+    {
+        isActivate = true;
+    }
+    public void HitDamage(int damage)
+    {
+        hp -= damage;
+    }
+
+    private float GetHp()
     {
         return hp;
     }
-    public void DeActivateObj()
+    private void DeActivateObj()
     {
         isDie = true;
         //gameObject.SetActive(false);
     }
+   
     public float LookTarget(Transform transform, Vector3 target)
     {
         Vector3 forward = transform.forward;
@@ -393,14 +405,10 @@ public class BossBehaviour : MonoBehaviour
             return rot;
         return -rot;
     }
-    public void HitDamage(int damage)
-    {
-        hp -= damage;
-    }
     
 
     //정해진 범위 안에 랜덤한 객체 활성화
-    public void RandomSpawnObjects(GameObject[] objs,int spawnCount)
+    private void RandomSpawnObjects(GameObject[] objs,int spawnCount)
     {
         for(int i=0; i<spawnCount; i++)
         {
@@ -413,12 +421,12 @@ public class BossBehaviour : MonoBehaviour
     }
 
     //지정한 위치로 객체 활성화
-    public GameObject SpawnObjects(GameObject obj,Vector3 posi)
+    private GameObject SpawnObjects(GameObject obj,Vector3 posi)
     {
         return pullingDirector.SpawnObject(obj.tag, posi);
     }
 
-    public void RandomSpawnObjectsWithITag(GameObject[] objs, int spawnCount)
+    private void RandomSpawnObjectsWithITag(GameObject[] objs, int spawnCount)
     {
         for (int i = 0; i < spawnCount; i++)
         {
@@ -429,13 +437,13 @@ public class BossBehaviour : MonoBehaviour
             pullingDirector.SpawnObjectwithITag(objs[randomIndex].tag, objs[randomIndex].GetComponent<ITag>(), posi);
         }
     }
-    public GameObject SpawnObjectWithITag(GameObject obj, Vector3 posi)
+    private GameObject SpawnObjectWithITag(GameObject obj, Vector3 posi)
     {
         return pullingDirector.SpawnObjectwithITag(obj.tag, obj.GetComponent<ITag>(), posi);
     }
 
     //지정한 위치와 갯수만큼 객체 활성화
-    public GameObject[] SpawnObjects(GameObject obj, Vector3 posi ,int count)
+    private GameObject[] SpawnObjects(GameObject obj, Vector3 posi ,int count)
     {
         GameObject[] spawnObjs = new GameObject[count];
         for(int i=0; i<count; i++)

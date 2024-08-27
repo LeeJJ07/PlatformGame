@@ -75,19 +75,21 @@ public class RushAttackNode : INode
             {
                 if(collider.tag.Equals(rushAttackInfo.playerTag))
                 {
-                    Vector3 dir = collider.transform.position - transform.position;
+                    Vector3 dir = collider.transform.position + transform.position;
                     Mathf.Clamp(dir.x, 0, 1);
                     Mathf.Clamp(dir.y, 0, 1);
                     dir.z = 0;
-                    collider.GetComponent<PlayerControlManagerFix>();
+                    //collider.GetComponent<PlayerControlManagerFix>();
                     Rigidbody rigid = collider.GetComponent<Rigidbody>();
+                    Debug.Log($"rigid: {rigid == null}");
                     if (rigid != null)
                     {
-                        rigid.AddForce(dir.normalized, ForceMode.Impulse);
+                        rigid.AddForce(dir.normalized/2.35f, ForceMode.Impulse);
                     }
                 }
             }
         }
+        
 
         return INode.NodeState.Running;
     }
