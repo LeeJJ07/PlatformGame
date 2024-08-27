@@ -12,10 +12,14 @@ public class IdleMonster : Monster
 
     bool isAwake = false;
 
+    private void Awake()
+    {
+        isAwake = false;
+    }
     new void Start()
     {
         base.Start();
-
+        animator.SetBool("isLive", false);
         switch (this.tag)
         {
             case "ChestMonster":
@@ -35,6 +39,7 @@ public class IdleMonster : Monster
         if (!isAwake && IsPossibleAwake())
         {
             isAwake = true;
+            animator.SetBool("isLive", true);
             UpdateState(EState.CHASE);
             return;
         }
@@ -43,6 +48,7 @@ public class IdleMonster : Monster
 
     bool IsPossibleAwake()
     {
-        return awakeDistance > getDistancePlayer();
+        float diffY = Mathf.Abs(player.transform.position.y - transform.position.y);
+        return (awakeDistance > getDistancePlayer()) && (diffY < 1f);
     }
 }

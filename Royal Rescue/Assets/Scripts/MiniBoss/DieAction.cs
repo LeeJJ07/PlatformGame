@@ -2,12 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MiniBossBaseAttack : INode
+public class DieAction : INode
 {
-    Animator animator;
+    public delegate void Die();
+    Die die;
     float time = 0f;
-    public MiniBossBaseAttack(Animator animator)
+
+    Animator animator;
+    public DieAction(Die die, Animator animator)
     {
+        this.die = die;
         this.animator = animator;
     }
     public void AddNode(INode node)
@@ -16,13 +20,12 @@ public class MiniBossBaseAttack : INode
 
     public INode.NodeState Evaluate()
     {
-        if (time > 1f)
+        if(time > 2f)
         {
-            time = 0f;
+            die();
             return INode.NodeState.Success;
         }
-        if(time == 0f)
-            animator.SetTrigger("baseAttack");
+        if (time == 0f) animator.SetTrigger("die");
         time += Time.deltaTime;
         return INode.NodeState.Running;
     }

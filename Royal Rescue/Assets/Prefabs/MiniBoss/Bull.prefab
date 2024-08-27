@@ -1074,6 +1074,8 @@ GameObject:
   - component: {fileID: 4172131224096474963}
   - component: {fileID: 4111837621694349700}
   - component: {fileID: -7681738270742068062}
+  - component: {fileID: 8118761356432122725}
+  - component: {fileID: 5341001745198403682}
   m_Layer: 0
   m_Name: Bull
   m_TagString: Untagged
@@ -1142,10 +1144,58 @@ Rigidbody:
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &8118761356432122725
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3624100848521550685}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.61
+  m_Height: 1.44
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.49, z: 0.29}
+--- !u!114 &5341001745198403682
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3624100848521550685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0644a0546a65dca41ba499fc4c541400, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  maxHp: 100
+  walkSpeed: 10
+  runSpeed: 8
+  player: {fileID: 0}
+  startPosition: {fileID: 0}
+  startPlayerPosition: {fileID: 0}
+  animator: {fileID: 4111837621694349700}
+  skill1Probability: 25
+  skill2Probability: 33
+  skill1Range: 20
+  skill2Range: 10
+  baseAttackRange: 5
 --- !u!1 &3852976472167282488
 GameObject:
   m_ObjectHideFlags: 0
