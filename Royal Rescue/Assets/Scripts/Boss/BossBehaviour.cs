@@ -1,10 +1,12 @@
+using Cinemachine;
 using UnityEngine;
+using UnityEngine.UIElements;
 //살려줘...
 
 public class BossBehaviour : MonoBehaviour
 {
     [Header("Boss Activate")]
-    bool isActivate = false;
+    [SerializeField] bool isActivate = false;
     [Header("Boss Values")]
     [SerializeField] GameObject warningPrefab;
     [SerializeField] Transform[] wallTransforms;
@@ -15,6 +17,7 @@ public class BossBehaviour : MonoBehaviour
     [SerializeField] float hp = 100;
     [SerializeField] float moveSpeed = 0;
     [SerializeField] GameObject shockWave;
+    [SerializeField] Collider[] bossColliders;
 
     [Header("Phase1")]
     [SerializeField] float Phase1HpCondition;
@@ -40,6 +43,7 @@ public class BossBehaviour : MonoBehaviour
     [SerializeField] FlameAttackScriptableObject Phase3flameAttackInfo;
     [SerializeField] ScreamAttackScriptableObject Phase3screamAttackInfo;
     [SerializeField] BasicAttackScriptableObject Phase3basicAttackInfo;
+    [SerializeField] BreathAttackScriptableObject Phase3breathAttackInfo;
     [SerializeField] RushAttackScriptableObject Phase3RushAttackInfo;
     //공격범위
     [SerializeField] float basicAttackDistance;
@@ -92,13 +96,15 @@ public class BossBehaviour : MonoBehaviour
     INode phase3ScreamAttackNode;
     INode phase3BasicAttackNode;
     INode phase3RushAttackNode;
+    INode phase3BreathAttackNode;
     INode phase3EntryNode;
     INode checkIncomingPhase3;
     INode phase3BasicAttackDelay;
     INode phase3FlameAttackDelay;
     INode phase3ScreamAttackDelay;
+    INode phase3BreathAttackDelay;
     INode phase3RushAttackDelay;
-    INode phase3WarningRushAttack;
+    INode phase3WarningRushAttackNode;
     #endregion
 
     #region Sequence, Selector, Parallel, RamdomSelector 변수들
@@ -135,16 +141,19 @@ public class BossBehaviour : MonoBehaviour
     Parallel phase3basicAttackmoveParallel;
     Parallel phase3screamAttackmoveParallel;
     Parallel phase3flameAttackmoveParallel;
+    Parallel phase3breathAttackmoveParallel;
     Selector phase3ActionSelector;
     Sequence entryPhase3Sequence;
     RandomSelector phase3AttackRandomSelector;
     Selector phase3BasicAttackSelector;
     Selector phase3FlameAttackSelector;
     Selector phase3ScreamAttackSelector;
+    Selector phase3BreathAttackSelector;
     Sequence phase3BasicAttackSequence;
     Sequence phase3FlameAttackSequence;
     Sequence phase3ScreamAttackSequence;
     Sequence phase3RushAttackSequence;
+    Sequence phase3BreathAttackSequence;
     #endregion
 
 
@@ -179,6 +188,7 @@ public class BossBehaviour : MonoBehaviour
         phase3BasicAttackDelay = new NodeDelay(Phase3basicAttackInfo.subSequenceDelay,aniController);
         phase3FlameAttackDelay = new NodeDelay(Phase3flameAttackInfo.subSequenceDelay,aniController);
         phase3ScreamAttackDelay = new NodeDelay(Phase3screamAttackInfo.subSequenceDelay,aniController);
+        phase3BreathAttackDelay = new NodeDelay(Phase3breathAttackInfo.subSequenceDelay, aniController);
         phase3RushAttackDelay = new NodeDelay(Phase3RushAttackInfo.subSequenceDelay,aniController);
 
         //행동 노드들
@@ -199,8 +209,9 @@ public class BossBehaviour : MonoBehaviour
         phase3FlameAttackNode = new FlameAttackNode(Phase3flameAttackInfo,SpawnObjects, flamePosition, aniController,transform,target);
         phase3ScreamAttackNode = new ScreamAttackNode(Phase3screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase3BasicAttackNode = new BasicAttackNode(Phase3basicAttackInfo, aniController, transform, target);
-        phase3RushAttackNode = new RushAttackNode(Phase3RushAttackInfo, RandomSpawnObjectsWithITag, aniController, transform, target);
-        phase3WarningRushAttack = new WarningRushAttack(SpawnObjects, angryLight, warningPrefab,transform, Phase3RushAttackInfo.warningDelay);
+        phase3RushAttackNode = new RushAttackNode(Phase3RushAttackInfo, bossColliders,RandomSpawnObjectsWithITag, aniController, transform, target);
+        phase3WarningRushAttackNode = new WarningRushAttack(SpawnObjects, angryLight, warningPrefab,transform, Phase3RushAttackInfo.warningDelay);
+        phase3BreathAttackNode = new BreathAttackNode(SpawnObjects, Phase3breathAttackInfo, aniController, flamePosition, transform, target);
 
 
         //시퀀스, 셀렉터 노드들
@@ -241,13 +252,16 @@ public class BossBehaviour : MonoBehaviour
         phase3BasicAttackSelector = new Selector();
         phase3FlameAttackSelector = new Selector();
         phase3ScreamAttackSelector = new Selector();
+        phase3BreathAttackSelector = new Selector();
         phase3basicAttackmoveParallel = new Parallel();
         phase3screamAttackmoveParallel = new Parallel();
         phase3flameAttackmoveParallel = new Parallel();
+        phase3breathAttackmoveParallel = new Parallel();
         phase3BasicAttackSequence = new Sequence();
         phase3FlameAttackSequence = new Sequence();
         phase3ScreamAttackSequence = new Sequence();
         phase3RushAttackSequence = new Sequence();
+        phase3BreathAttackSequence = new Sequence();
         pullingDirector = GameObject.FindWithTag("Director").GetComponent<PullingDirector>();
         target = GameObject.FindWithTag("Player").transform;
     }
@@ -325,9 +339,11 @@ public class BossBehaviour : MonoBehaviour
         phase3ScreamAttackSequence.AddNode(phase3ScreamAttackDelay);
         phase3FlameAttackSequence.AddNode(phase3FlameAttackNode);
         phase3FlameAttackSequence.AddNode(phase3FlameAttackDelay);
-        phase3RushAttackSequence.AddNode(phase3WarningRushAttack);
+        phase3RushAttackSequence.AddNode(phase3WarningRushAttackNode);
         phase3RushAttackSequence.AddNode(phase3RushAttackNode);
         phase3RushAttackSequence.AddNode(phase3RushAttackDelay);
+        phase3BreathAttackSequence.AddNode(phase3BreathAttackNode);
+        phase3BreathAttackSequence.AddNode(phase3BreathAttackDelay);
 
 
         phase3basicAttackmoveParallel.AddNode(targetinBasicAttackRange);
@@ -344,12 +360,19 @@ public class BossBehaviour : MonoBehaviour
         phase3screamAttackmoveParallel.AddNode(moveNode);
         phase3ScreamAttackSelector.AddNode(phase3screamAttackmoveParallel);
         phase3ScreamAttackSelector.AddNode(phase3ScreamAttackSequence);
-        
+
+        phase3breathAttackmoveParallel.AddNode(targetinBreathAttackRange);
+        phase3breathAttackmoveParallel.AddNode(moveNode);
+        phase3BreathAttackSelector.AddNode(phase3breathAttackmoveParallel);
+        phase3BreathAttackSelector.AddNode(phase3BreathAttackSequence);
+
         entryPhase3Sequence.AddNode(checkIncomingPhase3);
         entryPhase3Sequence.AddNode(phase3EntryNode);
-        phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
+
+        //phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
         phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
 
         phase3ActionSelector.AddNode(entryPhase3Sequence);
@@ -457,6 +480,22 @@ public class BossBehaviour : MonoBehaviour
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, 5);
 
+    }
+    /* private void OnCollisionStay(Collision collision)
+     {
+         if(collision.collider.CompareTag("Player"))
+         {
+             Vector3 dir = collision.transform.position - transform.position;
+             collision.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.right * dir.normalized.x * 20, ForceMode.Impulse);
+         }
+     }*/
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Vector3 dir = other.transform.position - transform.position;
+            other.GetComponent<Rigidbody>().AddForce(Vector3.right * dir.normalized.x * 50, ForceMode.Impulse);
+        }
     }
 }
 

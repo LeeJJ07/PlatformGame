@@ -14,6 +14,7 @@ public class RushAttackNode : INode
 
     Transform transform;
     Transform target;
+    Collider[] bossColliders;
 
     Ray ray;
     RaycastHit hit;
@@ -21,13 +22,14 @@ public class RushAttackNode : INode
 
     bool isActiveAnime = false;
     
-    public RushAttackNode(RushAttackScriptableObject rushAttackInfo, SpawnFunction func ,Animator aniController, Transform transform,Transform target)
+    public RushAttackNode(RushAttackScriptableObject rushAttackInfo,Collider[] bossColliders ,SpawnFunction func ,Animator aniController, Transform transform,Transform target)
     {
         this.rushAttackInfo = rushAttackInfo;
         this.transform = transform;
         this.target = target;
         this.aniController = aniController;
         spawnRocks = func;
+        this.bossColliders = bossColliders;
     }
     public void AddNode(INode node) { }
 
@@ -43,6 +45,8 @@ public class RushAttackNode : INode
         if (skillSpan >= rushAttackInfo.RushAttackDuration) 
         {
             aniController.SetBool("isRushAttack", false);
+            foreach (Collider bossCollider in bossColliders)
+                bossCollider.enabled = true;
             isActiveAnime = false;
             skillSpan = 0;
             return INode.NodeState.Success;
@@ -68,7 +72,7 @@ public class RushAttackNode : INode
                 ray = new Ray((transform.position + new Vector3(7, 3, 0)) * transform.forward.x, (transform.position + new Vector3(10, 3, 0)) * transform.forward.x);
             }
         }
-        //플레이어 넉백
+        //플레이어 데미지
         if(colliders!= null)
         {
             foreach(Collider collider in colliders)
@@ -79,13 +83,9 @@ public class RushAttackNode : INode
                     Mathf.Clamp(dir.x, 0, 1);
                     Mathf.Clamp(dir.y, 0, 1);
                     dir.z = 0;
-                    //collider.GetComponent<PlayerControlManagerFix>();
-                    Rigidbody rigid = collider.GetComponent<Rigidbody>();
-                    Debug.Log($"rigid: {rigid == null}");
-                    if (rigid != null)
-                    {
-                        rigid.AddForce(dir.normalized/2.35f, ForceMode.Impulse);
-                    }
+
+                    //collider.GetComponent<PlayerControlManagerFix>().hitdamage();
+                    
                 }
             }
         }
@@ -100,6 +100,8 @@ public class RushAttackNode : INode
         aniController.SetBool("isRushAttack",true);
         if(aniController.GetCurrentAnimatorStateInfo(0).IsName("Run"))
         {
+            foreach(Collider bossCollider in bossColliders)
+                bossCollider.enabled = false;
             isActiveAnime = true;
         }
     }

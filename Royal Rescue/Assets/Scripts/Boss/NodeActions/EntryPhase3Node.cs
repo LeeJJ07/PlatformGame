@@ -45,7 +45,7 @@ public class EntryPhase3Node : INode
                 Rigidbody rigid = collider.GetComponent<Rigidbody>();
                 if (rigid != null)
                 {
-                    rigid.AddForce(dir.normalized, ForceMode.Impulse);
+                    rigid.AddForce(Vector3.right*dir.normalized.x/1.2f,ForceMode.Impulse);
                 }
             }
         }

@@ -122,6 +122,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &14705333 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4437741861551325837, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+  m_PrefabInstance: {fileID: 3702073976555983303}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &14705335 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 2424326631092252458, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+  m_PrefabInstance: {fileID: 3702073976555983303}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &14705337
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 14705333}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 10.96}
+  m_Center: {x: 3.463989e-15, y: 2, z: 0.7}
 --- !u!1001 &284590718
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -290,7 +321,7 @@ GameObject:
   - component: {fileID: 634745225}
   m_Layer: 7
   m_Name: Cube
-  m_TagString: Ground
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -739,7 +770,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5986879744196465113, guid: c7955696a3889134bb4db43be54cbbb9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.2
+      value: -24.81
       objectReference: {fileID: 0}
     - target: {fileID: 5986879744196465113, guid: c7955696a3889134bb4db43be54cbbb9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -848,6 +879,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2424326631092252458, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: m_Size.z
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424326631092252458, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: m_Center.x
+      value: 3.463989e-15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424326631092252458, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: m_Center.z
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424326631092252458, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: m_IsTrigger
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
       propertyPath: hp
       value: 3
@@ -856,6 +903,22 @@ PrefabInstance:
       propertyPath: target
       value: 
       objectReference: {fileID: 522795791}
+    - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: isActivate
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: bossCollider
+      value: 
+      objectReference: {fileID: 14705335}
+    - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: Phase3breathAttackInfo
+      value: 
+      objectReference: {fileID: 11400000, guid: 388f3737dc5c3f1439cd6dfb4c07111b, type: 2}
+    - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: bossColliders.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
       propertyPath: spawnRange.Array.data[0]
       value: 
@@ -868,6 +931,14 @@ PrefabInstance:
       propertyPath: wallTransforms.Array.size
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: bossColliders.Array.data[0]
+      value: 
+      objectReference: {fileID: 14705335}
+    - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: bossColliders.Array.data[1]
+      value: 
+      objectReference: {fileID: 14705337}
     - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
       propertyPath: wallTransforms.Array.data[0]
       value: 
@@ -931,7 +1002,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4437741861551325837, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      insertIndex: 2
+      addedObject: {fileID: 14705337}
   m_SourcePrefab: {fileID: 100100000, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
 --- !u!1001 &6337988049908402593
 PrefabInstance:
@@ -1053,6 +1127,10 @@ PrefabInstance:
     - target: {fileID: 2870110713407379216, guid: 19ff19ba5ddd9a149b85ce7b5975550d, type: 3}
       propertyPath: m_Name
       value: RushAttackFlames
+      objectReference: {fileID: 0}
+    - target: {fileID: 2870110713407379216, guid: 19ff19ba5ddd9a149b85ce7b5975550d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
