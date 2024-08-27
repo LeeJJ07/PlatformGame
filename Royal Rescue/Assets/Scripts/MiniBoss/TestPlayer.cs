@@ -28,7 +28,6 @@ public class TestPlayer : MonoBehaviour
     {
         if (!other.CompareTag("Monster"))
             return;
-        Debug.Log("¤·¿¨");
         Vector3 dir = (transform.position - other.transform.position).normalized;
         rb.AddForce(new Vector3(dir.x * power, 0f, 0f),ForceMode.Impulse);
     }

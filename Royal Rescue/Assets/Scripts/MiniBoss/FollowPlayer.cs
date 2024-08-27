@@ -36,12 +36,18 @@ public class FollowPlayer : INode
         }
         if (time == 0)
             animator.SetTrigger("walk");
+        Vector3 nextPos = (playerTransform.position - transform.position);
 
-        float lookDir = (transform.position.x - playerTransform.position.x) / Mathf.Abs(transform.position.x - playerTransform.position.x);
-        transform.rotation = Quaternion.Euler(0f, 180f + 60f * lookDir, 0f);
-
-        Vector3 nextPos = (playerTransform.position - transform.position).normalized * Time.deltaTime * speed;
-        transform.position += new Vector3(nextPos.x, 0f, 0f);
+        float lookDir = (nextPos.x) / Mathf.Abs(nextPos.x);
+        transform.rotation = Quaternion.Euler(0f, 180f - 60f * lookDir, 0f);
+        
+        if(nextPos.magnitude < 5f)
+        {
+            time = 0;
+            return INode.NodeState.Success;
+        }
+        float nextX = nextPos.normalized.x * Time.deltaTime * speed;
+        transform.position += new Vector3(nextX, 0f, 0f);
 
         time += Time.deltaTime;
 
