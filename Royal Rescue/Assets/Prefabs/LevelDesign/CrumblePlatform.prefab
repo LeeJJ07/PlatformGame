@@ -49,6 +49,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformAnim: {fileID: 87090726421653097}
   platformRb: {fileID: 6027335886230190330}
+  platformCollider: {fileID: 8645287090939952584}
+  meshRenderer: {fileID: 3739058193112702807}
+  respawnDelay: 5
 --- !u!65 &1475771532414598812
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -227,4 +230,4 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.9740824, y: 0.121299505, z: 1.9577568}
-  m_Center: {x: -0.009472549, y: -0.08290303, z: 0.0031099916}
+  m_Center: {x: -0.009472549, y: -0.35, z: 0.0031099916}
