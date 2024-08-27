@@ -2,32 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireBallControl : MonoBehaviour
+public class SwordWindControl : MonoBehaviour
 {
-    Rigidbody rigidbody;
-    public float throwForce = 10;
+    //Rigidbody rigidbody;
+    public float throwForce = 20;
     public bool isFireball = false;
-    public float gravity = -9.81f;
     public Vector3 ballDir;
-    Vector3 velocity;
     public int damage = 50; // 폭탄이 적에게 주는 데미지
     public GameObject explosionEffect; // 폭발 효과
     public GameObject target;
     // Start is called before the first frame update
     void Start()
     {
-        //velocity = throwForce * ballDir;
-        rigidbody = GetComponent<Rigidbody>();
-        rigidbody.AddForce((ballDir + Vector3.up * 1.5f) * throwForce, ForceMode.Impulse);
+        //rigidbody = GetComponent<Rigidbody>();
     }
     private void Update()
     {
-        //transform.position += throwForce * ballDir * Time.deltaTime;
-        //velocity.y += gravity * Time.deltaTime;
-        //transform.position += velocity * Time.deltaTime;
-        Destroy(this.gameObject, 2f);
+        transform.position += throwForce * ballDir * Time.deltaTime;
+        Destroy(this.gameObject, 0.3f);
         //포물선
-        
+        //rigidbody.AddForce(ballDir + Vector3.up * 0.5f * throwForce, ForceMode.Impulse);
     }
     // Update is called once per frame
     // 폭탄이 발사될 때 호출하는 함수
@@ -40,8 +34,7 @@ public class FireBallControl : MonoBehaviour
             //if (enemyHealth != null)
             //enemyHealth.TakeDamage(damage);
             EnemyControler enemyHP = other.gameObject.GetComponent<EnemyControler>();
-            enemyHP.health -= damage;
-            Debug.Log("적에게 파이어볼 명중");
+            Debug.Log("적에게 검기 명중");
         }
         if (other.gameObject.CompareTag("Player"))
         {
@@ -60,7 +53,7 @@ public class FireBallControl : MonoBehaviour
             ParticleSystem ps = explosion.GetComponent<ParticleSystem>();
             if (ps != null)
             {
-                Destroy(explosion, 1.0f);
+                Destroy(explosion, 1f);
             }
             else
             {
@@ -68,6 +61,7 @@ public class FireBallControl : MonoBehaviour
                 Destroy(explosion, 3.0f);
             }
         }
+
         Destroy(gameObject);
     }
 }
