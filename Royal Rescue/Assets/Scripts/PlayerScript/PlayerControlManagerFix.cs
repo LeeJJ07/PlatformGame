@@ -317,6 +317,11 @@ public class PlayerControlManagerFix : MonoBehaviour
             Debug.Log("피격");
         }
     }
+    public void HurtPlayer(int damage)
+    {
+        playerHP -= damage;
+        Debug.Log("피격");
+    }
     private void OnCollisionExit(Collision collision)
     {
         RaycastHit hit;
@@ -354,8 +359,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         isSwordWindPossible = false;
     }
 
-(??)
-(??)    /****************************************************/
+
     private void OnParticleCollision(GameObject other)
     {
         Debug.Log("충돌");
