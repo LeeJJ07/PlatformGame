@@ -14,6 +14,11 @@ public class CannonBall : MonoBehaviour
         Destroy(gameObject, 10f);
     }
 
+    void OnDisable()
+    {
+        Destroy(gameObject);
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         GameObject effect = Instantiate(hitEffect, transform.parent);
