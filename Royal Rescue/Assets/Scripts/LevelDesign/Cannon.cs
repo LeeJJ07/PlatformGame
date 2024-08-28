@@ -9,7 +9,7 @@ public class Cannon : MonoBehaviour
     [SerializeField] private ParticleSystem explosionEffect;
     [SerializeField] private Transform cannon, spawnPoint;
 
-    void Start()
+    void OnEnable()
     {
         InvokeRepeating("FireCannonBall", 0.2f, fireInterval);
     }

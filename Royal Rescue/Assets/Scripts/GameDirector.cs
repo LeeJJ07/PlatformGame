@@ -34,6 +34,7 @@ public class GameDirector : MonoBehaviour
         {
             _instance = this;
 
+            SetCurrentStageIndex();
             loadingScreen.SetActive(false);
             loadScreenFade.SetActive(true);
 
@@ -41,6 +42,20 @@ public class GameDirector : MonoBehaviour
         }
         else
             Destroy(gameObject);
+    }
+
+    private void SetCurrentStageIndex()
+    {
+        Scene scene = SceneManager.GetActiveScene();
+        for (int i = 0; i < stageNames.Count; i++)
+        {
+            if (stageNames[i] == scene.name)
+            {
+                stageIndex = i;
+                return;
+            }
+        }
+        stageIndex = 0;
     }
 
     public IEnumerator LoadNextStage()
