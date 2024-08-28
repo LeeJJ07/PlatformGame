@@ -470,6 +470,7 @@ GameObject:
   - component: {fileID: 7901142262291957670}
   - component: {fileID: 6049505428092940588}
   - component: {fileID: 4811801451882433572}
+  - component: {fileID: 4168477721459391092}
   m_Layer: 0
   m_Name: Cactus
   m_TagString: Monster
@@ -657,6 +658,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0e90d9781fbb0144ac413c7c6dae451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4168477721459391092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6259114647815313276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a17048ae8917fe0428d823471471850b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detailTag: Cactus
+  dangerZoneObj: {fileID: 7360912941218823822, guid: 8e99ae799f6f16243aeb4a94dfced891, type: 3}
+  delayTime: 0
+  dropSpeed: 30
+  damage: 1
+  destroyObj: 0
+  detectLayers:
+  - serializedVersion: 2
+    m_Bits: 128
+  - serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &6511703974913406166
 GameObject:
   m_ObjectHideFlags: 0

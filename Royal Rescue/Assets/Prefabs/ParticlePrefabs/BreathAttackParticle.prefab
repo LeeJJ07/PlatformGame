@@ -4856,11 +4856,11 @@ GameObject:
   - component: {fileID: 2105405942826699515}
   m_Layer: 0
   m_Name: BreathAttackParticle
-  m_TagString: Untagged
+  m_TagString: Particle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &101165750814079026
 Transform:
   m_ObjectHideFlags: 0

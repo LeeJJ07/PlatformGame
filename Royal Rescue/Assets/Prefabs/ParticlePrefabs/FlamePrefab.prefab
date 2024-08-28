@@ -14,11 +14,11 @@ GameObject:
   - component: {fileID: 4970813269476130541}
   m_Layer: 0
   m_Name: FlamePrefab
-  m_TagString: Skill
+  m_TagString: Particle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3350215180130442600
 Transform:
   m_ObjectHideFlags: 0
@@ -99,9 +99,7 @@ MonoBehaviour:
   detailTag: flameSkill
   flameParticle: {fileID: 27911454026559427}
   explosionParticle: {fileID: 3599827170578653174}
-  ignoreLayerList:
-  - serializedVersion: 2
-    m_Bits: 1024
+  ignoreTagList: []
   moveSpeed: 20
 --- !u!1001 &189676919323409035
 PrefabInstance:

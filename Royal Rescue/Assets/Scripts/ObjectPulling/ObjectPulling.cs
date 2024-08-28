@@ -43,4 +43,8 @@ public class ObjectPulling
         objList.Add(gm);
         return gm;
     }
+    public List<GameObject> GetObjectList()
+    {
+        return objList;
+    }
 }

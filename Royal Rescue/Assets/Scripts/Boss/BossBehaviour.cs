@@ -200,19 +200,19 @@ public class BossBehaviour : MonoBehaviour
         phase1EntryLandNode = new EntryPhase1LandNode(transform, target, aniController);
         phase1EntryScreamNode = new EntryPhase1ScreamNode(transform, target, aniController,shockWave,flamePosition, SpawnObjectWithITag);
 
-        phase2EntryNode = new EntryPhase2Node(transform, target, flamePosition,shockWave, aniController, SpawnObjectWithITag);
+        phase2EntryNode = new EntryPhase2Node(transform, target, flamePosition,shockWave, aniController, SpawnObjectWithITag,DeActivateParticles);
         phase2FlameAttackNode = new FlameAttackNode(Phase2flameAttackInfo, SpawnObjects, flamePosition, aniController, transform, target);
         phase2ScreamAttackNode = new ScreamAttackNode(Phase2screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase2BasicAttackNode = new BasicAttackNode(Phase2basicAttackInfo, aniController, transform, target);
-        phase2BreathAttackNode = new BreathAttackNode(SpawnObjects, Phase2breathAttackInfo, aniController, flamePosition, transform, target);
+        phase2BreathAttackNode = new BreathAttackNode(SpawnObjectWithITag, Phase2breathAttackInfo, aniController, flamePosition, transform, target);
 
-        phase3EntryNode = new EntryPhase3Node(angryLight, transform, target,flamePosition, shockWave, flamePrefabsObject, aniController,SpawnObjectWithITag);
+        phase3EntryNode = new EntryPhase3Node(angryLight, transform, target,flamePosition, shockWave, flamePrefabsObject, aniController,SpawnObjectWithITag, DeActivateParticles);
         phase3FlameAttackNode = new FlameAttackNode(Phase3flameAttackInfo,SpawnObjects, flamePosition, aniController,transform,target);
         phase3ScreamAttackNode = new ScreamAttackNode(Phase3screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase3BasicAttackNode = new BasicAttackNode(Phase3basicAttackInfo, aniController, transform, target);
         phase3RushAttackNode = new RushAttackNode(Phase3RushAttackInfo, bossColliders,RandomSpawnObjectsWithITag, aniController, transform, target);
         phase3WarningRushAttackNode = new WarningRushAttack(SpawnObjects, angryLight, warningPrefab,transform, Phase3RushAttackInfo.warningDelay);
-        phase3BreathAttackNode = new BreathAttackNode(SpawnObjects, Phase3breathAttackInfo, aniController, flamePosition, transform, target);
+        phase3BreathAttackNode = new BreathAttackNode(SpawnObjectWithITag, Phase3breathAttackInfo, aniController, flamePosition, transform, target);
 
 
         //½ÃÄö½º, ¼¿·ºÅÍ ³ëµåµé
@@ -322,9 +322,9 @@ public class BossBehaviour : MonoBehaviour
         phase2BreathAttackSelector.AddNode(phase2breathAttackmoveParallel);
         phase2BreathAttackSelector.AddNode(phase2BreathAttackSequence);
 
-        //phase2AttackRandomSelector.AddNode(phase2BasicAttackSelector);
-        //phase2AttackRandomSelector.AddNode(phase2ScreamAttackSelector);
-        //phase2AttackRandomSelector.AddNode(phase2FlameAttackSelector);
+        phase2AttackRandomSelector.AddNode(phase2BasicAttackSelector);
+        phase2AttackRandomSelector.AddNode(phase2ScreamAttackSelector);
+        phase2AttackRandomSelector.AddNode(phase2FlameAttackSelector);
         phase2AttackRandomSelector.AddNode(phase2BreathAttackSelector);
         entryPhase2Sequence.AddNode(checkIncomingPhase2);
         entryPhase2Sequence.AddNode(phase2EntryNode);
@@ -370,10 +370,10 @@ public class BossBehaviour : MonoBehaviour
         entryPhase3Sequence.AddNode(checkIncomingPhase3);
         entryPhase3Sequence.AddNode(phase3EntryNode);
 
-        //phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
         phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
 
         phase3ActionSelector.AddNode(entryPhase3Sequence);
@@ -477,20 +477,16 @@ public class BossBehaviour : MonoBehaviour
         }
         return spawnObjs;
     }
+    private void DeActivateParticles()
+    {
+        pullingDirector.DeActivateObjectsWithTag("Particle");
+    }
     public void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, 5);
 
     }
-    /* private void OnCollisionStay(Collision collision)
-     {
-         if(collision.collider.CompareTag("Player"))
-         {
-             Vector3 dir = collision.transform.position - transform.position;
-             collision.gameObject.GetComponent<Rigidbody>().AddForce(Vector3.right * dir.normalized.x * 20, ForceMode.Impulse);
-         }
-     }*/
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))

@@ -81,6 +81,7 @@ GameObject:
   - component: {fileID: 4077169115095364955}
   - component: {fileID: 5252150350831911848}
   - component: {fileID: 5791550774509258435}
+  - component: {fileID: 1019068881223607322}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Monster
@@ -254,6 +255,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0e90d9781fbb0144ac413c7c6dae451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1019068881223607322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3223769606541887397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a17048ae8917fe0428d823471471850b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detailTag: Slime
+  dangerZoneObj: {fileID: 7360912941218823822, guid: 8e99ae799f6f16243aeb4a94dfced891, type: 3}
+  delayTime: 0
+  dropSpeed: 30
+  damage: 1
+  destroyObj: 0
+  detectLayers:
+  - serializedVersion: 2
+    m_Bits: 128
+  - serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &3500400409229833645
 GameObject:
   m_ObjectHideFlags: 0

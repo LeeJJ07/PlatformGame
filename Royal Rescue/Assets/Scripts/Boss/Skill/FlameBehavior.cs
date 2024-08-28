@@ -23,7 +23,7 @@ public class FlameBehavior : MonoBehaviour,ITag
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Boss")||other.CompareTag("Skill"))
+        if (other.CompareTag("Boss")||other.CompareTag("Particle"))
             return;
         StopCoroutine(skillCoroutine);
         flameParticle.Stop();
