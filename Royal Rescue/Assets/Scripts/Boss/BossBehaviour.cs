@@ -36,6 +36,7 @@ public class BossBehaviour : MonoBehaviour
     [SerializeField] BasicAttackScriptableObject Phase2basicAttackInfo;
 
     [Header("Phase3")]
+    [SerializeField] GameObject flamePrefabsObject;
     [SerializeField] GameObject angryLight;
     [SerializeField] float Phase3HpCondition;
     
@@ -199,13 +200,13 @@ public class BossBehaviour : MonoBehaviour
         phase1EntryLandNode = new EntryPhase1LandNode(transform, target, aniController);
         phase1EntryScreamNode = new EntryPhase1ScreamNode(transform, target, aniController,shockWave,flamePosition, SpawnObjectWithITag);
 
-        phase2EntryNode = new EntryPhase2Node(transform, target, shockWave, aniController);
+        phase2EntryNode = new EntryPhase2Node(transform, target, flamePosition,shockWave, aniController, SpawnObjectWithITag);
         phase2FlameAttackNode = new FlameAttackNode(Phase2flameAttackInfo, SpawnObjects, flamePosition, aniController, transform, target);
         phase2ScreamAttackNode = new ScreamAttackNode(Phase2screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase2BasicAttackNode = new BasicAttackNode(Phase2basicAttackInfo, aniController, transform, target);
         phase2BreathAttackNode = new BreathAttackNode(SpawnObjects, Phase2breathAttackInfo, aniController, flamePosition, transform, target);
 
-        phase3EntryNode = new EntryPhase3Node(angryLight, transform, target, shockWave, aniController);
+        phase3EntryNode = new EntryPhase3Node(angryLight, transform, target,flamePosition, shockWave, flamePrefabsObject, aniController,SpawnObjectWithITag);
         phase3FlameAttackNode = new FlameAttackNode(Phase3flameAttackInfo,SpawnObjects, flamePosition, aniController,transform,target);
         phase3ScreamAttackNode = new ScreamAttackNode(Phase3screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase3BasicAttackNode = new BasicAttackNode(Phase3basicAttackInfo, aniController, transform, target);
@@ -387,6 +388,7 @@ public class BossBehaviour : MonoBehaviour
         root.AddNode(phase3);
 
         angryLight.SetActive(false);
+        flamePrefabsObject.SetActive(false);
         Bt = new BehaviorTreeRunner(root);
     }
     void Update()

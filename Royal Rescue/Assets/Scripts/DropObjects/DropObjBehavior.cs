@@ -30,7 +30,7 @@ public class DropObjBehavior : MonoBehaviour,ITag
             detectLayer |= layer;
         }
     }
-    private void OnEnable()
+    void OnEnable()
     {
         if (rigid != null)
         {

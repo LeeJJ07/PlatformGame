@@ -72,14 +72,10 @@ public class WarningRushAttack : INode
             float center = ((forwardHit.point.x+backHit.point.x)/2);
             size = Mathf.Abs(backHit.point.x- forwardHit.point.x)/2;
             warningZoneCenter = new Vector3(center, transform.position.y, 0);
-            Debug.Log($"wall1: {forwardHit.collider.name}, wall2: {backHit.collider.name}");
-            Debug.Log($"center: {center}, size: {size}");
-
         }
         spawnObjs = spawnFunc(WarningPrefab, warningZoneCenter, 1);
         foreach(GameObject obj in spawnObjs)
         {
-            Debug.Log($"size: {size}");
             obj.transform.localScale = new Vector3(size, 1, 5);
         }
         isSpawnZonePrefab = true;
