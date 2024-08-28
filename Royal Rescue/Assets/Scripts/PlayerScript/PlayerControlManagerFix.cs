@@ -21,6 +21,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     public GameObject fireBallPrefabs;
     public GameObject SwordWindPrefabsR;
     public GameObject SwordWindPrefabsL;
+    public GameObject Inventory;
     public Transform fireBallSpawnPoint;
     [SerializeField] private int jumpPossible = 2;
     [SerializeField] private float lastGroundTime;
@@ -63,6 +64,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         rb = this.GetComponent<Rigidbody>();
         rb.useGravity = true;
         anim = GetComponentInChildren<Animator>();
+        Inventory.SetActive(false);
 
         isAddicted = false;
         fieldView.weight = 0f;
@@ -85,6 +87,10 @@ public class PlayerControlManagerFix : MonoBehaviour
             if (Input.GetButtonDown("FireBallKey"))
             {
                 ThrowBall();
+            }
+            if (Input.GetButtonDown("InventoryKey"))
+            {
+                Inventory.SetActive(true);
             }
         }
         
