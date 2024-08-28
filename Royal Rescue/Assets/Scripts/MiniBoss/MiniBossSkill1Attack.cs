@@ -45,7 +45,9 @@ public class MiniBossSkill1Attack : INode
             if (time == 0f)
             {
                 transform.eulerAngles = new Vector3(0f, 180f - 90 * dirX / Mathf.Abs(dirX), 0f);
+                transform.GetChild(3).gameObject.SetActive(true);
                 animator.SetTrigger("skill1");
+                
             }
             delay = true;
             time += Time.deltaTime;
@@ -55,12 +57,13 @@ public class MiniBossSkill1Attack : INode
                 delay = false;
                 isAttack = false;
                 time = 0f;
+                transform.GetChild(3).gameObject.SetActive(false);
                 transform.eulerAngles = new Vector3(0f, 180f - 60 * dirX / Mathf.Abs(dirX), 0f);
                 return INode.NodeState.Success;
             }
         }
         else if (Mathf.Abs(dirX) >= 5f)
-            transform.position += new Vector3(dirX * runSpeed / 3 * Time.deltaTime, 0f, 0f);
+            transform.position += new Vector3(dirX * runSpeed / 5 * Time.deltaTime, 0f, 0f);
 
         return INode.NodeState.Running;
     }
