@@ -20,13 +20,13 @@ public class EntryPhase1ScreamNode : INode
     bool isActiveAnime = false;
 
     //오브젝트 스폰할 델리게이트 매개변수 생성, ScriptableObject 고려해보기
-    public EntryPhase1ScreamNode(Transform transform, Transform target, Animator aniController, GameObject shockWave,Transform spawnPosi, SpawnObj SpawnObject)
+    public EntryPhase1ScreamNode(Transform transform, Transform target, Animator aniController, GameObject shockWave,Transform shockWavePosi, SpawnObj SpawnObject)
     {
         this.transform = transform;
         this.target = target;
         this.aniController = aniController;
         this.shockWaveObj = shockWave;
-        this.spawnPosi = spawnPosi;
+        this.spawnPosi = shockWavePosi;
         this.SpawnObject = SpawnObject;
     }
     public void AddNode(INode node) { }
@@ -46,6 +46,7 @@ public class EntryPhase1ScreamNode : INode
         if (time >= animationDuration)
         {
             shockWaveParticleObj.GetComponent<ParticleSystem>().Stop();
+            shockWaveParticleObj.SetActive(false);
             shockWaveSpan = 0;
             time = 0;
             isStartParticle = false;

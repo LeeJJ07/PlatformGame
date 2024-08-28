@@ -128,6 +128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc5a677b8c89b4e4daa04f343ec7c503, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detailTag: WarningZone
   warningZoneMaterial: {fileID: 2100000, guid: ee248285845992f4e8b6696d3a3fce48, type: 2}
   alphaChangeSpeed: 1
   min: 0.5

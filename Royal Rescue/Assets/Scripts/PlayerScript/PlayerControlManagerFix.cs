@@ -21,6 +21,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     public GameObject fireBallPrefabs;
     public GameObject SwordWindPrefabsR;
     public GameObject SwordWindPrefabsL;
+    public GameObject Inventory;
     public Transform fireBallSpawnPoint;
     [SerializeField] private int jumpPossible = 2;
     [SerializeField] private float lastGroundTime;
@@ -40,8 +41,8 @@ public class PlayerControlManagerFix : MonoBehaviour
     [SerializeField] private bool isAttackPossible = false;
     public bool isAttackEnhance = false;
     public bool isJumpEnhance = false;
-    [SerializeField] private bool isDashPossible = false;
-    [SerializeField] private bool isFbPossible = false;
+    public bool isDashPossible = false;
+    public bool isFbPossible = false;
     [SerializeField] private bool isDie = false;
 
     public LayerMask layer;
@@ -63,6 +64,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         rb = this.GetComponent<Rigidbody>();
         rb.useGravity = true;
         anim = GetComponentInChildren<Animator>();
+        Inventory.SetActive(false);
 
         isAddicted = false;
         fieldView.weight = 0f;
@@ -85,6 +87,10 @@ public class PlayerControlManagerFix : MonoBehaviour
             if (Input.GetButtonDown("FireBallKey"))
             {
                 ThrowBall();
+            }
+            if (Input.GetButtonDown("InventoryKey"))
+            {
+                Inventory.SetActive(true);
             }
         }
         
@@ -348,7 +354,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     IEnumerator CheckFireBall()
     {
         Debug.Log("남은 횟수 : " + skillCount);
-        yield return new WaitForSeconds(1f);//1초 후
+        yield return new WaitForSeconds(3f);//3초 후
         Debug.Log("스킬 키 입력 가능");
         isFbPossible = false;
     }

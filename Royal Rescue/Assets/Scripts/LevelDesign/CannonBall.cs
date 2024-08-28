@@ -17,7 +17,7 @@ public class CannonBall : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         GameObject effect = Instantiate(hitEffect, transform.parent);
-        effect.transform.position = collision.transform.position;
+        effect.transform.position = collision.contacts[0].point;
         effect.GetComponent<ParticleSystem>().Play();
 
         if (collision.gameObject.CompareTag("Player"))

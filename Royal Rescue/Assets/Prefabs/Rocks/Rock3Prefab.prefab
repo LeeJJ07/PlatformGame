@@ -148,6 +148,4 @@ MonoBehaviour:
   destroyObj: 1
   detectLayers:
   - serializedVersion: 2
-    m_Bits: 1024
-  - serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 128
