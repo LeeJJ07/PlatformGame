@@ -22,7 +22,7 @@ public class MiniBossSkill2Attack : INode
     public INode.NodeState Evaluate()
     {
         float dirX = (playerTransform.position - transform.position).x;
-        if(time > 5.5f)
+        if(time > 7f)
         {
             transform.GetChild(4).gameObject.SetActive(false);
             time = 0f;
@@ -31,13 +31,14 @@ public class MiniBossSkill2Attack : INode
         }
         else if (!isIdle && time > 2f)
         {
+            transform.GetChild(4).gameObject.SetActive(true);
             animator.SetTrigger("idle");
             isIdle = true;
         }
         if (time == 0)
         {
             transform.GetChild(4).gameObject.transform.localRotation = Quaternion.Euler(0f, -dirX / Mathf.Abs(dirX) * 30f, 0f);
-            transform.GetChild(4).gameObject.SetActive(true);
+            
             animator.SetTrigger("jump");
         }
         time += Time.deltaTime;

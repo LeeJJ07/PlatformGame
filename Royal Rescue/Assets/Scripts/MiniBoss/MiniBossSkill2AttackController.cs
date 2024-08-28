@@ -10,8 +10,7 @@ public class MiniBossSkill2AttackController : MonoBehaviour
         if (!other.CompareTag("Player"))
             return;
 
+        //GameDirector.instance.PlayerControl.gameObject.SetActive(false);
         Debug.Log("플레이어 스킬 2 맞아따!");
     }
-
-    
 }
