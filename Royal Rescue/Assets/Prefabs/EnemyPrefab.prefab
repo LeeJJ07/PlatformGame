@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 7704076407147544968}
   - component: {fileID: -314737822106100923}
   - component: {fileID: -941639116042662158}
-  m_Layer: 7
+  m_Layer: 0
   m_Name: EnemyPrefab
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detailTag: enemy1
   dangerZoneObj: {fileID: 7360912941218823822, guid: 8e99ae799f6f16243aeb4a94dfced891, type: 3}
-  delayTime: 0.2
+  delayTime: 0.3
   dropSpeed: 25
   damage: 1
   detectGroundRayDistance: 1
@@ -192,7 +192,7 @@ MonoBehaviour:
   - serializedVersion: 2
     m_Bits: 256
   - serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 128
 --- !u!65 &-941639116042662158
 BoxCollider:
   m_ObjectHideFlags: 0

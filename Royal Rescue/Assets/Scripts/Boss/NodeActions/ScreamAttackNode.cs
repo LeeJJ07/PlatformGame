@@ -49,6 +49,7 @@ public class ScreamAttackNode : INode
         if (time >= animationDuration)
         {
             shockWaveObj.GetComponent<ParticleSystem>().Stop();
+            shockWaveObj.SetActive(false);
             Debug.Log("Scream Success");
 
             shockWaveSpan = 0;

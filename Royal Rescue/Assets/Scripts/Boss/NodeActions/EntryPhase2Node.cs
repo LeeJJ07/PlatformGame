@@ -4,22 +4,28 @@ using UnityEngine;
 
 public class EntryPhase2Node : INode
 {
+    public delegate GameObject SpawnObj(GameObject obj, Vector3 posi);
+    SpawnObj spawnObj;
     Transform transform;
     Transform target;
+    Transform shockWavePosi;
     Animator aniController;
     GameObject shockWaveObj;
+    ParticleSystem shockWaveParticle;
     float shockWaveStartTime = 1f;
     float shockWaveSpan = 0;
     float time = 0;
     float animationDuration = 100;
     bool isStartParticle = false;
     bool isActiveAnime = false;
-    public EntryPhase2Node(Transform transform, Transform target, GameObject shockWave ,Animator aniController)
+    public EntryPhase2Node(Transform transform, Transform target,Transform shockWavePosi, GameObject shockWave ,Animator aniController, SpawnObj spawnObj)
     {
         this.transform = transform;
         this.target = target;
         this.shockWaveObj = shockWave;
         this.aniController = aniController;
+        this.spawnObj = spawnObj;
+        this.shockWavePosi = shockWavePosi;
     }
     public void AddNode(INode node) { }
 
@@ -43,19 +49,21 @@ public class EntryPhase2Node : INode
                 Rigidbody rigid = collider.GetComponent<Rigidbody>();
                 if (rigid != null)
                 {
-                    rigid.AddForce(dir.normalized, ForceMode.Impulse);
+                    rigid.AddForce(Vector3.right * dir.normalized.x / 1.2f, ForceMode.Impulse);
                 }
             }
         }
+        if(shockWaveParticle!=null)
+            shockWaveParticle.transform.position = shockWavePosi.position;
         if (shockWaveSpan >= shockWaveStartTime && !isStartParticle)
         {
-            shockWaveObj.GetComponent<ParticleSystem>().Play();
+            shockWaveParticle.Play();
             isStartParticle = true;
         }
         if (time > animationDuration) 
         {
             Debug.Log("entryPhase2 Success");
-            shockWaveObj.GetComponent<ParticleSystem>().Stop();
+            shockWaveParticle.Stop();
             time = 0;
             shockWaveSpan = 0;
             isActiveAnime = false;
@@ -71,6 +79,7 @@ public class EntryPhase2Node : INode
         {
             animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length;
             Vector3 dir = target.position - transform.position;
+            shockWaveParticle= spawnObj(shockWaveObj, shockWavePosi.position).GetComponent<ParticleSystem>();
             if (dir.normalized.x < 0)
                 transform.rotation = Quaternion.Euler(0, -90, 0);
             else
