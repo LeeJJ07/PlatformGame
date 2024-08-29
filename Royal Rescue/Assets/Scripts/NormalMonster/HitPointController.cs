@@ -14,7 +14,8 @@ public class HitPointController : MonoBehaviour
         {
             Vector3 dir = (other.gameObject.transform.position - transform.position).normalized;
             other.gameObject.GetComponent<Rigidbody>().AddForce(dir * 5f, ForceMode.Impulse);
-            Debug.Log("공격 성공");
+            Debug.Log("공격 성공 여기에 데미지 넣기");
+            
         }
     }
 }

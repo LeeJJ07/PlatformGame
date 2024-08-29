@@ -80,8 +80,9 @@ public class BreathAttackNode : INode
 
             breathObj.transform.rotation = Quaternion.LookRotation(breathShootDir.normalized);
             
-            animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length;
-            skillEndTime = animationDuration - 0.6f;
+            animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length+2f;
+            
+            skillEndTime = animationDuration - 2f;
             Vector3 dir = target.position - transform.position;
             if (dir.normalized.x < 0)
                 transform.rotation = Quaternion.Euler(0, -90, 0);

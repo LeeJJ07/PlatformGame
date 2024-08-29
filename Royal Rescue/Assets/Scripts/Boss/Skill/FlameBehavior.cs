@@ -47,7 +47,7 @@ public class FlameBehavior : MonoBehaviour,ITag
     }
     IEnumerator WaitDeActiveFlameSkill()
     {
-        yield return new WaitForSeconds(explosionParticle.duration);
+        yield return new WaitForSeconds(explosionParticle.main.duration);
         
         explosionParticle.Stop();
         isExplosion = false;
