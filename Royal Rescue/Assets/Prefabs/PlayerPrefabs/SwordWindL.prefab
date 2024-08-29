@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8202029043244695966}
   m_Layer: 0
   m_Name: SwordWindL
-  m_TagString: Untagged
+  m_TagString: SlashAttack
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
