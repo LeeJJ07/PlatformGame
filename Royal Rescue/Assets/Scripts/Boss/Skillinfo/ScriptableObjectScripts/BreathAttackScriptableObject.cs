@@ -5,6 +5,6 @@ using UnityEngine;
 public class BreathAttackScriptableObject : ScriptableObject
 {
     public GameObject breathObj;
-    public float damage;
+    public int damage;
     public float subSequenceDelay;
 }

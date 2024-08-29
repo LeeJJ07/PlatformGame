@@ -4,7 +4,10 @@ using UnityEngine;
 
 public class EntryPhase3Node : INode
 {
+    //파티클 스폰 함수
     public delegate GameObject SpawnObj(GameObject obj, Vector3 posi);
+
+    //전체 파티클 비활성화 함수
     public delegate void DeActivateParticles();
     DeActivateParticles deActivateParticles;
     SpawnObj spawnObj;
@@ -18,7 +21,7 @@ public class EntryPhase3Node : INode
     Animator aniController;
     float shockWaveStartTime = 1f;
     float shockWaveSpan = 0;
-
+    
     float time = 0;
     float animationDuration = 100;
     bool isActiveAnime = false;
@@ -91,6 +94,11 @@ public class EntryPhase3Node : INode
             shockWaveParticle = spawnObj(shockWaveParticleObj, spawnPosi.position).GetComponent<ParticleSystem>();
             Vector3 dir = target.position - transform.position;
             FlameParticleObj.SetActive(true);
+            foreach(ParticleCollisionBehaviour flame in FlameParticleObj.GetComponentsInChildren<ParticleCollisionBehaviour>())
+            {
+                flame.SetDamage(3);
+            }
+            
             if (dir.normalized.x < 0)
                 transform.rotation = Quaternion.Euler(0, -90, 0);
             else

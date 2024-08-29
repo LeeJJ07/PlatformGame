@@ -15,3 +15,4 @@ MonoBehaviour:
   transform: {fileID: 0}
   BasicAttackDistance: 7
   damage: 5
+  subSequenceDelay: 0.2

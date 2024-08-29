@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2233802008315297326}
+  - component: {fileID: 1823858487234144349}
   m_Layer: 0
   m_Name: RushAttackFlamesPrefab
-  m_TagString: Untagged
+  m_TagString: Particle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33,6 +34,19 @@ Transform:
   - {fileID: 3750655196492895856}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1823858487234144349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2870110713407379216}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee6823975dbf4448a37316ba4d64332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detailTag: RushAttackFlame
 --- !u!1001 &3747625241731215218
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -22,7 +22,6 @@ TagManager:
   - Zone
   - Boss
   - DangerZone
-  - DropObject
   - Particle
   - Test
   layers:

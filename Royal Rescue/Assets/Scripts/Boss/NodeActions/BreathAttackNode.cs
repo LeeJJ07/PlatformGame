@@ -76,12 +76,14 @@ public class BreathAttackNode : INode
         {
             breathObj = SpawnBreathParticle(breathAttackInfo.breathObj, particlSpawnPosi.position);
 
-            Vector3 breathShootDir = target.position - breathObj.transform.position;
+            Vector3 breathShootDir = target.position - transform.position;
+            breathShootDir.z=0;
+            breathShootDir.y=0;
 
             breathObj.transform.rotation = Quaternion.LookRotation(breathShootDir.normalized);
             
             animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length+2f;
-            
+            breathObj.GetComponent<ParticleCollisionBehaviour>().SetDamage(breathAttackInfo.damage);
             skillEndTime = animationDuration - 2f;
             Vector3 dir = target.position - transform.position;
             if (dir.normalized.x < 0)

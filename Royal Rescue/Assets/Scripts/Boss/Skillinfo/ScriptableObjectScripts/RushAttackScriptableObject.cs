@@ -14,7 +14,7 @@ public class RushAttackScriptableObject : ScriptableObject
     public float warningDelay = 0;
     public float RushAttackDelay = 0;
     public float RushAttackDuration = 0;
-    public float damage = 0;
+    public int damage = 0;
     public float pushPower = 0;
     public float rushSpeed = 0;
     public float subSequenceDelay;

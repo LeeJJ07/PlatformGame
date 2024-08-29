@@ -40,7 +40,6 @@ public class DropObjBehavior : MonoBehaviour,ITag
         {
             rigid.isKinematic = true;
         }
-        Debug.Log("Test");
         StartCoroutine(DropCoroutine());
         
         

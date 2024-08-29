@@ -10,7 +10,7 @@ public class ScreamAttackScriptableObject : ScriptableObject
     public GameObject[] objs;
     public int objSpawnCount = 0;
     public float ScreamAttackDistance = 0;
-    public float damage = 0;
+    public int damage = 0;
     public float pushPower = 0;
     public float subSequenceDelay;
 }

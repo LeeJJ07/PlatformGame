@@ -4914,7 +4914,7 @@ GameObject:
   - component: {fileID: 4123994617682032421}
   m_Layer: 8
   m_Name: BossPrefab
-  m_TagString: Boss
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5002,7 +5002,7 @@ MonoBehaviour:
   target: {fileID: 0}
   flamePosition: {fileID: 8299470050138828525}
   aniController: {fileID: 8299470050131196015}
-  hp: 10
+  hp: 3
   moveSpeed: 5
   shockWave: {fileID: 3257248776282636964, guid: 0ca9b61117dfe9a489792a44806bdd5e, type: 3}
   bossColliders:
@@ -5024,7 +5024,7 @@ MonoBehaviour:
   Phase3basicAttackInfo: {fileID: 11400000, guid: 96ae2a5270ef06042a257d54ca4f511a, type: 2}
   Phase3breathAttackInfo: {fileID: 11400000, guid: 388f3737dc5c3f1439cd6dfb4c07111b, type: 2}
   Phase3RushAttackInfo: {fileID: 11400000, guid: 8c62a58717d6bf64d9f8ad056a1ec55d, type: 2}
-  basicAttackDistance: 7
+  basicAttackDistance: 8
   screamAttackDistance: 50
   flameAttackDistance: 50
   breathAttackDistance: 30
