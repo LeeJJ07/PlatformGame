@@ -161,7 +161,7 @@ MonoBehaviour:
   hitEffect: {fileID: 2599418369248315274, guid: 557897600b7a2ee45a0e290d64022ee3, type: 3}
   moveSpeed: 10
   horizontalForce: 100
-  verticalForce: 5
+  damage: 10
 --- !u!135 &6863969464596401969
 SphereCollider:
   m_ObjectHideFlags: 0

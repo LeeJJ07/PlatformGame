@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,6 +37,7 @@ public class DoorTrap : MonoBehaviour
     }
     IEnumerator TrapPlayer()
     {
+        portal.gameObject.SetActive(false);
         SwitchCamera(mainCamera, doorCamera);
         CloseIronWall();
         yield return new WaitForSeconds(1f);
@@ -56,15 +57,14 @@ public class DoorTrap : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         
         SwitchCamera(doorCamera, mainCamera);
+        portal.gameObject.SetActive(true);
     }
     private void CloseIronWall()
     {
-        portal.gameObject.SetActive(false);
         ironWallAnim.Play("IronWall_close");
     }
     private void OpenIronWall()
     {
-        portal.gameObject.SetActive(true);
         ironWallAnim.Play("IronWall_open");
     }
     private void SwitchCamera(Camera currentCamera, Camera subCamera)

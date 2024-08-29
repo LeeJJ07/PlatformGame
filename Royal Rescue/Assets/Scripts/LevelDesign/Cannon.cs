@@ -21,7 +21,8 @@ public class Cannon : MonoBehaviour
 
     void FireCannonBall()
     {
-        Instantiate(cannonBall, spawnPoint.position, cannon.rotation);
+        GameObject ball = Instantiate(cannonBall, spawnPoint.position, cannon.rotation);
+        ball.transform.SetParent(transform);
         explosionEffect.Play();
     }
 }

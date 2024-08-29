@@ -32,7 +32,7 @@ public class Monster : MonoBehaviour
     protected float curHp = 100f;
     [SerializeField] protected int damage = 10;
 
-    private Vector3 curTransform;
+    protected Vector3 initialPos;
 
     private float checkObstacleDistance = 0.5f;
     [SerializeField] float toGroundDistance = 1f;
@@ -49,9 +49,9 @@ public class Monster : MonoBehaviour
     protected int wallLayerMask;
     protected int playerMask;
 
-    private void Awake()
+    protected void Awake()
     {
-        curTransform = transform.position;
+        initialPos = transform.position;
     }
 
     protected void Start()
@@ -82,7 +82,7 @@ public class Monster : MonoBehaviour
     }
     private void OnEnable()
     {
-        transform.position = curTransform;
+        transform.position = initialPos;
     }
 
     protected void Update()
