@@ -30,7 +30,9 @@ public class Monster : MonoBehaviour
     [SerializeField]
     protected float maxHp = 100f;
     protected float curHp = 100f;
-    [SerializeField] protected float damage = 10f;
+    [SerializeField] protected int damage = 10;
+
+    private Vector3 curTransform;
 
     private float checkObstacleDistance = 0.5f;
     [SerializeField] float toGroundDistance = 1f;
@@ -49,7 +51,7 @@ public class Monster : MonoBehaviour
 
     private void Awake()
     {
-        
+        curTransform = transform.position;
     }
 
     protected void Start()
@@ -77,6 +79,10 @@ public class Monster : MonoBehaviour
         groundLayerMask = 1 << LayerMask.NameToLayer("Ground");
         wallLayerMask = 1 << LayerMask.NameToLayer("Wall");
         playerMask = 1 << LayerMask.NameToLayer("Player");
+    }
+    private void OnEnable()
+    {
+        transform.position = curTransform;
     }
 
     protected void Update()
@@ -138,7 +144,7 @@ public class Monster : MonoBehaviour
     #region �ʿ��� setter, getter
     public float getSpeed() { return speed; }
     public void setSpeed(float speed) { this.speed = speed; }
-    public float getDamage() { return damage; }
+    public int getDamage() { return damage; }
     public float getFacingDir() { return facingDir; }
     public float getToGroundDistance() { return toGroundDistance; }
     #endregion
@@ -192,7 +198,7 @@ public class Monster : MonoBehaviour
         if (other == null)
             return;
 
-        if (other.gameObject.tag == "PlayerAttack")
+        if (other.gameObject.tag == "weapon")
             StartCoroutine(OnDamage());
 
     }
