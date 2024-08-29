@@ -4161,6 +4161,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56651de20f41c2b4585754ed8a6e8644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PlayerHeart:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  DamageEffect: {fileID: 0}
+  playerMaxHP: 500
   playerHP: 500
   hAxis: 0
   vAxis: 0
@@ -4169,6 +4177,9 @@ MonoBehaviour:
   dashCoolDown: 0
   weapons: {fileID: 1606126889}
   fireBallPrefabs: {fileID: 0}
+  SwordWindPrefabsR: {fileID: 0}
+  SwordWindPrefabsL: {fileID: 0}
+  Inventory: {fileID: 0}
   fireBallSpawnPoint: {fileID: 0}
   jumpPossible: 2
   lastGroundTime: 0
@@ -4178,9 +4189,12 @@ MonoBehaviour:
   jumpCnt: 0
   isDirRight: 1
   isFloor: 0
-  isDoubleJump: 0
   isAttackButton: 0
+  isAttackSecond: 0
+  isSwordWindPossible: 0
   isAttackPossible: 0
+  isAttackEnhance: 0
+  isJumpEnhance: 0
   isDashPossible: 0
   isFbPossible: 0
   isDie: 0
@@ -49118,6 +49132,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5341001745198403682, guid: b9278a55f9c25a1419cabe52f613380d, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 148540446}
+    - target: {fileID: 5341001745198403682, guid: b9278a55f9c25a1419cabe52f613380d, type: 3}
+      propertyPath: startTrasform
+      value: 
+      objectReference: {fileID: 1339103389}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

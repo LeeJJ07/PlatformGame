@@ -91,7 +91,7 @@ public class MiniBossAI : MonoBehaviour
 
     void Start()
     {
-        player = GameDirector.instance.PlayerControl.gameObject;
+        
         maxHp = 100f;
         hp = maxHp;
 
