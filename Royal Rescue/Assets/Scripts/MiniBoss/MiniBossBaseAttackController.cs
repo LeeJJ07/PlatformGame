@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class BaseAttack : MonoBehaviour
 {
+    [SerializeField] MiniBossAI miniBoss;
     private void OnTriggerEnter(Collider other)
     {
         if (!other.gameObject.CompareTag("Player"))
             return;
 
-        
-        Debug.Log("플레이어 기본공격 맞아따!");
+        GameDirector.instance.PlayerControl.HurtPlayer(miniBoss.GetBaseAttackDamage());
+        Debug.Log("플레이어 기본공격 "+ miniBoss.GetBaseAttackDamage());
     }
 }

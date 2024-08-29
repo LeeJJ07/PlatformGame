@@ -5,16 +5,17 @@ using UnityEngine;
 
 public class BeholderProjectile : MonoBehaviour
 {
-    GameObject player;
+    PlayerControlManagerFix player;
     Vector3 moveDir;
+    [SerializeField] RangedMonster monster;
     [SerializeField] GameObject explosion;
     [SerializeField] float speed = 10f;
 
     void Start()
     {
-        player = GameDirector.instance.PlayerControl.gameObject;
+        player = GameDirector.instance.PlayerControl;
 
-        moveDir = player.transform.position - transform.position;
+        moveDir = player.gameObject.transform.position - transform.position;
 
         transform.rotation = Quaternion.LookRotation(moveDir).normalized;
         transform.eulerAngles -= new Vector3(90f, 0f, 0f);
@@ -39,7 +40,8 @@ public class BeholderProjectile : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Instantiate(explosion, transform.position, transform.rotation);
-            Debug.Log("플레이어 공격 성공! 여기에 데미지 넣기");
+            player.HurtPlayer(monster.getDamage());
+            Debug.Log(monster.getDamage());
             Destroy(gameObject);
         }
     }
