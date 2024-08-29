@@ -192,7 +192,7 @@ public class Monster : MonoBehaviour
         if (other == null)
             return;
 
-        if (other.gameObject.tag == "PlayerAttack")
+        if (other.gameObject.tag == "weapon")
             StartCoroutine(OnDamage());
 
     }

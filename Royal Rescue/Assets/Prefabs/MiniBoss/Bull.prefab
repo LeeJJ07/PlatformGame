@@ -1191,8 +1191,8 @@ MonoBehaviour:
   maxHp: 100
   walkSpeed: 7
   runSpeed: 10
-  player: {fileID: 0}
-  startTrasform: {fileID: 0}
+  player: {fileID: 7054254038125191259, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
+  startTrasform: {fileID: 4172131224096474963}
   animator: {fileID: 4111837621694349700}
   skill1Probability: 15
   skill2Probability: 10
