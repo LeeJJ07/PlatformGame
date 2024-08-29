@@ -38,6 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -199,11 +200,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-<<<<<<< HEAD
   m_AdditionalShaderChannelsFlag: 25
-=======
-  m_AdditionalShaderChannelsFlag: 0
->>>>>>> player
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -219,7 +216,6 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
-<<<<<<< HEAD
   m_Children:
   - {fileID: 334903259}
   - {fileID: 304609293}
@@ -230,9 +226,6 @@ RectTransform:
   - {fileID: 1930587545}
 >>>>>>> 4b607a88c8d4f98934586c2dc3131bc31ca3e9ea
   - {fileID: 572839268}
-=======
-  m_Children: []
->>>>>>> player
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -3380,7 +3373,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-<<<<<<< HEAD
 --- !u!1 &1172967998
 GameObject:
   m_ObjectHideFlags: 0
@@ -3536,8 +3528,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1226058792}
   m_CullTransparentMesh: 1
-=======
->>>>>>> player
 --- !u!1 &1227121358
 GameObject:
   m_ObjectHideFlags: 0
@@ -4074,11 +4064,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-<<<<<<< HEAD
   m_Constraints: 120
-=======
-  m_Constraints: 88
->>>>>>> player
   m_CollisionDetection: 1
 --- !u!136 &1461445035
 CapsuleCollider:
@@ -4163,10 +4149,7 @@ MonoBehaviour:
   fireBallPrefabs: {fileID: 1431150921175369799, guid: 2f824c5b801c31e4faa701c8f58014f2, type: 3}
   SwordWindPrefabsR: {fileID: 1431150921175369799, guid: dc23214fb4d66d244ad45a285e6eab61, type: 3}
   SwordWindPrefabsL: {fileID: 1431150921175369799, guid: a1b0626921f8db74394cbb44cc3383be, type: 3}
-<<<<<<< HEAD
   Inventory: {fileID: 304609292}
-=======
->>>>>>> player
   fireBallSpawnPoint: {fileID: 1807878592}
   jumpPossible: 2
   lastGroundTime: 0
@@ -5611,7 +5594,6 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1985763237}
   serializedVersion: 2
-<<<<<<< HEAD
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -1681.5, y: -100, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -5644,14 +5626,11 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035983889}
-=======
->>>>>>> player
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-<<<<<<< HEAD
   m_Father: {fileID: 152465564}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -5697,10 +5676,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035983889}
   m_CullTransparentMesh: 1
-=======
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
->>>>>>> player
 --- !u!1 &2062967734
 GameObject:
   m_ObjectHideFlags: 0
@@ -6219,7 +6194,3 @@ SceneRoots:
   - {fileID: 1054115405}
   - {fileID: 1164725039}
   - {fileID: 14169899}
-<<<<<<< HEAD
-=======
-  - {fileID: 1985763240}
->>>>>>> player
