@@ -19,6 +19,11 @@ public class MiniBossAI : MonoBehaviour
     [SerializeField] int skill1Probability = 25;
     [SerializeField] int skill2Probability = 33;
 
+    [Header("스킬 데미지")]
+    [SerializeField] int skill1Damage = 10;
+    [SerializeField] int skill2Damage = 10;
+    [SerializeField] int baseAttackDamage = 10;
+
     [Header("스킬 범위")]
     [SerializeField] float skill1Range= 20f;
     [SerializeField] float skill2Range = 10f;
@@ -126,7 +131,6 @@ public class MiniBossAI : MonoBehaviour
 
         bt = new BehaviorTreeRunner(root);
     }
-
     void Update()
     {
         if (isDie)
@@ -145,6 +149,9 @@ public class MiniBossAI : MonoBehaviour
     {
         isDie = true;
     }
+    public int GetBaseAttackDamage() { return baseAttackDamage; }
+    public int GetSkill1Damage() { return skill1Damage; }
+    public int GetSkill2Damage() { return skill2Damage; }
     IEnumerator DeActive()
     {
         yield return new WaitForSeconds(3f);

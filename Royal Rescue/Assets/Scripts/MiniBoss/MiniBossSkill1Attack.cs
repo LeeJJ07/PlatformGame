@@ -27,14 +27,6 @@ public class MiniBossSkill1Attack : INode
     public INode.NodeState Evaluate()
     {
         float dirX = (playerTransform.position - transform.position).x;
-        if (playerTransform.position.y >= (5f + transform.position.y))
-        {
-            delay = false;
-            isAttack = false;
-            time = 0f;
-            transform.eulerAngles = new Vector3(0f, 180f - 60 * dirX / Mathf.Abs(dirX), 0f);
-            return INode.NodeState.Failure;
-        }
         if (!isAttack)
         {
             isAttack = true;

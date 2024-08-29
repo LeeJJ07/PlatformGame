@@ -14,6 +14,7 @@ public class MiniBossBaseAttack : INode
         this.playerTransform = playerTransform;
         this.animator = animator;
     }
+
     public void AddNode(INode node)
     {
     }
