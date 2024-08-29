@@ -12,8 +12,7 @@ public class MiniBossAI : MonoBehaviour
 
     [Header("설정")]
     [SerializeField] GameObject player;
-    [SerializeField] Transform startPosition;
-    [SerializeField] Transform startPlayerPosition;
+    [SerializeField] Transform startTrasform;
     [SerializeField] Animator animator;
 
     [Header("스킬 사용 확률")]
@@ -34,8 +33,6 @@ public class MiniBossAI : MonoBehaviour
 
     INode checkDie;
     INode dieAction;
-    INode detectPlayer;
-    INode returnAction;
     INode lookPlayer;
     INode checkSkill1Probability;
     INode checkSkill1Range;
@@ -53,7 +50,6 @@ public class MiniBossAI : MonoBehaviour
 
     Selector root;
     Sequence deadSequence;
-    Sequence returnSequence;
     Selector attackSelector;
     Sequence skill1Sequence;
     Sequence skill2Sequence;
@@ -65,10 +61,10 @@ public class MiniBossAI : MonoBehaviour
 
     private void Awake()
     {
+        transform.position = startTrasform.position;
+
         checkDie = new CheckMiniBossHp(Hp);
         dieAction = new DieAction(Die, animator);
-        detectPlayer = new DetectPlayer(player.transform, startPlayerPosition);
-        returnAction = new ReturnAction(transform, startPosition, walkSpeed);
         lookPlayer = new LookPlayer(transform, player.transform);
         checkSkill1Probability = new CheckProbability(skill1Probability);
         checkSkill1Range = new CheckAttackRange(transform, player.transform, skill1Range);
@@ -86,7 +82,6 @@ public class MiniBossAI : MonoBehaviour
 
         root = new Selector();
         deadSequence= new Sequence();
-        returnSequence = new Sequence();
         attackSelector = new Selector();
         skill1Sequence = new Sequence();
         skill2Sequence = new Sequence();
@@ -96,14 +91,12 @@ public class MiniBossAI : MonoBehaviour
 
     void Start()
     {
+        
         maxHp = 100f;
         hp = maxHp;
 
         deadSequence.AddNode(checkDie);
         deadSequence.AddNode(dieAction);
-
-        returnSequence.AddNode(detectPlayer);
-        returnSequence.AddNode(returnAction);
 
         skill1Sequence.AddNode(checkSkill1Probability);
         skill1Sequence.AddNode(checkSkill1Range);
@@ -127,7 +120,6 @@ public class MiniBossAI : MonoBehaviour
         followPlayerSequence.AddNode(followPlayerDelay);
 
         root.AddNode(deadSequence);
-        root.AddNode(returnSequence);
         root.AddNode(lookPlayer);
         root.AddNode(attackSelector);
         root.AddNode(followPlayerSequence);
