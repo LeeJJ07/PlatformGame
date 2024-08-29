@@ -5,6 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.UI;
 
 public class PlayerControlManagerFix : MonoBehaviour
 {
@@ -22,6 +23,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     public GameObject SwordWindPrefabsR;
     public GameObject SwordWindPrefabsL;
     public GameObject Inventory;
+    public GameObject attackIcon;
     public Transform fireBallSpawnPoint;
     [SerializeField] private int jumpPossible = 2;
     [SerializeField] private float lastGroundTime;
@@ -65,7 +67,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         rb.useGravity = true;
         anim = GetComponentInChildren<Animator>();
         Inventory.SetActive(false);
-
+        attackIcon.SetActive(true);
         isAddicted = false;
         fieldView.weight = 0f;
     }
@@ -92,6 +94,11 @@ public class PlayerControlManagerFix : MonoBehaviour
             {
                 Inventory.SetActive(true);
             }
+            if(isAttackEnhance)
+            {
+                attackIcon.SetActive(false);
+            }
+                
         }
         
         playerDie();
