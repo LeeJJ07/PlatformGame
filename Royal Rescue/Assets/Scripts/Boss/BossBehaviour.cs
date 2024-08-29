@@ -284,7 +284,7 @@ public class BossBehaviour : MonoBehaviour
         entryPhase1ActionSequence.AddNode(phase1EntryScreamNode);
         entryPhase1Sequence.AddNode(checkIncomingPhase1);
         entryPhase1Sequence.AddNode(entryPhase1ActionSequence);
-        phase1AttackRandomSelector.AddNode(phase1FlameAttackSequence);
+        //phase1AttackRandomSelector.AddNode(phase1FlameAttackSequence);
         phase1AttackRandomSelector.AddNode(phase1ScreamAttackSequence);
         phase1ActionSelector.AddNode(entryPhase1Sequence);
         phase1ActionSelector.AddNode(phase1AttackRandomSelector);

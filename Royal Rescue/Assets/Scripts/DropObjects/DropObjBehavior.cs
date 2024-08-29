@@ -12,6 +12,7 @@ public class DropObjBehavior : MonoBehaviour,ITag
     [SerializeField] float delayTime = 0;
     [SerializeField] float dropSpeed = 1;
     [SerializeField] float damage = 1;
+    [SerializeField] float rayDistance = 1f;
     [SerializeField] bool destroyObj = false;
     [SerializeField] LayerMask[] detectLayers;
     int detectLayer = 0;
@@ -39,7 +40,7 @@ public class DropObjBehavior : MonoBehaviour,ITag
         {
             rigid.isKinematic = true;
         }
-        
+        Debug.Log("Test");
         StartCoroutine(DropCoroutine());
         
         
@@ -48,7 +49,7 @@ public class DropObjBehavior : MonoBehaviour,ITag
     {
         detectGroundRay = new Ray(transform.position, Vector3.down);
         Debug.DrawRay(detectGroundRay.origin, detectGroundRay.direction, Color.green);
-        Physics.Raycast(detectGroundRay, out detectGroundHit, 1f, detectLayer);
+        Physics.Raycast(detectGroundRay, out detectGroundHit, rayDistance, detectLayer);
         if (detectGroundHit.collider != null)
         {
             if (detectGroundHit.collider.tag.Equals("Player"))
@@ -85,6 +86,7 @@ public class DropObjBehavior : MonoBehaviour,ITag
                 Debug.Log("Floor");
                 isEndDelay = false;
             }
+            deactiveWarningZoneObj = null;
         }
         Debug.Log($"isEndDelay: {isEndDelay}");
         if (isEndDelay)
