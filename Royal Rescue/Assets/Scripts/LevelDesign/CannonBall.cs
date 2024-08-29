@@ -7,7 +7,8 @@ public class CannonBall : MonoBehaviour
     [SerializeField] private Rigidbody ballRb;
     [SerializeField] private GameObject hitEffect;
     [SerializeField] private float moveSpeed;
-[SerializeField] private float horizontalForce;
+    [SerializeField] private float horizontalForce;
+    [SerializeField] private int damage;
     void Start()
     {
         SetBallVelocity();
@@ -27,7 +28,7 @@ public class CannonBall : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("플레이어의 체력을 ?만큼 감소.");
+            GameDirector.instance.PlayerControl.HurtPlayer(damage);
 
             PlayerControlManagerFix player = GameDirector.instance.PlayerControl;
             Rigidbody playerRb = player.GetComponent<Rigidbody>();
