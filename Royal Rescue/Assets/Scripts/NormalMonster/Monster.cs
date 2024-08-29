@@ -32,6 +32,8 @@ public class Monster : MonoBehaviour
     protected float curHp = 100f;
     [SerializeField] protected int damage = 10;
 
+    private Vector3 curTransform;
+
     private float checkObstacleDistance = 0.5f;
     [SerializeField] float toGroundDistance = 1f;
     [SerializeField] float toWallDistance = 0.5f;
@@ -49,7 +51,7 @@ public class Monster : MonoBehaviour
 
     private void Awake()
     {
-        
+        curTransform = transform.position;
     }
 
     protected void Start()
@@ -77,6 +79,10 @@ public class Monster : MonoBehaviour
         groundLayerMask = 1 << LayerMask.NameToLayer("Ground");
         wallLayerMask = 1 << LayerMask.NameToLayer("Wall");
         playerMask = 1 << LayerMask.NameToLayer("Player");
+    }
+    private void OnEnable()
+    {
+        transform.position = curTransform;
     }
 
     protected void Update()

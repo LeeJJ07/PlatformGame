@@ -71,7 +71,6 @@ public class PlayerControlManagerFix : MonoBehaviour
         isAddicted = false;
         fieldView.weight = 0f;
     }
-
     // Update is called once per frame
     void Update()
     {
