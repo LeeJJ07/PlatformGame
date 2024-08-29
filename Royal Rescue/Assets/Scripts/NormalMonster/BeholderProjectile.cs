@@ -39,6 +39,7 @@ public class BeholderProjectile : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Instantiate(explosion, transform.position, transform.rotation);
+            Debug.Log("플레이어 공격 성공! 여기에 데미지 넣기");
             Destroy(gameObject);
         }
     }

@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   breathObj: {fileID: 4556307209356250449, guid: 117f0364ce8bd6f498ba497d7f8b46ea, type: 3}
   damage: 5
-  subSequenceDelay: 3
+  subSequenceDelay: 1

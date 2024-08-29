@@ -15,8 +15,6 @@ public class CheckProbability : INode
 
     public INode.NodeState Evaluate()
     {
-        float temp = Time.time * 100f;
-        Random.InitState((int)temp);
         int ran = Random.Range(0, 100);
 
         if (ran < probability)
