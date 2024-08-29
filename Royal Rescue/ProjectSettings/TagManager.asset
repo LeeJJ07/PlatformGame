@@ -21,6 +21,11 @@ TagManager:
   - Director
   - Zone
   - Boss
+  - DangerZone
+  - DropObject
+  - Bomb
+  - Weapon
+  - SlashAttack
   layers:
   - Default
   - TransparentFX

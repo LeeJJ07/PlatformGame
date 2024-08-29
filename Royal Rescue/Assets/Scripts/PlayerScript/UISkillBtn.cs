@@ -7,6 +7,7 @@ using Unity.VisualScripting;
 public class UISkillBtn : MonoBehaviour
 {
     private float coolTime;
+
     public TMP_Text textCoolTime;
     public GameObject player;
     private Coroutine coolTimeRoutine;
@@ -14,6 +15,8 @@ public class UISkillBtn : MonoBehaviour
     public string skillName;
     public Image imgFill;
     public int skillCollDown;
+
+
     public void Init()
     {
         this.textCoolTime.gameObject.SetActive(false);
@@ -23,11 +26,13 @@ public class UISkillBtn : MonoBehaviour
     void Start()
     {
         this.textCoolTime.gameObject.SetActive(false);
-
+        
         Init();
     }
     void Update()
     {
+        //fireBallCnt = player.GetComponent<PlayerControlManagerFix>().skillCount;
+
         if (Input.GetButtonDown(skillName) && coolTimeRoutine == null)
         {
             if (skillName == "Dash" && !player.GetComponent<PlayerControlManagerFix>().isDashPossible)
@@ -36,13 +41,16 @@ public class UISkillBtn : MonoBehaviour
             }
             else if (skillName == "FireBallKey" && !player.GetComponent<PlayerControlManagerFix>().isFbPossible)
             {
+                
                 coolTimeRoutine = StartCoroutine(FbCoolTimeRoutine());
             }
         }
+        //text_Count.text = fireBallCnt.ToString();
     }
 
     private IEnumerator DashCoolTimeRoutine()
     {
+        
         coolTime = skillCollDown;
         Debug.Log(textCoolTime);
         this.textCoolTime.gameObject.SetActive(true);
@@ -93,6 +101,9 @@ public class UISkillBtn : MonoBehaviour
         }
 
         this.coolTimeRoutine = null;
+
     }
+
+
 }
 
