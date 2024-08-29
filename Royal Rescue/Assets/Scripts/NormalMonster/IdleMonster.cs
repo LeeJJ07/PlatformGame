@@ -12,8 +12,9 @@ public class IdleMonster : Monster
 
     bool isAwake = false;
 
-    private void Awake()
+    new void Awake()
     {
+        base.Awake();
         isAwake = false;
     }
     new void Start()
@@ -33,6 +34,10 @@ public class IdleMonster : Monster
         monsterStateContext.Transition(idleState);
         curState = EState.IDLE;
 
+    }
+    private void OnEnable()
+    {
+        transform.position = initialPos;
     }
     new void Update()
     {

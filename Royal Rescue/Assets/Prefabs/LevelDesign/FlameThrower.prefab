@@ -9753,7 +9753,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6736493038817252743}
-  - component: {fileID: 6051099598975430517}
   m_Layer: 0
   m_Name: FlameThrower
   m_TagString: Untagged
@@ -9778,20 +9777,6 @@ Transform:
   - {fileID: 230063486213077754}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
---- !u!114 &6051099598975430517
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7169818646053885201}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91edf5a888f28fa448e1421e5f409f7a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  interval: 2
-  effect: {fileID: 3585478327762153887}
 --- !u!1 &9019559833390727767
 GameObject:
   m_ObjectHideFlags: 0
@@ -9801,6 +9786,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 230063486213077754}
+  - component: {fileID: 4813737940664278871}
   - component: {fileID: 3585478327762153887}
   - component: {fileID: 6191155261031204293}
   m_Layer: 0
@@ -9826,6 +9812,23 @@ Transform:
   - {fileID: 7990228503877631497}
   m_Father: {fileID: 6736493038817252743}
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+--- !u!114 &4813737940664278871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9019559833390727767}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 91edf5a888f28fa448e1421e5f409f7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  interval: 2
+  hitInterval: 0.5
+  damage: 2
+  effect: {fileID: 3585478327762153887}
+  hitEffect: {fileID: 1374287034565198861, guid: b25c778e65c5ac348945ae9a992f5556, type: 3}
 --- !u!198 &3585478327762153887
 ParticleSystem:
   m_ObjectHideFlags: 0
@@ -13412,9 +13415,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 4
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -13585,19 +13588,19 @@ ParticleSystem:
     radiusScale: 1
     collidesWith:
       serializedVersion: 2
-      m_Bits: 4294967295
+      m_Bits: 64
     maxCollisionShapes: 256
     quality: 0
     voxelSize: 0.5
-    collisionMessages: 0
+    collisionMessages: 1
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
     enabled: 0
     serializedVersion: 2
-    inside: 1
+    inside: 0
     outside: 0
-    enter: 0
+    enter: 2
     exit: 0
     colliderQueryMode: 0
     radiusScale: 1

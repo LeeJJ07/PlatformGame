@@ -12,10 +12,19 @@ public class CrumblePlatform : MonoBehaviour
 
     private bool startCrumble = false;
     private Vector3 initialPos;
+    private bool hasBeenInitialized = false;
 
-    void Start()
+    void OnEnable()
     {
-        initialPos = platformRb.position;
+        if (!hasBeenInitialized)
+        {
+            hasBeenInitialized = true;
+            initialPos = platformRb.position;
+        }
+        platformRb.isKinematic = true;
+        platformRb.position = initialPos;
+        startCrumble = false;
+        meshRenderer.enabled = platformCollider.enabled = true;
     }
 
     void OnTriggerEnter(Collider other)
