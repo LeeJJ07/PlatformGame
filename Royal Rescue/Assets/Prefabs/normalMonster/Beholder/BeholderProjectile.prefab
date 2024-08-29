@@ -9724,7 +9724,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f2ad8d80a552b945bc05718b7ca6011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosion: {fileID: 0}
+  monster: {fileID: 757929619709830530, guid: da729be0983bb83468ce61f35b3bdee8, type: 3}
+  explosion: {fileID: 389786130836482729, guid: bab318f17b6f90a4894a94285bb57598, type: 3}
   speed: 10
 --- !u!1 &5549186160469407880
 GameObject:

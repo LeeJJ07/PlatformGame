@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class MiniBossSkill2AttackController : MonoBehaviour
 {
+    [SerializeField] MiniBossAI miniBoss;
     private void OnParticleCollision(GameObject other)
     {
-        Debug.Log("dafsdfdasf");
         if (!other.CompareTag("Player"))
             return;
 
-        //GameDirector.instance.PlayerControl.gameObject.SetActive(false);
-        Debug.Log("플레이어 스킬 2 맞아따!");
+        GameDirector.instance.PlayerControl.HurtPlayer(miniBoss.GetSkill2Damage());
+        Debug.Log("플레이어 스킬 2 " + miniBoss.GetSkill2Damage());
     }
 }

@@ -1192,11 +1192,13 @@ MonoBehaviour:
   walkSpeed: 7
   runSpeed: 10
   player: {fileID: 0}
-  startPosition: {fileID: 0}
-  startPlayerPosition: {fileID: 0}
+  startTrasform: {fileID: 0}
   animator: {fileID: 4111837621694349700}
   skill1Probability: 15
   skill2Probability: 10
+  skill1Damage: 10
+  skill2Damage: 10
+  baseAttackDamage: 10
   skill1Range: 20
   skill2Range: 15
   baseAttackRange: 6
@@ -1977,6 +1979,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f67bd1ac1868284eba13e0efd7263ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  miniBoss: {fileID: 5341001745198403682}
 --- !u!1 &5869175850920888525
 GameObject:
   m_ObjectHideFlags: 0
@@ -2674,6 +2677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c0b3779a8796c164a84b672b8020e702, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  miniBoss: {fileID: 5341001745198403682}
 --- !u!1 &7417309159261812471
 GameObject:
   m_ObjectHideFlags: 0
@@ -3656,6 +3660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1bd80a8d152b97c44bc93c81a425a02b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  miniBoss: {fileID: 5341001745198403682}
 --- !u!4 &9198136642868477792 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7714643961646338989, guid: 4f9a3703fe390814d9545dacd956eda2, type: 3}
