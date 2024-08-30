@@ -41568,7 +41568,7 @@ PrefabInstance:
     - target: {fileID: 5130297143477228180, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       propertyPath: attackIcon
       value: 
-      objectReference: {fileID: 528129102}
+      objectReference: {fileID: 288413339}
     - target: {fileID: 5382281966775577330, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.062028646

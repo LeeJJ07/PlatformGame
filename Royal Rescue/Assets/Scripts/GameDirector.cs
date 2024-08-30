@@ -85,8 +85,9 @@ public class GameDirector : MonoBehaviour
         loadscreenFadeAnim.Play(AnimationHash.LOADSCREEN_FADEOUT);
         yield return new WaitForSeconds(1.5f);
 
+        respawnAnim.Play(AnimationHash.RESPAWN_SCREEN_HIDE);
+        
         loadingScreenCam.enabled = false;
-        Camera.main.enabled = true;
         uiCanvas.gameObject.SetActive(false);
     }
 
@@ -94,14 +95,13 @@ public class GameDirector : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
 
-        respawnAnim.Play("RespawnTransition_show");
+        respawnAnim.Play(AnimationHash.RESPAWN_SCREEN_SHOW);
         yield return new WaitForSeconds(0.8f);
 
         currentRoomControl.SetPlayerRespawnPosition(playerControl.transform); 
         playerControl.RevivePlayer();
-        
 
-        respawnAnim.Play("RespawnTransition_hide");
+        respawnAnim.Play(AnimationHash.RESPAWN_SCREEN_HIDE);
     }
 
     public void SetCurrentRoomControl(RoomController roomControl)

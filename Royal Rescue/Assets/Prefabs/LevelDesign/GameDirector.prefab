@@ -1593,7 +1593,6 @@ MonoBehaviour:
   respawnAnim: {fileID: 3314558719135796116}
   stageNames:
   - JooWoan
-  - Stage1
   - Stage2
   - Stage3
   - Stage4
