@@ -209,14 +209,34 @@ public class Monster : MonoBehaviour
         if (other == null)
             return;
 
-        if (other.gameObject.tag == "weapon")
-            StartCoroutine(OnDamage());
 
+        if (other.gameObject.tag == "Weapon"
+            || other.gameObject.tag == "Bomb"
+            || other.gameObject.tag == "SlashAttack")
+        {
+            if(!LookPlayer())
+                FlipX();
+            StartCoroutine(OnDamage(other.gameObject.tag));
+        }
     }
-    IEnumerator OnDamage()
+    IEnumerator OnDamage(string tag)
     {
         animator.SetTrigger("takeAttack");
-        curHp -= 10f; //playerControl.getDamage();
+        switch (tag)
+        {
+            case "Weapon":
+                curHp -= 10f; //playerControl.getDamage();
+                Debug.Log("기본 공격 받았다.");
+                break;
+            case "Bomb":
+                curHp -= 20f; //playerControl.getDamage();
+                Debug.Log("폭탄 공격 받았다.");
+                break;
+            case "SlashAttack":
+                curHp -= 30f; //playerControl.getDamage();
+                Debug.Log("슬래쉬 공격 받았다.");
+                break;
+        }
 
         coll.enabled = false;
         yield return new WaitForSeconds(0.5f);
