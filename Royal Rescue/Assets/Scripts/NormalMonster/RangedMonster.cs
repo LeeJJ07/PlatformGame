@@ -7,7 +7,7 @@ public class RangedMonster : Monster
     new void Start()
     {
         playerControl = GameDirector.instance.PlayerControl;
-        player = playerControl.gameObject;// GameObject.FindWithTag("Player");
+        player = playerControl.gameObject;
 
         if (!animator) animator = GetComponent<Animator>();
         if (!coll) coll = GetComponent<Collider>();
@@ -21,8 +21,14 @@ public class RangedMonster : Monster
         curState = EState.PATROL;
 
         isDetect = false;
-        maxHp = 100f;
+
+        maxHp = data.Hp;
         curHp = maxHp;
+        damage = data.Damage;
+        walkSpeed = data.MoveSpeed;
+        runSpeed = data.RunSpeed;
+        detectingDistance = data.SightRange;
+        attackDistance = data.AttackRange;
 
         groundLayerMask = 1 << LayerMask.NameToLayer("Ground");
         wallLayerMask = 1 << LayerMask.NameToLayer("Wall");

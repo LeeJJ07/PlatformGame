@@ -1209,14 +1209,9 @@ MonoBehaviour:
   deathState: {fileID: 5334547176081078864}
   isDetect: 0
   isAttack: 0
-  maxHp: 100
-  damage: 10
+  detecting: 0
   toGroundDistance: 2
   toWallDistance: 2
-  speed: 7
-  detectingDistance: 14
-  detectingAngle: 80
-  attackDistance: 14
   facingDir: 1
 --- !u!114 &168754736879246433
 MonoBehaviour:
@@ -1244,7 +1239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitPoint: {fileID: 0}
   projectile: {fileID: 2998339043173544459, guid: af932cdfa6174ee4ca3b63cb051301bd, type: 3}
-  attackSpeed: 1
+  attackSpeed: 0.5
 --- !u!114 &5334547176081078864
 MonoBehaviour:
   m_ObjectHideFlags: 0

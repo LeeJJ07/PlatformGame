@@ -11,6 +11,9 @@ public class NormalMonsterData : ScriptableObject
     [SerializeField]
     private int damage;
     public int Damage { get { return damage; } }
+    [SerializeField] 
+    private float awakeRange;
+    public float AwakeRange { get { return awakeRange; } }
     [SerializeField]
     private float sightRange;
     public float SightRange { get { return sightRange; } }

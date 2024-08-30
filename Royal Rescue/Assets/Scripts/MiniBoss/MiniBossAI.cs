@@ -149,6 +149,11 @@ public class MiniBossAI : MonoBehaviour
     {
         isDie = true;
     }
+
+    void OnDamage(int damage)
+    {
+        hp -= damage;
+    }
     public int GetBaseAttackDamage() { return baseAttackDamage; }
     public int GetSkill1Damage() { return skill1Damage; }
     public int GetSkill2Damage() { return skill2Damage; }
@@ -156,5 +161,41 @@ public class MiniBossAI : MonoBehaviour
     {
         yield return new WaitForSeconds(3f);
         gameObject.SetActive(false);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (isDie) return;
+
+        
+        if (other.CompareTag("Player"))
+        {
+            Debug.Log("에에엥");
+            Vector3 oppositeDir = (other.gameObject.transform.position - transform.position);
+            other.gameObject.transform.position += new Vector3((oppositeDir.x * Time.deltaTime * 3f), 0f, 0f);
+        }
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (isDie) return;
+
+        switch (other.tag)
+        {
+            case "Weapon":
+                OnDamage(10);
+                Debug.Log("현재 체력은 " + hp);
+                Debug.Log("데미지는 : 10");
+                break;
+            case "SlashAttack":
+                OnDamage(20);
+                Debug.Log("현재 체력은 " + hp);
+                Debug.Log("데미지는 : 20");
+                break;
+            case "Bomb":
+                OnDamage(30);
+                Debug.Log("현재 체력은 " + hp);
+                Debug.Log("데미지는 : 30");
+                break;
+        }
     }
 }

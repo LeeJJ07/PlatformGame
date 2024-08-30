@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04d0cff343e0df40a0b94c49a1dfe78, type: 3}
   m_Name: SmileMushroom Data
   m_EditorClassIdentifier: 
-  hp: 1234
-  damage: 123
-  sightRange: 1234
-  attackRange: 123
-  moveSpeed: 1234
-  runSpeed: 123
+  hp: 70
+  damage: 10
+  awakeRange: 2
+  sightRange: 5
+  attackRange: 1.5
+  moveSpeed: 2
+  runSpeed: 3

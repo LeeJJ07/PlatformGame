@@ -7,9 +7,9 @@ public class BeholderProjectile : MonoBehaviour
 {
     PlayerControlManagerFix player;
     Vector3 moveDir;
-    [SerializeField] RangedMonster monster;
     [SerializeField] GameObject explosion;
     [SerializeField] float speed = 10f;
+    [SerializeField] int damage = 10;
 
     void Start()
     {
@@ -40,8 +40,8 @@ public class BeholderProjectile : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Instantiate(explosion, transform.position, transform.rotation);
-            player.HurtPlayer(monster.getDamage());
-            Debug.Log(monster.getDamage());
+            player.HurtPlayer(damage);
+            Debug.Log(damage);
             Destroy(gameObject);
         }
     }

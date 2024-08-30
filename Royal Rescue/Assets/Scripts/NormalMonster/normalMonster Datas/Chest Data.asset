@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04d0cff343e0df40a0b94c49a1dfe78, type: 3}
   m_Name: Chest Data
   m_EditorClassIdentifier: 
-  hp: 5
-  damage: 6
-  sightRange: 7
-  attackRange: 8
-  moveSpeed: 9
-  runSpeed: 10
+  hp: 120
+  damage: 15
+  awakeRange: 3
+  sightRange: 5
+  attackRange: 2.5
+  moveSpeed: 2
+  runSpeed: 2.5

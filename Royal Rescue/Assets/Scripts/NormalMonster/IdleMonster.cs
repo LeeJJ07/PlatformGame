@@ -8,7 +8,7 @@ public class IdleMonster : Monster
     [Header("Additional State")]
     [SerializeField] private IState idleState;
 
-    [SerializeField] float awakeDistance = 3f;
+    [SerializeField] float awakeDistance;
 
     bool isAwake = false;
 
@@ -20,6 +20,8 @@ public class IdleMonster : Monster
     new void Start()
     {
         base.Start();
+        awakeDistance = data.AwakeRange;
+
         animator.SetBool("isLive", false);
         switch (this.tag)
         {

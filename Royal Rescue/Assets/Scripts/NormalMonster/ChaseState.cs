@@ -21,7 +21,6 @@ public class ChaseState : MonoBehaviour, IState
 
         animator.SetBool("isChase", true);
 
-        monster.setSpeed(5f);
         flowTime = 0f;
         if (monster.isDetect)
         {
@@ -44,7 +43,7 @@ public class ChaseState : MonoBehaviour, IState
                 exclamation.SetActive(false);
         }
         if (monster.CheckWall(monster.transform.position, new Vector3(monster.facingDir, 0f, 0f)))
-            return ;
+            return;
 
         if (!monster.CheckGround(monster.transform.position, Vector3.down))
             return;
@@ -52,7 +51,7 @@ public class ChaseState : MonoBehaviour, IState
         if (!monster.LookPlayer())
             monster.FlipX();
 
-        monster.transform.position += new Vector3(monster.getSpeed() * monster.getFacingDir(), 0, 0) * Time.deltaTime;
+        monster.transform.position += new Vector3(monster.getRunSpeed() * monster.getFacingDir(), 0, 0) * Time.deltaTime;
     }
     public void ExitState()
     {

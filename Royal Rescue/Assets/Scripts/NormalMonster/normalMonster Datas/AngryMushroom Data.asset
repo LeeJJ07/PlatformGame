@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: AngryMushroom Data
   m_EditorClassIdentifier: 
   hp: 100
-  damage: 10
-  sightRange: 10
-  attackRange: 13
-  moveSpeed: 21
-  runSpeed: 10
+  damage: 15
+  awakeRange: 2
+  sightRange: 5
+  attackRange: 1.5
+  moveSpeed: 3
+  runSpeed: 4

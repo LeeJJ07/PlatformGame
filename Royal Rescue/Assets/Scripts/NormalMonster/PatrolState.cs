@@ -22,7 +22,7 @@ public class PatrolState : MonoBehaviour, IState
     }
     public void UpdateState()
     {
-        monster.transform.position += new Vector3(monster.getSpeed() * monster.getFacingDir(), 0f, 0f) * Time.deltaTime;
+        monster.transform.position += new Vector3(monster.getWalkSpeed() * monster.getFacingDir(), 0f, 0f) * Time.deltaTime;
         if (!monster.CheckGround(monster.transform.position, Vector3.down, monster.getToGroundDistance())
             || monster.CheckWall(monster.transform.position, new Vector3(monster.facingDir, 0f, 0f)))
         {

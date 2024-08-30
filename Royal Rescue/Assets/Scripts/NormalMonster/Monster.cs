@@ -12,7 +12,7 @@ public class Monster : MonoBehaviour
 {
     [Header("Monster Info")]
     [SerializeField]
-    private NormalMonsterData data;
+    protected NormalMonsterData data;
 
     [Header("Monster States")]
     [SerializeField] protected PatrolState patrolState;
@@ -31,23 +31,23 @@ public class Monster : MonoBehaviour
 
     public bool isDetect;
     public bool isAttack;
-    [SerializeField]
-    protected float maxHp = 100f;
-    protected float curHp = 100f;
-    [SerializeField] protected int damage = 10;
+    public bool detecting;
+
+    protected float maxHp;
+    protected float curHp;
+    protected int damage;
+    protected float walkSpeed;
+    protected float runSpeed;
+    protected float detectingDistance;
+    protected float detectingAngle = 50f;
+    protected float attackDistance;
 
     protected Vector3 initialPos;
 
     private float checkObstacleDistance = 0.5f;
     [SerializeField] float toGroundDistance = 1f;
     [SerializeField] float toWallDistance = 0.5f;
-
-    [SerializeField] private float speed = 3f;
     
-    [SerializeField] private float detectingDistance = 10f;
-    [SerializeField] private float detectingAngle = 50f;
-
-    [SerializeField] private float attackDistance = 1.5f;
     public float facingDir = 1f;
     protected int groundLayerMask;
     protected int wallLayerMask;
@@ -75,10 +75,16 @@ public class Monster : MonoBehaviour
         monsterStateContext.Transition(patrolState);
         curState = EState.PATROL;
 
+        maxHp = data.Hp;
+        curHp = maxHp;
+        damage = data.Damage;
+        walkSpeed = data.MoveSpeed;
+        runSpeed = data.RunSpeed;
+        detectingDistance = data.SightRange;
+        attackDistance = data.AttackRange;
+
         isDetect = false;
         isAttack = false;
-        maxHp = 100f;
-        curHp = maxHp;
 
         groundLayerMask = 1 << LayerMask.NameToLayer("Ground");
         wallLayerMask = 1 << LayerMask.NameToLayer("Wall");
@@ -147,8 +153,8 @@ public class Monster : MonoBehaviour
         }
     }
     #region �ʿ��� setter, getter
-    public float getSpeed() { return speed; }
-    public void setSpeed(float speed) { this.speed = speed; }
+    public float getWalkSpeed() { return walkSpeed; }
+    public float getRunSpeed() { return runSpeed; }
     public int getDamage() { return damage; }
     public float getFacingDir() { return facingDir; }
     public float getToGroundDistance() { return toGroundDistance; }

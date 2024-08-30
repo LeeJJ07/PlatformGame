@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04d0cff343e0df40a0b94c49a1dfe78, type: 3}
   m_Name: Turtle Data
   m_EditorClassIdentifier: 
-  hp: 145
-  damage: 15
-  sightRange: 151
-  attackRange: 15
-  moveSpeed: 151
-  runSpeed: 15
+  hp: 120
+  damage: 5
+  awakeRange: 0
+  sightRange: 5
+  attackRange: 1.5
+  moveSpeed: 1
+  runSpeed: 2
