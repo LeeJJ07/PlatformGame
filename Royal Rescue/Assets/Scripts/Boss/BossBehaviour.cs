@@ -203,13 +203,13 @@ public class BossBehaviour : MonoBehaviour
         phase2EntryNode = new EntryPhase2Node(transform, target, flamePosition,shockWave, aniController, SpawnObjectWithITag,DeActivateParticles);
         phase2FlameAttackNode = new FlameAttackNode(Phase2flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController, transform, target);
         phase2ScreamAttackNode = new ScreamAttackNode(Phase2screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
-        phase2BasicAttackNode = new BasicAttackNode(Phase2basicAttackInfo, aniController, transform, target);
+        phase2BasicAttackNode = new BasicAttackNode(Phase2basicAttackInfo, aniController,flamePosition, transform, target);
         phase2BreathAttackNode = new BreathAttackNode(SpawnObjectWithITag, Phase2breathAttackInfo, aniController, flamePosition, transform, target);
 
         phase3EntryNode = new EntryPhase3Node(angryLight, transform, target,flamePosition, shockWave, flamePrefabsObject, aniController,SpawnObjectWithITag, DeActivateParticles);
         phase3FlameAttackNode = new FlameAttackNode(Phase3flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController,transform,target);
         phase3ScreamAttackNode = new ScreamAttackNode(Phase3screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
-        phase3BasicAttackNode = new BasicAttackNode(Phase3basicAttackInfo, aniController, transform, target);
+        phase3BasicAttackNode = new BasicAttackNode(Phase3basicAttackInfo, aniController, flamePosition, transform, target);
         phase3RushAttackNode = new RushAttackNode(Phase3RushAttackInfo, bossColliders,RandomSpawnObjectsWithITag, aniController, transform, target);
         phase3WarningRushAttackNode = new WarningRushAttack(SpawnObjects, angryLight, warningPrefab,transform, Phase3RushAttackInfo.warningDelay);
         phase3BreathAttackNode = new BreathAttackNode(SpawnObjectWithITag, Phase3breathAttackInfo, aniController, flamePosition, transform, target);
@@ -371,9 +371,9 @@ public class BossBehaviour : MonoBehaviour
         entryPhase3Sequence.AddNode(phase3EntryNode);
 
         //phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
         //phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
         //phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
 
         phase3ActionSelector.AddNode(entryPhase3Sequence);

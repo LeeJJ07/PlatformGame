@@ -96,7 +96,7 @@ public class EntryPhase3Node : INode
             FlameParticleObj.SetActive(true);
             foreach(ParticleCollisionBehaviour flame in FlameParticleObj.GetComponentsInChildren<ParticleCollisionBehaviour>())
             {
-                flame.SetDamage(3);
+                flame.init(target.GetComponent<Collider>(),true,2,3  );
             }
             
             if (dir.normalized.x < 0)

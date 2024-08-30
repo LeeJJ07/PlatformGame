@@ -9,4 +9,5 @@ public class FlameAttackScriptableObject : ScriptableObject
     public int damage = 0;
     public float flameSpeed = 0;
     public float subSequenceDelay;
+    public bool isContinuousParticleAttack;
 }

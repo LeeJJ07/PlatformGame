@@ -83,7 +83,7 @@ public class BreathAttackNode : INode
             breathObj.transform.rotation = Quaternion.LookRotation(breathShootDir.normalized);
             
             animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length+2f;
-            breathObj.GetComponent<ParticleCollisionBehaviour>().SetDamage(breathAttackInfo.damage);
+            breathObj.GetComponent<ParticleCollisionBehaviour>().init(target.GetComponent<Collider>(),breathAttackInfo.isContinuousParticleAttack,breathAttackInfo.tickDamage,breathAttackInfo.damage);
             skillEndTime = animationDuration - 2f;
             Vector3 dir = target.position - transform.position;
             if (dir.normalized.x < 0)

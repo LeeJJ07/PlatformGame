@@ -8473,7 +8473,7 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 1
+    enabled: 0
     serializedVersion: 4
     type: 1
     collisionMode: 0
@@ -8660,16 +8660,15 @@ ParticleSystem:
     collidesWithDynamic: 1
     interiorCollisions: 0
   TriggerModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 2
-    inside: 1
+    inside: 2
     outside: 0
-    enter: 2
+    enter: 0
     exit: 0
     colliderQueryMode: 0
     radiusScale: 1
-    primitives:
-    - {fileID: 101165750814079026}
+    primitives: []
   SubModule:
     serializedVersion: 2
     enabled: 0
@@ -9704,6 +9703,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detailTag: breathSkill
+  damage: 0
+  damageTime: 0
+  span: 0
 --- !u!1 &7052863525541931673
 GameObject:
   m_ObjectHideFlags: 0
