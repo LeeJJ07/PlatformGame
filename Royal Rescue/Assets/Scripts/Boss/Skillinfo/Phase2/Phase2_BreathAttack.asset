@@ -16,3 +16,4 @@ MonoBehaviour:
   damage: 12
   tickDamage: 0.5
   subSequenceDelay: 1
+  isContinuousParticleAttack: 1

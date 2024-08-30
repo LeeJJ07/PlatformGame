@@ -1048,5 +1048,3 @@ MonoBehaviour:
   detectLayers:
   - serializedVersion: 2
     m_Bits: 128
-  - serializedVersion: 2
-    m_Bits: 64

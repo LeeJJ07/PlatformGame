@@ -372,8 +372,8 @@ public class BossBehaviour : MonoBehaviour
 
         //phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
         //phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
         //phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
 
         phase3ActionSelector.AddNode(entryPhase3Sequence);

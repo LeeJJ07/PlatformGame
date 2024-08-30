@@ -736,8 +736,6 @@ MonoBehaviour:
   detectLayers:
   - serializedVersion: 2
     m_Bits: 128
-  - serializedVersion: 2
-    m_Bits: 64
 --- !u!1 &5613197173567522933
 GameObject:
   m_ObjectHideFlags: 0

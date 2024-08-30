@@ -658,6 +658,7 @@ GameObject:
   - component: {fileID: 2202348210298922360}
   - component: {fileID: 6175950472823688457}
   - component: {fileID: 6882534903960468970}
+  - component: {fileID: 117196289317051264}
   - component: {fileID: 6201586920695959100}
   - component: {fileID: 2982506481644859452}
   - component: {fileID: 525707294370916932}
@@ -738,6 +739,27 @@ CapsuleCollider:
   m_Height: 0
   m_Direction: 1
   m_Center: {x: 0, y: 1.45, z: 0.12}
+--- !u!65 &117196289317051264
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2897208131545264541}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.15, y: 0.15, z: 0.15}
+  m_Center: {x: 0, y: -0.2, z: 0}
 --- !u!95 &6201586920695959100
 Animator:
   serializedVersion: 5
@@ -842,13 +864,11 @@ MonoBehaviour:
   delayTime: 2
   dropSpeed: 15
   damage: 1
-  rayDistance: 1
+  rayDistance: 1.5
   destroyObj: 0
   detectLayers:
   - serializedVersion: 2
     m_Bits: 128
-  - serializedVersion: 2
-    m_Bits: 64
 --- !u!1 &2944549222179228336
 GameObject:
   m_ObjectHideFlags: 0
