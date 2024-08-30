@@ -26,6 +26,8 @@ public class RoomController : MonoBehaviour
         currentRoom = rooms[0];
         currentRoom.gameObject.SetActive(true);
 
+        SetPlayerRespawnPosition();
+
         roomCamera.Init(this);
         roomCamera.ResetCameraPosition();
         roomCamera.SetCameraFollow(true);
@@ -44,7 +46,7 @@ public class RoomController : MonoBehaviour
         previousRoom.gameObject.SetActive(false);
     }
 
-    public void SetPlayerRespawnPosition(Transform playerPos)
+    public void SetPlayerRespawnPosition()
     {
         RoomPortal respawnPortal = CurrentRoom.GetComponentInChildren<RoomPortal>(true);
 

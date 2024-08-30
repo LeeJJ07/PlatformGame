@@ -86,7 +86,7 @@ public class GameDirector : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         respawnAnim.Play(AnimationHash.RESPAWN_SCREEN_HIDE);
-        
+
         loadingScreenCam.enabled = false;
         uiCanvas.gameObject.SetActive(false);
     }
@@ -98,7 +98,7 @@ public class GameDirector : MonoBehaviour
         respawnAnim.Play(AnimationHash.RESPAWN_SCREEN_SHOW);
         yield return new WaitForSeconds(0.8f);
 
-        currentRoomControl.SetPlayerRespawnPosition(playerControl.transform); 
+        currentRoomControl.SetPlayerRespawnPosition(); 
         playerControl.RevivePlayer();
 
         respawnAnim.Play(AnimationHash.RESPAWN_SCREEN_HIDE);
