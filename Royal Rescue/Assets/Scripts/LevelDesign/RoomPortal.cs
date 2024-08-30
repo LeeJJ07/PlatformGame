@@ -35,4 +35,8 @@ public class RoomPortal : MonoBehaviour
         GameDirector.instance.PlayerControl.transform.position = linkedPortal.TeleportPosition.position;
         linkedPortal.CurrentRoom.RoomControl.roomCamera.SetCameraFollow(true);
     }
+    public void TeleportPlayer(Vector3 teleportPos)
+    {
+        GameDirector.instance.PlayerControl.transform.position = teleportPos;
+    }
 }

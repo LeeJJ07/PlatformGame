@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class FlameThrowerTrap : MonoBehaviour
@@ -24,11 +25,12 @@ public class FlameThrowerTrap : MonoBehaviour
     {
         if (hitTimer == 0f)
         {
-            GameDirector.instance.PlayerControl.HurtPlayer(damage);
             GameObject hitEf = Instantiate(hitEffect, transform);
             hitEf.transform.position = GameDirector.instance.PlayerControl.transform.position;
             hitEf.GetComponent<ParticleSystem>().Play();
             Destroy(hitEf, 0.4f);
+            
+            GameDirector.instance.PlayerControl.HurtPlayer(damage);
         }
         else if (hitTimer >= hitInterval)
             hitTimer = 0f;
@@ -40,12 +42,17 @@ public class FlameThrowerTrap : MonoBehaviour
     {
         while (gameObject.activeSelf)
         {
+            var coll = effect.collision;
+
             hitTimer = 0f;
             effect.Play();
+            coll.enabled = true;
             yield return new WaitForSeconds(interval);
 
             hitTimer = 0f;
             effect.Stop();
+            coll.enabled = false;
+            
             yield return new WaitForSeconds(interval);
         }
     }

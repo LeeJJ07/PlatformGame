@@ -15,16 +15,13 @@ public class GameDirector : MonoBehaviour
                 playerControl = GameObject.FindWithTag("Player").GetComponent<PlayerControlManagerFix>();
             return playerControl;
         }
-        private set
-        {
-            ;
-        }
     }
     private PlayerControlManagerFix playerControl;
+    private RoomController currentRoomControl;
 
-    [SerializeField] private GameObject loadingScreen, loadScreenFade;
+    [SerializeField] private GameObject uiCanvas, loadScreenFade;
     [SerializeField] private Camera loadingScreenCam;
-    [SerializeField] private Animator loadscreenFadeAnim, shroomAnim;
+    [SerializeField] private Animator loadscreenFadeAnim, shroomAnim, respawnAnim;
     [SerializeField] private List<string> stageNames;
     private int stageIndex = 0;
 
@@ -35,7 +32,7 @@ public class GameDirector : MonoBehaviour
             _instance = this;
 
             SetCurrentStageIndex();
-            loadingScreen.SetActive(false);
+            uiCanvas.SetActive(false);
             loadScreenFade.SetActive(true);
 
             DontDestroyOnLoad(gameObject);
@@ -76,7 +73,7 @@ public class GameDirector : MonoBehaviour
 
     public void ShowLoadingScreen()
     {
-        loadingScreen.gameObject.SetActive(true);
+        uiCanvas.gameObject.SetActive(true);
         loadingScreenCam.enabled = true;
         shroomAnim.Play(AnimationHash.SHROOM_CHASE, -1, 0f);
     }
@@ -90,6 +87,25 @@ public class GameDirector : MonoBehaviour
 
         loadingScreenCam.enabled = false;
         Camera.main.enabled = true;
-        loadingScreen.gameObject.SetActive(false);
+        uiCanvas.gameObject.SetActive(false);
+    }
+
+    public IEnumerator RespawnScreenTransition()
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        respawnAnim.Play("RespawnTransition_show");
+        yield return new WaitForSeconds(0.8f);
+
+        currentRoomControl.SetPlayerRespawnPosition(playerControl.transform); 
+        playerControl.RevivePlayer();
+        
+
+        respawnAnim.Play("RespawnTransition_hide");
+    }
+
+    public void SetCurrentRoomControl(RoomController roomControl)
+    {
+        currentRoomControl = roomControl;
     }
 }

@@ -9,6 +9,9 @@ using UnityEngine.UI;
 
 public class PlayerControlManagerFix : MonoBehaviour
 {
+    private delegate void OnPlayerDeath();
+    private OnPlayerDeath onPlayerDeath;
+
     public GameObject[] PlayerHeart = new GameObject[5];
     public GameObject DamageEffect;
     public int playerMaxHP = 500;
@@ -70,6 +73,12 @@ public class PlayerControlManagerFix : MonoBehaviour
         attackIcon.SetActive(true);
         isAddicted = false;
         fieldView.weight = 0f;
+
+        if (onPlayerDeath == null)
+        {
+            onPlayerDeath += playerDie;
+            onPlayerDeath += () => StartCoroutine(GameDirector.instance.RespawnScreenTransition());
+        }
     }
     // Update is called once per frame
     void Update()
@@ -99,9 +108,6 @@ public class PlayerControlManagerFix : MonoBehaviour
             }
                 
         }
-        
-        playerDie();
-        
     }
     void GetInput()
     {
@@ -289,16 +295,33 @@ public class PlayerControlManagerFix : MonoBehaviour
     }
     void playerDie()
     {
-        if(playerHP <= 0)
-        {
-            moveDir = Vector3.zero;
-            moveVec = Vector3.zero;
-            isDie = true;
-            anim.SetTrigger("DieTr");
-            anim.SetBool("isDiePlayer", isDie ? true : false);
-            //this.gameObject.SetActive(false);
-        }
+        isDie = true;
+        // moveDir = Vector3.zero;
+        // moveVec = Vector3.zero;
+
+        rb.isKinematic = true;
+        rb.isKinematic = false;
+
+        anim.SetTrigger("DieTr");
+        anim.SetBool("isDiePlayer", isDie ? true : false);
+        //this.gameObject.SetActive(false);
     }
+    
+    public void RevivePlayer()
+    {
+        playerHP = playerMaxHP;
+        anim.SetBool("isDiePlayer", false);
+        anim.SetBool("Idle", true);
+        anim.Play(AnimationHash.PLAYER_IDLE);
+        isDie = false;
+    }
+
+    private void CheckPlayerDeath()
+    {
+        if (!isDie && playerHP <= 0 && onPlayerDeath != null)
+            onPlayerDeath();
+    }
+
     void OnCollisionEnter(Collision collision)
     {
         Debug.DrawRay(transform.position + Vector3.up, Vector3.down * 1f, Color.red);
@@ -334,6 +357,8 @@ public class PlayerControlManagerFix : MonoBehaviour
     {
         playerHP -= damage;
         Debug.Log("ÇÇ°Ý");
+
+        CheckPlayerDeath();
     }
     private void OnCollisionExit(Collision collision)
     {

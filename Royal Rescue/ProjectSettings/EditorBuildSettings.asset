@@ -4,5 +4,17 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/JooWoan.unity
+    guid: 8c33cbcb27117904fa520aa15abf3f80
+  - enabled: 1
+    path: Assets/Scenes/Stage2.unity
+    guid: 1db537d507214b54aac2bc709a162810
+  - enabled: 1
+    path: Assets/Scenes/Stage3.unity
+    guid: f97efbfd193ee8b488f0ec914c1ea72f
+  - enabled: 1
+    path: Assets/Scenes/Stage4.unity
+    guid: f7bdd3477517f9c44808d2e2686cbca1
   m_configObjects: {}

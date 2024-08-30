@@ -11,7 +11,6 @@ public class SpikePlatform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            GameDirector.instance.PlayerControl.HurtPlayer(damage);
             PlayerControlManagerFix player = GameDirector.instance.PlayerControl;
 
             // rigidbody 도 public으로 빼서 접근할 수 있으면 좋을 것 같습니다
@@ -26,6 +25,8 @@ public class SpikePlatform : MonoBehaviour
 
             effect.GetComponent<ParticleSystem>().Play();
             Destroy(effect, 0.4f);
+            
+            GameDirector.instance.PlayerControl.HurtPlayer(damage);
         }
     }
 }
