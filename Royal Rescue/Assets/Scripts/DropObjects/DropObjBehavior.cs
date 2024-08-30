@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class DropObjBehavior : MonoBehaviour,ITag
@@ -10,14 +11,17 @@ public class DropObjBehavior : MonoBehaviour,ITag
     [SerializeField] GameObject dangerZoneObj;
     [SerializeField] float delayTime = 0;
     [SerializeField] float dropSpeed = 1;
-    [SerializeField] float damage = 1;
-    [SerializeField] float detectGroundRayDistance;
+    [SerializeField] int damage = 30;
+    [SerializeField] float rayDistance = 0.5f;
     [SerializeField] bool destroyObj = false;
     [SerializeField] LayerMask[] detectLayers;
+    PlayerControlManagerFix player;
     int detectLayer = 0;
     Ray warningZoneSpawnRay;
     RaycastHit warningZoneSpawnHit;
-    GameObject deactiveDangerZoneObj;
+    Ray detectGroundRay;
+    RaycastHit detectGroundHit;
+    GameObject deactiveWarningZoneObj;
     Rigidbody rigid;
     bool isEndDelay = false;
     private void Awake()
@@ -25,10 +29,12 @@ public class DropObjBehavior : MonoBehaviour,ITag
         rigid = GetComponent<Rigidbody>();
         
         pulling = GameObject.FindWithTag("Director").GetComponent<PullingDirector>();
-        foreach(LayerMask layer in detectLayers)
+        player = GameObject.FindWithTag("Player").GetComponent<PlayerControlManagerFix>();
+        foreach (LayerMask layer in detectLayers)
         {
             detectLayer |= layer;
         }
+       
     }
     void OnEnable()
     {
@@ -36,27 +42,48 @@ public class DropObjBehavior : MonoBehaviour,ITag
         {
             rigid.isKinematic = true;
         }
-        StartCoroutine("DropCoroutine");
+        StartCoroutine(DropCoroutine());
     }
-
     void Update()
     {
-        if(isEndDelay)
+        detectGroundRay = new Ray(transform.position, Vector3.down);
+        Debug.DrawRay(detectGroundRay.origin, detectGroundRay.direction, Color.green);
+        Physics.Raycast(detectGroundRay, out detectGroundHit, rayDistance, detectLayer);
+        if (detectGroundHit.collider != null)
+        {
+            if (detectGroundHit.collider.tag.Equals("Floor"))
+            {
+                Debug.Log("Floor collision");
+                if (destroyObj)
+                {
+                    this.gameObject.SetActive(false);
+                }
+                if (rigid != null)
+                {
+                    rigid.isKinematic = false;
+                }
+                if(deactiveWarningZoneObj!=null)
+                    deactiveWarningZoneObj.SetActive(false);
+                isEndDelay = false;
+            }
+            deactiveWarningZoneObj = null;
+        }
+        if (isEndDelay)
             transform.position += Vector3.down * dropSpeed * Time.deltaTime;
+        
     }
     IEnumerator DropCoroutine()
     {
         yield return new WaitForSeconds(delayTime);
         warningZoneSpawnRay = new Ray(transform.position, Vector3.down);
         Physics.Raycast(warningZoneSpawnRay, out warningZoneSpawnHit, 50, detectLayer);
-        deactiveDangerZoneObj = pulling.SpawnObject(dangerZoneObj.tag, warningZoneSpawnHit.point);
-        yield return new WaitForSeconds(delayTime);
+        deactiveWarningZoneObj = pulling.SpawnObject(dangerZoneObj.tag, warningZoneSpawnHit.point);
         isEndDelay = true;
     }
-   
+
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag.Equals("Player"))
+        if (other.tag.Equals("Player"))
         {
             if (destroyObj)
             {
@@ -66,26 +93,12 @@ public class DropObjBehavior : MonoBehaviour,ITag
             {
                 rigid.isKinematic = false;
             }
-            deactiveDangerZoneObj.SetActive(false);
+            if (deactiveWarningZoneObj != null)
+                deactiveWarningZoneObj.SetActive(false);
+            Debug.Log("DropObject Player Collision");
             isEndDelay = false;
             //플레이어 데미지 전달 로직작성 블럭
-
-
-        }
-        if (other.tag.Equals("Ground"))
-        {
-            Debug.Log("collision");
-            if (destroyObj)
-            {
-                this.gameObject.SetActive(false);
-            }
-            if (rigid != null)
-            {
-                rigid.isKinematic = false;
-            } 
-            
-            deactiveDangerZoneObj.SetActive(false);
-            isEndDelay = false;
+            player.HurtPlayer(damage);
         }
     }
 

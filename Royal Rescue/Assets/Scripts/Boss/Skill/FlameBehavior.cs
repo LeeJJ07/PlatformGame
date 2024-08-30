@@ -8,7 +8,7 @@ public class FlameBehavior : MonoBehaviour,ITag
     [SerializeField] ParticleSystem explosionParticle;
     [SerializeField] string[] ignoreTagList;
     [SerializeField] float moveSpeed;
-
+    int damage = 0;
     Coroutine skillCoroutine;
     Transform target;
     Vector3 dir;
@@ -21,19 +21,39 @@ public class FlameBehavior : MonoBehaviour,ITag
         skillCoroutine = StartCoroutine("ActiveFlameSkill");
      
     }
+    public void SetDamage(int damage)
+    {
+        this.damage = damage;
+    }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Boss")||other.CompareTag("Skill"))
-            return;
-        StopCoroutine(skillCoroutine);
-        flameParticle.Stop();
-        if(!isExplosion)
+        if((other.CompareTag("Player")))
         {
-            explosionParticle.Play();
-            isExplosion = true;
-        }
+            StopCoroutine(skillCoroutine);
+            flameParticle.Stop();
+            if (!isExplosion)
+            {
+                Debug.Log("Player Hit Flame");
+                other.GetComponent<PlayerControlManagerFix>().HurtPlayer(damage);
+                explosionParticle.Play();
+                isExplosion = true;
+            }
+            
 
-        StartCoroutine("WaitDeActiveFlameSkill");
+            StartCoroutine("WaitDeActiveFlameSkill");
+        }
+        else if(other.CompareTag("Floor"))
+        {
+            StopCoroutine(skillCoroutine);
+            flameParticle.Stop();
+            if (!isExplosion)
+            {
+                explosionParticle.Play();
+                isExplosion = true;
+            }
+            StartCoroutine("WaitDeActiveFlameSkill");
+
+        }
     }
     IEnumerator ActiveFlameSkill()
     {

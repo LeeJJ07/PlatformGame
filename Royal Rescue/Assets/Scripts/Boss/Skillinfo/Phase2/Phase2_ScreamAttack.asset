@@ -15,7 +15,11 @@ MonoBehaviour:
   transform: {fileID: 0}
   shockWaveObj: {fileID: 3257248776282636964, guid: 0ca9b61117dfe9a489792a44806bdd5e, type: 3}
   objs:
-  - {fileID: 7152337332152818099, guid: 6b0d7834836fa044ca718a5e21c5ca06, type: 3}
+  - {fileID: 8854714597802012400, guid: ab23cb4290596bb48ab089b535664b49, type: 3}
+  - {fileID: 7493431075636079889, guid: 75958b2e7fb08994ca33fc3f6529821c, type: 3}
+  - {fileID: 8084919204812644092, guid: 3d42bc3a07ef11c41ab5cb99a0edfbae, type: 3}
+  - {fileID: 5506683884172181178, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
+  - {fileID: 2895879474864152614, guid: 7754dc1e98dd5364a85a9532529839bf, type: 3}
   objSpawnCount: 3
   ScreamAttackDistance: 30
   damage: 0

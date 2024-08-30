@@ -14,11 +14,11 @@ GameObject:
   - component: {fileID: 2486483057738839693}
   m_Layer: 0
   m_Name: Shockwave
-  m_TagString: Skill
+  m_TagString: Particle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7943698580335787731
 Transform:
   m_ObjectHideFlags: 0

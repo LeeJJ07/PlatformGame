@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class EntryPhase2Node : INode
 {
+    //파티클 스폰 함수
     public delegate GameObject SpawnObj(GameObject obj, Vector3 posi);
+    //전체 파티클 비활성화 함수
+    public delegate void DeActivateParticles();
+    DeActivateParticles deActivateParticles;
     SpawnObj spawnObj;
     Transform transform;
     Transform target;
@@ -18,7 +22,7 @@ public class EntryPhase2Node : INode
     float animationDuration = 100;
     bool isStartParticle = false;
     bool isActiveAnime = false;
-    public EntryPhase2Node(Transform transform, Transform target,Transform shockWavePosi, GameObject shockWave ,Animator aniController, SpawnObj spawnObj)
+    public EntryPhase2Node(Transform transform, Transform target,Transform shockWavePosi, GameObject shockWave ,Animator aniController, SpawnObj spawnObj, DeActivateParticles deActivateParticles)
     {
         this.transform = transform;
         this.target = target;
@@ -26,6 +30,7 @@ public class EntryPhase2Node : INode
         this.aniController = aniController;
         this.spawnObj = spawnObj;
         this.shockWavePosi = shockWavePosi;
+        this.deActivateParticles = deActivateParticles;
     }
     public void AddNode(INode node) { }
 
@@ -79,7 +84,9 @@ public class EntryPhase2Node : INode
         {
             animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length;
             Vector3 dir = target.position - transform.position;
-            shockWaveParticle= spawnObj(shockWaveObj, shockWavePosi.position).GetComponent<ParticleSystem>();
+
+            deActivateParticles();
+            shockWaveParticle = spawnObj(shockWaveObj, shockWavePosi.position).GetComponent<ParticleSystem>();
             if (dir.normalized.x < 0)
                 transform.rotation = Quaternion.Euler(0, -90, 0);
             else

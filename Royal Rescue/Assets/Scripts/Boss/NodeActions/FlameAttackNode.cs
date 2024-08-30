@@ -44,7 +44,9 @@ public class FlameAttackNode : INode
         skillActiveSpan += Time.deltaTime;
         if (skillActiveSpan >= startShootTime&& shootCount<flameAttackInfo.flameCount)
         {
-            SpawnFlame(flameAttackInfo.flameObj, flameSpawntransform.position);
+            GameObject flame = SpawnFlame(flameAttackInfo.flameObj, flameSpawntransform.position);
+            flame.GetComponent<FlameBehavior>().SetDamage(flameAttackInfo.damage);
+
             startShootTime += shootGap;
             shootCount++;
         }

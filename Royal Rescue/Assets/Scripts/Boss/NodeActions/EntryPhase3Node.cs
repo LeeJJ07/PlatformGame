@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class EntryPhase3Node : INode
 {
+    //파티클 스폰 함수
     public delegate GameObject SpawnObj(GameObject obj, Vector3 posi);
+
+    //전체 파티클 비활성화 함수
+    public delegate void DeActivateParticles();
+    DeActivateParticles deActivateParticles;
     SpawnObj spawnObj;
     GameObject angryLight;
     Transform transform;
@@ -16,12 +21,12 @@ public class EntryPhase3Node : INode
     Animator aniController;
     float shockWaveStartTime = 1f;
     float shockWaveSpan = 0;
-
+    
     float time = 0;
     float animationDuration = 100;
     bool isActiveAnime = false;
     bool isStartParticle = false;
-    public EntryPhase3Node(GameObject light, Transform transform, Transform target,Transform spawnPosi,GameObject shockWave, GameObject FlameParticleObj,Animator aniController, SpawnObj spawnObj)
+    public EntryPhase3Node(GameObject light, Transform transform, Transform target,Transform spawnPosi,GameObject shockWave, GameObject FlameParticleObj,Animator aniController, SpawnObj spawnObj, DeActivateParticles deActivateParticles)
     {
         angryLight = light;
         this.transform = transform;
@@ -31,6 +36,7 @@ public class EntryPhase3Node : INode
         this.spawnObj = spawnObj;
         this.spawnPosi = spawnPosi;
         this.FlameParticleObj = FlameParticleObj;
+        this.deActivateParticles = deActivateParticles;
     }
     public void AddNode(INode node) { }
 
@@ -83,9 +89,16 @@ public class EntryPhase3Node : INode
         if (aniController.GetCurrentAnimatorStateInfo(0).IsName("Scream"))
         {
             animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length;
+
+            deActivateParticles();
             shockWaveParticle = spawnObj(shockWaveParticleObj, spawnPosi.position).GetComponent<ParticleSystem>();
             Vector3 dir = target.position - transform.position;
             FlameParticleObj.SetActive(true);
+            foreach(ParticleCollisionBehaviour flame in FlameParticleObj.GetComponentsInChildren<ParticleCollisionBehaviour>())
+            {
+                flame.init(target.GetComponent<Collider>(),true,2,3  );
+            }
+            
             if (dir.normalized.x < 0)
                 transform.rotation = Quaternion.Euler(0, -90, 0);
             else

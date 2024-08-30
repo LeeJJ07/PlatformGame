@@ -6,6 +6,7 @@ public class PullingDirector : MonoBehaviour
 {
     [SerializeField]List<GameObject> objectList = new List<GameObject>();
     List<ObjectPulling> pullingList = new List<ObjectPulling>();
+    List<GameObject> pullingObjList = new List<GameObject>();
     void Start()
     {
         if(objectList.Count!=0)
@@ -16,6 +17,30 @@ public class PullingDirector : MonoBehaviour
             }
         }
     }
+    public void DeActivateAllObjects()
+    {
+        
+        foreach (GameObject obj in objectList)
+        {
+            obj.SetActive(false);
+        }
+    }
+    
+    public void DeActivateObjectsWithTag(string tag)
+    {
+        
+        foreach(ObjectPulling pulling in pullingList)
+        {
+            pullingObjList = pulling.GetObjectList();
+            foreach(GameObject obj in pullingObjList)
+            {
+                if (obj.CompareTag(tag) && obj.activeSelf == true)
+                    obj.SetActive(false);
+
+            }
+        }
+    }
+    
     public GameObject SpawnObjectwithITag(string tag, ITag detailTag, Vector3 position)
     {
         for (int i = 0; i < objectList.Count; i++)

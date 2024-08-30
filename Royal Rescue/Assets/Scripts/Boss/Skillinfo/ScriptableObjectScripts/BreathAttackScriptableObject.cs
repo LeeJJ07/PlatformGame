@@ -5,6 +5,8 @@ using UnityEngine;
 public class BreathAttackScriptableObject : ScriptableObject
 {
     public GameObject breathObj;
-    public float damage;
+    public int damage;
+    public float tickDamage;
     public float subSequenceDelay;
+    public bool isContinuousParticleAttack;
 }

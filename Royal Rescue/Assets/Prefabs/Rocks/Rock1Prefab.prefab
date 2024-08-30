@@ -143,8 +143,8 @@ MonoBehaviour:
   dangerZoneObj: {fileID: 7360912941218823822, guid: 8e99ae799f6f16243aeb4a94dfced891, type: 3}
   delayTime: 0.3
   dropSpeed: 20
-  damage: 5
-  detectGroundRayDistance: 1
+  damage: 15
+  rayDistance: 1
   destroyObj: 1
   detectLayers:
   - serializedVersion: 2
