@@ -367,6 +367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed97b1ff23f39f479c9e82c88dd6fd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 2edef6272d0661a4893ab07bec8fd821, type: 2}
   patrolState: {fileID: 1686863740607201122}
   chaseState: {fileID: 8053208860478700782}
   attackState: {fileID: 5526288553236239044}

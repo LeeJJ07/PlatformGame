@@ -190,6 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb34a9790f4a835429c69a29f2bcfe47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: e592769f2bd7595459ff3e3a3ffeabf5, type: 2}
   patrolState: {fileID: 4194283786953299098}
   chaseState: {fileID: 4077169115095364955}
   attackState: {fileID: 5252150350831911848}

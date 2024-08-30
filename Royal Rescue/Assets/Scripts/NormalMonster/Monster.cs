@@ -10,6 +10,10 @@ using static UnityEditor.Experimental.GraphView.GraphView;
 
 public class Monster : MonoBehaviour
 {
+    [Header("Monster Info")]
+    [SerializeField]
+    private NormalMonsterData data;
+
     [Header("Monster States")]
     [SerializeField] protected PatrolState patrolState;
     [SerializeField] protected ChaseState chaseState;
@@ -57,7 +61,7 @@ public class Monster : MonoBehaviour
     protected void Start()
     {
         playerControl = GameDirector.instance.PlayerControl;
-        player = playerControl.gameObject;// GameObject.FindWithTag("Player");
+        player = playerControl.gameObject;
         
         if (!animator) animator = GetComponent<Animator>();
         if (!coll) coll = GetComponent<Collider>();
@@ -79,6 +83,7 @@ public class Monster : MonoBehaviour
         groundLayerMask = 1 << LayerMask.NameToLayer("Ground");
         wallLayerMask = 1 << LayerMask.NameToLayer("Wall");
         playerMask = 1 << LayerMask.NameToLayer("Player");
+
     }
     private void OnEnable()
     {
