@@ -44,7 +44,6 @@ public class ChaseState : MonoBehaviour, IState
         }
         if (monster.CheckWall(monster.transform.position, new Vector3(monster.facingDir, 0f, 0f)))
             return;
-
         if (!monster.CheckGround(monster.transform.position, Vector3.down))
             return;
 

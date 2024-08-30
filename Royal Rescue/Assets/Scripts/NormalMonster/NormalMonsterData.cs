@@ -26,4 +26,7 @@ public class NormalMonsterData : ScriptableObject
     [SerializeField]
     private float runSpeed;
     public float RunSpeed { get { return runSpeed; } }
+    [SerializeField]
+    private float detectingAngle;
+    public float DetectingAngle { get { return detectingAngle; } }
 }

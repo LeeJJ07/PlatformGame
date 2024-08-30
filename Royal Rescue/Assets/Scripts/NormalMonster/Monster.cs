@@ -39,7 +39,7 @@ public class Monster : MonoBehaviour
     protected float walkSpeed;
     protected float runSpeed;
     protected float detectingDistance;
-    protected float detectingAngle = 50f;
+    protected float detectingAngle;
     protected float attackDistance;
 
     protected Vector3 initialPos;
@@ -81,6 +81,7 @@ public class Monster : MonoBehaviour
         walkSpeed = data.MoveSpeed;
         runSpeed = data.RunSpeed;
         detectingDistance = data.SightRange;
+        detectingAngle = data.DetectingAngle;
         attackDistance = data.AttackRange;
 
         isDetect = false;
@@ -186,7 +187,7 @@ public class Monster : MonoBehaviour
     }
     protected bool CantChase()
     {
-        return getDistancePlayer() > detectingDistance;
+        return getDistancePlayerX() >= detectingDistance + 2; // 거리 조금 여유있게 해줌
     }
 
     protected bool CanAttackPlayer()
@@ -310,6 +311,10 @@ public class Monster : MonoBehaviour
     public float getDistancePlayer()
     {
         return (player.transform.position - transform.position).magnitude;
+    }
+    public float getDistancePlayerX()
+    {
+        return Mathf.Abs(player.transform.position.x - transform.position.x);
     }
     public float getDirectionPlayerX()
     {

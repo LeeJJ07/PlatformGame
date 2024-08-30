@@ -28,6 +28,7 @@ public class RangedMonster : Monster
         walkSpeed = data.MoveSpeed;
         runSpeed = data.RunSpeed;
         detectingDistance = data.SightRange;
+        detectingAngle = data.DetectingAngle;
         attackDistance = data.AttackRange;
 
         groundLayerMask = 1 << LayerMask.NameToLayer("Ground");

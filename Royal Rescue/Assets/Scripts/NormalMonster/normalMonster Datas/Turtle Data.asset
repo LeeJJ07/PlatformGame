@@ -19,3 +19,4 @@ MonoBehaviour:
   attackRange: 1.5
   moveSpeed: 1
   runSpeed: 2
+  detectingAngle: 50
