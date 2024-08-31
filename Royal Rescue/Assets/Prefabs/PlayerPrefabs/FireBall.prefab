@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 8402315221995383734}
   m_Layer: 0
   m_Name: FireBall
-  m_TagString: Untagged
+  m_TagString: Bomb
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,7 +75,7 @@ MonoBehaviour:
   isFireball: 0
   gravity: -9.81
   ballDir: {x: 0, y: 0, z: 0}
-  damage: 50
+  bombDamage: 50
   explosionEffect: {fileID: 1947871717301538, guid: 8adf38b6e7db9bb438db2454776ea086, type: 3}
   target: {fileID: 0}
 --- !u!23 &-8729927729515319274

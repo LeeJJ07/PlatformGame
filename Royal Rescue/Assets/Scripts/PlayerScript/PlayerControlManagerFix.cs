@@ -40,7 +40,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     [SerializeField] public bool isAttackButton = false;
     [SerializeField] public bool isAttackSecond = false;
     [SerializeField] public bool isSwordWindPossible = false;
-    [SerializeField] private bool isAttackPossible = false;
+    public bool isAttackPossible = false;
     public bool isAttackEnhance = false;
     public bool isJumpEnhance = false;
     public bool isDashPossible = false;
@@ -68,6 +68,8 @@ public class PlayerControlManagerFix : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         Inventory.SetActive(false);
         attackIcon.SetActive(true);
+        weapons.GetComponent<BoxCollider>().enabled = false;
+
         isAddicted = false;
         fieldView.weight = 0f;
     }
@@ -221,8 +223,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         attackDelay += Time.deltaTime;
         isAttackPossible = equipWeapon.rate < attackDelay ? true : false;//공격 딜레이 시간이 공격 쿨타임(rate)을 넘었다면 ? 공격 함 : 공격 눌러도 안써짐
         if(isAttackButton && isAttackPossible )
-        {
-            
+        {    
             weapons.GetComponent<WeaponControl>().isAttackWeapon = true;
             equipWeapon.WeaponUse();
             if (!isAttackEnhance)
@@ -230,6 +231,7 @@ public class PlayerControlManagerFix : MonoBehaviour
             else if (isAttackEnhance)
                 SwordWind();
             attackDelay = 0;
+            weapons.GetComponent<BoxCollider>().enabled = true ;
             StopCoroutine("Swing");
             StartCoroutine("Swing");
         }
@@ -330,6 +332,22 @@ public class PlayerControlManagerFix : MonoBehaviour
             Debug.Log("피격");
         }
     }
+
+    //플레이어 데미지 관련 외부 접근
+
+    public int GetBasicDamage()
+    {
+        return weapons.GetComponent<WeaponControl>().damage;
+    }
+    public int GetSlashAttackDamage()
+    {
+        return weapons.GetComponent<SwordWindControl>().slashDamage;
+    }
+    public int GetBombDamage()
+    {
+        return fireBallPrefabs.GetComponent<FireBallControl>().bombDamage;
+    }
+    //
     public void HurtPlayer(int damage)
     {
         playerHP -= damage;
@@ -356,6 +374,8 @@ public class PlayerControlManagerFix : MonoBehaviour
     {
         yield return new WaitForSeconds(0.05f);//0.05초 후
         weapons.GetComponent<WeaponControl>().isAttackWeapon = false;//무기 공격 트리거 상태를 false로 바꿔 공격중이지 않을때는 충돌 트리거 이벤트가 발생하지 않게
+        yield return new WaitForSeconds(0.25f);
+        weapons.GetComponent<BoxCollider>().enabled = false;
 
     }
     IEnumerator CheckFireBall()

@@ -8,7 +8,7 @@ public class SwordWindControl : MonoBehaviour
     public float throwForce = 20;
     public bool isFireball = false;
     public Vector3 ballDir;
-    public int damage = 50; // 폭탄이 적에게 주는 데미지
+    public int slashDamage = 35;
     public GameObject explosionEffect; // 폭발 효과
     public GameObject target;
     // Start is called before the first frame update
@@ -34,6 +34,7 @@ public class SwordWindControl : MonoBehaviour
             //if (enemyHealth != null)
             //enemyHealth.TakeDamage(damage);
             EnemyControler enemyHP = other.gameObject.GetComponent<EnemyControler>();
+            enemyHP.health -= slashDamage;
             Debug.Log("적에게 검기 명중");
         }
         if (other.gameObject.CompareTag("Player"))
