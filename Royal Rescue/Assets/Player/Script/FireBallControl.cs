@@ -4,27 +4,32 @@ using UnityEngine;
 
 public class FireBallControl : MonoBehaviour
 {
-    //Rigidbody rigidbody;
+    Rigidbody rigidbody;
     public float throwForce = 10;
-    public GameObject player;
-    public bool isDirPlayer;
+    public bool isFireball = false;
+    public float gravity = -9.81f;
     public Vector3 ballDir;
-    public int damage = 50; // 폭탄이 적에게 주는 데미지
+    Vector3 velocity;
+    public int bombDamage = 50; // 폭탄이 적에게 주는 데미지
     public GameObject explosionEffect; // 폭발 효과
     public GameObject target;
     // Start is called before the first frame update
     void Start()
     {
-        //rigidbody = GetComponent<Rigidbody>();
+        //velocity = throwForce * ballDir;
+        rigidbody = GetComponent<Rigidbody>();
+        rigidbody.AddForce((ballDir + Vector3.up * 1.5f) * throwForce, ForceMode.Impulse);
     }
     private void Update()
     {
-        //Vector3 dir = player.GetComponent<PlayerControlManagerFix>().isDirRight ? Vector3.right : Vector3.left;
-        transform.position += throwForce * ballDir * Time.deltaTime;
+        //transform.position += throwForce * ballDir * Time.deltaTime;
+        //velocity.y += gravity * Time.deltaTime;
+        //transform.position += velocity * Time.deltaTime;
         Destroy(this.gameObject, 2f);
         //포물선
-        // rigidbody.AddForce(direction * throwForce, ForceMode.Impulse);
+        
     }
+    
     // Update is called once per frame
     // 폭탄이 발사될 때 호출하는 함수
     private void OnCollisionEnter(Collision other)
@@ -36,7 +41,7 @@ public class FireBallControl : MonoBehaviour
             //if (enemyHealth != null)
             //enemyHealth.TakeDamage(damage);
             EnemyControler enemyHP = other.gameObject.GetComponent<EnemyControler>();
-            enemyHP.health -= damage;
+            enemyHP.health -= bombDamage;
             Debug.Log("적에게 파이어볼 명중");
         }
         if (other.gameObject.CompareTag("Player"))
@@ -64,7 +69,6 @@ public class FireBallControl : MonoBehaviour
                 Destroy(explosion, 3.0f);
             }
         }
-
         Destroy(gameObject);
     }
 }

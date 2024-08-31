@@ -1,11 +1,18 @@
-ï»¿using System.Collections;
+    using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Playables;
+//using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.UI;
 
 public class PlayerControlManagerFix : MonoBehaviour
 {
-    public int playerHP = 500;
+    public GameObject[] PlayerHeart = new GameObject[5];
+    public GameObject DamageEffect;
+    public int playerMaxHP = 500;
+    public int playerHP;
     public float hAxis;
     public float vAxis;
     public float dash = 5f;
@@ -13,6 +20,10 @@ public class PlayerControlManagerFix : MonoBehaviour
     public float dashCoolDown;
     public GameObject weapons;
     public GameObject fireBallPrefabs;
+    public GameObject SwordWindPrefabsR;
+    public GameObject SwordWindPrefabsL;
+    public GameObject Inventory;
+    public GameObject attackIcon;
     public Transform fireBallSpawnPoint;
     [SerializeField] private int jumpPossible = 2;
     [SerializeField] private float lastGroundTime;
@@ -26,14 +37,16 @@ public class PlayerControlManagerFix : MonoBehaviour
     [SerializeField] private int jumpCnt = 0;
     [SerializeField] public bool isDirRight = true;
     [SerializeField] private bool isFloor = false;
-    [SerializeField] private bool isDoubleJump = false;
     [SerializeField] public bool isAttackButton = false;
-    [SerializeField] private bool isAttackPossible = false;
-    [SerializeField] private bool isDashPossible = false;
-    [SerializeField] private bool isFbPossible = false;
+    [SerializeField] public bool isAttackSecond = false;
+    [SerializeField] public bool isSwordWindPossible = false;
+    public bool isAttackPossible = false;
+    public bool isAttackEnhance = false;
+    public bool isJumpEnhance = false;
+    public bool isDashPossible = false;
+    public bool isFbPossible = false;
     [SerializeField] private bool isDie = false;
 
-    private bool ground = false;
     public LayerMask layer;
 
     Rigidbody rb;
@@ -44,13 +57,22 @@ public class PlayerControlManagerFix : MonoBehaviour
     Vector3 moveDir;
     Vector3 moveVec;
     Vector3 dashPower;
+
+    bool isAddicted;
+    //[SerializeField] PostProcessVolume fieldView;
     void Start()
     {
+        playerHP = playerMaxHP;
         rb = this.GetComponent<Rigidbody>();
         rb.useGravity = true;
         anim = GetComponentInChildren<Animator>();
-    }
+        Inventory.SetActive(false);
+        attackIcon.SetActive(true);
+        weapons.GetComponent<BoxCollider>().enabled = false;
 
+        isAddicted = false;
+        //fieldView.weight = 0f;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -69,6 +91,15 @@ public class PlayerControlManagerFix : MonoBehaviour
             {
                 ThrowBall();
             }
+            if (Input.GetButtonDown("InventoryKey"))
+            {
+                Inventory.SetActive(true);
+            }
+            if(isAttackEnhance)
+            {
+                attackIcon.SetActive(false);
+            }
+                
         }
         
         playerDie();
@@ -78,15 +109,15 @@ public class PlayerControlManagerFix : MonoBehaviour
     {
         hAxis = Input.GetAxis("Horizontal");
         vAxis = Input.GetAxis("Vertical");//
-        isJumpDown = Input.GetKeyDown(KeyCode.Space);//ì í”„
-        isAttackButton = Input.GetButtonDown("Attack");//ê³µê²©
+        isJumpDown = Input.GetKeyDown(KeyCode.Space);//Á¡ÇÁ
+        isAttackButton = Input.GetButtonDown("Attack");//°ø°İ
     }
     private void FixedUpdate()
     {
         if(!isDie)
         {
-            rb.velocity = new Vector2(hAxis * moveSpeed, rb.velocity.y);//ì¢Œìš°ì´ë™
-                                                                        //rb.AddForce(moveDir, ForceMode.VelocityChange);//ê°œë¹¨ë¼ì§;;
+            rb.velocity = new Vector2(hAxis * moveSpeed, rb.velocity.y);//ÁÂ¿ìÀÌµ¿
+                                                                        //rb.AddForce(moveDir, ForceMode.VelocityChange);//°³»¡¶óÁü;;
             if (!isDirRight && hAxis > 0.0f)
             {
                 changeDir();
@@ -140,7 +171,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         if(!isDashPossible)
         {
             //rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y), ForceMode.Impulse);
-            Debug.Log("ëŒ€ì‰¬");
+            Debug.Log("´ë½¬");
             dashPower = (isDirRight ? Vector3.right : Vector3.left) * dash;
             //rb.velocity = dashPower*moveSpeed;
             rb.AddForce(dashPower, ForceMode.VelocityChange);
@@ -151,7 +182,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
         else
         {
-            Debug.Log("ëŒ€ì‰¬ ì¿¨íƒ€ì„ì„");
+            Debug.Log("´ë½¬ ÄğÅ¸ÀÓÀÓ");
         }
         
     }
@@ -161,7 +192,8 @@ public class PlayerControlManagerFix : MonoBehaviour
         if (isJumpDown && jumpCnt > 0)
         {
             //curTabTime = Time.time;
-            rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y) * 1.3f, ForceMode.Impulse);
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y) * 1.5f, ForceMode.Impulse);
             if (jumpCnt == 2)
             {
                 anim.SetTrigger("Jump");
@@ -189,27 +221,33 @@ public class PlayerControlManagerFix : MonoBehaviour
         if (equipWeapon == null)
             return;
         attackDelay += Time.deltaTime;
-        isAttackPossible = equipWeapon.rate < attackDelay ? true : false;//ê³µê²© ë”œë ˆì´ ì‹œê°„ì´ ê³µê²© ì¿¨íƒ€ì„(rate)ì„ ë„˜ì—ˆë‹¤ë©´ ? ê³µê²© í•¨ : ê³µê²© ëˆŒëŸ¬ë„ ì•ˆì¨ì§
-        if(isAttackButton && isAttackPossible && isFloor && moveDir == Vector3.zero)
-        {
+        isAttackPossible = equipWeapon.rate < attackDelay ? true : false;//°ø°İ µô·¹ÀÌ ½Ã°£ÀÌ °ø°İ ÄğÅ¸ÀÓ(rate)À» ³Ñ¾ú´Ù¸é ? °ø°İ ÇÔ : °ø°İ ´­·¯µµ ¾È½áÁü
+        if(isAttackButton && isAttackPossible )
+        {    
             weapons.GetComponent<WeaponControl>().isAttackWeapon = true;
             equipWeapon.WeaponUse();
-            anim.SetTrigger("AttackTr");
+            if (!isAttackEnhance)
+                anim.SetTrigger("AttackTr");
+            else if (isAttackEnhance)
+                SwordWind();
             attackDelay = 0;
+            weapons.GetComponent<BoxCollider>().enabled = true ;
             StopCoroutine("Swing");
             StartCoroutine("Swing");
         }
     }
     
 
-    void ThrowBall()
+    public void ThrowBall()
     {
         if(skillCount > 0 && !isFbPossible)
         {
+            GameObject fBall;
             isFbPossible = true;
-            GameObject fBall = Instantiate(fireBallPrefabs, fireBallSpawnPoint.position, fireBallSpawnPoint.rotation);
+            fBall = Instantiate(fireBallPrefabs, fireBallSpawnPoint.position, fireBallSpawnPoint.rotation);
             fBall.GetComponent<FireBallControl>().ballDir = isDirRight ? Vector3.right : Vector3.left;
-            //Vector3 throwDir = (isDirRight ? Vector3.right : Vector3.left) + Vector3.up * 0.5f; // ì•½ê°„ ìœ„ë¡œ ë˜ì§ (í¬ë¬¼ì„  íš¨ê³¼)
+            //fBall.GetComponent<FireBallControl>().isFireball = true;
+            //Vector3 throwDir = (isDirRight ? Vector3.right : Vector3.left) + Vector3.up * 0.5f; // ¾à°£ À§·Î ´øÁü (Æ÷¹°¼± È¿°ú)
             //fBall.GetComponent<FireBallControl>().Throw(throwDir);
             //fBall.transform.position = fireBallSpawnPoint.transform.position;
             anim.SetTrigger("FireBallTr");
@@ -218,9 +256,37 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
         else if (skillCount == 0)
         {
-            Debug.Log("íŒŒì´ì–´ë³¼ íšŸìˆ˜ ëª¨ë‘ ì‚¬ìš©");
+            Debug.Log("ÆÄÀÌ¾îº¼ È½¼ö ¸ğµÎ »ç¿ë");
             return;
         }
+        
+    }
+    public void SwordWind()
+    {
+        
+        if (!isSwordWindPossible)
+        {
+            GameObject fBall;
+            isSwordWindPossible = true;
+            if (isDirRight)
+            {
+                fBall = Instantiate(SwordWindPrefabsR, fireBallSpawnPoint.position, fireBallSpawnPoint.rotation);
+            }
+            else
+            {
+                fBall = Instantiate(SwordWindPrefabsL, fireBallSpawnPoint.position, fireBallSpawnPoint.rotation);
+            }
+            //fBall = Instantiate(fireBallPrefabs, fireBallSpawnPoint.position, fireBallSpawnPoint.rotation);
+            fBall.GetComponent<SwordWindControl>().ballDir = isDirRight ? Vector3.right : Vector3.left;
+            //fBall.GetComponent<FireBallControl>().isFireball = true;
+            //Vector3 throwDir = (isDirRight ? Vector3.right : Vector3.left) + Vector3.up * 0.5f; // ¾à°£ À§·Î ´øÁü (Æ÷¹°¼± È¿°ú)
+            //fBall.GetComponent<FireBallControl>().Throw(throwDir);
+            //fBall.transform.position = fireBallSpawnPoint.transform.position;
+            anim.SetTrigger("FireBallTr");
+            StartCoroutine("CheckAttack2");
+        }
+        else
+            return;
         
     }
     void playerDie()
@@ -263,8 +329,29 @@ public class PlayerControlManagerFix : MonoBehaviour
         {
             EnemyControler enemy = collision.gameObject.GetComponent<EnemyControler>();
             playerHP -= enemy.enemyAtk;
-            Debug.Log("í”¼ê²©");
+            Debug.Log("ÇÇ°İ");
         }
+    }
+
+    //ÇÃ·¹ÀÌ¾î µ¥¹ÌÁö °ü·Ã ¿ÜºÎ Á¢±Ù
+
+    public int GetBasicDamage()
+    {
+        return weapons.GetComponent<WeaponControl>().damage;
+    }
+    public int GetSlashAttackDamage()
+    {
+        return weapons.GetComponent<SwordWindControl>().slashDamage;
+    }
+    public int GetBombDamage()
+    {
+        return fireBallPrefabs.GetComponent<FireBallControl>().bombDamage;
+    }
+    //
+    public void HurtPlayer(int damage)
+    {
+        playerHP -= damage;
+        Debug.Log("ÇÇ°İ");
     }
     private void OnCollisionExit(Collision collision)
     {
@@ -279,23 +366,60 @@ public class PlayerControlManagerFix : MonoBehaviour
 
     IEnumerator DashCoolDown()
     {
-        yield return new WaitForSeconds(1f);//1ì´ˆ í›„
-        Debug.Log("ëŒ€ì‰¬ ì¬í™œì„±í™”");
+        yield return new WaitForSeconds(1f);//1ÃÊ ÈÄ
+        Debug.Log("´ë½¬ ÀçÈ°¼ºÈ­");
         isDashPossible = false;
     }
     IEnumerator Swing()
     {
-        yield return new WaitForSeconds(0.05f);//0.05ì´ˆ í›„
-        weapons.GetComponent<WeaponControl>().isAttackWeapon = false;//ë¬´ê¸° ê³µê²© íŠ¸ë¦¬ê±° ìƒíƒœë¥¼ falseë¡œ ë°”ê¿” ê³µê²©ì¤‘ì´ì§€ ì•Šì„ë•ŒëŠ” ì¶©ëŒ íŠ¸ë¦¬ê±° ì´ë²¤íŠ¸ê°€ ë°œìƒí•˜ì§€ ì•Šê²Œ
+        yield return new WaitForSeconds(0.05f);//0.05ÃÊ ÈÄ
+        weapons.GetComponent<WeaponControl>().isAttackWeapon = false;//¹«±â °ø°İ Æ®¸®°Å »óÅÂ¸¦ false·Î ¹Ù²ã °ø°İÁßÀÌÁö ¾ÊÀ»¶§´Â Ãæµ¹ Æ®¸®°Å ÀÌº¥Æ®°¡ ¹ß»ıÇÏÁö ¾Ê°Ô
+        yield return new WaitForSeconds(0.25f);
+        weapons.GetComponent<BoxCollider>().enabled = false;
 
     }
     IEnumerator CheckFireBall()
     {
-        Debug.Log("ë‚¨ì€ íšŸìˆ˜ : " + skillCount);
-        yield return new WaitForSeconds(1f);//1ì´ˆ í›„
-        Debug.Log("ìŠ¤í‚¬ í‚¤ ì…ë ¥ ê°€ëŠ¥");
+        Debug.Log("³²Àº È½¼ö : " + skillCount);
+        yield return new WaitForSeconds(3f);//3ÃÊ ÈÄ
+        Debug.Log("½ºÅ³ Å° ÀÔ·Â °¡´É");
         isFbPossible = false;
     }
+    IEnumerator CheckAttack2()
+    {
+        yield return new WaitForSeconds(0.5f);//1ÃÊ ÈÄ
+        Debug.Log("½ºÅ³ Å° ÀÔ·Â °¡´É");
+        isSwordWindPossible = false;
+    }
+
+
+    private void OnParticleCollision(GameObject other)
+    {
+        Debug.Log("Ãæµ¹");
+        switch (other.tag)
+        {
+            case "Poison":
+                ReduceFieldOfView();
+                break;
+        }
+    }
+
+    void ReduceFieldOfView()
+    {
+        if (isAddicted) return;
+        isAddicted = true;
+
+        StartCoroutine(ReduceReduceFieldOfViewSlowly());
+    }
+    IEnumerator ReduceReduceFieldOfViewSlowly()
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            //fieldView.weight += 0.01f;
+            yield return new WaitForSeconds(0.02f);
+        }
+    }
+
 }
 /*
  * private Rigidbody rigid;
@@ -308,7 +432,7 @@ public class PlayerControlManagerFix : MonoBehaviour
 @@ -22,10 +23,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
-        h = Input.GetAxis("Horizontal");        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        h = Input.GetAxis("Horizontal");        // ??????
         transform.position += new Vector3(h, 0, 0) * speed * Time.deltaTime;
         this.transform.position += new Vector3(h, 0, 0) * speed * Time.deltaTime;
         if (h > 1e-3 || h < -1e-3)
@@ -334,7 +458,7 @@ public class PlayerControlManagerFix : MonoBehaviour
 
     IEnumerator Atk()
     {
-        //90ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, -90ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        //90?? ????, -90?? ??????
 
 
         hand.transform.eulerAngles = new Vector3(0, 0, 50f);
