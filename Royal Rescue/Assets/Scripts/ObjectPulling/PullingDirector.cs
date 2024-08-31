@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// 오브젝트들을 리스트로 만들어
+/// 리스트에 있는 오브젝트들만 풀링을 하도록함
+/// </summary>
 public class PullingDirector : MonoBehaviour
 {
     [SerializeField]List<GameObject> objectList = new List<GameObject>();
@@ -17,6 +20,7 @@ public class PullingDirector : MonoBehaviour
             }
         }
     }
+
     public void DeActivateAllObjects()
     {
         

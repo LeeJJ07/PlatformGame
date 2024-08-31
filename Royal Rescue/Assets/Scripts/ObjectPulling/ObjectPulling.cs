@@ -17,7 +17,6 @@ public class ObjectPulling
     }
     void FindObjs(string tag)
     {
-        GameObject test = GameObject.FindWithTag(tag);
         GameObject[] gms = GameObject.FindGameObjectsWithTag(tag);
         if (gms.Length != 0)
         {
@@ -28,7 +27,7 @@ public class ObjectPulling
         }
     }
 
-    //detailTag 찾아서 반환해보기
+
     public GameObject GetObject()
     {
         if(objList.Count!=0)
@@ -48,5 +47,15 @@ public class ObjectPulling
     public List<GameObject> GetObjectList()
     {
         return objList;
+    }
+    public int ActiveObjCount()
+    {
+        int count = 0;
+        foreach(GameObject gm in objList)
+        {
+            if (gm.activeSelf)
+                count++;
+        }
+        return count;
     }
 }

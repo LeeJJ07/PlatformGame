@@ -1,6 +1,4 @@
-using Cinemachine;
 using UnityEngine;
-using UnityEngine.UIElements;
 //살려줘...
 
 public class BossBehaviour : MonoBehaviour
@@ -162,6 +160,9 @@ public class BossBehaviour : MonoBehaviour
 
     private void Awake()
     {
+        pullingDirector = GameObject.FindWithTag("Director").GetComponent<PullingDirector>();
+        target = GameObject.FindWithTag("Player").transform;
+
         root = new Selector();
         //조건 노드들
         
@@ -263,8 +264,7 @@ public class BossBehaviour : MonoBehaviour
         phase3ScreamAttackSequence = new Sequence();
         phase3RushAttackSequence = new Sequence();
         phase3BreathAttackSequence = new Sequence();
-        pullingDirector = GameObject.FindWithTag("Director").GetComponent<PullingDirector>();
-        target = GameObject.FindWithTag("Player").transform;
+        
     }
 
     void Start()
@@ -370,11 +370,11 @@ public class BossBehaviour : MonoBehaviour
         entryPhase3Sequence.AddNode(checkIncomingPhase3);
         entryPhase3Sequence.AddNode(phase3EntryNode);
 
-        //phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
         phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
+        phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
 
         phase3ActionSelector.AddNode(entryPhase3Sequence);
         phase3ActionSelector.AddNode(phase3AttackRandomSelector);
@@ -398,6 +398,8 @@ public class BossBehaviour : MonoBehaviour
         Bt.Operator();
     }
 
+
+    //보스 활성화할 때 사용
     public void ActivateBoss()
     {
         isActivate = true;
@@ -421,7 +423,9 @@ public class BossBehaviour : MonoBehaviour
         //gameObject.SetActive(false);
     }
    
-    public float LookTarget(Transform transform, Vector3 target)
+
+    //사용않함 곧 삭제될 코드(타겟위치로 회전 각도를 리턴하는 함수)
+    /*public float LookTarget(Transform transform, Vector3 target)
     {
         Vector3 forward = transform.forward;
         Vector3 dir = target - transform.position;
@@ -433,7 +437,7 @@ public class BossBehaviour : MonoBehaviour
         if (sign > 0)
             return rot;
         return -rot;
-    }
+    }*/
     
 
     //정해진 범위 안에 랜덤한 객체 활성화
@@ -447,6 +451,7 @@ public class BossBehaviour : MonoBehaviour
             int randomIndex = Random.Range(0, objs.Length-1);
             pullingDirector.SpawnObject(objs[randomIndex].tag, pos);
         }
+        
     }
 
     //지정한 위치로 객체 활성화
@@ -455,8 +460,10 @@ public class BossBehaviour : MonoBehaviour
         return pullingDirector.SpawnObject(obj.tag, posi);
     }
 
+    //ITag를사용한 오브젝트들 랜덤스폰
     private void RandomSpawnObjectsWithITag(GameObject[] objs, int spawnCount)
     {
+        int count = 0;
         for (int i = 0; i < spawnCount; i++)
         {
             float randomPosiX = Random.Range(spawnRange[0].position.x, spawnRange[1].position.x);
@@ -464,8 +471,12 @@ public class BossBehaviour : MonoBehaviour
             Vector3 posi = new Vector3(randomPosiX, spawnRange[0].position.y, 0);
             int randomIndex = Random.Range(0, objs.Length - 1);
             pullingDirector.SpawnObjectwithITag(objs[randomIndex].tag, objs[randomIndex].GetComponent<ITag>(), posi);
+            //count += pullingDirector.GetObjectCountWithTag(objs[randomIndex].GetComponent<ITag>().GetTag());
         }
+        Debug.Log($"Enemy count: {count}");
     }
+
+    //ITag를사용한 오브젝트 랜덤스폰
     private GameObject SpawnObjectWithITag(GameObject obj, Vector3 posi)
     {
         return pullingDirector.SpawnObjectwithITag(obj.tag, obj.GetComponent<ITag>(), posi);
@@ -481,26 +492,35 @@ public class BossBehaviour : MonoBehaviour
         }
         return spawnObjs;
     }
+
+    //모든 파티클 종료
     private void DeActivateParticles()
     {
         pullingDirector.DeActivateObjectsWithTag("Particle");
     }
+
     public void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, 5);
 
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(transform.position + Vector3.forward, new Vector3(5, 0, 0));
 
     }
+    
+    
     private void OnTriggerStay(Collider other)
     {
+        Debug.Log($"hit: {other.tag}");
         if (other.CompareTag("Player"))
         {
             Vector3 dir = other.transform.position - transform.position;
             other.GetComponent<Rigidbody>().AddForce(Vector3.right * dir.normalized.x * 50, ForceMode.Impulse);
         }
+        else if(other.CompareTag("weapon"))
+        {
+            HitDamage(2);
+        }
+
     }
 }
 

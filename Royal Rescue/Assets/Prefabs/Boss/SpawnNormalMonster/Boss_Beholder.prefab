@@ -667,7 +667,7 @@ GameObject:
   - component: {fileID: 86735578705420647}
   m_Layer: 0
   m_Name: Boss_Beholder
-  m_TagString: BeholderMonster
+  m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -860,7 +860,7 @@ MonoBehaviour:
   delayTime: 2
   dropSpeed: 15
   damage: 1
-  rayDistance: 1.5
+  rayDistance: 0.8
   destroyObj: 0
   detectLayers:
   - serializedVersion: 2
