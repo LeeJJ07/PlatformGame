@@ -28,11 +28,11 @@ public class CannonBall : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Player"))
         {
-            GameDirector.instance.PlayerControl.HurtPlayer(damage);
-
             PlayerControlManagerFix player = GameDirector.instance.PlayerControl;
             Rigidbody playerRb = player.GetComponent<Rigidbody>();
             playerRb.AddForce(-ballRb.transform.right * horizontalForce, ForceMode.Impulse);
+            
+            GameDirector.instance.PlayerControl.HurtPlayer(damage);
         }
         Destroy(effect, 0.4f);
         Destroy(gameObject);

@@ -13,6 +13,8 @@ public class RoomController : MonoBehaviour
 
     void Start()
     {
+        GameDirector.instance.SetCurrentRoomControl(this);
+
         rooms = GetComponentsInChildren<Room>(true);
         for (int i = 0; i < rooms.Length; i++)
         {
@@ -23,6 +25,8 @@ public class RoomController : MonoBehaviour
         roomCamera.transform.SetParent(rooms[0].transform);
         currentRoom = rooms[0];
         currentRoom.gameObject.SetActive(true);
+
+        SetPlayerRespawnPosition();
 
         roomCamera.Init(this);
         roomCamera.ResetCameraPosition();
@@ -40,5 +44,13 @@ public class RoomController : MonoBehaviour
 
         roomCamera.ResetCameraPosition();
         previousRoom.gameObject.SetActive(false);
+    }
+
+    public void SetPlayerRespawnPosition()
+    {
+        RoomPortal respawnPortal = CurrentRoom.GetComponentInChildren<RoomPortal>(true);
+
+        if (respawnPortal)
+            respawnPortal.TeleportPlayer(respawnPortal.TeleportPosition.position);
     }
 }
