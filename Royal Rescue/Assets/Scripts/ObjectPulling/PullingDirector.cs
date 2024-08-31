@@ -49,6 +49,7 @@ public class PullingDirector : MonoBehaviour
             {
                 if (objectList[i].GetComponent<ITag>().CompareToTag(detailTag.GetTag()))
                 {
+                    //pullingList와 objectList의 인덱스에 담긴 정보가 다름
                     GameObject obj = pullingList[i].GetObject();
                     obj.SetActive(true);
                     obj.transform.position = position;

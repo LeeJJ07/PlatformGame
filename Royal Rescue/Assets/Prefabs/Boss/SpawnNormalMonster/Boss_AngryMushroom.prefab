@@ -735,6 +735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0c1c8681c1149c4ebfe2f3ec60856f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  monster: {fileID: 0}
 --- !u!1 &7911669199144251506
 GameObject:
   m_ObjectHideFlags: 0
@@ -947,20 +948,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7ed97b1ff23f39f479c9e82c88dd6fd1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: ace4201a80bbd3a4a9493350b8624850, type: 2}
   patrolState: {fileID: 1859776259371598354}
   chaseState: {fileID: 2846713318801835300}
   attackState: {fileID: 3722011693666706846}
   deathState: {fileID: 8720558314410649652}
   isDetect: 0
   isAttack: 0
-  maxHp: 100
-  damage: 10
+  detecting: 0
   toGroundDistance: 1
   toWallDistance: 0.5
-  speed: 3
-  detectingDistance: 10
-  detectingAngle: 50
-  attackDistance: 3
   facingDir: 1
   awakeDistance: 2.5
 --- !u!114 &3508941545002770189
