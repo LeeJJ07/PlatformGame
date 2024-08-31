@@ -506,20 +506,23 @@ public class BossBehaviour : MonoBehaviour
         Gizmos.DrawWireCube(transform.position + Vector3.forward, new Vector3(5, 0, 0));
 
     }
-    
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log($"TriggerTag: {other.tag}");
+        if (other.CompareTag("Weapon"))
+        {
+            HitDamage(2);
+        }
+    }
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log($"hit: {other.tag}");
         if (other.CompareTag("Player"))
         {
             Vector3 dir = other.transform.position - transform.position;
             other.GetComponent<Rigidbody>().AddForce(Vector3.right * dir.normalized.x * 50, ForceMode.Impulse);
         }
-        else if(other.CompareTag("weapon"))
-        {
-            HitDamage(2);
-        }
+       
 
     }
 }
