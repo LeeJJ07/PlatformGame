@@ -18,6 +18,7 @@ public class ChestIdleState : MonoBehaviour, IState
         animator.SetBool("isChase", false);
         animator.SetBool("isAttack", false);
         animator.SetBool("isDie", false);
+        animator.SetBool("isLive", false);
 
         monster.GetComponent<Collider>().enabled = false;
     }
