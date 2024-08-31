@@ -31,6 +31,55 @@ Transform:
   m_Children: []
   m_Father: {fileID: 8270665678267749835}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &546706713717433072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8419265431982665598}
+  - component: {fileID: 3060221139843355700}
+  m_Layer: 9
+  m_Name: PostProcessing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8419265431982665598
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546706713717433072}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.09967804, y: 1.0636487, z: -4.958647}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8270665678267749835}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3060221139843355700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546706713717433072}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: 911f30edf39f2864c88d7104d6a8c8da, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 0
+  priority: 0
 --- !u!1 &5662754026613469752
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,6 +310,7 @@ Transform:
   - {fileID: 84325309842763873}
   - {fileID: 4226406644614449768}
   - {fileID: 4987513842323046630}
+  - {fileID: 8419265431982665598}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!136 &2159143539946940801
@@ -366,7 +416,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 0
-  fieldView: {fileID: 0}
+  fieldView: {fileID: 3060221139843355700}
 --- !u!1001 &8919627622507330317
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -760,13 +810,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6cf8174422100ee4a8f7425eb505d2e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
   damage: 25
   rate: 0.5
   isAttackWeapon: 0
   meleeArea: {fileID: 1213789898871534768}
   trailEffect: {fileID: 8319547234528358597}
   player: {fileID: 7054254038125191259}
+  boxCollider: {fileID: 0}
 --- !u!54 &1198034833743393925
 Rigidbody:
   m_ObjectHideFlags: 0

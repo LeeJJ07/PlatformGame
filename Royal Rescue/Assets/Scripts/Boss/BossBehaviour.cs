@@ -468,7 +468,7 @@ public class BossBehaviour : MonoBehaviour
         {
             float randomPosiX = Random.Range(spawnRange[0].position.x, spawnRange[1].position.x);
 
-            Vector3 posi = new Vector3(randomPosiX, spawnRange[0].position.y, 0);
+            Vector3 posi = new Vector3(randomPosiX, spawnRange[0].position.y, spawnRange[0].position.z);
             int randomIndex = Random.Range(0, objs.Length - 1);
             pullingDirector.SpawnObjectwithITag(objs[randomIndex].tag, objs[randomIndex].GetComponent<ITag>(), posi);
             //count += pullingDirector.GetObjectCountWithTag(objs[randomIndex].GetComponent<ITag>().GetTag());

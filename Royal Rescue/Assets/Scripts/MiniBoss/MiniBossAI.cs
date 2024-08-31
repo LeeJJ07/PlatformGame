@@ -66,6 +66,8 @@ public class MiniBossAI : MonoBehaviour
 
     private void Awake()
     {
+        player = GameDirector.instance.PlayerControl.gameObject;
+
         transform.position = startTrasform.position;
 
         checkDie = new CheckMiniBossHp(Hp);

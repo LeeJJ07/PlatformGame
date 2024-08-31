@@ -63,6 +63,7 @@ public class PlayerControlManagerFix : MonoBehaviour
 
     bool isAddicted;
     [SerializeField] PostProcessVolume fieldView;
+    private Vignette vignette; // 비네팅 효과
     void Start()
     {
         playerHP = playerMaxHP;
@@ -108,7 +109,8 @@ public class PlayerControlManagerFix : MonoBehaviour
             {
                 attackIcon.SetActive(false);
             }
-                
+
+            setPostProcessCenter();
         }
     }
     void GetInput()
@@ -298,11 +300,9 @@ public class PlayerControlManagerFix : MonoBehaviour
     void playerDie()
     {
         isDie = true;
-        // moveDir = Vector3.zero;
-        // moveVec = Vector3.zero;
-
         rb.isKinematic = true;
         rb.isKinematic = false;
+        rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
 
         anim.SetTrigger("DieTr");
         anim.SetBool("isDiePlayer", isDie ? true : false);
@@ -311,6 +311,8 @@ public class PlayerControlManagerFix : MonoBehaviour
     
     public void RevivePlayer()
     {
+        rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+
         playerHP = playerMaxHP;
         anim.SetBool("isDiePlayer", false);
         anim.SetBool("Idle", true);
@@ -417,6 +419,18 @@ public class PlayerControlManagerFix : MonoBehaviour
         isSwordWindPossible = false;
     }
 
+    void setPostProcessCenter()
+    {
+        if (vignette == null)
+        {
+            fieldView.profile.TryGetSettings(out vignette);
+        }
+        Vector3 playerWorldPosition = transform.position;
+
+        Vector3 viewportPosition = Camera.main.WorldToViewportPoint(playerWorldPosition);
+
+        vignette.center.value = viewportPosition;
+    }
 
     private void OnParticleCollision(GameObject other)
     {
@@ -441,6 +455,12 @@ public class PlayerControlManagerFix : MonoBehaviour
         for (int i = 0; i < 100; i++)
         {
             fieldView.weight += 0.01f;
+            yield return new WaitForSeconds(0.02f);
+        }
+        yield return new WaitForSeconds(8f);
+        for (int i = 0; i < 100; i++)
+        {
+            fieldView.weight -= 0.01f;
             yield return new WaitForSeconds(0.02f);
         }
     }

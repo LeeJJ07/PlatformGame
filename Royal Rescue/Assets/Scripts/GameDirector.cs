@@ -61,6 +61,8 @@ public class GameDirector : MonoBehaviour
         if (stageIndex >= stageNames.Count)
             stageIndex = stageNames.Count - 1;
 
+        playerControl.transform.SetParent(transform);
+
         yield return new WaitForSeconds(0.1f);
         var asyncLoadStage = SceneManager.LoadSceneAsync(stageNames[stageIndex], LoadSceneMode.Single);
 
@@ -93,7 +95,7 @@ public class GameDirector : MonoBehaviour
 
     public IEnumerator RespawnScreenTransition()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
 
         respawnAnim.Play(AnimationHash.RESPAWN_SCREEN_SHOW);
         yield return new WaitForSeconds(0.8f);
