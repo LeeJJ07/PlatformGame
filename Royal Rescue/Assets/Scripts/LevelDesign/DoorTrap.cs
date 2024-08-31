@@ -4,21 +4,21 @@ using UnityEngine;
 
 public class DoorTrap : MonoBehaviour
 {
-    [SerializeField] private Camera mainCamera, doorCamera, gemCamera;
-    [SerializeField] private Animator ironWallAnim;
-    [SerializeField] private RoomPortal portal;
-    [SerializeField] private Transform monsterHub;
-    [SerializeField] private GameObject reward;
+    [SerializeField] protected Camera mainCamera, doorCamera,gemCamera;
+    [SerializeField] protected Animator ironWallAnim;
+    [SerializeField] protected RoomPortal portal;
+    [SerializeField] protected Transform monsterHub;
+    [SerializeField] protected GameObject reward;
     private Monster[] monsters;
-    private bool isTrapActivated = false;
-    private bool hasClearedRoom = false;
+    protected bool isTrapActivated = false;
+    protected bool hasClearedRoom = false;
 
-    void Start()
+    protected virtual void Start()
     {
         monsters = monsterHub.GetComponentsInChildren<Monster>(true);
     }
 
-    void Update()
+    protected void Update()
     {
         if (!hasClearedRoom && CheckRoomClear())
         {
@@ -26,8 +26,8 @@ public class DoorTrap : MonoBehaviour
             StartCoroutine(ReleasePlayer());
         }
     }
-    
-    void OnTriggerEnter(Collider other)
+
+    protected void OnTriggerEnter(Collider other)
     {
         if (!isTrapActivated && other.gameObject.CompareTag("Player"))
         {
@@ -35,7 +35,7 @@ public class DoorTrap : MonoBehaviour
             StartCoroutine(TrapPlayer());
         }
     }
-    IEnumerator TrapPlayer()
+    protected virtual IEnumerator TrapPlayer()
     {
         portal.gameObject.SetActive(false);
         SwitchCamera(mainCamera, doorCamera);
@@ -44,12 +44,12 @@ public class DoorTrap : MonoBehaviour
         
         SwitchCamera(mainCamera, doorCamera);
     }
-    IEnumerator ReleasePlayer()
+    protected virtual IEnumerator ReleasePlayer()
     {
         SwitchCamera(mainCamera, gemCamera);
         yield return new WaitForSeconds(0.2f);
 
-        reward.SetActive(true);
+        if (reward) reward.SetActive(true);
         yield return new WaitForSeconds(1f);
 
         SwitchCamera(gemCamera, doorCamera);
@@ -59,20 +59,20 @@ public class DoorTrap : MonoBehaviour
         SwitchCamera(doorCamera, mainCamera);
         portal.gameObject.SetActive(true);
     }
-    private void CloseIronWall()
+    protected void CloseIronWall()
     {
         ironWallAnim.Play("IronWall_close");
     }
-    private void OpenIronWall()
+    protected void OpenIronWall()
     {
         ironWallAnim.Play("IronWall_open");
     }
-    private void SwitchCamera(Camera currentCamera, Camera subCamera)
+    protected void SwitchCamera(Camera currentCamera, Camera subCamera)
     {
         currentCamera.enabled = !currentCamera.enabled;
         subCamera.enabled = !doorCamera.enabled;
     }
-    bool CheckRoomClear()
+    protected virtual bool CheckRoomClear()
     {
         foreach (Monster monster in monsters)
         {

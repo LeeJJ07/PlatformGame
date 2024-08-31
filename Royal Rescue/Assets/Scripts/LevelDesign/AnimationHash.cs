@@ -14,4 +14,15 @@ public class AnimationHash
     public static readonly int RESPAWN_SCREEN_SHOW      = Animator.StringToHash("RespawnTransition_show");
     public static readonly int RESPAWN_SCREEN_HIDE      = Animator.StringToHash("RespawnTransition_hide");
 
+
+    public static float GetAnimationLength(Animator anim, string animName)
+    {
+        AnimationClip[] clips = anim.runtimeAnimatorController.animationClips;
+        foreach (AnimationClip clip in clips)
+        {
+            if (clip.name == animName)
+                return clip.length;
+        }
+        return 0f;
+    }
 }
