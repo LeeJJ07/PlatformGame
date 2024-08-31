@@ -66,6 +66,8 @@ public class Monster : MonoBehaviour
         if (!animator) animator = GetComponent<Animator>();
         if (!coll) coll = GetComponent<Collider>();
 
+        animator.keepAnimatorStateOnDisable = true;
+
         patrolState = GetComponent<PatrolState>();
         chaseState = GetComponent<ChaseState>();
         attackState = GetComponent<AttackState>();
@@ -74,6 +76,10 @@ public class Monster : MonoBehaviour
         monsterStateContext = new MonsterStateContext(this);
         monsterStateContext.Transition(patrolState);
         curState = EState.PATROL;
+
+        animator.SetBool("isChase", false);
+        animator.SetBool("isAttack", false);
+        animator.SetBool("isDie", false);
 
         maxHp = data.Hp;
         curHp = maxHp;
@@ -95,6 +101,8 @@ public class Monster : MonoBehaviour
     private void OnEnable()
     {
         transform.position = initialPos;
+        if(animator && animator.GetBool("isDie"))
+            gameObject.SetActive(false);
     }
 
     protected void Update()

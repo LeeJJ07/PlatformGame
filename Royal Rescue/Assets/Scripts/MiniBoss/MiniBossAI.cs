@@ -96,7 +96,7 @@ public class MiniBossAI : MonoBehaviour
 
     void Start()
     {
-        
+
         maxHp = 100f;
         hp = maxHp;
 
@@ -130,6 +130,11 @@ public class MiniBossAI : MonoBehaviour
         root.AddNode(followPlayerSequence);
 
         bt = new BehaviorTreeRunner(root);
+    }
+    private void OnEnable()
+    {
+        if (isDie)
+            gameObject.SetActive(false);
     }
     void Update()
     {

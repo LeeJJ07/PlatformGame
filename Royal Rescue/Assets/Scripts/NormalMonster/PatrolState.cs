@@ -15,10 +15,6 @@ public class PatrolState : MonoBehaviour, IState
         if (!monster) monster = GetComponent<Monster>();
 
         animator.SetBool("isPatrol", true);
-        animator.SetBool("isChase", false);
-        animator.SetBool("isAttack", false);
-        animator.SetBool("isDie", false);
-        animator.SetBool("isLive", true);
     }
     public void UpdateState()
     {
