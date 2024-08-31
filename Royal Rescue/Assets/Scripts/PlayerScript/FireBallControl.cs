@@ -10,7 +10,7 @@ public class FireBallControl : MonoBehaviour
     public float gravity = -9.81f;
     public Vector3 ballDir;
     Vector3 velocity;
-    public int damage = 50; // 폭탄이 적에게 주는 데미지
+    public int bombDamage = 50; // 폭탄이 적에게 주는 데미지
     public GameObject explosionEffect; // 폭발 효과
     public GameObject target;
     // Start is called before the first frame update
@@ -29,6 +29,7 @@ public class FireBallControl : MonoBehaviour
         //포물선
         
     }
+    
     // Update is called once per frame
     // 폭탄이 발사될 때 호출하는 함수
     private void OnCollisionEnter(Collision other)
@@ -40,7 +41,7 @@ public class FireBallControl : MonoBehaviour
             //if (enemyHealth != null)
             //enemyHealth.TakeDamage(damage);
             EnemyControler enemyHP = other.gameObject.GetComponent<EnemyControler>();
-            enemyHP.health -= damage;
+            enemyHP.health -= bombDamage;
             Debug.Log("적에게 파이어볼 명중");
         }
         if (other.gameObject.CompareTag("Player"))

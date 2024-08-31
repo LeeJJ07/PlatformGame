@@ -2134,9 +2134,9 @@ RectTransform:
   - {fileID: 834676694}
   m_Father: {fileID: 818545506}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -2250, y: 400}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 100, y: 350}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &488780654
@@ -6188,8 +6188,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1316145588}
-  - component: {fileID: 1316145590}
   - component: {fileID: 1316145589}
+  - component: {fileID: 1316145590}
   m_Layer: 5
   m_Name: UIDashButton
   m_TagString: Untagged
@@ -6216,9 +6216,9 @@ RectTransform:
   - {fileID: 678530552}
   m_Father: {fileID: 818545506}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -2250, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 100, y: 50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1316145589
@@ -6283,9 +6283,9 @@ RectTransform:
   - {fileID: 753049710}
   m_Father: {fileID: 818545506}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -2250, y: 907}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 100, y: -200}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1350991519
@@ -6972,8 +6972,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1682490817}
-  - component: {fileID: 1682490819}
   - component: {fileID: 1682490818}
+  - component: {fileID: 1682490819}
   m_Layer: 5
   m_Name: UISkillButton
   m_TagString: Untagged
@@ -7001,9 +7001,9 @@ RectTransform:
   - {fileID: 1946340020}
   m_Father: {fileID: 818545506}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -2250, y: 250}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 100, y: 200}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1682490818
@@ -7031,7 +7031,7 @@ MonoBehaviour:
   thisSkill: {fileID: 1682490816}
   skillName: FireBallKey
   imgFill: {fileID: 1006178329}
-  skillCollDown: 3
+  skillCollDown: 5
 --- !u!1 &1748504996 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7054254038125191259, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
@@ -8899,10 +8899,6 @@ PrefabInstance:
     - target: {fileID: 8270665678267749835, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8372730062957105005, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
-      propertyPath: m_TagString
-      value: Weapon
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

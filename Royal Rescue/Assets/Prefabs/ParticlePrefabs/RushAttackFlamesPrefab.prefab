@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2233802008315297326}
   m_Layer: 0
   m_Name: RushAttackFlamesPrefab
-  m_TagString: Particle
+  m_TagString: Skill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -182,6 +182,7 @@ MonoBehaviour:
   detailTag: RushAttackFire
   damage: 0
   damageTime: 0
+  span: 0
 --- !u!4 &3082800853193385498 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4288416149911810, guid: f293a2dcc753a4a489fefe7f8f312d69, type: 3}
@@ -342,6 +343,7 @@ MonoBehaviour:
   detailTag: 
   damage: 1
   damageTime: 0
+  span: 0
 --- !u!114 &5919874782749947554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,6 +359,7 @@ MonoBehaviour:
   detailTag: RushAttackFire
   damage: 0
   damageTime: 0
+  span: 0
 --- !u!4 &3750655196492895856 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4288416149911810, guid: f293a2dcc753a4a489fefe7f8f312d69, type: 3}
@@ -485,6 +488,7 @@ MonoBehaviour:
   detailTag: 
   damage: 1
   damageTime: 0
+  span: 0
 --- !u!114 &2326522890351174115
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -500,6 +504,7 @@ MonoBehaviour:
   detailTag: RushAttackFire
   damage: 0
   damageTime: 0
+  span: 0
 --- !u!4 &3782534996350401504 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4430340635691708, guid: bb98861c48ad2024ca93498c7dd93a6c, type: 3}

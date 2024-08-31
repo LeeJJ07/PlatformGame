@@ -27,6 +27,8 @@ public class ObjectPulling
             }
         }
     }
+
+    //detailTag 찾아서 반환해보기
     public GameObject GetObject()
     {
         if(objList.Count!=0)
