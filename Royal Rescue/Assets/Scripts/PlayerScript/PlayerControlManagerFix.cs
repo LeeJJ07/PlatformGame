@@ -421,6 +421,9 @@ public class PlayerControlManagerFix : MonoBehaviour
 
     void setPostProcessCenter()
     {
+        if (Camera.main == null)
+            return;
+
         if (vignette == null)
         {
             fieldView.profile.TryGetSettings(out vignette);
