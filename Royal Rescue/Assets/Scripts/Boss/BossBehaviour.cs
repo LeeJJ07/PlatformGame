@@ -1,5 +1,7 @@
+using Unity.VisualScripting;
 using UnityEngine;
 //살려줘...
+//불만사항: 없고요 희망사항은 있어요...보스 트리구조만 바꾸지 말아주세요...
 
 public class BossBehaviour : MonoBehaviour
 {
@@ -54,19 +56,23 @@ public class BossBehaviour : MonoBehaviour
 
     
     bool isDie = false;
+    bool isHit = false;
 
     BehaviorTreeRunner Bt;
 
     #region 노드 변수들(행동노드, 조건노드)
     ////////////////////
-    INode IntroNode;
     INode DieNode;
     INode DieHpConditionDecorator;
     INode moveNode;
+    INode getHitActionNode;
     INode targetinFlameAttackRange;
     INode targetinScreamAttackRange;
     INode targetinBasicAttackRange;
     INode targetinBreathAttackRange;
+    INode isGetAttackDecorator;
+    INode phase1ReturnRunningNSuccess;
+    INode Phase1FlameAttackReturnFailure;
     /// ///////////////////////
 
     INode phase1HpConditionDecorator;
@@ -111,6 +117,8 @@ public class BossBehaviour : MonoBehaviour
     Sequence dieSequence;
 
     Parallel phase1;
+    Parallel flameAttackDelayParallel;
+    Sequence getHitSequence;
     Sequence entryPhase1Sequence;
     Sequence entryPhase1ActionSequence;
     Sequence phase1FlameAttackSequence;
@@ -173,12 +181,14 @@ public class BossBehaviour : MonoBehaviour
         checkIncomingPhase1 = new CheckIncomingPhase();
         checkIncomingPhase2 = new CheckIncomingPhase();
         checkIncomingPhase3 = new CheckIncomingPhase();
+        isGetAttackDecorator = new IsGetAttack(GetIsHit,SetIsHit);
+        Phase1FlameAttackReturnFailure = new ReturnFailure();
 
         targetinFlameAttackRange = new ChecktoTargetDistance(transform, target, flameAttackDistance);
         targetinScreamAttackRange = new ChecktoTargetDistance(transform, target, screamAttackDistance);
         targetinBasicAttackRange = new ChecktoTargetDistance(transform, target, basicAttackDistance);
         targetinBreathAttackRange = new ChecktoTargetDistance(transform, target, breathAttackDistance);
-
+        phase1ReturnRunningNSuccess = new ReturnRunningNSuccess();//공격을 받았는지를 확인하는 Decorator노드 추가할 것
         phase1FlameAttackDelay = new NodeDelay(Phase1flameAttackInfo.subSequenceDelay,aniController);
         phase1ScreamAttackDelay = new NodeDelay(Phase1screamAttackInfo.subSequenceDelay,aniController);
 
@@ -196,6 +206,7 @@ public class BossBehaviour : MonoBehaviour
         //행동 노드들
         moveNode = new MoveNode(transform, target, aniController, moveSpeed);
         DieNode = new DieNode(DeActivateObj, transform, target, aniController);
+        getHitActionNode = new GetHitActionNode(aniController, transform, target);
         phase1FlameAttackNode = new FlameAttackNode(Phase1flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController,transform,target);
         phase1ScreamAttackNode = new ScreamAttackNode(Phase1screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase1EntryLandNode = new EntryPhase1LandNode(transform, target, aniController);
@@ -218,7 +229,7 @@ public class BossBehaviour : MonoBehaviour
 
         //시퀀스, 셀렉터 노드들
         dieSequence = new Sequence();
-
+        flameAttackDelayParallel = new Parallel();
         phase1 = new Parallel();
         phase1ActionSelector = new Selector();
         phase1AttackRandomSelector = new RandomSelector("phase1 RandomSequence");
@@ -226,6 +237,7 @@ public class BossBehaviour : MonoBehaviour
         entryPhase1Sequence = new Sequence();
         phase1FlameAttackSequence = new Sequence();
         phase1ScreamAttackSequence = new Sequence();
+        getHitSequence = new Sequence();
 
         phase2 = new Parallel();
         phase2ActionSelector = new Selector("phase2ActionSelector");
@@ -275,17 +287,21 @@ public class BossBehaviour : MonoBehaviour
 
 
         //페이지1 트리
+        isGetAttackDecorator.AddNode(getHitActionNode);
+        phase1ReturnRunningNSuccess.AddNode(isGetAttackDecorator);
+        Phase1FlameAttackReturnFailure.AddNode(phase1FlameAttackDelay);
+        flameAttackDelayParallel.AddNode(phase1ReturnRunningNSuccess);
+        flameAttackDelayParallel.AddNode(Phase1FlameAttackReturnFailure);
         phase1FlameAttackSequence.AddNode(phase1FlameAttackNode);
-        phase1FlameAttackSequence.AddNode(phase1FlameAttackDelay);
+        phase1FlameAttackSequence.AddNode(flameAttackDelayParallel);
         phase1ScreamAttackSequence.AddNode(phase1ScreamAttackNode);
         phase1ScreamAttackSequence.AddNode(phase1ScreamAttackDelay);
-
         entryPhase1ActionSequence.AddNode(phase1EntryLandNode);
         entryPhase1ActionSequence.AddNode(phase1EntryScreamNode);
         entryPhase1Sequence.AddNode(checkIncomingPhase1);
         entryPhase1Sequence.AddNode(entryPhase1ActionSequence);
         phase1AttackRandomSelector.AddNode(phase1FlameAttackSequence);
-        phase1AttackRandomSelector.AddNode(phase1ScreamAttackSequence);
+        //phase1AttackRandomSelector.AddNode(phase1ScreamAttackSequence);
         phase1ActionSelector.AddNode(entryPhase1Sequence);
         phase1ActionSelector.AddNode(phase1AttackRandomSelector);
         phase1.AddNode(phase1HpConditionDecorator);
@@ -396,6 +412,7 @@ public class BossBehaviour : MonoBehaviour
         if (!isActivate) return;
         if (isDie) return;
         Bt.Operator();
+        Debug.Log($"isHit: {isHit}");
     }
 
 
@@ -413,14 +430,25 @@ public class BossBehaviour : MonoBehaviour
         hp -= damage;
     }
 
+    private bool GetIsHit()
+    {
+        return isHit;
+    }
+    private void SetIsHit(bool value)
+    {
+        isHit = value;
+    }
     private float GetHp()
     {
         return hp;
     }
+
+    
+    // 보스가 죽을 때 호출 하는 함수
     private void DeActivateObj()
     {
         isDie = true;
-        //gameObject.SetActive(false);
+        pullingDirector.DeActivateObjectsWithTag("Monster");
     }
    
 
@@ -440,25 +468,6 @@ public class BossBehaviour : MonoBehaviour
     }*/
     
 
-    //정해진 범위 안에 랜덤한 객체 활성화
-    private void RandomSpawnObjects(GameObject[] objs,int spawnCount)
-    {
-        for(int i=0; i<spawnCount; i++)
-        {
-            float randomPosiX = Random.Range(spawnRange[0].position.x, spawnRange[1].position.x);
-
-            Vector3 pos = new Vector3(randomPosiX, spawnRange[0].position.y, 0);
-            int randomIndex = Random.Range(0, objs.Length-1);
-            pullingDirector.SpawnObject(objs[randomIndex].tag, pos);
-        }
-        
-    }
-
-    //지정한 위치로 객체 활성화
-    private GameObject SpawnObjects(GameObject obj,Vector3 posi)
-    {
-        return pullingDirector.SpawnObject(obj.tag, posi);
-    }
 
     //ITag를사용한 오브젝트들 랜덤스폰
     private void RandomSpawnObjectsWithITag(GameObject[] objs, int spawnCount)
@@ -498,6 +507,7 @@ public class BossBehaviour : MonoBehaviour
     {
         pullingDirector.DeActivateObjectsWithTag("Particle");
     }
+    
 
     public void OnDrawGizmos()
     {
@@ -509,12 +519,14 @@ public class BossBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"TriggerTag: {other.tag}");
         if (other.CompareTag("Weapon"))
         {
-            HitDamage(2);
+            isHit = true;
+            HitDamage(0);
         }
     }
+    
+
     private void OnTriggerStay(Collider other)
     {
         if (other.CompareTag("Player"))
@@ -522,8 +534,6 @@ public class BossBehaviour : MonoBehaviour
             Vector3 dir = other.transform.position - transform.position;
             other.GetComponent<Rigidbody>().AddForce(Vector3.right * dir.normalized.x * 50, ForceMode.Impulse);
         }
-       
-
     }
 }
 

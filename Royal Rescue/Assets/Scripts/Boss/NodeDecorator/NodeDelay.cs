@@ -21,6 +21,7 @@ public class NodeDelay : INode
     {
         ActiveAnimation();
         span += Time.deltaTime;
+        
         if (span >= duration) 
         {
             span = 0;

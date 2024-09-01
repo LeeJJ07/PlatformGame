@@ -21,6 +21,8 @@ public class PullingDirector : MonoBehaviour
         }
     }
 
+
+    //PullingDirector 리스트에 있는 모든 객체들을 비활성화 시키는 함수
     public void DeActivateAllObjects()
     {
         
@@ -29,7 +31,12 @@ public class PullingDirector : MonoBehaviour
             obj.SetActive(false);
         }
     }
-    
+
+    /// <summary>
+    /// 태그와 같은 객체를 비활성화 함
+    /// return : void
+    /// </summary>
+    /// <param name="tag">비활성화 시킬 객체의 태그입력</param>
     public void DeActivateObjectsWithTag(string tag)
     {
         
@@ -45,6 +52,14 @@ public class PullingDirector : MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// 객체의 기본태그와 ITag의 detailTag를 비교하여 
+    /// 객체를 지정한 위치로 객체 활성화 혹은 생성함
+    /// </summary>
+    /// <param name="tag">객체의 기본태그</param>
+    /// <param name="detailTag">ITag의 태그 이름</param>
+    /// <param name="position">생성할 위치</param>
+    /// <returns></returns>
     public GameObject SpawnObjectwithITag(string tag, ITag detailTag, Vector3 position)
     {
         for (int i = 0; i < objectList.Count; i++)
@@ -63,6 +78,13 @@ public class PullingDirector : MonoBehaviour
         }
         return null;
     }
+
+    /// <summary>
+    /// 객체의 기본 태그를 확인하여 객체를 지정한 위치로 활성화 혹은 생성함
+    /// </summary>
+    /// <param name="tag">객체의 기본 태그</param>
+    /// <param name="position">생성할 위치</param>
+    /// <returns></returns>
     public GameObject SpawnObject(string tag,Vector3 position)
     {
         for(int i=0; i<objectList.Count; i++)
@@ -77,7 +99,9 @@ public class PullingDirector : MonoBehaviour
         }
         return null;
     }
-    GameObject CreateObject(GameObject obj)
+
+    //ObjectPulling.cs에서 사용하기위한 함수
+    private GameObject CreateObject(GameObject obj)
     {
         return Instantiate(obj);
     }
