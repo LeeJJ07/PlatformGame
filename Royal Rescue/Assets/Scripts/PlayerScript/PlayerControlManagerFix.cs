@@ -302,7 +302,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         isDie = true;
         rb.isKinematic = true;
         rb.isKinematic = false;
-        rb.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezeRotation;
+        rb.constraints |= RigidbodyConstraints.FreezePositionX;
 
         anim.SetTrigger("DieTr");
         anim.SetBool("isDiePlayer", isDie ? true : false);
@@ -422,9 +422,11 @@ public class PlayerControlManagerFix : MonoBehaviour
     void setPostProcessCenter()
     {
         if (vignette == null)
-        {
             fieldView.profile.TryGetSettings(out vignette);
-        }
+
+        if (!Camera.main || !vignette)
+            return;
+        
         Vector3 playerWorldPosition = transform.position;
 
         Vector3 viewportPosition = Camera.main.WorldToViewportPoint(playerWorldPosition);
