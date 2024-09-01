@@ -4892,6 +4892,8 @@ MonoBehaviour:
   loadscreenFadeAnim: {fileID: 3733444737109757741}
   shroomAnim: {fileID: 5094588022222983802}
   respawnAnim: {fileID: 3314558719135796116}
+  loadScreenDelay: 1.5
+  respawnDelay: 1.5
   stageNames:
   - JooWoan
   - Stage2
