@@ -1,5 +1,7 @@
+using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class SpringPlatform : MonoBehaviour
@@ -17,6 +19,8 @@ public class SpringPlatform : MonoBehaviour
             playerRb.AddForce(Vector3.up * springForce, ForceMode.Impulse);
 
             springAnim.Play(AnimationHash.SPRING, -1, 0f);
+
+            SoundManager.Instance.PlaySound("Spring");
         }
     }
 }

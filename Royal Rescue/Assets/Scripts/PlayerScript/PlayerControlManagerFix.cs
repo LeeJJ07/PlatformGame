@@ -214,6 +214,8 @@ public class PlayerControlManagerFix : MonoBehaviour
             }
             jumpCnt--;
             //lastTabTime = Time.time;
+
+            SoundManager.Instance.PlaySound("Jump");
         }
 
     }
