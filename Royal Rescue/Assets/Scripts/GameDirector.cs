@@ -22,6 +22,7 @@ public class GameDirector : MonoBehaviour
     [SerializeField] private GameObject uiCanvas, loadScreenFade;
     [SerializeField] private Camera loadingScreenCam;
     [SerializeField] private Animator loadscreenFadeAnim, shroomAnim, respawnAnim;
+    [SerializeField] private float loadScreenDelay, respawnDelay;
     [SerializeField] private List<string> stageNames;
     private int stageIndex = 0;
 
@@ -82,10 +83,10 @@ public class GameDirector : MonoBehaviour
 
     IEnumerator ExitLoadingScreen()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(loadScreenDelay);
 
         loadscreenFadeAnim.Play(AnimationHash.LOADSCREEN_FADEOUT);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(loadScreenDelay);
 
         respawnAnim.Play(AnimationHash.RESPAWN_SCREEN_HIDE);
 
@@ -95,7 +96,7 @@ public class GameDirector : MonoBehaviour
 
     public IEnumerator RespawnScreenTransition()
     {
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(respawnDelay);
 
         respawnAnim.Play(AnimationHash.RESPAWN_SCREEN_SHOW);
         yield return new WaitForSeconds(0.8f);
