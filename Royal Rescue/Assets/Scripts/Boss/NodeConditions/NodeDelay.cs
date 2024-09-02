@@ -32,12 +32,12 @@ public class NodeDelay : INode
         if (span >= duration && !isActiveGetHitAni) 
         {
             span = 0;
-            setGetHitAni();
-            setDelayTime(false);
             isActiveAnime = false;
+            setDelayTime(false);
             return INode.NodeState.Success;
         }
         isActiveGetHitAni = setGetHitAni();
+        Debug.Log($"isActiveGetHitAni: {isActiveGetHitAni}");
         return INode.NodeState.Running;
     }
     void ActiveAnimation()
@@ -47,9 +47,9 @@ public class NodeDelay : INode
         aniController.SetBool("isWalk", false);
         if (aniController.GetCurrentAnimatorStateInfo(0).IsName("Idle01"))
         {
+            isActiveAnime = true;
             Debug.Log("DelayTime");
             setDelayTime(true);
-            isActiveAnime = true;
         }
     }
 }

@@ -27,7 +27,6 @@ public class DieNode : INode
 
     public INode.NodeState Evaluate()
     {
-        Debug.Log("test");
         ActiveAnimation();
         time += Time.deltaTime;
         Debug.Log("Die Running");

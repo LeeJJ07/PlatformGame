@@ -338,13 +338,17 @@ public class BossBehaviour : MonoBehaviour
         //페이지3 트리
         phase3BasicAttackSequence.AddNode(phase3BasicAttackNode);
         phase3BasicAttackSequence.AddNode(phase3BasicAttackDelay);
+
         phase3ScreamAttackSequence.AddNode(phase3ScreamAttackNode);
         phase3ScreamAttackSequence.AddNode(phase3ScreamAttackDelay);
+
         phase3FlameAttackSequence.AddNode(phase3FlameAttackNode);
         phase3FlameAttackSequence.AddNode(phase3FlameAttackDelay);
+
         phase3RushAttackSequence.AddNode(phase3WarningRushAttackNode);
         phase3RushAttackSequence.AddNode(phase3RushAttackNode);
         phase3RushAttackSequence.AddNode(phase3RushAttackDelay);
+
         phase3BreathAttackSequence.AddNode(phase3BreathAttackNode);
         phase3BreathAttackSequence.AddNode(phase3BreathAttackDelay);
 
@@ -396,7 +400,6 @@ public class BossBehaviour : MonoBehaviour
     void Update()
     {
         if (!isActivate) return;
-        if (isDie) return;
         Bt.Operator();
     }
 
@@ -428,7 +431,7 @@ public class BossBehaviour : MonoBehaviour
     }
     private void DeActivateObj()
     {
-        isDie = true;
+        isActivate = false;
         //gameObject.SetActive(false);
     }
    
@@ -518,7 +521,7 @@ public class BossBehaviour : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (isDie) return;
+        if (!isActivate) return;
         Debug.Log($"TriggerTag: {other.tag}");
         if (other.gameObject.tag == "Weapon"
            || other.gameObject.tag == "Bomb"
@@ -531,7 +534,7 @@ public class BossBehaviour : MonoBehaviour
     }
     private void OnTriggerStay(Collider other)
     {
-        if (isDie) return;
+        if (!isActivate) return;
         if (other.CompareTag("Player"))
         {
             Vector3 dir = other.transform.position - transform.position;
@@ -544,8 +547,8 @@ public class BossBehaviour : MonoBehaviour
     {
         if (!isDelayTime) yield break;
         if(isActiveGetHitAni) yield break;
-        float aniDuration = 0;
         isActiveGetHitAni = true;
+        float aniDuration = 0;
         while(true)
         {
 
@@ -573,15 +576,15 @@ public class BossBehaviour : MonoBehaviour
         switch (tag)
         {
             case "Weapon":
-                hp -= 1f; //playerControl.getDamage();
+                //hp -= 1f; //playerControl.getDamage();
                 Debug.Log("기본 공격 받았다.");
                 break;
             case "Bomb":
-                hp -= 2f; //playerControl.getDamage();
+                //hp -= 2f; //playerControl.getDamage();
                 Debug.Log("폭탄 공격 받았다.");
                 break;
             case "SlashAttack":
-                hp -= 3f; //playerControl.getDamage();
+                //hp -= 3f; //playerControl.getDamage();
                 Debug.Log("슬래쉬 공격 받았다.");
                 break;
         }
