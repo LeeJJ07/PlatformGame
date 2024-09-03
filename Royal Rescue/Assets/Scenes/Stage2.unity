@@ -62740,6 +62740,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameDirector
       objectReference: {fileID: 0}
+    - target: {fileID: 8004242064888634764, guid: f5be971d3b316e14b9f3ba5de72e6b3f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
