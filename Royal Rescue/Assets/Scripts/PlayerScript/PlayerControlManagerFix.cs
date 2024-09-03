@@ -12,7 +12,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     private delegate void OnPlayerDeath();
     private OnPlayerDeath onPlayerDeath;
 
-    public GameObject[] PlayerHeart = new GameObject[5];
+    //public GameObject[] PlayerHeart = new GameObject[5];
     public GameObject DamageEffect;
     public int playerMaxHP = 500;
     public int playerHP;
@@ -26,16 +26,16 @@ public class PlayerControlManagerFix : MonoBehaviour
     public GameObject SwordWindPrefabsR;
     public GameObject SwordWindPrefabsL;
     public GameObject Inventory;
-    public GameObject attackIcon;
-    public Transform fireBallSpawnPoint;
-    [SerializeField] private int jumpPossible = 2;
-    [SerializeField] private float lastGroundTime;
-    [SerializeField] private float jumpPressTime;
+    public GameObject attackIcon;//스킬 활성화 비활성화 표시용
+    public Transform fireBallSpawnPoint;//폭탄 생성 좌표
+    [SerializeField] private int jumpPossible = 2;//점프 최대 가능 횟수
+    //[SerializeField] private float lastGroundTime;
+    //[SerializeField] private float jumpPressTime;
     private float attackDelay;
     public float moveSpeed;
     public float JumpPower;
     bool isJumpDown;
-    bool isJump;
+    //bool isJump;
     bool isDashbool;
     [SerializeField] private int jumpCnt = 0;
     [SerializeField] public bool isDirRight = true;
@@ -248,7 +248,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     }
     
 
-    public void ThrowBall()
+    public void ThrowBall()//폭탄 사용 체크
     {
         if(skillCount > 0 && !isFbPossible)
         {
@@ -271,9 +271,8 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
         
     }
-    public void SwordWind()
-    {
-        
+    public void SwordWind()//원거리공격 방향에 따른 프리팹 및 원거리공격 딜레이와 애니메이션(폭탄과 동일 애니메이션)
+    {  
         if (!isSwordWindPossible)
         {
             GameObject fBall;
