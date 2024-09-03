@@ -35,11 +35,11 @@ public class UISkillBtn : MonoBehaviour
 
         if (Input.GetButtonDown(skillName) && coolTimeRoutine == null)
         {
-            if (skillName == "Dash" && !player.GetComponent<PlayerControlManagerFix>().isDashPossible)
+            if (skillName == "Dash")
             {
                 coolTimeRoutine = StartCoroutine(DashCoolTimeRoutine());
             }
-            else if (skillName == "FireBallKey" && !player.GetComponent<PlayerControlManagerFix>().isFbPossible)
+            else if (skillName == "FireBallKey")
             {
                 
                 coolTimeRoutine = StartCoroutine(FbCoolTimeRoutine());

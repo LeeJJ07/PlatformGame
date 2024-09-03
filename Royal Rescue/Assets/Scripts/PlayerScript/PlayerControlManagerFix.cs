@@ -409,7 +409,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     IEnumerator CheckFireBall()
     {
         Debug.Log("남은 횟수 : " + skillCount);
-        yield return new WaitForSeconds(3f);//3초 후
+        yield return new WaitForSeconds(5f);//3초 후
         Debug.Log("스킬 키 입력 가능");
         isFbPossible = false;
     }
