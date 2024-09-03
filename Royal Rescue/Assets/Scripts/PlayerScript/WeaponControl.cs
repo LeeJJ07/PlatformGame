@@ -6,7 +6,7 @@ public class WeaponControl : MonoBehaviour
 {
     //public enum Type { Melee, Range };
     //public Type type;
-    public int damage;
+    public int damage = 25;
     public float rate;
     public bool isAttackWeapon;
     public BoxCollider meleeArea;
