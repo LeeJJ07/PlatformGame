@@ -13,6 +13,7 @@ public class AnimationHash
     public static readonly int PLAYER_IDLE              = Animator.StringToHash("Idle");
     public static readonly int RESPAWN_SCREEN_SHOW      = Animator.StringToHash("RespawnTransition_show");
     public static readonly int RESPAWN_SCREEN_HIDE      = Animator.StringToHash("RespawnTransition_hide");
+    public static readonly int TITLESCREENCAM_INTRO     = Animator.StringToHash("TitleScreenCam_intro");
 
 
     public static float GetAnimationLength(Animator anim, string animName)
