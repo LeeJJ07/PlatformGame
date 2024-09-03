@@ -73,6 +73,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         Inventory.SetActive(false);
         attackIcon.SetActive(true);
         weapons.GetComponent<BoxCollider>().enabled = false;
+        weapons.GetComponent<WeaponControl>().trailEffect.enabled = false;
 
         isAddicted = false;
         fieldView.weight = 0f;
@@ -242,6 +243,7 @@ public class PlayerControlManagerFix : MonoBehaviour
                 SwordWind();
             attackDelay = 0;
             weapons.GetComponent<BoxCollider>().enabled = true ;
+            weapons.GetComponent<WeaponControl>().trailEffect.enabled = true;
             StopCoroutine("Swing");
             StartCoroutine("Swing");
         }
@@ -404,12 +406,13 @@ public class PlayerControlManagerFix : MonoBehaviour
         weapons.GetComponent<WeaponControl>().isAttackWeapon = false;//무기 공격 트리거 상태를 false로 바꿔 공격중이지 않을때는 충돌 트리거 이벤트가 발생하지 않게
         yield return new WaitForSeconds(0.25f);
         weapons.GetComponent<BoxCollider>().enabled = false;
+        weapons.GetComponent<WeaponControl>().trailEffect.enabled = false;
 
     }
     IEnumerator CheckFireBall()
     {
         Debug.Log("남은 횟수 : " + skillCount);
-        yield return new WaitForSeconds(3f);//3초 후
+        yield return new WaitForSeconds(5f);//5초 후
         Debug.Log("스킬 키 입력 가능");
         isFbPossible = false;
     }
