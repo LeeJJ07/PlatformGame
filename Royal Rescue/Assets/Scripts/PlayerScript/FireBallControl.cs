@@ -18,7 +18,7 @@ public class FireBallControl : MonoBehaviour
     {
         //velocity = throwForce * ballDir;
         rigidbody = GetComponent<Rigidbody>();
-        rigidbody.AddForce((ballDir + Vector3.up * 1.5f) * throwForce, ForceMode.Impulse);
+        rigidbody.AddForce((ballDir + Vector3.up * 1.5f) * throwForce, ForceMode.Impulse);//Æ÷¹°¼±
     }
     private void Update()
     {

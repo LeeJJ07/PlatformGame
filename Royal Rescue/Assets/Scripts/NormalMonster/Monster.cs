@@ -7,6 +7,8 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.PostProcessing;
 using static UnityEditor.Experimental.GraphView.GraphView;
+using UnityEngine.UI;
+using TMPro;
 
 public class Monster : MonoBehaviour
 {
@@ -33,8 +35,8 @@ public class Monster : MonoBehaviour
     public bool isAttack;
     public bool detecting;
 
-    protected float maxHp;
-    protected float curHp;
+    protected int maxHp;
+    protected int curHp;
     protected int damage;
     protected float walkSpeed;
     protected float runSpeed;
@@ -52,6 +54,12 @@ public class Monster : MonoBehaviour
     protected int groundLayerMask;
     protected int wallLayerMask;
     protected int playerMask;
+
+    public Slider hpBarPrefab;
+    public Vector3 hpBarOffset = new Vector3(0, -0.4f, 0);
+
+    private Canvas uiCanvas;
+    private Slider hpBarSlider;
 
     protected void Awake()
     {
@@ -97,12 +105,14 @@ public class Monster : MonoBehaviour
         wallLayerMask = 1 << LayerMask.NameToLayer("Wall");
         playerMask = 1 << LayerMask.NameToLayer("Player");
 
+        SetHpBar();
     }
     private void OnEnable()
     {
         transform.position = initialPos;
         if(animator && animator.GetBool("isDie"))
             gameObject.SetActive(false);
+
     }
 
     protected void Update()
@@ -111,6 +121,12 @@ public class Monster : MonoBehaviour
         {
             UpdateState(EState.DEATH);
             monsterStateContext.CurrentState.UpdateState();
+
+            if (hpBarSlider != null)
+            {
+                Destroy(hpBarSlider.gameObject);
+            }
+
             return;
         }
         switch (curState)
@@ -230,22 +246,31 @@ public class Monster : MonoBehaviour
     }
     IEnumerator OnDamage(string tag)
     {
+
+        int dmg = 0;
+
         animator.SetTrigger("takeAttack");
         switch (tag)
         {
             case "Weapon":
-                curHp -= 10f; //playerControl.getDamage();
+                dmg = 10; //playerControl.getDamage();
                 Debug.Log("기본 공격 받았다.");
                 break;
             case "Bomb":
-                curHp -= 20f; //playerControl.getDamage();
+
+                dmg = 20; //playerControl.getDamage();
                 Debug.Log("폭탄 공격 받았다.");
                 break;
             case "SlashAttack":
-                curHp -= 30f; //playerControl.getDamage();
+                dmg = 30; //playerControl.getDamage();
+                
                 Debug.Log("슬래쉬 공격 받았다.");
                 break;
         }
+
+        curHp -= dmg; //playerControl.getDamage();
+
+        hpBarSlider.value = (float)curHp / (float)maxHp;
 
         coll.enabled = false;
         yield return new WaitForSeconds(0.5f);
@@ -340,4 +365,17 @@ public class Monster : MonoBehaviour
         return true;
     }
     #endregion
+
+    void SetHpBar()
+    {
+        uiCanvas = GameObject.Find("Monster Canvas").GetComponent<Canvas>();
+        Slider hpBar = Instantiate<Slider>(hpBarPrefab, uiCanvas.transform);
+        hpBarSlider = hpBar;
+        
+        var _hpbar = hpBar.GetComponent<MonsterHpBar>();
+        _hpbar.targetTr = this.gameObject.transform;
+        _hpbar.offset = hpBarOffset;
+
+        hpBarSlider.value = curHp / maxHp;
+    }
 }

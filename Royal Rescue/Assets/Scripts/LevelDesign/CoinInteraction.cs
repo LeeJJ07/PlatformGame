@@ -16,6 +16,8 @@ public class CoinInteraction : MonoBehaviour
             effect.transform.position = other.transform.position;
             effect.GetComponent<ParticleSystem>().Play();
             Destroy(effect, 0.9f);
+
+            SoundManager.Instance.PlaySound("Coin");
         }
     }
 }
