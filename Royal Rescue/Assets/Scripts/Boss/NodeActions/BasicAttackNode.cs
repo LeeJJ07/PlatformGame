@@ -39,7 +39,8 @@ public class BasicAttackNode : INode
             {
                 foreach(Collider hit in hitCollider)
                 {
-                    hit.GetComponent<PlayerControlManagerFix>().HurtPlayer(basicAttackInfo.damage);
+                    if(hit.CompareTag("Player"))
+                        hit.GetComponent<PlayerControlManagerFix>().HurtPlayer(basicAttackInfo.damage);
                 }
                 
                 isAttackPlayer = true;

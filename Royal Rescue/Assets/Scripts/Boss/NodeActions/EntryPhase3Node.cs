@@ -6,11 +6,14 @@ public class EntryPhase3Node : INode
 {
     //파티클 스폰 함수
     public delegate GameObject SpawnObj(GameObject obj, Vector3 posi);
-
     //전체 파티클 비활성화 함수
     public delegate void DeActivateParticles();
-    DeActivateParticles deActivateParticles;
+
+    public delegate void SetDelayTime(bool value);
+
     SpawnObj spawnObj;
+    DeActivateParticles deActivateParticles;
+    SetDelayTime setDelayTime;
     GameObject angryLight;
     Transform transform;
     Transform target;
@@ -26,7 +29,7 @@ public class EntryPhase3Node : INode
     float animationDuration = 100;
     bool isActiveAnime = false;
     bool isStartParticle = false;
-    public EntryPhase3Node(GameObject light, Transform transform, Transform target,Transform spawnPosi,GameObject shockWave, GameObject FlameParticleObj,Animator aniController, SpawnObj spawnObj, DeActivateParticles deActivateParticles)
+    public EntryPhase3Node(GameObject light, Transform transform, Transform target,Transform spawnPosi,GameObject shockWave, GameObject FlameParticleObj,Animator aniController, SpawnObj spawnObj, DeActivateParticles deActivateParticles, SetDelayTime setDelayTime)
     {
         angryLight = light;
         this.transform = transform;
@@ -37,6 +40,7 @@ public class EntryPhase3Node : INode
         this.spawnPosi = spawnPosi;
         this.FlameParticleObj = FlameParticleObj;
         this.deActivateParticles = deActivateParticles;
+        this.setDelayTime = setDelayTime;
     }
     public void AddNode(INode node) { }
 
@@ -88,6 +92,7 @@ public class EntryPhase3Node : INode
         aniController.SetTrigger("ScreamTrigger");
         if (aniController.GetCurrentAnimatorStateInfo(0).IsName("Scream"))
         {
+            setDelayTime(false);
             animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length;
 
             deActivateParticles();

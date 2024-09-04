@@ -79,13 +79,7 @@ public class RushAttackNode : INode
                 {
                     if(collider.tag.Equals(rushAttackInfo.playerTag))
                     {
-                    /* Vector3 dir = collider.transform.position + transform.position;
-                        Mathf.Clamp(dir.x, 0, 1);
-                        Mathf.Clamp(dir.y, 0, 1);
-                        dir.z = 0;*/
-    
                         collider.GetComponent<PlayerControlManagerFix>().HurtPlayer(rushAttackInfo.damage);
-                        
                     }
                 }
             }
@@ -101,7 +95,6 @@ public class RushAttackNode : INode
     void ActiveAnimation()
     {
         if (isActiveAnime) return;
-        Debug.Log("rushattackANimation");
         aniController.SetBool("isRushAttack",true);
         if(aniController.GetCurrentAnimatorStateInfo(0).IsName("Run"))
         {

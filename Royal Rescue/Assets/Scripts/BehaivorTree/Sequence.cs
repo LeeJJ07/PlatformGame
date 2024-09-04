@@ -34,12 +34,14 @@ public class Sequence : INode
         switch (childNodes[index].Evaluate())
         {
             case INode.NodeState.Success:
+                Debug.Log($"{childNodes[index].ToString()}: Success");
                 index++;
                 break;
                 //리턴은 Failure일 때만
                 
 
             case INode.NodeState.Failure:
+                Debug.Log($"{childNodes[index].ToString()}: Failure");
                 index = 0;
                 return INode.NodeState.Failure;
         }
