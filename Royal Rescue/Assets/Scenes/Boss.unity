@@ -2383,11 +2383,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
       propertyPath: hp
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
       propertyPath: target
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: Phase1HpCondition
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: Phase2HpCondition
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: Phase3HpCondition
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: breathAttackDistance
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
       propertyPath: spawnRange.Array.data[0]

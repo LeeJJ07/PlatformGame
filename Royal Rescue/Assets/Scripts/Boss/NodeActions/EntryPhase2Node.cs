@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static EntryPhase2Node;
+using static NodeDelay;
 
 public class EntryPhase2Node : INode
 {
@@ -8,8 +10,12 @@ public class EntryPhase2Node : INode
     public delegate GameObject SpawnObj(GameObject obj, Vector3 posi);
     //전체 파티클 비활성화 함수
     public delegate void DeActivateParticles();
-    DeActivateParticles deActivateParticles;
+    public delegate void SetDelayTime(bool value);
+
     SpawnObj spawnObj;
+    DeActivateParticles deActivateParticles;
+    SetDelayTime setDelayTime;
+
     Transform transform;
     Transform target;
     Transform shockWavePosi;
@@ -22,7 +28,7 @@ public class EntryPhase2Node : INode
     float animationDuration = 100;
     bool isStartParticle = false;
     bool isActiveAnime = false;
-    public EntryPhase2Node(Transform transform, Transform target,Transform shockWavePosi, GameObject shockWave ,Animator aniController, SpawnObj spawnObj, DeActivateParticles deActivateParticles)
+    public EntryPhase2Node(Transform transform, Transform target,Transform shockWavePosi, GameObject shockWave ,Animator aniController, SpawnObj spawnObj, DeActivateParticles deActivateParticles, SetDelayTime setDelayTime)
     {
         this.transform = transform;
         this.target = target;
@@ -31,6 +37,7 @@ public class EntryPhase2Node : INode
         this.spawnObj = spawnObj;
         this.shockWavePosi = shockWavePosi;
         this.deActivateParticles = deActivateParticles;
+        this.setDelayTime = setDelayTime;
     }
     public void AddNode(INode node) { }
 
@@ -82,9 +89,10 @@ public class EntryPhase2Node : INode
         aniController.SetTrigger("ScreamTrigger");
         if (aniController.GetCurrentAnimatorStateInfo(0).IsName("Scream"))
         {
+            setDelayTime(false);
             animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length;
             Vector3 dir = target.position - transform.position;
-
+            
             deActivateParticles();
             shockWaveParticle = spawnObj(shockWaveObj, shockWavePosi.position).GetComponent<ParticleSystem>();
             if (dir.normalized.x < 0)

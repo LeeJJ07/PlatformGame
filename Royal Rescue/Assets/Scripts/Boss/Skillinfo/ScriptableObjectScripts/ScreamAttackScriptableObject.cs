@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BossSkills_ScreamAttack", menuName = "BossSkills/ScreamAttack")]
 public class ScreamAttackScriptableObject : ScriptableObject
 {
-    public Transform transform;
     public GameObject shockWaveObj;
     public GameObject[] objs;
     public int objSpawnCount = 0;
