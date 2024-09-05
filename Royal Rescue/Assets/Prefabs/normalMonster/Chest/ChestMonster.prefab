@@ -374,15 +374,12 @@ MonoBehaviour:
   deathState: {fileID: 2324094091390809257}
   isDetect: 0
   isAttack: 0
-  maxHp: 100
-  damage: 10
+  detecting: 0
   toGroundDistance: 1
   toWallDistance: 0.5
-  speed: 3
-  detectingDistance: 10
-  detectingAngle: 50
-  attackDistance: 3
   facingDir: 1
+  hpBarPrefab: {fileID: 8677396949248983754, guid: 11036c294b2303440810d64f5593febb, type: 3}
+  hpBarOffset: {x: 0, y: 2.2, z: 0}
   awakeDistance: 3
 --- !u!114 &4291976048038411940
 MonoBehaviour:
