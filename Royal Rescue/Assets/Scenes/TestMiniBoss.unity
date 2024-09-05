@@ -1401,6 +1401,10 @@ PrefabInstance:
       propertyPath: hudDamageText
       value: 
       objectReference: {fileID: 3930897508900390552, guid: 2f978db89ec60494cb7de3fb1cf03304, type: 3}
+    - target: {fileID: 3023841243553470015, guid: 9b36cd1efbbde2d4299013519897e21d, type: 3}
+      propertyPath: DamageTextPrefab
+      value: 
+      objectReference: {fileID: 3445122839428053434, guid: d60b9d755d64c5a408d421b8188fc290, type: 3}
     - target: {fileID: 6481475169841401275, guid: 9b36cd1efbbde2d4299013519897e21d, type: 3}
       propertyPath: m_Name
       value: Turtle
@@ -1769,6 +1773,10 @@ PrefabInstance:
       propertyPath: hudDamageText
       value: 
       objectReference: {fileID: 3930897508900390552, guid: 2f978db89ec60494cb7de3fb1cf03304, type: 3}
+    - target: {fileID: 7544386845185424777, guid: 9beb40e86a5049445b665aaa6c869961, type: 3}
+      propertyPath: DamageTextPrefab
+      value: 
+      objectReference: {fileID: 3445122839428053434, guid: d60b9d755d64c5a408d421b8188fc290, type: 3}
     - target: {fileID: 8534990399413135992, guid: 9beb40e86a5049445b665aaa6c869961, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.2768774

@@ -60,6 +60,7 @@ public class Monster : MonoBehaviour
 
     private Canvas uiCanvas;
     private Slider hpBarSlider;
+    public GameObject DamageTextPrefab;
 
     protected void Awake()
     {
@@ -271,6 +272,15 @@ public class Monster : MonoBehaviour
         curHp -= dmg; //playerControl.getDamage();
 
         hpBarSlider.value = (float)curHp / (float)maxHp;
+
+        var screenPos = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2f, 0)); // 몬스터의 월드 3d좌표를 스크린좌표로 변환
+        var localPos = Vector2.zero;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.GetComponent<RectTransform>(), screenPos, uiCanvas.worldCamera, out localPos); // 스크린 좌표를 다시 체력바 UI 캔버스 좌표로 변환
+
+        GameObject damageUI = Instantiate(DamageTextPrefab) as GameObject;
+        damageUI.GetComponent<DamageText>().damage = dmg;
+        damageUI.transform.SetParent(uiCanvas.transform, false);
+        damageUI.transform.localPosition = localPos;
 
         coll.enabled = false;
         yield return new WaitForSeconds(0.5f);

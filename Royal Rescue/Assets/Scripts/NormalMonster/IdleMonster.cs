@@ -11,7 +11,6 @@ public class IdleMonster : Monster
     [SerializeField] float awakeDistance;
 
     bool isAwake = false;
-
     new void Awake()
     {
         base.Awake();
