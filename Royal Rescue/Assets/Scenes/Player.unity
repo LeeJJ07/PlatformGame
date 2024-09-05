@@ -2005,19 +2005,27 @@ PrefabInstance:
       objectReference: {fileID: 21300000, guid: 0a57bb61970b6e844a6fbf93282ed8d6, type: 3}
     - target: {fileID: 7743237445353363844, guid: f0bbd5f34abb3f24099957b7f429927f, type: 3}
       propertyPath: m_Color.a
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7743237445353363844, guid: f0bbd5f34abb3f24099957b7f429927f, type: 3}
       propertyPath: m_Color.b
-      value: 0.21960786
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7743237445353363844, guid: f0bbd5f34abb3f24099957b7f429927f, type: 3}
       propertyPath: m_Color.g
-      value: 0.21960786
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7743237445353363844, guid: f0bbd5f34abb3f24099957b7f429927f, type: 3}
       propertyPath: m_Color.r
-      value: 0.21960786
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8735623041743001818, guid: f0bbd5f34abb3f24099957b7f429927f, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 11400000, guid: 2c78359c7c22a1d4994d775b3cfb701a, type: 2}
+    - target: {fileID: 8735623041743001818, guid: f0bbd5f34abb3f24099957b7f429927f, type: 3}
+      propertyPath: itemCount
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
