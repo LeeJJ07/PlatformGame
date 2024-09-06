@@ -202,7 +202,8 @@ MonoBehaviour:
   toWallDistance: 0.5
   facingDir: 1
   hpBarPrefab: {fileID: 8677396949248983754, guid: 11036c294b2303440810d64f5593febb, type: 3}
-  hpBarOffset: {x: 0, y: -0.4, z: 0}
+  hpBarOffset: {x: 0, y: 2, z: 0}
+  DamageTextPrefab: {fileID: 3445122839428053434, guid: d60b9d755d64c5a408d421b8188fc290, type: 3}
 --- !u!114 &4194283786953299098
 MonoBehaviour:
   m_ObjectHideFlags: 0

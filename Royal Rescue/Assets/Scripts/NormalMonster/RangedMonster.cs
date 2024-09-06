@@ -34,6 +34,8 @@ public class RangedMonster : Monster
         groundLayerMask = 1 << LayerMask.NameToLayer("Ground");
         wallLayerMask = 1 << LayerMask.NameToLayer("Wall");
         playerMask = 1 << LayerMask.NameToLayer("Player");
+
+        SetHpBar();
     }
 
     new void Update()
@@ -42,6 +44,10 @@ public class RangedMonster : Monster
         {
             UpdateState(EState.DEATH);
             monsterStateContext.CurrentState.UpdateState();
+            if (hpBarSlider != null)
+            {
+                Destroy(hpBarSlider.gameObject);
+            }
             return;
         }
         switch (curState)

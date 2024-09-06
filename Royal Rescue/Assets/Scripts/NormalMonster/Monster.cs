@@ -58,8 +58,8 @@ public class Monster : MonoBehaviour
     public Slider hpBarPrefab;
     public Vector3 hpBarOffset = new Vector3(0, -0.4f, 0);
 
-    private Canvas uiCanvas;
-    private Slider hpBarSlider;
+    protected Canvas uiCanvas;
+    protected Slider hpBarSlider;
     public GameObject DamageTextPrefab;
 
     protected void Awake()
@@ -124,9 +124,7 @@ public class Monster : MonoBehaviour
             monsterStateContext.CurrentState.UpdateState();
 
             if (hpBarSlider != null)
-            {
                 Destroy(hpBarSlider.gameObject);
-            }
 
             return;
         }
@@ -273,7 +271,10 @@ public class Monster : MonoBehaviour
 
         hpBarSlider.value = (float)curHp / (float)maxHp;
 
-        var screenPos = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2f, 0)); // 몬스터의 월드 3d좌표를 스크린좌표로 변환
+        Vector3 nVec = new Vector3(0, 2.5f, 0);
+        if (gameObject.CompareTag("BeholderMonster"))
+            nVec += new Vector3(0, 0.5f, 0);
+        var screenPos = Camera.main.WorldToScreenPoint(transform.position + nVec); // 몬스터의 월드 3d좌표를 스크린좌표로 변환
         var localPos = Vector2.zero;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.GetComponent<RectTransform>(), screenPos, uiCanvas.worldCamera, out localPos); // 스크린 좌표를 다시 체력바 UI 캔버스 좌표로 변환
 
@@ -376,7 +377,7 @@ public class Monster : MonoBehaviour
     }
     #endregion
 
-    void SetHpBar()
+    protected void SetHpBar()
     {
         uiCanvas = GameObject.Find("Monster Canvas").GetComponent<Canvas>();
         Slider hpBar = Instantiate<Slider>(hpBarPrefab, uiCanvas.transform);

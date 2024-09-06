@@ -1165,7 +1165,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.35
+  m_Radius: 0.5
   m_Height: 0
   m_Direction: 1
   m_Center: {x: 0, y: 1.45, z: 0.12}
@@ -1213,8 +1213,9 @@ MonoBehaviour:
   toGroundDistance: 2
   toWallDistance: 2
   facingDir: 1
-  hpBarPrefab: {fileID: 0}
-  hpBarOffset: {x: 0, y: 2.2, z: 0}
+  hpBarPrefab: {fileID: 8677396949248983754, guid: 11036c294b2303440810d64f5593febb, type: 3}
+  hpBarOffset: {x: 0, y: 2, z: 0}
+  DamageTextPrefab: {fileID: 3445122839428053434, guid: d60b9d755d64c5a408d421b8188fc290, type: 3}
 --- !u!114 &168754736879246433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1239,7 +1240,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54eb3078fdfdcef40b8d844e3e29c957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoint: {fileID: 4293439679185630136, guid: 11036c294b2303440810d64f5593febb, type: 3}
+  hitPoint: {fileID: 0}
   projectile: {fileID: 2998339043173544459, guid: af932cdfa6174ee4ca3b63cb051301bd, type: 3}
   attackSpeed: 0.5
 --- !u!114 &5334547176081078864

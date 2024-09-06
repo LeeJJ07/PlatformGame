@@ -27,7 +27,7 @@ public class DamageText : MonoBehaviour
     private void Update()
     {
         transform.Translate(new Vector3(0, textUpSpeed * Time.deltaTime, 0));
-        textMP.color = new Color(1f, 0, 0, Mathf.Lerp(textMP.color.a, 0, Time.deltaTime*alphaSpeed));
+        textMP.color = new Color(1, 1, 1, Mathf.Lerp(textMP.color.a, 0, Time.deltaTime*alphaSpeed));
     }
     
     private void DestroyDamageText()
