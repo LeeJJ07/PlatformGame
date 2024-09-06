@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements.Experimental;
 
 public class ObjectPulling
 {
@@ -12,7 +13,8 @@ public class ObjectPulling
     {
         objList = new List<GameObject>();
         this.instantiate = instantiate;
-        FindObjs(tag);
+        FindObjsWithITag(tag,obj.GetComponent<ITag>().GetTag());
+        //FindObjs(tag);
         this.obj = obj;
     }
     void FindObjs(string tag)
@@ -23,6 +25,20 @@ public class ObjectPulling
             foreach (GameObject gm in gms)
             {
                 objList.Add(gm);
+            }
+        }
+    }
+    void FindObjsWithITag(string tag, string detailTag)
+    {
+        GameObject[] gms = GameObject.FindGameObjectsWithTag(tag);
+        if (gms.Length != 0)
+        {
+            foreach (GameObject gm in gms)
+            {
+                if(gm.GetComponent<ITag>().CompareToTag(detailTag))
+                {
+                    objList.Add(gm);
+                }
             }
         }
     }

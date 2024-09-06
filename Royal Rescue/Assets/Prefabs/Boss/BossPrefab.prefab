@@ -4954,10 +4954,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 3, z: 12}
-  m_Center: {x: 3.463989e-15, y: 2, z: 0.7}
+  m_Size: {x: 1, y: 2.983815, z: 12}
+  m_Center: {x: -2.84217e-15, y: 1.8919078, z: 0.6999998}
 --- !u!65 &5449763429638808952
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4977,8 +4977,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 10.96}
-  m_Center: {x: 3.463989e-15, y: 2, z: 0.7}
+  m_Size: {x: 1, y: 3.0846848, z: 11.8}
+  m_Center: {x: -2.84217e-15, y: 2.0423434, z: 0.6999998}
 --- !u!114 &4123994617682032421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4992,6 +4992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActivate: 1
+  detailTag: Boss
   warningPrefab: {fileID: 7360912941218823822, guid: 8e99ae799f6f16243aeb4a94dfced891, type: 3}
   wallTransforms:
   - {fileID: 0}
@@ -4999,26 +5000,26 @@ MonoBehaviour:
   spawnRange:
   - {fileID: 0}
   - {fileID: 0}
-  target: {fileID: 0}
+  playerTransform: {fileID: 0}
   flamePosition: {fileID: 8299470050138828525}
   aniController: {fileID: 8299470050131196015}
-  hp: 10
+  hp: 20
   moveSpeed: 5
   shockWave: {fileID: 3257248776282636964, guid: 0ca9b61117dfe9a489792a44806bdd5e, type: 3}
   bossColliders:
   - {fileID: 2424326631092252458}
   - {fileID: 5449763429638808952}
-  Phase1HpCondition: 10
+  Phase1HpCondition: 50
   Phase1flameAttackInfo: {fileID: 11400000, guid: b7ed442ee7a98d743baac1d0978ac10a, type: 2}
   Phase1screamAttackInfo: {fileID: 11400000, guid: 2b5637f32b346b8429e8fc667a707c30, type: 2}
-  Phase2HpCondition: 7
+  Phase2HpCondition: 40
   Phase2flameAttackInfo: {fileID: 11400000, guid: 50ba72bdb4f666a45a01afa405db7a53, type: 2}
   Phase2breathAttackInfo: {fileID: 11400000, guid: 37dc83238470a9246a06b4fb9b86454c, type: 2}
   Phase2screamAttackInfo: {fileID: 11400000, guid: 9ffed9975c3ee944f856fd456714d550, type: 2}
   Phase2basicAttackInfo: {fileID: 11400000, guid: 958b84fc75e413844979f431c4803667, type: 2}
   flamePrefabsObject: {fileID: 6619354497864261883}
   angryLight: {fileID: 8121658675680668182}
-  Phase3HpCondition: 5
+  Phase3HpCondition: 20
   Phase3flameAttackInfo: {fileID: 11400000, guid: 2c7a365421c32b94f86d04c61a264c36, type: 2}
   Phase3screamAttackInfo: {fileID: 11400000, guid: 26db39c48611e2e49908f648c900e88b, type: 2}
   Phase3basicAttackInfo: {fileID: 11400000, guid: 96ae2a5270ef06042a257d54ca4f511a, type: 2}
@@ -5027,7 +5028,7 @@ MonoBehaviour:
   basicAttackDistance: 8
   screamAttackDistance: 50
   flameAttackDistance: 50
-  breathAttackDistance: 30
+  breathAttackDistance: 15
 --- !u!1 &8121658675680668182
 GameObject:
   m_ObjectHideFlags: 0

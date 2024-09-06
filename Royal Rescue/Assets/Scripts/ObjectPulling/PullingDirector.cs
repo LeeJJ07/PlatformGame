@@ -11,30 +11,33 @@ public class PullingDirector : MonoBehaviour
     List<ObjectPulling> pullingList = new List<ObjectPulling>();
     void Start()
     {
-        if(objectList.Count!=0)
+        pullingList = new List<ObjectPulling> ();
+        if (objectList.Count!=0)
         {
-            for(int i=0; i<objectList.Count; i++)
+            for (int i = 0; i < objectList.Count; i++)
             {
                 pullingList.Add(new ObjectPulling(CreateObject, objectList[i], objectList[i].tag));
             }
         }
     }
 
+    //스폰한 모든 객체 비활성화
     public void DeActivateSpawnObjects()
     {
         List<GameObject> pullingObjList = new List<GameObject>();
-
+        int i = 0;
         foreach (ObjectPulling pulling in pullingList)
         {
             pullingObjList = pulling.GetObjectList();
+            i++;
             foreach(GameObject obj in pullingObjList)
             {
-                if (!obj.tag.Equals("Monster")) break;
-                obj.GetComponent<Monster>().getDamage();
+                obj.SetActive(false);
             }
         }
     }
     
+    //ITag의 태그 비교후 비활성화
     public void DeActivateObjectsWithTag(string tag)
     {
         List<GameObject> pullingObjList = new List<GameObject>();
@@ -51,6 +54,7 @@ public class PullingDirector : MonoBehaviour
         }
     }
     
+    //객체의 ITag와 스폰할려는ITag가 같으면 지정한 위치로 객체 스폰
     public GameObject SpawnObjectwithITag(string tag, ITag detailTag, Vector3 position)
     {
         for (int i = 0; i < objectList.Count; i++)
@@ -69,6 +73,8 @@ public class PullingDirector : MonoBehaviour
         }
         return null;
     }
+
+    //지정한 위치로 객체 스폰
     public GameObject SpawnObject(string tag,Vector3 position)
     {
         for(int i=0; i<objectList.Count; i++)
@@ -83,6 +89,8 @@ public class PullingDirector : MonoBehaviour
         }
         return null;
     }
+
+    //객체생성 함수 델리게이트 전달
     GameObject CreateObject(GameObject obj)
     {
         return Instantiate(obj);

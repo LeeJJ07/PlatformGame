@@ -2,11 +2,13 @@ using System.Collections;
 using UnityEngine;
 //살려줘...
 
-public class BossBehaviour : MonoBehaviour
+public class BossBehaviour : MonoBehaviour,ITag
 {
     [Header("Boss Activate")]
     [SerializeField] bool isActivate = false;
+
     [Header("Boss Values")]
+    [SerializeField] string detailTag;
     [SerializeField] GameObject warningPrefab;
     [SerializeField] Transform[] wallTransforms;
     [SerializeField] Transform[] spawnRange;
@@ -195,7 +197,7 @@ public class BossBehaviour : MonoBehaviour
 
         //행동 노드들
         moveNode = new MoveNode(transform, playerTransform, aniController, moveSpeed);
-        DieNode = new DieNode(DeActivateAllObj, transform, playerTransform, aniController);
+        DieNode = new DieNode(DeActivateSpawnObjs, transform, playerTransform, aniController);
         phase1FlameAttackNode = new FlameAttackNode(Phase1flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController,transform,playerTransform);
         phase1ScreamAttackNode = new ScreamAttackNode(Phase1screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase1EntryLandNode = new EntryPhase1LandNode(transform, playerTransform, aniController);
@@ -376,9 +378,9 @@ public class BossBehaviour : MonoBehaviour
 
         //phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
         //phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
         //phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
+        //phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
 
         phase3ActionSelector.AddNode(entryPhase3Sequence);
         phase3ActionSelector.AddNode(phase3AttackRandomSelector);
@@ -431,12 +433,12 @@ public class BossBehaviour : MonoBehaviour
     }
 
 
-    //DeActivate ALL Object include SpawnNormalMonster
-    private void DeActivateAllObj()
+    //스폰한 몬스터들 비활성화
+    private void DeActivateSpawnObjs()
     {
         isActivate = false;
         pullingDirector.DeActivateSpawnObjects();
-        //gameObject.SetActive(false);
+        DeActivateParticles();
     }
 
     //모든 파티클 종료
@@ -553,6 +555,16 @@ public class BossBehaviour : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         bossColliders[1].enabled = true;
         isHit=true;
+    }
+
+    public string GetTag()
+    {
+        return detailTag;
+    }
+
+    public bool CompareToTag(string detailTag)
+    {
+        return this.detailTag==detailTag;
     }
 }
 

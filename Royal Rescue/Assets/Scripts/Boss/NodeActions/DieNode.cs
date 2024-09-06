@@ -5,7 +5,7 @@ using UnityEngine;
 public class DieNode : INode
 {
     public delegate void DeActiveObj();
-    DeActiveObj deActiveObj;
+    DeActiveObj deActiveSpawnObj;
     Transform transform;
     Transform target;
     Animator aniController;
@@ -16,7 +16,7 @@ public class DieNode : INode
     
     public DieNode(DeActiveObj deActiveObj, Transform transform, Transform target, Animator aniController)
     {
-        this.deActiveObj = deActiveObj;
+        this.deActiveSpawnObj = deActiveObj;
         this.transform = transform;
         this.target = target;
         this.aniController = aniController;
@@ -33,6 +33,7 @@ public class DieNode : INode
             Debug.Log("Die Success");
             animationDuration = 0;
             isActiveAnime = false;
+            transform.gameObject.SetActive(false);
             
             return INode.NodeState.Success;
         }
@@ -44,7 +45,7 @@ public class DieNode : INode
         aniController.SetTrigger("DieTrigger");
         if (aniController.GetCurrentAnimatorStateInfo(0).IsName("Die"))
         {
-            deActiveObj();
+            deActiveSpawnObj();
             animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length;
             Vector3 dir = target.position - transform.position;
             if (dir.normalized.x < 0)

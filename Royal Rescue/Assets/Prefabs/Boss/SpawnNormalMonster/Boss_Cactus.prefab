@@ -776,9 +776,9 @@ MonoBehaviour:
   toGroundDistance: 1
   toWallDistance: 0.5
   facingDir: 1
-  hpBarPrefab: {fileID: 0}
+  hpBarPrefab: {fileID: 8677396949248983754, guid: 11036c294b2303440810d64f5593febb, type: 3}
   hpBarOffset: {x: 0, y: -0.4, z: 0}
-  DamageTextPrefab: {fileID: 0}
+  DamageTextPrefab: {fileID: 4293439679185630136, guid: 11036c294b2303440810d64f5593febb, type: 3}
   awakeDistance: 3
 --- !u!114 &949949259384004143
 MonoBehaviour:
