@@ -136,7 +136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8270665678267749835, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -32.8
       objectReference: {fileID: 0}
     - target: {fileID: 8270665678267749835, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       propertyPath: m_LocalPosition.y
@@ -309,6 +309,8 @@ MonoBehaviour:
   loadscreenFadeAnim: {fileID: 0}
   shroomAnim: {fileID: 0}
   respawnAnim: {fileID: 0}
+  loadScreenDelay: 0
+  respawnDelay: 0
   stageNames: []
 --- !u!4 &425757743
 Transform:
@@ -2062,6 +2064,8 @@ MonoBehaviour:
   loadscreenFadeAnim: {fileID: 1837349460}
   shroomAnim: {fileID: 474315231}
   respawnAnim: {fileID: 0}
+  loadScreenDelay: 0
+  respawnDelay: 0
   stageNames:
   - JooWoan
   - Stage2

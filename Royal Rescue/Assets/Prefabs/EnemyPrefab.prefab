@@ -102,7 +102,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7642885576191789432
 Transform:
   m_ObjectHideFlags: 0
@@ -186,7 +186,7 @@ MonoBehaviour:
   delayTime: 0.3
   dropSpeed: 25
   damage: 1
-  detectGroundRayDistance: 1
+  rayDistance: 1
   destroyObj: 0
   detectLayers:
   - serializedVersion: 2

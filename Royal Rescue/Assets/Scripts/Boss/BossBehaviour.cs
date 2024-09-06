@@ -195,7 +195,7 @@ public class BossBehaviour : MonoBehaviour
 
         //행동 노드들
         moveNode = new MoveNode(transform, playerTransform, aniController, moveSpeed);
-        DieNode = new DieNode(DeActivateObj, transform, playerTransform, aniController);
+        DieNode = new DieNode(DeActivateAllObj, transform, playerTransform, aniController);
         phase1FlameAttackNode = new FlameAttackNode(Phase1flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController,transform,playerTransform);
         phase1ScreamAttackNode = new ScreamAttackNode(Phase1screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase1EntryLandNode = new EntryPhase1LandNode(transform, playerTransform, aniController);
@@ -285,7 +285,7 @@ public class BossBehaviour : MonoBehaviour
         entryPhase1Sequence.AddNode(checkIncomingPhase1);
         entryPhase1Sequence.AddNode(entryPhase1ActionSequence);
         phase1AttackRandomSelector.AddNode(phase1FlameAttackSequence);
-        //phase1AttackRandomSelector.AddNode(phase1ScreamAttackSequence);
+        phase1AttackRandomSelector.AddNode(phase1ScreamAttackSequence);
         phase1ActionSelector.AddNode(entryPhase1Sequence);
         phase1ActionSelector.AddNode(phase1AttackRandomSelector);
         phase1.AddNode(phase1HpConditionDecorator);
@@ -374,10 +374,10 @@ public class BossBehaviour : MonoBehaviour
         entryPhase3Sequence.AddNode(checkIncomingPhase3);
         entryPhase3Sequence.AddNode(phase3EntryNode);
 
-        phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
         phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
 
         phase3ActionSelector.AddNode(entryPhase3Sequence);
@@ -429,53 +429,26 @@ public class BossBehaviour : MonoBehaviour
     {
         return hp;
     }
-    private void DeActivateObj()
+
+
+    //DeActivate ALL Object include SpawnNormalMonster
+    private void DeActivateAllObj()
     {
         isActivate = false;
+        pullingDirector.DeActivateSpawnObjects();
         //gameObject.SetActive(false);
     }
-   
 
-    //사용않함 곧 삭제될 코드(타겟위치로 회전 각도를 리턴하는 함수)
-    /*public float LookTarget(Transform transform, Vector3 target)
+    //모든 파티클 종료
+    private void DeActivateParticles()
     {
-        Vector3 forward = transform.forward;
-        Vector3 dir = target - transform.position;
-        float dot = Vector3.Dot(dir, forward);
-        float sign = Vector3.Cross(dir, forward).y;
-
-        dot = Mathf.Clamp(dot, 0, 1f);
-        float rot = Mathf.Acos(dot) * Mathf.Deg2Rad;
-        if (sign > 0)
-            return rot;
-        return -rot;
-    }*/
-    
-
-    //정해진 범위 안에 랜덤한 객체 활성화
-    private void RandomSpawnObjects(GameObject[] objs,int spawnCount)
-    {
-        for(int i=0; i<spawnCount; i++)
-        {
-            float randomPosiX = Random.Range(spawnRange[0].position.x, spawnRange[1].position.x);
-
-            Vector3 pos = new Vector3(randomPosiX, spawnRange[0].position.y, 0);
-            int randomIndex = Random.Range(0, objs.Length-1);
-            pullingDirector.SpawnObject(objs[randomIndex].tag, pos);
-        }
-        
+        pullingDirector.DeActivateObjectsWithTag("Particle");
     }
 
-    //지정한 위치로 객체 활성화
-    private GameObject SpawnObjects(GameObject obj,Vector3 posi)
-    {
-        return pullingDirector.SpawnObject(obj.tag, posi);
-    }
 
     //ITag를사용한 오브젝트들 랜덤스폰
     private void RandomSpawnObjectsWithITag(GameObject[] objs, int spawnCount)
     {
-        int count = 0;
         for (int i = 0; i < spawnCount; i++)
         {
             float randomPosiX = Random.Range(spawnRange[0].position.x, spawnRange[1].position.x);
@@ -483,9 +456,8 @@ public class BossBehaviour : MonoBehaviour
             Vector3 posi = new Vector3(randomPosiX, spawnRange[0].position.y, spawnRange[0].position.z);
             int randomIndex = Random.Range(0, objs.Length - 1);
             pullingDirector.SpawnObjectwithITag(objs[randomIndex].tag, objs[randomIndex].GetComponent<ITag>(), posi);
-            //count += pullingDirector.GetObjectCountWithTag(objs[randomIndex].GetComponent<ITag>().GetTag());
         }
-        Debug.Log($"Enemy count: {count}");
+        
     }
 
     //ITag를사용한 오브젝트 랜덤스폰
@@ -505,17 +477,15 @@ public class BossBehaviour : MonoBehaviour
         return spawnObjs;
     }
 
-    //모든 파티클 종료
-    private void DeActivateParticles()
+    
+    private void OnDrawGizmos()
     {
-        pullingDirector.DeActivateObjectsWithTag("Particle");
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, Phase3RushAttackInfo.hitRange);
     }
-
-
     private void OnTriggerEnter(Collider other)
     {
         if (!isActivate) return;
-        Debug.Log($"TriggerTag: {other.tag}");
         if (other.gameObject.tag == "Weapon"
            || other.gameObject.tag == "Bomb"
            || other.gameObject.tag == "SlashAttack")
@@ -533,9 +503,9 @@ public class BossBehaviour : MonoBehaviour
             Vector3 dir = other.transform.position - transform.position;
             other.GetComponent<Rigidbody>().AddForce(Vector3.right * dir.normalized.x * 50, ForceMode.Impulse);
         }
-       
-
     }
+
+    //플레이어의 데미지를 받을 때 GetHit애니메이션 재생하는 코루틴 함수
     IEnumerator hitAniCoroutine()
     {
         if (!isDelayTime) yield break;
@@ -544,21 +514,21 @@ public class BossBehaviour : MonoBehaviour
         float aniDuration = 0;
         while(true)
         {
-
             aniController.SetTrigger("GetHitTrigger");
             if (aniController.GetCurrentAnimatorStateInfo(0).IsName("GetHit"))
             {
                 aniDuration = aniController.GetCurrentAnimatorStateInfo(0).length;
                 break;
             }
-
-
             yield return null;
         }
+
         yield return new WaitForSeconds(aniDuration);
         
         isActiveGetHitAni = false;
     }
+
+    //플레이어의 데미지를 받는 코루틴 함수
     IEnumerator OnDamage(string tag)
     {
         if (!isHit) yield break;
@@ -579,13 +549,10 @@ public class BossBehaviour : MonoBehaviour
                 //Debug.Log("슬래쉬 공격 받았다.");
                 break;
         }
-
         
         yield return new WaitForSeconds(0.5f);
         bossColliders[1].enabled = true;
         isHit=true;
-
-
     }
 }
 

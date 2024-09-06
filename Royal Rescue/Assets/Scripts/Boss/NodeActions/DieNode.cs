@@ -21,9 +21,7 @@ public class DieNode : INode
         this.target = target;
         this.aniController = aniController;
     }
-    public void AddNode(INode node)
-    {
-    }
+    public void AddNode(INode node) {}
 
     public INode.NodeState Evaluate()
     {
@@ -35,7 +33,7 @@ public class DieNode : INode
             Debug.Log("Die Success");
             animationDuration = 0;
             isActiveAnime = false;
-            deActiveObj();
+            
             return INode.NodeState.Success;
         }
         return INode.NodeState.Running;
@@ -46,6 +44,7 @@ public class DieNode : INode
         aniController.SetTrigger("DieTrigger");
         if (aniController.GetCurrentAnimatorStateInfo(0).IsName("Die"))
         {
+            deActiveObj();
             animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length;
             Vector3 dir = target.position - transform.position;
             if (dir.normalized.x < 0)

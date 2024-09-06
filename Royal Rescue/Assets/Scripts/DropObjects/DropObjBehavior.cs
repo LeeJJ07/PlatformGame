@@ -53,7 +53,7 @@ public class DropObjBehavior : MonoBehaviour,ITag
         {
             if (detectGroundHit.collider.tag.Equals("Floor"))
             {
-                Debug.Log("Floor collision");
+                
                 if (destroyObj)
                 {
                     this.gameObject.SetActive(false);
@@ -95,7 +95,7 @@ public class DropObjBehavior : MonoBehaviour,ITag
             }
             if (deactiveWarningZoneObj != null)
                 deactiveWarningZoneObj.SetActive(false);
-            Debug.Log("DropObject Player Collision");
+            
             isEndDelay = false;
             //플레이어 데미지 전달 로직작성 블럭
             player.HurtPlayer(damage);

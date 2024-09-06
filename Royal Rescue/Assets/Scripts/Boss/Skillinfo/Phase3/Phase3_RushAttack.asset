@@ -16,19 +16,16 @@ MonoBehaviour:
   - {fileID: 7839642434157458917, guid: fe8b3b1a5e7d4f24b8cb90f2fdb46135, type: 3}
   - {fileID: 8383780294630944465, guid: c66a9869b912f204b84929127277fd4c, type: 3}
   - {fileID: 1254819242936617488, guid: f32fa6f158412484eb48e7996a3516c0, type: 3}
-  transform: {fileID: 0}
-  playerLayer:
+  DetectLayers:
     serializedVersion: 2
-    m_Bits: 64
-  WallLayer:
-    serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 320
   playerTag: Player
   wallTag: Wall
   warningDelay: 3
   RushAttackDelay: 5
   RushAttackDuration: 6
-  damage: 5
   pushPower: 3
   rushSpeed: 20
+  hitRange: 7
   subSequenceDelay: 5
+  damage: 5

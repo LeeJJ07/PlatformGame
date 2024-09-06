@@ -380,7 +380,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2012040085029969903
 Transform:
   m_ObjectHideFlags: 0
@@ -514,6 +514,9 @@ MonoBehaviour:
   toGroundDistance: 1
   toWallDistance: 0.5
   facingDir: 1
+  hpBarPrefab: {fileID: 0}
+  hpBarOffset: {x: 0, y: -0.4, z: 0}
+  DamageTextPrefab: {fileID: 0}
 --- !u!114 &2520401139955511409
 MonoBehaviour:
   m_ObjectHideFlags: 0

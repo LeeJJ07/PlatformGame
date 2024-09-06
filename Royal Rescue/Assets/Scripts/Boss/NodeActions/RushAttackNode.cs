@@ -12,12 +12,9 @@ public class RushAttackNode : INode
     Transform target;
     Collider[] bossColliders;
 
-    Ray ray;
-    RaycastHit hit;
     float skillSpan = 0;
-
+    int rotDir = -1;
     bool isActiveAnime = false;
-    bool isCollisionPlayer = false;
     
     public RushAttackNode(RushAttackScriptableObject rushAttackInfo,Collider[] bossColliders ,SpawnFunction spawnRock ,Animator aniController, Transform transform,Transform target)
     {
@@ -40,11 +37,8 @@ public class RushAttackNode : INode
 
        
 
-        ray = new Ray((transform.position + new Vector3(7, 3, 0)) * transform.forward.x, (transform.position + new Vector3(10, 3, 0)) * transform.forward.x);
         transform.position += transform.forward * rushAttackInfo.rushSpeed * Time.deltaTime;
-        Collider[] colliders =  Physics.OverlapSphere(transform.position, 5, rushAttackInfo.playerLayer); 
-        Physics.Raycast(ray,out hit, 5, rushAttackInfo.WallLayer);
-        
+        Collider[] colliders =  Physics.OverlapSphere(transform.position, rushAttackInfo.hitRange, rushAttackInfo.DetectLayers); 
         //스킬 종료
         if (skillSpan >= rushAttackInfo.RushAttackDuration) 
         {
@@ -56,38 +50,31 @@ public class RushAttackNode : INode
             return INode.NodeState.Success;
         }
 
-        //드래곤 회전(벽에 닿았을 시)
-        if(hit.collider != null)
-        {
-            if (hit.collider.tag.Equals(rushAttackInfo.wallTag))
-            {
-                Quaternion curRot = transform.rotation;
-                curRot.y += 180;
-                transform.Rotate(new Vector3(0, -curRot.y, 0));
-
-                spawnRocks(rushAttackInfo.objs, 5);
-                ray = new Ray((transform.position + new Vector3(7, 3, 0)) * transform.forward.x, (transform.position + new Vector3(10, 3, 0)) * transform.forward.x);
-            }
-        }
-        //플레이어 데미지
+        
         if(colliders!= null)
         {
-            if(!isCollisionPlayer)
+            foreach (Collider collider in colliders)
             {
-                isCollisionPlayer = true;
-                foreach (Collider collider in colliders)
+                
+                if (collider.tag.Equals(rushAttackInfo.playerTag)) //플레이어 데미지 전달
                 {
-                    if(collider.tag.Equals(rushAttackInfo.playerTag))
-                    {
-                        collider.GetComponent<PlayerControlManagerFix>().HurtPlayer(rushAttackInfo.damage);
-                    }
+                    collider.GetComponent<PlayerControlManagerFix>().HurtPlayer(rushAttackInfo.damage);
+                    Debug.Log("PlayerHit RushAttack!");
+                }
+                else if (collider.tag.Equals(rushAttackInfo.wallTag)) //드래곤 회전(벽에 닿았을 시)
+                {
+                    
+                    Debug.Log("WallHit RushAttack!");
+                    rotDir *= -1;
+                    Quaternion curRot = transform.rotation;
+                    curRot.y += 180;
+                    transform.Rotate(new Vector3(0, -curRot.y, 0));
+
+                    spawnRocks(rushAttackInfo.objs, 5);
                 }
             }
         }
-        else
-        {
-            isCollisionPlayer = false;
-        }
+        
         
 
         return INode.NodeState.Running;

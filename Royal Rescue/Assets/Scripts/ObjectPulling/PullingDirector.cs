@@ -9,7 +9,6 @@ public class PullingDirector : MonoBehaviour
 {
     [SerializeField]List<GameObject> objectList = new List<GameObject>();
     List<ObjectPulling> pullingList = new List<ObjectPulling>();
-    List<GameObject> pullingObjList = new List<GameObject>();
     void Start()
     {
         if(objectList.Count!=0)
@@ -21,19 +20,26 @@ public class PullingDirector : MonoBehaviour
         }
     }
 
-    public void DeActivateAllObjects()
+    public void DeActivateSpawnObjects()
     {
-        
-        foreach (GameObject obj in objectList)
+        List<GameObject> pullingObjList = new List<GameObject>();
+
+        foreach (ObjectPulling pulling in pullingList)
         {
-            obj.SetActive(false);
+            pullingObjList = pulling.GetObjectList();
+            foreach(GameObject obj in pullingObjList)
+            {
+                if (!obj.tag.Equals("Monster")) break;
+                obj.GetComponent<Monster>().getDamage();
+            }
         }
     }
     
     public void DeActivateObjectsWithTag(string tag)
     {
-        
-        foreach(ObjectPulling pulling in pullingList)
+        List<GameObject> pullingObjList = new List<GameObject>();
+
+        foreach (ObjectPulling pulling in pullingList)
         {
             pullingObjList = pulling.GetObjectList();
             foreach(GameObject obj in pullingObjList)
