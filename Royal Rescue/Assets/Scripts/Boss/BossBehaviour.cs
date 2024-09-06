@@ -197,7 +197,7 @@ public class BossBehaviour : MonoBehaviour,ITag
 
         //행동 노드들
         moveNode = new MoveNode(transform, playerTransform, aniController, moveSpeed);
-        DieNode = new DieNode(DeActivateSpawnObjs, transform, playerTransform, aniController);
+        DieNode = new DieNode(DeActivateSpawnObjs,BossDie, transform, playerTransform, aniController);
         phase1FlameAttackNode = new FlameAttackNode(Phase1flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController,transform,playerTransform);
         phase1ScreamAttackNode = new ScreamAttackNode(Phase1screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase1EntryLandNode = new EntryPhase1LandNode(transform, playerTransform, aniController);
@@ -376,11 +376,11 @@ public class BossBehaviour : MonoBehaviour,ITag
         entryPhase3Sequence.AddNode(checkIncomingPhase3);
         entryPhase3Sequence.AddNode(phase3EntryNode);
 
-        //phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
         phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
+        phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
 
         phase3ActionSelector.AddNode(entryPhase3Sequence);
         phase3ActionSelector.AddNode(phase3AttackRandomSelector);
@@ -432,15 +432,22 @@ public class BossBehaviour : MonoBehaviour,ITag
         return hp;
     }
 
+    private void BossDie()
+    {
+        isActivate = false;
+        gameObject.SetActive(false);
+    }
 
     //스폰한 몬스터들 비활성화
     private void DeActivateSpawnObjs()
     {
-        isActivate = false;
         pullingDirector.DeActivateSpawnObjects();
-        DeActivateParticles();
     }
 
+    private void DeActivatePullingObjWithTag(string tag)
+    {
+        pullingDirector.DeActivateObjectsWithTag(tag);
+    }
     //모든 파티클 종료
     private void DeActivateParticles()
     {
