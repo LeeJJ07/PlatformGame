@@ -10,6 +10,7 @@ public class EntryPhase1LandNode : INode
     Animator aniController;
     float time = 0;
     float animationDuration = 100;
+    float PlaySoundTime = 0;
     bool isActiveAnime = false;
     public EntryPhase1LandNode(Transform transform, Transform target, Animator aniController)
     {

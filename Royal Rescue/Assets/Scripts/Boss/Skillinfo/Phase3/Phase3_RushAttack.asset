@@ -19,6 +19,7 @@ MonoBehaviour:
   DetectLayers:
     serializedVersion: 2
     m_Bits: 320
+  soundClipName: 
   playerTag: Player
   wallTag: Wall
   warningDelay: 3
@@ -26,6 +27,6 @@ MonoBehaviour:
   RushAttackDuration: 6
   pushPower: 3
   rushSpeed: 20
-  hitRange: 7
+  hitRange: 9.5
   subSequenceDelay: 5
   damage: 5

@@ -20,8 +20,8 @@ public class CheckSpawnMonsterCount : INode
     {
         if (maxCount >= spawnCount() + skillSpawnCount) 
         {
-            return INode.NodeState.Failure;
+            return INode.NodeState.Success;
         }
-        return INode.NodeState.Success;
+        return INode.NodeState.Failure;
     }
 }

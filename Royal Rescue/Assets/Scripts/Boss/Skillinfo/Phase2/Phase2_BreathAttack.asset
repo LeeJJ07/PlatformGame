@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Phase2_BreathAttack
   m_EditorClassIdentifier: 
   breathObj: {fileID: 4556307209356250449, guid: 117f0364ce8bd6f498ba497d7f8b46ea, type: 3}
-  attackDistance: 10
+  soundClipName: Boss_BreathAttack
+  attackDistance: 15
   damage: 12
   tickDamage: 0.5
   subSequenceDelay: 1

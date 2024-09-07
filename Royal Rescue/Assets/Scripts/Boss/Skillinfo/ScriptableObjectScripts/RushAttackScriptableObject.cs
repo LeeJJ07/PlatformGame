@@ -7,6 +7,7 @@ public class RushAttackScriptableObject : ScriptableObject
 {
     public GameObject[] objs;
     public LayerMask DetectLayers;
+    public string soundClipName;
     public string playerTag;
     public string wallTag;
     public float warningDelay = 0;

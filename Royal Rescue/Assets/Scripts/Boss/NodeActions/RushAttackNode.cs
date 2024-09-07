@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class RushAttackNode : INode
 {
+    //낙하물 생성 함수
     public delegate void SpawnFunction(GameObject[] objs,int spawnCount);
     SpawnFunction spawnRocks;
 
@@ -34,7 +35,6 @@ public class RushAttackNode : INode
         ActiveAnimation();
         Debug.Log("RushAttack Running");
         skillSpan += Time.deltaTime;
-
        
 
         transform.position += transform.forward * rushAttackInfo.rushSpeed * Time.deltaTime;

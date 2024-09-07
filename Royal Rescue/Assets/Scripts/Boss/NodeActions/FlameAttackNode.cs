@@ -5,8 +5,11 @@ using UnityEngine;
 
 public class FlameAttackNode : INode
 {
+    //사운드 재생 함수
+    public delegate void SoundEffect(string name, bool isLoop);
     public delegate GameObject SpawnObj(GameObject obj, Vector3 posi);
     SpawnObj SpawnFlame;
+    SoundEffect playSound;
     FlameAttackScriptableObject flameAttackInfo;
     Transform flameSpawntransform;
     Animator aniController;
@@ -22,7 +25,7 @@ public class FlameAttackNode : INode
     bool isActiveAnime = false;
 
 
-    public FlameAttackNode(FlameAttackScriptableObject flameAttackInfo,SpawnObj SpawnFlame,Transform flameSpawntransform, Animator aniController, Transform transform, Transform target)
+    public FlameAttackNode(FlameAttackScriptableObject flameAttackInfo,SpawnObj SpawnFlame,Transform flameSpawntransform, Animator aniController, Transform transform, Transform target, SoundEffect playSound)
     {
         this.flameAttackInfo = flameAttackInfo;
         this.SpawnFlame = SpawnFlame;
@@ -30,6 +33,7 @@ public class FlameAttackNode : INode
         this.aniController = aniController;
         this.transform = transform;
         this.target = target;
+        this.playSound = playSound;
     }
     public void AddNode(INode node) { }
 
@@ -46,7 +50,7 @@ public class FlameAttackNode : INode
         {
             GameObject flame = SpawnFlame(flameAttackInfo.flameObj, flameSpawntransform.position);
             flame.GetComponent<FlameBehavior>().SetDamage(flameAttackInfo.damage);
-
+            playSound(flameAttackInfo.soundClipName, false);
             startShootTime += shootGap;
             shootCount++;
         }

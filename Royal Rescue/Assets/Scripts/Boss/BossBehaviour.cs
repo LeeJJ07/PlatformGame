@@ -59,6 +59,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     bool isActiveGetHitAni = false;
     bool isDelayTime = false;
     PullingDirector pullingDirector;
+    SoundManager soundManager;
     BehaviorTreeRunner Bt;
 
     #region 노드 변수들(행동노드, 조건노드)
@@ -72,7 +73,8 @@ public class BossBehaviour : MonoBehaviour,ITag
     INode targetinBasicAttackRange;
     INode targetinBreathAttackRange;
     /// ///////////////////////
-
+    
+    INode phase1CheckSpawnCount;
     INode phase1HpConditionDecorator;
     INode phase1FlameAttackNode;
     INode phase1ScreamAttackNode;
@@ -165,6 +167,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     private void Awake()
     {
         pullingDirector = GameObject.FindWithTag("Director").GetComponent<PullingDirector>();
+        soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
         playerTransform = GameObject.FindWithTag("Player").transform;
 
         root = new Selector();
@@ -183,6 +186,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         targetinBasicAttackRange = new ChecktoTargetDistance(transform, playerTransform, basicAttackDistance);
         targetinBreathAttackRange = new ChecktoTargetDistance(transform, playerTransform, breathAttackDistance);
 
+        phase1CheckSpawnCount = new CheckSpawnMonsterCount(GetSpawnMonsterCount, Phase1screamAttackInfo.maxSpawnCount, Phase1screamAttackInfo.objSpawnCount);
         phase2CheckSpawnCount = new CheckSpawnMonsterCount(GetSpawnMonsterCount, Phase2screamAttackInfo.maxSpawnCount, Phase2screamAttackInfo.objSpawnCount);
         phase3CheckSpawnCount = new CheckSpawnMonsterCount(GetSpawnMonsterCount, Phase3screamAttackInfo.maxSpawnCount, Phase3screamAttackInfo.objSpawnCount);
 
@@ -203,24 +207,24 @@ public class BossBehaviour : MonoBehaviour,ITag
         //행동 노드들
         moveNode = new MoveNode(transform, playerTransform, aniController, moveSpeed);
         DieNode = new DieNode(DeActivateSpawnObjs,BossDie, transform, playerTransform, aniController);
-        phase1FlameAttackNode = new FlameAttackNode(Phase1flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController,transform,playerTransform);
+        phase1FlameAttackNode = new FlameAttackNode(Phase1flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController,transform,playerTransform, SoundEffect);
         phase1ScreamAttackNode = new ScreamAttackNode(Phase1screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase1EntryLandNode = new EntryPhase1LandNode(transform, playerTransform, aniController);
         phase1EntryScreamNode = new EntryPhase1ScreamNode(transform, playerTransform, aniController,shockWave,flamePosition, SpawnObjectWithITag);
 
         phase2EntryNode = new EntryPhase2Node(transform, playerTransform, flamePosition,shockWave, aniController, SpawnObjectWithITag,DeActivateParticles, SetisDelayTime);
-        phase2FlameAttackNode = new FlameAttackNode(Phase2flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController, transform, playerTransform);
+        phase2FlameAttackNode = new FlameAttackNode(Phase2flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController, transform, playerTransform, SoundEffect);
         phase2ScreamAttackNode = new ScreamAttackNode(Phase2screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase2BasicAttackNode = new BasicAttackNode(Phase2basicAttackInfo, aniController,flamePosition, transform, playerTransform);
-        phase2BreathAttackNode = new BreathAttackNode(SpawnObjectWithITag, Phase2breathAttackInfo, aniController, flamePosition, transform, playerTransform);
+        phase2BreathAttackNode = new BreathAttackNode(SpawnObjectWithITag, Phase2breathAttackInfo, aniController, flamePosition, transform, playerTransform,SoundEffect);
 
         phase3EntryNode = new EntryPhase3Node(angryLight, transform, playerTransform,flamePosition, shockWave, flamePrefabsObject, aniController,SpawnObjectWithITag, DeActivateParticles, SetisDelayTime);
-        phase3FlameAttackNode = new FlameAttackNode(Phase3flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController,transform,playerTransform);
+        phase3FlameAttackNode = new FlameAttackNode(Phase3flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController,transform,playerTransform, SoundEffect);
         phase3ScreamAttackNode = new ScreamAttackNode(Phase3screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase3BasicAttackNode = new BasicAttackNode(Phase3basicAttackInfo, aniController, flamePosition, transform, playerTransform);
         phase3RushAttackNode = new RushAttackNode(Phase3RushAttackInfo, bossColliders,RandomSpawnObjectsWithITag, aniController, transform, playerTransform);
         phase3WarningRushAttackNode = new WarningRushAttack(SpawnObjects, angryLight, warningPrefab,transform, Phase3RushAttackInfo.warningDelay);
-        phase3BreathAttackNode = new BreathAttackNode(SpawnObjectWithITag, Phase3breathAttackInfo, aniController, flamePosition, transform, playerTransform);
+        phase3BreathAttackNode = new BreathAttackNode(SpawnObjectWithITag, Phase3breathAttackInfo, aniController, flamePosition, transform, playerTransform, SoundEffect);
 
 
         //시퀀스, 셀렉터 노드들
@@ -284,6 +288,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         //페이지1 트리
         phase1FlameAttackSequence.AddNode(phase1FlameAttackNode);
         phase1FlameAttackSequence.AddNode(phase1FlameAttackDelay);
+        phase1ScreamAttackSequence.AddNode(phase1CheckSpawnCount);
         phase1ScreamAttackSequence.AddNode(phase1ScreamAttackNode);
         phase1ScreamAttackSequence.AddNode(phase1ScreamAttackDelay);
 
@@ -300,6 +305,7 @@ public class BossBehaviour : MonoBehaviour,ITag
 
 
         //페이지2 트리
+        phase2ScreamAttackSequence.AddNode(phase2CheckSpawnCount);
         phase2ScreamAttackSequence.AddNode(phase2ScreamAttackNode);
         phase2ScreamAttackSequence.AddNode(phase2ScreamAttackDelay);
         phase2BreathAttackSequence.AddNode(phase2BreathAttackNode);
@@ -316,7 +322,7 @@ public class BossBehaviour : MonoBehaviour,ITag
 
         phase2screamAttackmoveParallel.AddNode(targetinScreamAttackRange);
         phase2screamAttackmoveParallel.AddNode(moveNode);
-        phase2ScreamAttackSelector.AddNode(phase2CheckSpawnCount);
+        
         phase2ScreamAttackSelector.AddNode(phase2screamAttackmoveParallel);
         phase2ScreamAttackSelector.AddNode(phase2ScreamAttackSequence);
 
@@ -345,6 +351,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         phase3BasicAttackSequence.AddNode(phase3BasicAttackNode);
         phase3BasicAttackSequence.AddNode(phase3BasicAttackDelay);
 
+        phase3ScreamAttackSequence.AddNode(phase3CheckSpawnCount);
         phase3ScreamAttackSequence.AddNode(phase3ScreamAttackNode);
         phase3ScreamAttackSequence.AddNode(phase3ScreamAttackDelay);
 
@@ -371,7 +378,6 @@ public class BossBehaviour : MonoBehaviour,ITag
 
         phase3screamAttackmoveParallel.AddNode(targetinScreamAttackRange);
         phase3screamAttackmoveParallel.AddNode(moveNode);
-        phase3ScreamAttackSelector.AddNode(phase3CheckSpawnCount);
         phase3ScreamAttackSelector.AddNode(phase3screamAttackmoveParallel);
         phase3ScreamAttackSelector.AddNode(phase3ScreamAttackSequence);
 
@@ -409,6 +415,11 @@ public class BossBehaviour : MonoBehaviour,ITag
         if (!isActivate) return;
         Bt.Operator();
         Debug.Log($"SpawnCount: {GetSpawnMonsterCount()}");
+    }
+
+    private void SoundEffect(string name, bool isLoop)
+    {
+        soundManager.PlaySound(name, isLoop);
     }
 
     private bool GetIsActiveGetHitAni()
@@ -450,12 +461,9 @@ public class BossBehaviour : MonoBehaviour,ITag
     private void DeActivateSpawnObjs()
     {
         pullingDirector.DeActivateSpawnObjects();
+        isDie = true;
     }
 
-    private void DeActivatePullingObjWithTag(string tag)
-    {
-        pullingDirector.DeActivateObjectsWithTag(tag);
-    }
     //모든 파티클 종료
     private void DeActivateParticles()
     {
@@ -506,10 +514,10 @@ public class BossBehaviour : MonoBehaviour,ITag
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (!isActivate) return;
-        if (other.gameObject.tag == "Weapon"
+        if (isDie) return;
+        if ((other.gameObject.tag == "Weapon"
            || other.gameObject.tag == "Bomb"
-           || other.gameObject.tag == "SlashAttack")
+           || other.gameObject.tag == "SlashAttack"))
         {
             StartCoroutine(OnDamage(other.gameObject.tag));
             StartCoroutine(hitAniCoroutine());
@@ -518,7 +526,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     }
     private void OnTriggerStay(Collider other)
     {
-        if (!isActivate) return;
+        if (isDie) return;
         if (other.CompareTag("Player"))
         {
             Vector3 dir = other.transform.position - transform.position;
@@ -558,15 +566,15 @@ public class BossBehaviour : MonoBehaviour,ITag
         switch (tag)
         {
             case "Weapon":
-                hp -= 1f; //playerControl.getDamage();
+                hp -= 10f; //playerControl.getDamage();
                 //Debug.Log("기본 공격 받았다.");
                 break;
             case "Bomb":
-                hp -= 2f; //playerControl.getDamage();
+                hp -= 20f; //playerControl.getDamage();
                 //Debug.Log("폭탄 공격 받았다.");
                 break;
             case "SlashAttack":
-                hp -= 3f; //playerControl.getDamage();
+                hp -= 30f; //playerControl.getDamage();
                 //Debug.Log("슬래쉬 공격 받았다.");
                 break;
         }

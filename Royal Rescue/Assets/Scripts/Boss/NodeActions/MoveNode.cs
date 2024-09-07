@@ -29,6 +29,7 @@ public class MoveNode : INode
 
         Vector3 dir= target.position - transform.position;
         transform.position += new Vector3(dir.normalized.x,0,0) * moveSpeed * Time.deltaTime;
+
         if(dir.normalized.x<0)
             transform.rotation= Quaternion.Euler(0,-90,0);
         else

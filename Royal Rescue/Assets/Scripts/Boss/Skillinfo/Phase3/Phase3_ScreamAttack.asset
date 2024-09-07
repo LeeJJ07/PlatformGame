@@ -20,12 +20,8 @@ MonoBehaviour:
   - {fileID: 5506683884172181178, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
   - {fileID: 2895879474864152614, guid: 7754dc1e98dd5364a85a9532529839bf, type: 3}
   - {fileID: 2897208131545264541, guid: 2b0a4689a87b6b042b8803f25e2e0800, type: 3}
-  - {fileID: 2897208131545264541, guid: 2b0a4689a87b6b042b8803f25e2e0800, type: 3}
-  - {fileID: 2897208131545264541, guid: 2b0a4689a87b6b042b8803f25e2e0800, type: 3}
-  - {fileID: 2897208131545264541, guid: 2b0a4689a87b6b042b8803f25e2e0800, type: 3}
-  - {fileID: 2897208131545264541, guid: 2b0a4689a87b6b042b8803f25e2e0800, type: 3}
-  - {fileID: 2897208131545264541, guid: 2b0a4689a87b6b042b8803f25e2e0800, type: 3}
-  - {fileID: 2897208131545264541, guid: 2b0a4689a87b6b042b8803f25e2e0800, type: 3}
+  soundClipName: Boss_ScreamAttack
+  maxSpawnCount: 10
   objSpawnCount: 5
   ScreamAttackDistance: 50
   damage: 0

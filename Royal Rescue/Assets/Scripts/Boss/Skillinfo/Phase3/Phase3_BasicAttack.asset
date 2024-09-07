@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3a23579a95e32b40a64c1a7d1d88d34, type: 3}
   m_Name: Phase3_BasicAttack
   m_EditorClassIdentifier: 
-  transform: {fileID: 0}
+  soundClipName: Boss_BasicAttack
   BasicAttackDistance: 7
   damage: 5
   subSequenceDelay: 0.2

@@ -6,6 +6,7 @@ using static NodeDelay;
 
 public class EntryPhase2Node : INode
 {
+    
     //파티클 스폰 함수
     public delegate GameObject SpawnObj(GameObject obj, Vector3 posi);
     //전체 파티클 비활성화 함수

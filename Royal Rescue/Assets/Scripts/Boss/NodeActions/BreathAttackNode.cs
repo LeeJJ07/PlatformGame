@@ -5,7 +5,10 @@ using UnityEngine.UIElements;
 
 public class BreathAttackNode : INode
 {
+    //사운드 재생 함수
+    public delegate void SoundEffect(string name, bool isLoop);
     public delegate GameObject SpawnObject(GameObject obj, Vector3 spawnPosi);
+    SoundEffect playSound;
     SpawnObject SpawnBreathParticle;
     BreathAttackScriptableObject breathAttackInfo;
     GameObject breathObj;
@@ -19,7 +22,7 @@ public class BreathAttackNode : INode
     float skillActiveSpan = 0;
     bool isStartParticle = false;
     bool isActiveAnime;
-    public BreathAttackNode(SpawnObject SpawnBreathParticle, BreathAttackScriptableObject breathAttackInfo, Animator aniController, Transform particlSpawnPosi, Transform transform, Transform target)
+    public BreathAttackNode(SpawnObject SpawnBreathParticle, BreathAttackScriptableObject breathAttackInfo, Animator aniController, Transform particlSpawnPosi, Transform transform, Transform target, SoundEffect playSound)
     {
         this.SpawnBreathParticle = SpawnBreathParticle;
         this.breathAttackInfo = breathAttackInfo;
@@ -27,6 +30,9 @@ public class BreathAttackNode : INode
         this.particlSpawnPosi = particlSpawnPosi;
         this.transform = transform;
         this.target = target;
+        this.playSound = playSound;
+       
+
     }
 
     public void AddNode(INode node) { }
@@ -47,6 +53,7 @@ public class BreathAttackNode : INode
         if ((skillActiveSpan >= skillStartTime) && !isStartParticle)
         {
             breathObj.GetComponent<ParticleSystem>().Play();
+            playSound(breathAttackInfo.soundClipName, false);
             isStartParticle = true;
         }
         else if ((skillActiveSpan >= skillEndTime) && isStartParticle)
@@ -72,19 +79,21 @@ public class BreathAttackNode : INode
     {
         if (isActiveAnime) return;
         aniController.SetTrigger("FlameAttackTrigger");
+        aniController.SetBool("isWalk", false);
         if (aniController.GetCurrentAnimatorStateInfo(0).IsName("Flame Attack"))
         {
-            breathObj = SpawnBreathParticle(breathAttackInfo.breathObj, particlSpawnPosi.position);
 
             Vector3 breathShootDir = target.position - transform.position;
             breathShootDir.z=0;
             breathShootDir.y=0;
-
+            breathObj = SpawnBreathParticle(breathAttackInfo.breathObj, particlSpawnPosi.position);
+            breathObj.GetComponent<ParticleCollisionBehaviour>().init(target.GetComponent<Collider>(), breathAttackInfo.isContinuousParticleAttack, breathAttackInfo.tickDamage, breathAttackInfo.damage);
             breathObj.transform.rotation = Quaternion.LookRotation(breathShootDir.normalized);
+
+            animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length+2;
             
-            animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length;
-            breathObj.GetComponent<ParticleCollisionBehaviour>().init(target.GetComponent<Collider>(),breathAttackInfo.isContinuousParticleAttack,breathAttackInfo.tickDamage,breathAttackInfo.damage);
-            skillEndTime = animationDuration;
+            skillEndTime = animationDuration-2;
+            
             Vector3 dir = target.position - transform.position;
             if (dir.normalized.x < 0)
                 transform.rotation = Quaternion.Euler(0, -90, 0);
