@@ -113,7 +113,6 @@ public class Monster : MonoBehaviour
         transform.position = initialPos;
         if(animator && animator.GetBool("isDie"))
             gameObject.SetActive(false);
-
     }
 
     protected void Update()
@@ -221,6 +220,11 @@ public class Monster : MonoBehaviour
     protected bool Die()
     {
         return curHp <= 0;
+    }
+
+    public void setDie()
+    {
+        curHp = 0;
     }
     #endregion
 

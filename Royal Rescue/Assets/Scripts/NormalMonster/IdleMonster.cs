@@ -48,7 +48,6 @@ public class IdleMonster : Monster
             curState = EState.PATROL;
             monsterStateContext.Transition(patrolState);
         }
-
     }
     new void Update()
     {

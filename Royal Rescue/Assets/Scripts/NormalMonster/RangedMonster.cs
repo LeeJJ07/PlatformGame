@@ -37,6 +37,18 @@ public class RangedMonster : Monster
 
         SetHpBar();
     }
+    private void OnEnable()
+    {
+        transform.position = initialPos;
+        if (animator && animator.GetBool("isDie"))
+            gameObject.SetActive(false);
+
+        if (animator && animator.GetBool("isLive"))
+        {
+            curState = EState.PATROL;
+            monsterStateContext.Transition(patrolState);
+        }
+    }
 
     new void Update()
     {
