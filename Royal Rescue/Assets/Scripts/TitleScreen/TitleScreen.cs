@@ -26,14 +26,17 @@ public class TitleScreen : MonoBehaviour
 
     void OnEnable()
     {
+        if (GameDirector.instance)
+            GameDirector.instance.PlayerControl.gameObject.SetActive(false);
+            
         Init();
-        GameDirector.instance.PlayerControl.gameObject.SetActive(false);
         StartCoroutine(StartIntro());
     }
 
     void OnDisable()
     {
-        GameDirector.instance.PlayerControl.gameObject.SetActive(true);
+        if (GameDirector.instance)
+            GameDirector.instance.PlayerControl.gameObject.SetActive(true);
     }
 
     void Update()
