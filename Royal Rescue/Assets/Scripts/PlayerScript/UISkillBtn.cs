@@ -39,9 +39,12 @@ public class UISkillBtn : MonoBehaviour
             {
                 coolTimeRoutine = StartCoroutine(DashCoolTimeRoutine());
             }
-            else if (skillName == "FireBallKey")
+        }
+        else if (Input.GetButtonUp(skillName) && coolTimeRoutine == null)
+        {
+            if (skillName == "FireBallKey")
             {
-                
+
                 coolTimeRoutine = StartCoroutine(FbCoolTimeRoutine());
             }
         }

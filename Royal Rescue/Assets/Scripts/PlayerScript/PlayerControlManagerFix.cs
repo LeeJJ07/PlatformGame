@@ -57,7 +57,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     [SerializeField]private float holdTime = 0.0f;
     [SerializeField]private float maxHoldTime = 3.0f;
     [SerializeField] private float minThrowPower = 5;
-    [SerializeField] private float maxThrowPower = 20;
+    [SerializeField] private float maxThrowPower = 10;
 
 
     public LayerMask layer;
@@ -113,6 +113,10 @@ public class PlayerControlManagerFix : MonoBehaviour
             {
                 ThrowBall();
             }*/
+            if (Input.GetButtonDown("FireBallKey"))
+            {
+                holdTime = 0;
+            }
             if (Input.GetButton("FireBallKey"))
             {
                 holdTime += Time.deltaTime;
@@ -464,9 +468,8 @@ public class PlayerControlManagerFix : MonoBehaviour
     }
     IEnumerator CheckFireBall()
     {
-        Debug.Log("���� Ƚ�� : " + skillCount);
-        yield return new WaitForSeconds(5f);//3�� ��
-        Debug.Log("��ų Ű �Է� ����");
+        Debug.Log("남은 횟수 : " + skillCount);
+        yield return new WaitForSeconds(5f);
         isFbPossible = false;
     }
     IEnumerator CheckAttack2()
