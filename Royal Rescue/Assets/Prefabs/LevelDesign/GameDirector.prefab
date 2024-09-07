@@ -4579,8 +4579,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Loading.
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 890dfdf138d62c44aa20210af3f6cadd, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 890dfdf138d62c44aa20210af3f6cadd, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: a13a7beed6c65af4eadc58b6bd671b3f, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4953,7 +4953,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8efd9390b1512a34fb3249c3bc8cefbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRoomControl: {fileID: 0}
   uiCanvas: {fileID: 753016106623375842}
   loadScreenFade: {fileID: 1742999589665624187}
   loadingScreenCam: {fileID: 5395744414215573686}

@@ -2496,6 +2496,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1581919641}
   - component: {fileID: 1581919640}
+  - component: {fileID: 1581919642}
   m_Layer: 0
   m_Name: TitleScreenControl
   m_TagString: Untagged
@@ -2543,6 +2544,31 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1581919642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1581919639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f54f764dfc52b74ba3dd9dae927d7bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuImages:
+  - {fileID: 24517014}
+  - {fileID: 137991186}
+  - {fileID: 1837557699}
+  - {fileID: 1643203939}
+  menuTexts:
+  - {fileID: 1528059354}
+  - {fileID: 1674069839}
+  - {fileID: 508147443}
+  - {fileID: 1567257923}
+  highlightMenuColor: {r: 0.84313726, g: 0.96862745, b: 1, a: 1}
+  highlightTextColor: {r: 0.14150941, g: 0.13283195, b: 0.13283195, a: 1}
+  menuIndex: 0
 --- !u!1 &1643203937
 GameObject:
   m_ObjectHideFlags: 0

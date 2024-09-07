@@ -8,9 +8,9 @@ using UnityEngine.UI;
 public class TitleScreen : MonoBehaviour
 {
     private enum ScreenState { INTRO, TITLE, MAIN, HELP, SETTINGS };
-    private enum MenuState { START, HOWTOPLAY, SETTINGS, EXIT };
     private const float FADEAMOUNT = 0.0001f;
     
+    [SerializeField] private TitleMenuControl titleMenuControl;
     [SerializeField] private Image fadeCover;
     [SerializeField] private Animator cameraAnim;
     [SerializeField] private TextMeshProUGUI titleText, startText;
@@ -18,7 +18,9 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] private CanvasGroup mainMenu;
     [SerializeField] private float screenFadeSpeed, textFadeSpeed, menuFadeSpeed, blurSpeed;
     [SerializeField] private float initialFocusDistance;
+
     [SerializeField] private ScreenState previousScreenState, currentScreenState;
+
     private DepthOfField dof;
 
     void Awake()
@@ -26,6 +28,7 @@ public class TitleScreen : MonoBehaviour
         fadeCover.gameObject.SetActive(true);
         titleText.gameObject.SetActive(false);
         startText.gameObject.SetActive(false);
+        titleMenuControl.enabled = false;
         mainMenu.alpha = 0f;
 
         ppVolume.profile.TryGetSettings(out dof);
@@ -167,6 +170,7 @@ public class TitleScreen : MonoBehaviour
         yield return Fade(mainMenu, true);
         
         currentScreenState = ScreenState.MAIN;
+        titleMenuControl.enabled = true;
     }
 
     private IEnumerator BlurScreen()
