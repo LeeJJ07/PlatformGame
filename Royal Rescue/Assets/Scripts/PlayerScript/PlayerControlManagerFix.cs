@@ -26,9 +26,9 @@ public class PlayerControlManagerFix : MonoBehaviour
     public GameObject SwordWindPrefabsR;
     public GameObject SwordWindPrefabsL;
     public GameObject Inventory;
-    public GameObject attackIcon;//��ų Ȱ��ȭ ��Ȱ��ȭ ǥ�ÿ�
-    public Transform fireBallSpawnPoint;//��ź ���� ��ǥ
-    [SerializeField] private int jumpPossible = 2;//���� �ִ� ���� Ƚ��
+    public GameObject attackIcon;
+    public Transform fireBallSpawnPoint;
+    [SerializeField] private int jumpPossible = 2;
     //[SerializeField] private float lastGroundTime;
     //[SerializeField] private float jumpPressTime;
     private float attackDelay;
@@ -53,6 +53,11 @@ public class PlayerControlManagerFix : MonoBehaviour
     public float invincibilityDuration = 2.0f;  // 무적 상태 지속 시간
     private bool isInvincible = false;  // 무적 상태 여부
     private Renderer playerRenderer;  // 플레이어 렌더러
+
+    [SerializeField]private float holdTime = 0.0f;
+    [SerializeField]private float maxHoldTime = 3.0f;
+    [SerializeField] private float minThrowPower = 5;
+    [SerializeField] private float maxThrowPower = 20;
 
 
     public LayerMask layer;
@@ -104,10 +109,22 @@ public class PlayerControlManagerFix : MonoBehaviour
             {
                 CheckDash();
             }
-            if (Input.GetButtonDown("FireBallKey"))
+            /*if (Input.GetButtonDown("FireBallKey"))
+            {
+                ThrowBall();
+            }*/
+            if (Input.GetButton("FireBallKey"))
+            {
+                holdTime += Time.deltaTime;
+                holdTime = Mathf.Clamp(holdTime, 0, maxHoldTime);
+
+            }
+            if (Input.GetButtonUp("FireBallKey"))
             {
                 ThrowBall();
             }
+
+
             if (Input.GetButtonDown("InventoryKey"))
             {
                 Inventory.SetActive(true);
@@ -238,13 +255,15 @@ public class PlayerControlManagerFix : MonoBehaviour
         if (equipWeapon == null)
             return;
         attackDelay += Time.deltaTime;
-        isAttackPossible = equipWeapon.rate < attackDelay ? true : false;//���� ������ �ð��� ���� ��Ÿ��(rate)�� �Ѿ��ٸ� ? ���� �� : ���� ������ �Ƚ���
+        isAttackPossible = equipWeapon.rate < attackDelay ? true : false;
         if(isAttackButton && isAttackPossible )
         {    
             weapons.GetComponent<WeaponControl>().isAttackWeapon = true;
             equipWeapon.WeaponUse();
             if (!isAttackEnhance)
+            {
                 anim.SetTrigger("AttackTr");
+            }
             else if (isAttackEnhance)
                 SwordWind();
             attackDelay = 0;
@@ -256,13 +275,15 @@ public class PlayerControlManagerFix : MonoBehaviour
     }
     
 
-    public void ThrowBall()//��ź ��� üũ
+    public void ThrowBall()
     {
         if(skillCount > 0 && !isFbPossible)
         {
             GameObject fBall;
             isFbPossible = true;
             fBall = Instantiate(fireBallPrefabs, fireBallSpawnPoint.position, fireBallSpawnPoint.rotation);
+            //float throwForce = Mathf.Lerp(minThrowPower, maxThrowPower, holdTime / maxHoldTime);
+            fBall.GetComponent<FireBallControl>().throwForce = Mathf.Lerp(minThrowPower, maxThrowPower, holdTime / maxHoldTime);
             fBall.GetComponent<FireBallControl>().ballDir = isDirRight ? Vector3.right : Vector3.left;
             //fBall.GetComponent<FireBallControl>().isFireball = true;
             //Vector3 throwDir = (isDirRight ? Vector3.right : Vector3.left) + Vector3.up * 0.5f; // �ణ ���� ���� (������ ȿ��)
@@ -274,14 +295,14 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
         else if (skillCount == 0)
         {
-            Debug.Log("���̾ Ƚ�� ��� ���");
+            Debug.Log("횟수를 모두 사용");
             return;
         }
         
     }
-    public void SwordWind()//���Ÿ����� ���⿡ ���� ������ �� ���Ÿ����� �����̿� �ִϸ��̼�(��ź�� ���� �ִϸ��̼�)
+    public void SwordWind()
     {  
-        if (!isSwordWindPossible)
+        if (isAttackPossible)
         {
             GameObject fBall;
             isSwordWindPossible = true;
@@ -399,7 +420,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     {
         RaycastHit hit;
         Debug.DrawRay(transform.position + Vector3.up, Vector3.down * 3f, Color.red);
-        if (collision.gameObject.tag == "Floor" && !Physics.Raycast(transform.position, Vector3.down, out hit, 0.1f))
+        if (collision.gameObject.tag == "Floor" && !Physics.Raycast(transform.position, Vector3.down, out hit, 1f))
         {
             isFloor = false;
             anim.SetBool("isGround", true);
@@ -450,8 +471,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     }
     IEnumerator CheckAttack2()
     {
-        yield return new WaitForSeconds(0.5f);//1�� ��
-        Debug.Log("��ų Ű �Է� ����");
+        yield return new WaitForSeconds(0.5f);
         isSwordWindPossible = false;
     }
 
