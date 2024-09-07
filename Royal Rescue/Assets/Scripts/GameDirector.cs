@@ -17,7 +17,8 @@ public class GameDirector : MonoBehaviour
         }
     }
     private PlayerControlManagerFix playerControl;
-    private RoomController currentRoomControl;
+    public RoomController CurrentRoomControl => currentRoomControl;
+    [SerializeField] private RoomController currentRoomControl;
 
     [SerializeField] private GameObject uiCanvas, loadScreenFade;
     [SerializeField] private Camera loadingScreenCam;
