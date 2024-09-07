@@ -5,39 +5,35 @@ using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
+public enum ScreenState { INTRO, TITLE, MAIN, HELP, SETTINGS };
 public class TitleScreen : MonoBehaviour
 {
-    private enum ScreenState { INTRO, TITLE, MAIN, HELP, SETTINGS };
     private const float FADEAMOUNT = 0.0001f;
     
     [SerializeField] private TitleMenuControl titleMenuControl;
     [SerializeField] private Image fadeCover;
     [SerializeField] private Animator cameraAnim;
-    [SerializeField] private TextMeshProUGUI titleText, startText;
+     [SerializeField] private TextMeshProUGUI titleText, startText;
     [SerializeField] private PostProcessVolume ppVolume;
     [SerializeField] private CanvasGroup mainMenu;
-    [SerializeField] private float screenFadeSpeed, textFadeSpeed, menuFadeSpeed, blurSpeed;
+    [SerializeField] private float screenFadeInSpeed, screenFadeOutSpeed, textFadeSpeed, menuFadeSpeed, blurSpeed;
     [SerializeField] private float initialFocusDistance;
 
-    [SerializeField] private ScreenState previousScreenState, currentScreenState;
+    [SerializeField] private ScreenState currentScreenState;
+    public ScreenState CurrentScreenState => currentScreenState;
 
     private DepthOfField dof;
 
-    void Awake()
+    void OnEnable()
     {
-        fadeCover.gameObject.SetActive(true);
-        titleText.gameObject.SetActive(false);
-        startText.gameObject.SetActive(false);
-        titleMenuControl.enabled = false;
-        mainMenu.alpha = 0f;
-
-        ppVolume.profile.TryGetSettings(out dof);
-        previousScreenState = currentScreenState = ScreenState.INTRO;
+        Init();
+        GameDirector.instance.PlayerControl.gameObject.SetActive(false);
+        StartCoroutine(StartIntro());
     }
 
-    void Start()
+    void OnDisable()
     {
-        StartCoroutine(StartIntro());
+        GameDirector.instance.PlayerControl.gameObject.SetActive(true);
     }
 
     void Update()
@@ -49,19 +45,12 @@ public class TitleScreen : MonoBehaviour
     {
         switch (currentScreenState)
         {
-            case ScreenState.INTRO:
-                break;
-
             case ScreenState.TITLE:
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
-                    previousScreenState = currentScreenState;
-                    currentScreenState = ScreenState.MAIN;
+                    SetScreenState(ScreenState.MAIN);
                     StartCoroutine(ShowMainMenu());
                 }
-                break;
-
-            case ScreenState.MAIN:
                 break;
             
             case ScreenState.HELP:
@@ -73,6 +62,17 @@ public class TitleScreen : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    private void Init()
+    {
+        ppVolume.profile.TryGetSettings(out dof);
+        fadeCover.gameObject.SetActive(true);
+        titleText.gameObject.SetActive(false);
+        startText.gameObject.SetActive(false);
+        titleMenuControl.enabled = false;
+        mainMenu.alpha = 0f;
+        SetScreenState(ScreenState.INTRO);
     }
 
     private IEnumerator StartIntro()
@@ -90,13 +90,14 @@ public class TitleScreen : MonoBehaviour
         startText.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(0.5f);
-        currentScreenState = ScreenState.TITLE;
+        SetScreenState(ScreenState.TITLE);
     }
 
     private IEnumerator Fade(Image targetImage, bool isFadeIn)
     {
         float initialAlpha = 1f;
         float multiplier = -1f;
+        float fadeSpeed = isFadeIn ? screenFadeInSpeed : screenFadeOutSpeed;
 
         if (!isFadeIn)
         {
@@ -110,7 +111,7 @@ public class TitleScreen : MonoBehaviour
         while (true)
         {
             tempColor = targetImage.color;
-            tempColor.a += FADEAMOUNT * multiplier * screenFadeSpeed;
+            tempColor.a += FADEAMOUNT * multiplier * fadeSpeed;
             targetImage.color = tempColor;
 
             if (isFadeIn && targetImage.color.a <= 0f) break;
@@ -162,17 +163,6 @@ public class TitleScreen : MonoBehaviour
         }
     }
 
-    private IEnumerator ShowMainMenu()
-    {
-        startText.gameObject.SetActive(false);
-        yield return Fade(titleText, false);
-        yield return BlurScreen();
-        yield return Fade(mainMenu, true);
-        
-        currentScreenState = ScreenState.MAIN;
-        titleMenuControl.enabled = true;
-    }
-
     private IEnumerator BlurScreen()
     {
         if (!dof) yield break;
@@ -190,4 +180,46 @@ public class TitleScreen : MonoBehaviour
         }
     }
 
+    public void SetScreenState(ScreenState state)
+    {
+        currentScreenState = state;
+    }
+
+    private IEnumerator ShowMainMenu()
+    {
+        startText.gameObject.SetActive(false);
+        yield return Fade(titleText, false);
+        yield return BlurScreen();
+        yield return Fade(mainMenu, true);
+        
+        SetScreenState(ScreenState.MAIN);
+        titleMenuControl.enabled = true;
+    }
+
+    private IEnumerator HideMainMenu(bool isCoverScreen = false)
+    {
+        titleMenuControl.enabled = false;
+
+        yield return Fade(mainMenu, false);
+
+        if (isCoverScreen)
+            yield return StartCoroutine(Fade(fadeCover, false));
+    }
+
+    public IEnumerator StartGame()
+    {
+        yield return HideMainMenu(true);
+
+        GameDirector.instance.ShowLoadingScreen();
+        StartCoroutine(GameDirector.instance.LoadNextStage());
+    }
+
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 }

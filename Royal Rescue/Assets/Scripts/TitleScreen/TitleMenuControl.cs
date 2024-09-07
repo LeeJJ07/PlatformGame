@@ -6,8 +6,9 @@ using UnityEngine.UI;
 
 public class TitleMenuControl : MonoBehaviour
 {
-    private enum MenuState { START, HOWTOPLAY, SETTINGS, EXIT };
+    private enum MenuState { START, HELP, SETTINGS, EXIT };
 
+    [SerializeField] private TitleScreen titleScreen;
     [SerializeField] private List<Image> menuImages;
     [SerializeField] private List<TextMeshProUGUI> menuTexts;
     [SerializeField] private Color highlightMenuColor, highlightTextColor;
@@ -18,11 +19,12 @@ public class TitleMenuControl : MonoBehaviour
     void OnEnable()
     {
         Init();
+        HighlightMenu(0);
     }
     void Update()
     {
-        if (Navigate())
-            SelectMenu();
+        Navigate();
+        SelectMenu();
     }
 
     private void Init()
@@ -37,7 +39,7 @@ public class TitleMenuControl : MonoBehaviour
             textColor = menuTexts[0].color;
     }
 
-    private bool Navigate()
+    private void Navigate()
     {
         previousMenuIndex = menuIndex;
 
@@ -52,27 +54,32 @@ public class TitleMenuControl : MonoBehaviour
             NormalizeMenu(previousMenuIndex);
             menuIndex = Mathf.Clamp(menuIndex, 0, maxMenuIndex);
             HighlightMenu(menuIndex);
-            return true;
         }
-        return false;
     }
 
     private void SelectMenu()
     {
-        switch ((MenuState)menuIndex)
+        if (Input.GetKeyDown(KeyCode.Return))
         {
-            case MenuState.START:
-                break;
+            switch ((MenuState)menuIndex)
+            {
+                case MenuState.START:
+                    StartCoroutine(titleScreen.StartGame());
+                    break;
 
-            case MenuState.HOWTOPLAY:
-                break;
+                case MenuState.HELP:
+                    break;
 
-            case MenuState.SETTINGS:
-                break;
+                case MenuState.SETTINGS:
+                    break;
 
-            case MenuState.EXIT:
-                QuitGame();
-                break;
+                case MenuState.EXIT:
+                    titleScreen.QuitGame();
+                    break;
+                
+                default:
+                    break;
+            }
         }
     }
 
@@ -86,14 +93,5 @@ public class TitleMenuControl : MonoBehaviour
     {
         menuImages[index].color = highlightMenuColor;
         menuTexts[index].color = highlightTextColor;
-    }
-
-    private void QuitGame()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
     }
 }
