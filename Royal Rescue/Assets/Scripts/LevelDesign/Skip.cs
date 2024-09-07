@@ -11,7 +11,11 @@ public class Skip : MonoBehaviour
     public Room[] rooms => GameDirector.instance.CurrentRoomControl.rooms;
 
     private int i = 0;
+    private AltarPortal altarPortal;
 
+    private void Start()
+    {
+    }
     // Update is called once per frame
     void Update()
     {
@@ -23,6 +27,11 @@ public class Skip : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.J))
         {
             SwitchRoom(currentRoom.RoomId - 1);
+        }
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            altarPortal = GameObject.Find("AltarPortal").GetComponent<AltarPortal>();
+            altarPortal.TryOpenStagePortal(true);
         }
 
     }
