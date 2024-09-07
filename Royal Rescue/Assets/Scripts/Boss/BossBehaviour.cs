@@ -383,11 +383,11 @@ public class BossBehaviour : MonoBehaviour,ITag
         entryPhase3Sequence.AddNode(checkIncomingPhase3);
         entryPhase3Sequence.AddNode(phase3EntryNode);
 
-        //phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
         phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
+        phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
 
         phase3ActionSelector.AddNode(entryPhase3Sequence);
         phase3ActionSelector.AddNode(phase3AttackRandomSelector);
