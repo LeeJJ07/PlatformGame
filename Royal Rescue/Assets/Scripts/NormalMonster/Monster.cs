@@ -383,7 +383,7 @@ public class Monster : MonoBehaviour
 
     protected void SetHpBar()
     {
-        uiCanvas = GameObject.Find("Monster Canvas").GetComponent<Canvas>();
+        uiCanvas = GameObject.Find("InGame Canvas").GetComponent<Canvas>();
         Slider hpBar = Instantiate<Slider>(hpBarPrefab, uiCanvas.transform);
         hpBarSlider = hpBar;
         

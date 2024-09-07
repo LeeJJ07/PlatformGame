@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1088105372274239260}
   m_Layer: 0
-  m_Name: MonsterHpUI
+  m_Name: InGameUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 1075097713433663254}
   - component: {fileID: 3312238736278268575}
   m_Layer: 0
-  m_Name: HPCamera
+  m_Name: InGameCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 1968607871411032420}
   - component: {fileID: 7582965527970547799}
   m_Layer: 5
-  m_Name: Monster Canvas
+  m_Name: InGame Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

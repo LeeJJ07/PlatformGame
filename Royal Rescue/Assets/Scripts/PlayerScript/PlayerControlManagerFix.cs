@@ -68,7 +68,9 @@ public class PlayerControlManagerFix : MonoBehaviour
 
     bool isAddicted;
     [SerializeField] PostProcessVolume fieldView;
-    private Vignette vignette; // ����� ȿ��
+    private Vignette vignette;
+
+    [SerializeField] private int coin = 100; // 코인 갯수
     void Start()
     {
         playerRenderer = GetComponent<Renderer>();
@@ -505,7 +507,12 @@ public class PlayerControlManagerFix : MonoBehaviour
             yield return new WaitForSeconds(0.02f);
         }
     }
-
+    public bool InputCoinKeyDown()
+    {
+        return Input.GetKeyDown(KeyCode.Q);
+    }
+    public int GetCoin() { return coin; }
+    public void SetCoin(int needCoin) { coin -= needCoin; }
 }
 /*
  * private Rigidbody rigid;

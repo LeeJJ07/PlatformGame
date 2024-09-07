@@ -730,6 +730,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8507465494778958662}
+  - component: {fileID: 1806934152573742822}
+  - component: {fileID: 7887261332250116183}
+  - component: {fileID: 2508402177466343964}
   m_Layer: 0
   m_Name: TreasureChest
   m_TagString: ChestMonster
@@ -754,6 +757,79 @@ Transform:
   - {fileID: 2303613285854377334}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+--- !u!65 &1806934152573742822
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5749906868379211012}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2.3, y: 1.5, z: 1.5}
+  m_Center: {x: 0, y: 0.7, z: 0}
+--- !u!54 &7887261332250116183
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5749906868379211012}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &2508402177466343964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5749906868379211012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5e333fa35203f44fb0d85cc4f4129a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  needRandomCoin: 0
+  curCoin: 0
+  minCoinNum: 5
+  maxCoinNum: 11
+  hpBarOffset: {x: 0, y: -0.4, z: 0}
+  treasureTextPrefab: {fileID: 8931323871595477075, guid: 67e8149a251867649b537c4e822b487a, type: 3}
+  treasureCoinPrefab: {fileID: 8970643121904784803, guid: aa153b1b84cf7204e9b9977b367bce4e, type: 3}
+  treasureParticlePrefab: {fileID: 1838949130018192, guid: 1e461830cb6e45c44a3801d425f0f2c2, type: 3}
+  itemPrefabs:
+  - {fileID: 7366293000453468869, guid: ddc9ffe096d67bc4494543197438a356, type: 3}
+  - {fileID: 2186267516141195477, guid: 6f0ce590d79ea3a4da0c02ac014ea949, type: 3}
+  - {fileID: 6526228553577736824, guid: 6463a0367e7a3104fb23aac494992f62, type: 3}
+  - {fileID: 6403366432721289831, guid: 20b0549458f72a342b4e41368a0e4ecf, type: 3}
 --- !u!1 &6171671948943640257
 GameObject:
   m_ObjectHideFlags: 0
