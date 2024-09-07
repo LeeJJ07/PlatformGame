@@ -334,9 +334,10 @@ public class PlayerControlManagerFix : MonoBehaviour
     void playerDie()
     {
         isDie = true;
-        rb.isKinematic = true;
-        rb.isKinematic = false;
-        rb.constraints |= RigidbodyConstraints.FreezePositionX;
+
+        SetPlayerKinematic(true);
+        SetPlayerKinematic(false);
+        FixatePlayerRigidBody(true);
 
         anim.SetTrigger("DieTr");
         anim.SetBool("isDiePlayer", isDie ? true : false);
@@ -345,7 +346,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     
     public void RevivePlayer()
     {
-        rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+        FixatePlayerRigidBody(false);
 
         playerHP = playerMaxHP;
         anim.SetBool("isDiePlayer", false);
@@ -529,6 +530,28 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
     }
 
+    public void FixatePlayerRigidBody(bool isFixated)
+    {
+        if (isFixated)
+            rb.constraints |= RigidbodyConstraints.FreezePositionX;
+        else
+            rb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+    }
+
+    public void SetPlayerKinematic(bool isKinematic)
+    {
+        rb.isKinematic = isKinematic;
+    }
+
+    public void SetPlayerVelocity(float x, float y, float z)
+    {
+        rb.velocity = new Vector3(x, y, z);
+    }
+
+    public void AddForceToPlayer(Vector3 force, ForceMode mode)
+    {
+        rb.AddForce(force, mode);
+    }
 }
 /*
  * private Rigidbody rigid;
