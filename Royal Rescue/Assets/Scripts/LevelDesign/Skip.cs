@@ -12,7 +12,7 @@ public class Skip : MonoBehaviour
 
     private int i = 0;
     private AltarPortal altarPortal;
-
+    
     private void Start()
     {
     }
@@ -22,7 +22,6 @@ public class Skip : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.K))
         {
             SwitchRoom(currentRoom.RoomId + 1);
-
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
@@ -32,6 +31,14 @@ public class Skip : MonoBehaviour
         {
             altarPortal = GameObject.Find("AltarPortal").GetComponent<AltarPortal>();
             altarPortal.TryOpenStagePortal(true);
+        }
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            Monster[] monsters = currentRoom.GetComponentsInChildren<Monster>(true);
+            foreach (Monster monster in monsters)
+            {
+                monster.gameObject.SetActive(false);
+            }
         }
 
     }
