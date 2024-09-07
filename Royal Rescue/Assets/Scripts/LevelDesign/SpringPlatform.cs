@@ -15,7 +15,8 @@ public class SpringPlatform : MonoBehaviour
             PlayerControlManagerFix player = GameDirector.instance.PlayerControl;
             Rigidbody playerRb = player.GetComponent<Rigidbody>();
 
-            playerRb.velocity = new Vector3(0, 0, 0);
+            playerRb.isKinematic = true;
+            playerRb.isKinematic = false;
             playerRb.AddForce(Vector3.up * springForce, ForceMode.Impulse);
 
             springAnim.Play(AnimationHash.SPRING, -1, 0f);
