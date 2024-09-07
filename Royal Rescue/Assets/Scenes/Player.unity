@@ -1515,6 +1515,7 @@ MonoBehaviour:
   isDashPossible: 0
   isFbPossible: 0
   isDie: 0
+  invincibilityDuration: 2
   layer:
     serializedVersion: 2
     m_Bits: 0

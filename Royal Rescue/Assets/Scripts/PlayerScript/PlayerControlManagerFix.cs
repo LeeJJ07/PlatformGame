@@ -50,6 +50,11 @@ public class PlayerControlManagerFix : MonoBehaviour
     public bool isFbPossible = false;
     [SerializeField] private bool isDie = false;
 
+    public float invincibilityDuration = 2.0f;  // 무적 상태 지속 시간
+    private bool isInvincible = false;  // 무적 상태 여부
+    private Renderer playerRenderer;  // 플레이어 렌더러
+
+
     public LayerMask layer;
 
     Rigidbody rb;
@@ -66,6 +71,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     private Vignette vignette; // ����� ȿ��
     void Start()
     {
+        playerRenderer = GetComponent<Renderer>();
         playerHP = playerMaxHP;
         rb = this.GetComponent<Rigidbody>();
         rb.useGravity = true;
@@ -356,8 +362,12 @@ public class PlayerControlManagerFix : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy") && !isAttackButton)
         {
             EnemyControler enemy = collision.gameObject.GetComponent<EnemyControler>();
-            playerHP -= enemy.enemyAtk;
-            Debug.Log("�ǰ�");
+            if(!isInvincible)
+            {
+                playerHP -= enemy.enemyAtk;
+                Debug.Log("맞음");
+            }
+            
         }
     }
 
@@ -378,9 +388,11 @@ public class PlayerControlManagerFix : MonoBehaviour
     //
     public void HurtPlayer(int damage)
     {
-        playerHP -= damage;
-        Debug.Log("�ǰ�");
-
+        if(isInvincible == false)
+        {
+            playerHP -= damage;
+            Debug.Log("맞음");
+        }
         CheckPlayerDeath();
     }
     private void OnCollisionExit(Collision collision)
@@ -392,8 +404,28 @@ public class PlayerControlManagerFix : MonoBehaviour
             isFloor = false;
             anim.SetBool("isGround", true);
         }
+        if (collision.gameObject.tag != "Floor" && !isDie)
+        {
+            StartCoroutine(Invincibility());
+        }
     }
+    IEnumerator Invincibility()
+    {
+        isInvincible = true;  // 무적 상태 활성화
+        Debug.Log("무적상태 진입");
+        // 시각적 피드백(예: 깜빡이기 효과)
+        /*
+        for (float i = 0; i < invincibilityDuration; i += 0.2f)
+        {
+            playerRenderer.enabled = !playerRenderer.enabled;  // 깜빡이기
+            yield return new WaitForSeconds(0.2f);  // 0.2초 동안 대기
+        }
 
+        playerRenderer.enabled = true;*/  // 렌더러 다시 켜기
+        yield return new WaitForSeconds(5f);
+        isInvincible = false;  // 무적 상태 해제
+        Debug.Log("무적상태 해제");
+    }
     IEnumerator DashCoolDown()
     {
         yield return new WaitForSeconds(1f);//1�� ��

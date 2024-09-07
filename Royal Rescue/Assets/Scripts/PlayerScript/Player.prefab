@@ -287,6 +287,7 @@ GameObject:
   - component: {fileID: 2159143539946940801}
   - component: {fileID: 7919289716281912371}
   - component: {fileID: 5130297143477228180}
+  - component: {fileID: 5957443920983066934}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -330,7 +331,7 @@ CapsuleCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Height: 1.5
@@ -398,17 +399,39 @@ MonoBehaviour:
   isFloor: 0
   isAttackButton: 0
   isAttackSecond: 0
-  isSwordWindPossible: 0
+  isSwordWindPossible: 1
   isAttackPossible: 0
   isAttackEnhance: 0
   isJumpEnhance: 0
   isDashPossible: 0
   isFbPossible: 0
   isDie: 0
+  invincibilityDuration: 2
   layer:
     serializedVersion: 2
     m_Bits: 0
   fieldView: {fileID: 3060221139843355700}
+--- !u!65 &5957443920983066934
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7054254038125191259}
+  m_Material: {fileID: 13400000, guid: f7e3cf4ba0c9abd459c234e91251478f, type: 2}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.4, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &8919627622507330317
 PrefabInstance:
   m_ObjectHideFlags: 0
