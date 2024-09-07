@@ -81,7 +81,8 @@ public class BossBehaviour : MonoBehaviour,ITag
     INode phase1EntryScreamNode;
     INode phase1FlameAttackDelay;
     INode phase1ScreamAttackDelay;
-    
+
+    INode phase2CheckSpawnCount;
     INode phase2HpConditionDecorator;
     INode phase2FlameAttackNode;
     INode phase2ScreamAttackNode;
@@ -94,6 +95,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     INode phase2ScreamAttackDelay;
     INode phase2BreathAttackDelay;
 
+    INode phase3CheckSpawnCount;
     INode phase3HpConditionDecorator;
     INode phase3FlameAttackNode;
     INode phase3ScreamAttackNode;
@@ -180,6 +182,9 @@ public class BossBehaviour : MonoBehaviour,ITag
         targetinScreamAttackRange = new ChecktoTargetDistance(transform, playerTransform, screamAttackDistance);
         targetinBasicAttackRange = new ChecktoTargetDistance(transform, playerTransform, basicAttackDistance);
         targetinBreathAttackRange = new ChecktoTargetDistance(transform, playerTransform, breathAttackDistance);
+
+        phase2CheckSpawnCount = new CheckSpawnMonsterCount(GetSpawnMonsterCount, Phase2screamAttackInfo.maxSpawnCount, Phase2screamAttackInfo.objSpawnCount);
+        phase3CheckSpawnCount = new CheckSpawnMonsterCount(GetSpawnMonsterCount, Phase3screamAttackInfo.maxSpawnCount, Phase3screamAttackInfo.objSpawnCount);
 
         phase1FlameAttackDelay = new NodeDelay(GetIsActiveGetHitAni, SetisDelayTime, Phase1flameAttackInfo.subSequenceDelay,aniController);
         phase1ScreamAttackDelay = new NodeDelay(GetIsActiveGetHitAni, SetisDelayTime, Phase1screamAttackInfo.subSequenceDelay,aniController);
@@ -311,6 +316,7 @@ public class BossBehaviour : MonoBehaviour,ITag
 
         phase2screamAttackmoveParallel.AddNode(targetinScreamAttackRange);
         phase2screamAttackmoveParallel.AddNode(moveNode);
+        phase2ScreamAttackSelector.AddNode(phase2CheckSpawnCount);
         phase2ScreamAttackSelector.AddNode(phase2screamAttackmoveParallel);
         phase2ScreamAttackSelector.AddNode(phase2ScreamAttackSequence);
 
@@ -365,6 +371,7 @@ public class BossBehaviour : MonoBehaviour,ITag
 
         phase3screamAttackmoveParallel.AddNode(targetinScreamAttackRange);
         phase3screamAttackmoveParallel.AddNode(moveNode);
+        phase3ScreamAttackSelector.AddNode(phase3CheckSpawnCount);
         phase3ScreamAttackSelector.AddNode(phase3screamAttackmoveParallel);
         phase3ScreamAttackSelector.AddNode(phase3ScreamAttackSequence);
 
@@ -376,11 +383,11 @@ public class BossBehaviour : MonoBehaviour,ITag
         entryPhase3Sequence.AddNode(checkIncomingPhase3);
         entryPhase3Sequence.AddNode(phase3EntryNode);
 
-        phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
         phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
+        //phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
 
         phase3ActionSelector.AddNode(entryPhase3Sequence);
         phase3ActionSelector.AddNode(phase3AttackRandomSelector);
@@ -401,6 +408,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     {
         if (!isActivate) return;
         Bt.Operator();
+        Debug.Log($"SpawnCount: {GetSpawnMonsterCount()}");
     }
 
     private bool GetIsActiveGetHitAni()
@@ -454,6 +462,10 @@ public class BossBehaviour : MonoBehaviour,ITag
         pullingDirector.DeActivateObjectsWithTag("Particle");
     }
 
+    private int GetSpawnMonsterCount()
+    {
+        return pullingDirector.GetSpawnCountWithTag("Monster");
+    }
 
     //ITag를사용한 오브젝트들 랜덤스폰
     private void RandomSpawnObjectsWithITag(GameObject[] objs, int spawnCount)

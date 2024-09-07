@@ -20,20 +20,51 @@ public class PullingDirector : MonoBehaviour
             }
         }
     }
+    public int GetSpawnCountWithTag(string tag)
+    {
+        List<GameObject> pullingObjList = new List<GameObject>();
+        int count = 0;
+        foreach (ObjectPulling pulling in pullingList)
+        {
+            pullingObjList = pulling.GetObjectList();
+            if (pulling.GetObject().CompareTag(tag))
+            {
+                foreach (GameObject obj in pullingObjList)
+                {
+                    if (obj.activeSelf==true)
+                    {
+                        count++;
+                    }
+                }
+
+            }
+        }
+        return count;
+    }
 
     //스폰한 모든 객체 비활성화
     public void DeActivateSpawnObjects()
     {
         List<GameObject> pullingObjList = new List<GameObject>();
-        int i = 0;
         foreach (ObjectPulling pulling in pullingList)
         {
             pullingObjList = pulling.GetObjectList();
-            i++;
-            foreach(GameObject obj in pullingObjList)
+            if (pulling.GetObject().CompareTag("Monster"))
             {
-                obj.SetActive(false);
+                foreach (GameObject obj in pullingObjList)
+                {
+                    obj.GetComponent<Monster>().setDie();
+                }
             }
+            else
+            {
+                foreach (GameObject obj in pullingObjList)
+                {
+                    obj.SetActive(false);
+                }
+            }
+            
+
         }
     }
     

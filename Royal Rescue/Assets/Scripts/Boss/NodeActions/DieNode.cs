@@ -33,6 +33,7 @@ public class DieNode : INode
         if (time>animationDuration)
         {
             Debug.Log("Die Success");
+            deActiveSpawnObj();
             animationDuration = 0;
             isActiveAnime = false;
             bossDie();
