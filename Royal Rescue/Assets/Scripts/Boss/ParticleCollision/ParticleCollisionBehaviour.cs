@@ -25,7 +25,8 @@ public class ParticleCollisionBehaviour : MonoBehaviour,ITag
         Debug.Log("particle init");
         ParticleSystem = GetComponent<ParticleSystem>();
         this.triggerCollider = triggerCollider;
-        ParticleSystem.trigger.AddCollider(triggerCollider);
+        if(!ParticleSystem.trigger.Equals(triggerCollider))
+            ParticleSystem.trigger.AddCollider(triggerCollider);
         this.isContinuous = isContinuous;
         this.damageTime = damageTime;
         this.damage = damage;

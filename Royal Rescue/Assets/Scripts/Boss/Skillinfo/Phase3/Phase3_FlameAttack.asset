@@ -13,8 +13,10 @@ MonoBehaviour:
   m_Name: Phase3_FlameAttack
   m_EditorClassIdentifier: 
   flameObj: {fileID: 296312535592555926, guid: 5c1325be632445247ac5ba44fdb10d98, type: 3}
+  soundClipName: Boss_FireBall
   flameAttackDistance: 25
   flameCount: 8
   damage: 5
   flameSpeed: 5
   subSequenceDelay: 1
+  isContinuousParticleAttack: 0

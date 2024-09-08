@@ -4,6 +4,7 @@ using UnityEngine;
 public class FlameAttackScriptableObject : ScriptableObject
 {
     public GameObject flameObj;
+    public string soundClipName;
     public float flameAttackDistance = 0;
     public int flameCount;
     public int damage = 0;

@@ -7,6 +7,8 @@ public class ScreamAttackScriptableObject : ScriptableObject
 {
     public GameObject shockWaveObj;
     public GameObject[] objs;
+    public string soundClipName;
+    public int maxSpawnCount = 0;
     public int objSpawnCount = 0;
     public float ScreamAttackDistance = 0;
     public int damage = 0;

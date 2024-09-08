@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class ScreamAttackNode : INode
 {
+
     //적 랜덤스폰 함수
     public delegate void SpawnRandomObjs(GameObject[] objs,int count);
-
+    
     //파티클 스폰 함수
     public delegate GameObject SpawnObjs(GameObject objs, Vector3 spawnPosi);
+
     SpawnRandomObjs SpawnRandomObject;
     SpawnObjs SpawnObject;
     ScreamAttackScriptableObject screamAttackInfo;

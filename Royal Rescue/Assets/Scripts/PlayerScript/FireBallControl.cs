@@ -5,7 +5,7 @@ using UnityEngine;
 public class FireBallControl : MonoBehaviour
 {
     Rigidbody rigidbody;
-    public float throwForce = 10;
+    public float throwForce;
     public bool isFireball = false;
     public float gravity = -9.81f;
     public Vector3 ballDir;
@@ -13,11 +13,11 @@ public class FireBallControl : MonoBehaviour
     public int bombDamage = 50; // 폭탄이 적에게 주는 데미지
     public GameObject explosionEffect; // 폭발 효과
     public GameObject target;
+    PlayerControlManagerFix player;
     // Start is called before the first frame update
     void Start()
     {
-        //velocity = throwForce * ballDir;
-        rigidbody = GetComponent<Rigidbody>();
+        rigidbody = GetComponent<Rigidbody >();
         rigidbody.AddForce((ballDir + Vector3.up * 1.5f) * throwForce, ForceMode.Impulse);//포물선
     }
     private void Update()
@@ -29,12 +29,11 @@ public class FireBallControl : MonoBehaviour
         //포물선
         
     }
-    
     // Update is called once per frame
     // 폭탄이 발사될 때 호출하는 함수
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Monster"))
         {
             // 적에게 데미지를 입힘 (예시)
             //EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();

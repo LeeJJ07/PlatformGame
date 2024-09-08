@@ -9,6 +9,7 @@ public class DoorTrap : MonoBehaviour
     [SerializeField] protected RoomPortal portal;
     [SerializeField] protected Transform monsterHub;
     [SerializeField] protected GameObject reward;
+    protected BoxCollider trapTrigger;
     private Monster[] monsters;
     protected bool isTrapActivated = false;
     protected bool hasClearedRoom = false;
@@ -16,6 +17,7 @@ public class DoorTrap : MonoBehaviour
     protected virtual void Start()
     {
         monsters = monsterHub.GetComponentsInChildren<Monster>(true);
+        trapTrigger = GetComponent<BoxCollider>();
     }
 
     protected void Update()
@@ -57,6 +59,7 @@ public class DoorTrap : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
         
         SwitchCamera(doorCamera, mainCamera);
+        trapTrigger.enabled = false;
         portal.gameObject.SetActive(true);
     }
     protected void CloseIronWall()
