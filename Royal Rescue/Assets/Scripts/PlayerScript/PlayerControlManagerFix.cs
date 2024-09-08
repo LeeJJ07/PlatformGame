@@ -13,6 +13,12 @@ public class PlayerControlManagerFix : MonoBehaviour
     private OnPlayerDeath onPlayerDeath;
 
     //public GameObject[] PlayerHeart = new GameObject[5];
+
+    public Material material;
+    public float maxAlpha = 1f; // 최대 알파 값
+    public float minAlpha = 0f; // 최소 알파 값
+    private Color originalColor; // 원래 색상
+
     public GameObject DamageEffect;
     public int playerMaxHP = 500;
     public int playerHP;
@@ -73,7 +79,9 @@ public class PlayerControlManagerFix : MonoBehaviour
 
     bool isAddicted;
     [SerializeField] PostProcessVolume fieldView;
-    private Vignette vignette; // ����� ȿ��
+    private Vignette vignette;
+
+    [SerializeField] private int coin = 100; // 코인 갯수
     void Start()
     {
         playerRenderer = GetComponent<Renderer>();
@@ -368,7 +376,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         if (collision.gameObject.CompareTag("Floor") && Physics.Raycast(transform.position, Vector3.down, out hit, 1f))
         {
             isFloor = true;
-            anim.SetBool("isJump", false);
+                anim.SetBool("isJump", false);
             anim.SetBool("isDoubleJump", false);
             anim.SetBool("isGround", false);
             jumpCnt = jumpPossible;
@@ -440,15 +448,19 @@ public class PlayerControlManagerFix : MonoBehaviour
         isInvincible = true;  // 무적 상태 활성화
         Debug.Log("무적상태 진입");
         // 시각적 피드백(예: 깜빡이기 효과)
-        /*
-        for (float i = 0; i < invincibilityDuration; i += 0.2f)
+        
+        for (float i = 0; i <= invincibilityDuration; i += 0.4f)
         {
-            playerRenderer.enabled = !playerRenderer.enabled;  // 깜빡이기
+            
+            Debug.Log("깜빡");
+            originalColor = material.color;
+            material.color = new Color(5, 5, 5, 0);
             yield return new WaitForSeconds(0.2f);  // 0.2초 동안 대기
+            material.color = originalColor;
+            yield return new WaitForSeconds(0.2f);
         }
 
-        playerRenderer.enabled = true;*/  // 렌더러 다시 켜기
-        yield return new WaitForSeconds(5f);
+        //yield return new WaitForSeconds(invincibilityDuration);
         isInvincible = false;  // 무적 상태 해제
         Debug.Log("무적상태 해제");
     }
@@ -552,6 +564,12 @@ public class PlayerControlManagerFix : MonoBehaviour
     {
         rb.AddForce(force, mode);
     }
+    public bool InputCoinKeyDown()
+    {
+        return Input.GetKeyDown(KeyCode.Q);
+    }
+    public int GetCoin() { return coin; }
+    public void SetCoin(int needCoin) { coin -= needCoin; }
 }
 /*
  * private Rigidbody rigid;
