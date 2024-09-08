@@ -13,6 +13,7 @@ public class TitleMenu : UIMenu
     void Awake()
     {
         exitPromptControl.enabled = false;
+        exitPrompt.SetActive(false);
     }
 
     protected override void Start()
@@ -40,6 +41,7 @@ public class TitleMenu : UIMenu
                     break;
 
                 case MenuState.SETTINGS:
+                    StartCoroutine(titleScreen.ShowSettingsMenu());
                     break;
 
                 case MenuState.EXIT:
