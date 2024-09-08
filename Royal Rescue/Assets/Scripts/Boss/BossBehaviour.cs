@@ -61,6 +61,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     PullingDirector pullingDirector;
     SoundManager soundManager;
     BehaviorTreeRunner Bt;
+    BossHpBarUI hpbarUi;
 
     #region 노드 변수들(행동노드, 조건노드)
     ////////////////////
@@ -169,6 +170,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         pullingDirector = GameObject.FindWithTag("Director").GetComponent<PullingDirector>();
         soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
         playerTransform = GameObject.FindWithTag("Player").transform;
+        hpbarUi = GetComponent<BossHpBarUI>();
 
         root = new Selector();
         //조건 노드들
@@ -280,6 +282,8 @@ public class BossBehaviour : MonoBehaviour,ITag
 
     void Start()
     {
+        float[] hpcolorChangeNum = { Phase1HpCondition, Phase2HpCondition, Phase3HpCondition };
+        hpbarUi.init((int)hp, (int)hp, hpcolorChangeNum);
         //죽는 상태 트리
         dieSequence.AddNode(DieHpConditionDecorator);
         dieSequence.AddNode(DieNode);
@@ -578,7 +582,7 @@ public class BossBehaviour : MonoBehaviour,ITag
                 //Debug.Log("슬래쉬 공격 받았다.");
                 break;
         }
-        
+        hpbarUi.changeHpValue((int)hp);
         yield return new WaitForSeconds(0.5f);
         bossColliders[1].enabled = true;
         isHit=true;
