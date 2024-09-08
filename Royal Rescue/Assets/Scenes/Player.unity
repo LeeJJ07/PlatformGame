@@ -8948,11 +8948,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1819397249}
   m_CullTransparentMesh: 1
---- !u!1 &1826957363 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 747674232039729883, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
-  m_PrefabInstance: {fileID: 4503517443478921989}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1866529477
 GameObject:
   m_ObjectHideFlags: 0
@@ -10923,10 +10918,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 5130297143477228180, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
-      propertyPath: material
-      value: 
-      objectReference: {fileID: 2100000, guid: f323cced30244554986ee5e9f5dd8b67, type: 2}
-    - target: {fileID: 5130297143477228180, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       propertyPath: Inventory
       value: 
       objectReference: {fileID: 1866529477}
@@ -10934,10 +10925,6 @@ PrefabInstance:
       propertyPath: attackIcon
       value: 
       objectReference: {fileID: 1869919248}
-    - target: {fileID: 5130297143477228180, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
-      propertyPath: playerMaterial
-      value: 
-      objectReference: {fileID: 1826957363}
     - target: {fileID: 7054254038125191259, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       propertyPath: m_Name
       value: Player

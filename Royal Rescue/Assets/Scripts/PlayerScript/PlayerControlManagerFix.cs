@@ -457,7 +457,7 @@ public class PlayerControlManagerFix : MonoBehaviour
             yield return new WaitForSeconds(0.2f);
         }
 
-        yield return new WaitForSeconds(invincibilityDuration);
+        //yield return new WaitForSeconds(invincibilityDuration);
         isInvincible = false;  // 무적 상태 해제
         Debug.Log("무적상태 해제");
     }

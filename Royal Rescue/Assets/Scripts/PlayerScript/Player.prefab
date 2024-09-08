@@ -284,7 +284,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8270665678267749835}
-  - component: {fileID: 2159143539946940801}
   - component: {fileID: 7919289716281912371}
   - component: {fileID: 5130297143477228180}
   - component: {fileID: 5957443920983066934}
@@ -314,29 +313,6 @@ Transform:
   - {fileID: 8419265431982665598}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &2159143539946940801
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7054254038125191259}
-  m_Material: {fileID: 13400000, guid: f7e3cf4ba0c9abd459c234e91251478f, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 1.5
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &7919289716281912371
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -376,6 +352,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56651de20f41c2b4585754ed8a6e8644, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  material: {fileID: 2100000, guid: f323cced30244554986ee5e9f5dd8b67, type: 2}
+  maxAlpha: 1
+  minAlpha: 0
   DamageEffect: {fileID: 0}
   playerMaxHP: 500
   playerHP: 500
@@ -407,6 +386,10 @@ MonoBehaviour:
   isFbPossible: 0
   isDie: 0
   invincibilityDuration: 2
+  holdTime: 0
+  maxHoldTime: 3
+  minThrowPower: 5
+  maxThrowPower: 10
   layer:
     serializedVersion: 2
     m_Bits: 0
