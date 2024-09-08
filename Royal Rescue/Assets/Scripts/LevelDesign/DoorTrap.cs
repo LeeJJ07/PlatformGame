@@ -10,16 +10,16 @@ public class DoorTrap : MonoBehaviour
     [SerializeField] protected Transform monsterHub;
     [SerializeField] protected GameObject reward;
     protected BoxCollider trapTrigger;
-    protected Rigidbody playerRb;
-    private Monster[] monsters;
+    protected PlayerControlManagerFix playerControl;
     protected bool isTrapActivated = false;
     protected bool hasClearedRoom = false;
+
+    private Monster[] monsters;
 
     protected virtual void Start()
     {
         monsters = monsterHub.GetComponentsInChildren<Monster>(true);
         trapTrigger = GetComponent<BoxCollider>();
-        playerRb = GetComponent<Rigidbody>();
     }
 
     protected void Update()
@@ -41,7 +41,7 @@ public class DoorTrap : MonoBehaviour
     }
     protected virtual IEnumerator TrapPlayer()
     {
-        playerRb.constraints |= RigidbodyConstraints.FreezePositionX;
+        GameDirector.instance.PlayerControl.FixatePlayerRigidBody(true);
 
         portal.gameObject.SetActive(false);
         SwitchCamera(mainCamera, doorCamera);
@@ -50,11 +50,11 @@ public class DoorTrap : MonoBehaviour
         
         SwitchCamera(mainCamera, doorCamera);
 
-        playerRb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+        GameDirector.instance.PlayerControl.FixatePlayerRigidBody(false);
     }
     protected virtual IEnumerator ReleasePlayer()
     {
-        playerRb.constraints |= RigidbodyConstraints.FreezePositionX;
+        GameDirector.instance.PlayerControl.FixatePlayerRigidBody(true);
 
         SwitchCamera(mainCamera, gemCamera);
         yield return new WaitForSeconds(0.2f);
@@ -70,7 +70,7 @@ public class DoorTrap : MonoBehaviour
         trapTrigger.enabled = false;
         portal.gameObject.SetActive(true);
 
-        playerRb.constraints = RigidbodyConstraints.FreezePositionZ | RigidbodyConstraints.FreezeRotation;
+        GameDirector.instance.PlayerControl.FixatePlayerRigidBody(false);
     }
     protected void CloseIronWall()
     {
