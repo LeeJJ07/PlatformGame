@@ -170,7 +170,12 @@ public class BossBehaviour : MonoBehaviour,ITag
         pullingDirector = GameObject.FindWithTag("Director").GetComponent<PullingDirector>();
         soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
         playerTransform = GameObject.FindWithTag("Player").transform;
-        hpbarUi = GetComponent<BossHpBarUI>();
+        GameObject[] uiObjs = GameObject.FindGameObjectsWithTag("UI");
+        foreach(GameObject obj in uiObjs)
+        {
+            if (obj.GetComponent<ITag>().CompareToTag("BossHpUI"))
+                hpbarUi = obj.GetComponent<BossHpBarUI>();
+        }
 
         root = new Selector();
         //조건 노드들
@@ -212,7 +217,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         phase1FlameAttackNode = new FlameAttackNode(Phase1flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController,transform,playerTransform, SoundEffect);
         phase1ScreamAttackNode = new ScreamAttackNode(Phase1screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase1EntryLandNode = new EntryPhase1LandNode(transform, playerTransform, aniController);
-        phase1EntryScreamNode = new EntryPhase1ScreamNode(transform, playerTransform, aniController,shockWave,flamePosition, SpawnObjectWithITag);
+        phase1EntryScreamNode = new EntryPhase1ScreamNode(transform, playerTransform, aniController,shockWave,flamePosition, SpawnObjectWithITag,hpbarUi.ActivateUI);
 
         phase2EntryNode = new EntryPhase2Node(transform, playerTransform, flamePosition,shockWave, aniController, SpawnObjectWithITag,DeActivateParticles, SetisDelayTime);
         phase2FlameAttackNode = new FlameAttackNode(Phase2flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController, transform, playerTransform, SoundEffect);
@@ -283,7 +288,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     void Start()
     {
         float[] hpcolorChangeNum = { Phase1HpCondition, Phase2HpCondition, Phase3HpCondition };
-        hpbarUi.init((int)hp, (int)hp, hpcolorChangeNum);
+        hpbarUi.Init((int)hp, hpcolorChangeNum, gameObject.name);
         //죽는 상태 트리
         dieSequence.AddNode(DieHpConditionDecorator);
         dieSequence.AddNode(DieNode);
@@ -418,7 +423,6 @@ public class BossBehaviour : MonoBehaviour,ITag
     {
         if (!isActivate) return;
         Bt.Operator();
-        Debug.Log($"SpawnCount: {GetSpawnMonsterCount()}");
     }
 
     private void SoundEffect(string name, bool isLoop)
@@ -458,6 +462,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     private void BossDie()
     {
         isActivate = false;
+        hpbarUi.DeActivateUI();
         gameObject.SetActive(false);
     }
 
@@ -582,7 +587,7 @@ public class BossBehaviour : MonoBehaviour,ITag
                 //Debug.Log("슬래쉬 공격 받았다.");
                 break;
         }
-        hpbarUi.changeHpValue((int)hp);
+        hpbarUi.ChangeHpValue((int)hp);
         yield return new WaitForSeconds(0.5f);
         bossColliders[1].enabled = true;
         isHit=true;

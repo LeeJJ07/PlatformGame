@@ -5,44 +5,54 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BossHpBarUI : MonoBehaviour
+public class BossHpBarUI : MonoBehaviour,ITag
 {
-    [SerializeField] string findSliderParent;
-    [SerializeField] string findHpSlider;
-    [SerializeField] string findNameTMP;
-    GameObject[] UIobjs;
+    [SerializeField] string detailTag;
     Slider hpSlider;
     TextMeshProUGUI TMPname;
     int maxHp = 1;
-    int curHp = 1;
     float[] hpColorChangeNum= new float[3];
+    string bossName = "";
 
     private void Start()
     {
-        UIobjs = GameObject.FindGameObjectsWithTag("UI");
-        ITag detailTag = null;
-        foreach (GameObject obj in UIobjs)
-        {
-            detailTag = obj.GetComponent<ITag>();
-            if (detailTag.CompareToTag(findSliderParent))
-            {
-                hpSlider = obj.GetComponentInChildren<Slider>();
-                TMPname = obj.GetComponentInChildren<TextMeshProUGUI>();
-            }
-        }
+        hpSlider = GetComponentInChildren<Slider>();
+        TMPname = GetComponentInChildren<TextMeshProUGUI>();
+        hpSlider.gameObject.SetActive(false);
+        TMPname.gameObject.SetActive(false);
     }
-    public void init(int maxHp, int curHp, float[] hpColorChangeNum)
+    public void Init(int maxHp, float[] hpColorChangeNum, string name)
     {
         this.maxHp = maxHp;
-        this.curHp = curHp;
         this.hpColorChangeNum = hpColorChangeNum;
-
-        hpSlider.value = 1;
-        TMPname.text = name;
-        
+        this.bossName = name;
     }
-    public void changeHpValue(int value)
+    public void ActivateUI()
     {
-        hpSlider.value = (float)(maxHp/value);
+        hpSlider.gameObject.SetActive(true);
+        TMPname.gameObject.SetActive(true);
+        hpSlider.value = 1;
+        TMPname.text = bossName;
+
+    }
+    public void DeActivateUI()
+    {
+        hpSlider.gameObject.SetActive(false);
+        TMPname.gameObject.SetActive(false);
+    }
+    public void ChangeHpValue(int curHp)
+    {
+        hpSlider.value = (curHp/ (float)maxHp);
+        Debug.Log($"value: {(curHp / (float)maxHp)}\n maxHp: {maxHp}\ncurHp: {curHp}");
+    }
+
+    public string GetTag()
+    {
+        return detailTag;
+    }
+
+    public bool CompareToTag(string detailTag)
+    {
+        return this.detailTag == detailTag;
     }
 }

@@ -5,7 +5,9 @@ using UnityEngine;
 public class EntryPhase1ScreamNode : INode
 {
     public delegate GameObject SpawnObj(GameObject obj, Vector3 posi);
+    public delegate void ActivateHpbarUI();
     SpawnObj SpawnObject;
+    ActivateHpbarUI activateHpbarUI;
     Transform transform;
     Transform target;
     Transform spawnPosi;
@@ -20,7 +22,7 @@ public class EntryPhase1ScreamNode : INode
     bool isActiveAnime = false;
 
     //오브젝트 스폰할 델리게이트 매개변수 생성, ScriptableObject 고려해보기
-    public EntryPhase1ScreamNode(Transform transform, Transform target, Animator aniController, GameObject shockWave,Transform shockWavePosi, SpawnObj SpawnObject)
+    public EntryPhase1ScreamNode(Transform transform, Transform target, Animator aniController, GameObject shockWave,Transform shockWavePosi, SpawnObj SpawnObject, ActivateHpbarUI activateHpbarUI)
     {
         this.transform = transform;
         this.target = target;
@@ -28,6 +30,7 @@ public class EntryPhase1ScreamNode : INode
         this.shockWaveObj = shockWave;
         this.spawnPosi = shockWavePosi;
         this.SpawnObject = SpawnObject;
+        this.activateHpbarUI = activateHpbarUI;
     }
     public void AddNode(INode node) { }
 
@@ -51,6 +54,7 @@ public class EntryPhase1ScreamNode : INode
             time = 0;
             isStartParticle = false;
             isActiveAnime = false;
+            activateHpbarUI();
             return INode.NodeState.Success;
         }
         return INode.NodeState.Running;
