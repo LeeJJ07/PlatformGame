@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
@@ -10,7 +9,7 @@ public class TitleScreen : MonoBehaviour
 {
     private const float FADEAMOUNT = 0.0001f;
     
-    [SerializeField] private TitleMenuControl titleMenuControl;
+    [SerializeField] private TitleMenu titleMenuControl;
     [SerializeField] private Image fadeCover;
     [SerializeField] private Animator cameraAnim;
      [SerializeField] private TextMeshProUGUI titleText, startText;
@@ -26,17 +25,14 @@ public class TitleScreen : MonoBehaviour
 
     void OnEnable()
     {
-        if (GameDirector.instance)
-            GameDirector.instance.PlayerControl.gameObject.SetActive(false);
-            
+        SetPlayerEnabled(false);
         Init();
         StartCoroutine(StartIntro());
     }
 
     void OnDisable()
     {
-        if (GameDirector.instance)
-            GameDirector.instance.PlayerControl.gameObject.SetActive(true);
+        SetPlayerEnabled(true);
     }
 
     void Update()
@@ -49,7 +45,7 @@ public class TitleScreen : MonoBehaviour
         switch (currentScreenState)
         {
             case ScreenState.TITLE:
-                if (Input.GetKeyDown(KeyCode.Return))
+                if (UIMenu.pressedConfirmBtn)
                 {
                     SetScreenState(ScreenState.MAIN);
                     StartCoroutine(ShowMainMenu());
@@ -215,6 +211,12 @@ public class TitleScreen : MonoBehaviour
 
         GameDirector.instance.ShowLoadingScreen();
         StartCoroutine(GameDirector.instance.LoadNextStage());
+    }
+
+    private void SetPlayerEnabled(bool state)
+    {
+        if (!GameDirector.instance) return;
+        GameDirector.instance.PlayerControl.gameObject.SetActive(state);
     }
 
     public void QuitGame()
