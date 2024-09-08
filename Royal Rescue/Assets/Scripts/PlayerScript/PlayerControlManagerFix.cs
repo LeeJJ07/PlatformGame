@@ -453,14 +453,14 @@ public class PlayerControlManagerFix : MonoBehaviour
     }
     IEnumerator DashCoolDown()
     {
-        yield return new WaitForSeconds(1f);//1�� ��
-        Debug.Log("�뽬 ��Ȱ��ȭ");
+        yield return new WaitForSeconds(1f);
+        Debug.Log("대쉬온");
         isDashPossible = false;
     }
     IEnumerator Swing()
     {
-        yield return new WaitForSeconds(0.05f);//0.05�� ��
-        weapons.GetComponent<WeaponControl>().isAttackWeapon = false;//���� ���� Ʈ���� ���¸� false�� �ٲ� ���������� �������� �浹 Ʈ���� �̺�Ʈ�� �߻����� �ʰ�
+        yield return new WaitForSeconds(0.05f);
+        weapons.GetComponent<WeaponControl>().isAttackWeapon = false;
         yield return new WaitForSeconds(0.25f);
         weapons.GetComponent<BoxCollider>().enabled = false;
         weapons.GetComponent<WeaponControl>().trailEffect.enabled = false;

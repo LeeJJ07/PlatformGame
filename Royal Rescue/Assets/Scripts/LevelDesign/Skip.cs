@@ -10,7 +10,6 @@ public class Skip : MonoBehaviour
     private RoomPortal roomPortal;
     public Room[] rooms => GameDirector.instance.CurrentRoomControl.rooms;
 
-    private int i = 0;
     private AltarPortal altarPortal;
     
     private void Start()
