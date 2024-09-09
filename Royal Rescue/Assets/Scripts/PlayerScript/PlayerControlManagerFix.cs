@@ -426,6 +426,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         {
             playerHP -= damage;
             Debug.Log("맞음");
+            StartCoroutine(Invincibility());
         }
         CheckPlayerDeath();
     }
@@ -438,10 +439,6 @@ public class PlayerControlManagerFix : MonoBehaviour
             isFloor = false;
             anim.SetBool("isGround", true);
         }
-        if (collision.gameObject.tag != "Floor" && !isDie)
-        {
-            StartCoroutine(Invincibility());
-        }
     }
     IEnumerator Invincibility()
     {
@@ -451,13 +448,12 @@ public class PlayerControlManagerFix : MonoBehaviour
         
         for (float i = 0; i <= invincibilityDuration; i += 0.4f)
         {
-            
             Debug.Log("깜빡");
             originalColor = material.color;
-            material.color = new Color(5, 5, 5, 0);
-            yield return new WaitForSeconds(0.2f);  // 0.2초 동안 대기
+            material.color = new Color(255, 130, 100, 255);
+            yield return new WaitForSeconds(0.05f);  // 0.2초 동안 대기
             material.color = originalColor;
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.05f);
         }
 
         //yield return new WaitForSeconds(invincibilityDuration);
