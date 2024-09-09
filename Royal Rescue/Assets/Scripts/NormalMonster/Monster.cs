@@ -55,6 +55,7 @@ public class Monster : MonoBehaviour
     protected int wallLayerMask;
     protected int playerMask;
 
+    bool isHit = false;
     public Slider hpBarPrefab;
     public Vector3 hpBarOffset = new Vector3(0, -0.4f, 0);
 
@@ -175,15 +176,11 @@ public class Monster : MonoBehaviour
                 break;
         }
     }
-    #region �ʿ��� setter, getter
     public float getWalkSpeed() { return walkSpeed; }
     public float getRunSpeed() { return runSpeed; }
     public int getDamage() { return damage; }
     public float getFacingDir() { return facingDir; }
     public float getToGroundDistance() { return toGroundDistance; }
-    #endregion
-
-    #region ��������
     protected bool CanSeePlayer(float eyeHeight)
     {
         Vector3 myPos = transform.position + Vector3.up * eyeHeight;
@@ -226,9 +223,6 @@ public class Monster : MonoBehaviour
     {
         curHp = 0;
     }
-    #endregion
-
-    #region �ǰ�
     private void OnTriggerEnter(Collider other)
     {
         if (!animator.GetBool("isLive"))
@@ -237,19 +231,19 @@ public class Monster : MonoBehaviour
         if (other == null)
             return;
 
-
         if (other.gameObject.tag == "Weapon"
             || other.gameObject.tag == "Bomb"
             || other.gameObject.tag == "SlashAttack")
         {
             if(!LookPlayer())
                 FlipX();
+            if (isHit) return;
             StartCoroutine(OnDamage(other.gameObject.tag));
         }
     }
     IEnumerator OnDamage(string tag)
     {
-
+        isHit = true;
         int dmg = 0;
 
         animator.SetTrigger("takeAttack");
@@ -290,18 +284,17 @@ public class Monster : MonoBehaviour
         coll.enabled = false;
         yield return new WaitForSeconds(0.5f);
         coll.enabled = true;
-        Debug.Log("���� �޾���");
-    }
-    #endregion
 
-    #region ����ĥ ��
+        isHit = false;
+    }
+    
     private void OnTriggerStay(Collider other)
     {
         if (!animator.GetBool("isLive"))
             return;
         if (other == null)
             return;
-        if (other.gameObject.tag == "Player")
+        if (other.gameObject.CompareTag("Player"))
         {
             Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
             rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
@@ -310,9 +303,6 @@ public class Monster : MonoBehaviour
             rb.AddForce(dir * 15f, ForceMode.Impulse);
         }
     }
-    #endregion
-
-    #region �����Լ�(����->����, ��üũ, ��üũ, Flip, �ٸ� ������Ʈ���� �Ÿ�) ĳ���� ��Ʈ�ѷ�
     public Vector3 AngleToDir(float angle)
     {
         float radian = angle * Mathf.Deg2Rad;
@@ -379,7 +369,6 @@ public class Monster : MonoBehaviour
             return false;
         return true;
     }
-    #endregion
 
     protected void SetHpBar()
     {
