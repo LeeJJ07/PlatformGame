@@ -10,19 +10,19 @@ public class PromptMenu : UIMenu
     public OnPromptCancel OnCancelDelegate { get; set; }
     public OnPromptConfirm OnConfirmDelegate { get; set; }
 
-    protected void OnEnable()
+    void OnEnable()
     {
         SetMenuHighlight(menuIndex, false);
         base.Start();
     }
 
-    protected void Update()
+    void Update()
     {
         Navigate(KeyCode.RightArrow, KeyCode.LeftArrow);
         SelectMenu();
     }
 
-    protected void SelectMenu()
+    private void SelectMenu()
     {
         if (pressedConfirmBtn)
         {
@@ -39,6 +39,11 @@ public class PromptMenu : UIMenu
                 default:
                     break;
             }
+            this.enabled = false;
+        }
+        else if (pressedEscBtn)
+        {
+            OnCancelDelegate?.Invoke();
             this.enabled = false;
         }
     }

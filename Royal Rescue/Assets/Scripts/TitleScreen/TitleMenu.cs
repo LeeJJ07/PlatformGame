@@ -1,47 +1,55 @@
 using System.Collections;
-using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using System;
+using UnityEngine.UI;
 
 public class TitleMenu : UIMenu
 {
     private enum MenuState { START, HELP, SETTINGS, EXIT };
     [SerializeField] private TitleScreen titleScreen;
     [SerializeField] private PromptMenu exitPromptControl;
-    [SerializeField] private GameObject exitPrompt;
+    [SerializeField] private SettingsMenu settingsControl;
+    [SerializeField] private CanvasGroup mainMenuGroup, settingsMenuGroup;
+    [SerializeField] private GameObject exitPrompt, settingsMenu;
 
     void Awake()
     {
+        this.enabled = false;
         exitPromptControl.enabled = false;
-        exitPrompt.SetActive(false);
-    }
+        settingsControl.enabled = false;
 
+        mainMenuGroup.alpha = 0f;
+        settingsMenuGroup.alpha = 0f;
+
+        exitPrompt.SetActive(false);
+        settingsMenu.gameObject.SetActive(false);
+    }
     protected override void Start()
     {
         base.Start();
     }
 
-    protected void Update()
+    void Update()
     {
         Navigate(KeyCode.DownArrow, KeyCode.UpArrow);
         SelectMenu();
     }
 
-    protected void SelectMenu()
+    private void SelectMenu()
     {
         if (pressedConfirmBtn)
         {
             switch ((MenuState)menuIndex)
             {
                 case MenuState.START:
-                    StartCoroutine(titleScreen.StartGame());
+                    StartCoroutine(StartGame());
                     break;
 
                 case MenuState.HELP:
-                    break;
+                    return;
 
                 case MenuState.SETTINGS:
-                    StartCoroutine(titleScreen.ShowSettingsMenu());
+                    StartCoroutine(ShowSettingsMenu());
                     break;
 
                 case MenuState.EXIT:
@@ -51,21 +59,68 @@ public class TitleMenu : UIMenu
                 default:
                     break;
             }
+            this.enabled = false;
         }
+    }
+    
+    private IEnumerator HideMainMenu(bool isCoverScreen = false)
+    {
+        yield return FadeInOut.Fade(mainMenuGroup, false, titleScreen.menuFadeSpeed);
+
+        if (isCoverScreen)
+            yield return StartCoroutine(FadeInOut.Fade(titleScreen.ScreenCover, false, titleScreen.screenFadeInSpeed, titleScreen.screenFadeOutSpeed));
+    }
+
+    public IEnumerator ShowMainMenu()
+    {
+        yield return FadeInOut.Fade(mainMenuGroup, true, titleScreen.menuFadeSpeed);
+    }
+
+    private IEnumerator ShowSettingsMenu()
+    {
+        yield return HideMainMenu();
+
+        settingsMenu.SetActive(true);
+        yield return FadeInOut.Fade(settingsMenuGroup, true, titleScreen.menuFadeSpeed);
+        
+        settingsControl.OnSettingsExitDelegate = EnableTitleMenu;
+        settingsControl.enabled = true;
     }
 
     private void ShowExitPrompt()
     {
-        this.enabled = false;
-        exitPromptControl.OnConfirmDelegate = titleScreen.QuitGame;
+        exitPromptControl.OnConfirmDelegate = QuitGame;
         exitPromptControl.OnCancelDelegate = EnableTitleMenu;
+
         exitPrompt.SetActive(true);
         exitPromptControl.enabled = true;
     }
 
     private void EnableTitleMenu()
     {
+        settingsMenu.SetActive(false);
         exitPrompt.SetActive(false);
+
+        if (mainMenuGroup.alpha != 1f)
+            StartCoroutine(ShowMainMenu());
+        
         this.enabled = true;
+    }
+
+    private IEnumerator StartGame()
+    {
+        yield return HideMainMenu(true);
+
+        GameDirector.instance.ShowLoadingScreen();
+        StartCoroutine(GameDirector.instance.LoadNextStage());
+    }
+
+    private void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
     }
 }
