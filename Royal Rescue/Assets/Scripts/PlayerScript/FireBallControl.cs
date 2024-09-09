@@ -33,7 +33,7 @@ public class FireBallControl : MonoBehaviour
     // 폭탄이 발사될 때 호출하는 함수
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Monster"))
+        if (other.gameObject.CompareTag("Enemy"))
         {
             // 적에게 데미지를 입힘 (예시)
             //EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();

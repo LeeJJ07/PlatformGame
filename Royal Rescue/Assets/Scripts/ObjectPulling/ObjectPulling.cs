@@ -43,7 +43,20 @@ public class ObjectPulling
         }
     }
 
-
+    public GameObject GetObjectType()
+    {
+        if (objList.Count != 0)
+        {
+            foreach (GameObject obj in objList)
+            {
+                if (!obj.activeSelf)
+                {
+                    return obj;
+                }
+            }
+        }
+        return null;
+    }
     public GameObject GetObject()
     {
         if(objList.Count!=0)

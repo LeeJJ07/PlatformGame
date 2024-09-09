@@ -23,21 +23,27 @@ public class PullingDirector : MonoBehaviour
     public int GetSpawnCountWithTag(string tag)
     {
         List<GameObject> pullingObjList = new List<GameObject>();
+        GameObject objType = null;
         int count = 0;
+
+
         foreach (ObjectPulling pulling in pullingList)
         {
             pullingObjList = pulling.GetObjectList();
-            if (pulling.GetObject().CompareTag(tag))
+            objType = pulling.GetObjectType();
+
+            if (objType && objType.CompareTag(tag))
             {
                 foreach (GameObject obj in pullingObjList)
                 {
-                    if (obj.activeSelf==true)
+                    if (obj.activeSelf == true)
                     {
                         count++;
                     }
                 }
 
             }
+
         }
         return count;
     }
