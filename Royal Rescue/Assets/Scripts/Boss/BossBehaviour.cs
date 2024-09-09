@@ -170,13 +170,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         pullingDirector = GameObject.FindWithTag("Director").GetComponent<PullingDirector>();
         soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
         playerTransform = GameObject.FindWithTag("Player").transform;
-        GameObject[] uiObjs = GameObject.FindGameObjectsWithTag("UI");
-        foreach(GameObject obj in uiObjs)
-        {
-            if (obj.GetComponent<ITag>().CompareToTag("BossHpUI"))
-                hpbarUi = obj.GetComponent<BossHpBarUI>();
-        }
-
+       
         root = new Selector();
         //조건 노드들
         
@@ -217,7 +211,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         phase1FlameAttackNode = new FlameAttackNode(Phase1flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController,transform,playerTransform, SoundEffect);
         phase1ScreamAttackNode = new ScreamAttackNode(Phase1screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase1EntryLandNode = new EntryPhase1LandNode(transform, playerTransform, aniController);
-        phase1EntryScreamNode = new EntryPhase1ScreamNode(transform, playerTransform, aniController,shockWave,flamePosition, SpawnObjectWithITag,hpbarUi.ActivateUI);
+        phase1EntryScreamNode = new EntryPhase1ScreamNode(transform, playerTransform, aniController,shockWave,flamePosition, SpawnObjectWithITag, ActivateHpUi);
 
         phase2EntryNode = new EntryPhase2Node(transform, playerTransform, flamePosition,shockWave, aniController, SpawnObjectWithITag,DeActivateParticles, SetisDelayTime);
         phase2FlameAttackNode = new FlameAttackNode(Phase2flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController, transform, playerTransform, SoundEffect);
@@ -287,6 +281,13 @@ public class BossBehaviour : MonoBehaviour,ITag
 
     void Start()
     {
+        GameObject[] uiObjs = GameObject.FindGameObjectsWithTag("UI");
+        foreach (GameObject obj in uiObjs)
+        {
+            if (obj.GetComponent<ITag>().CompareToTag("BossHpUI"))
+                hpbarUi = obj.GetComponent<BossHpBarUI>();
+        }
+
         float[] hpcolorChangeNum = { Phase1HpCondition, Phase2HpCondition, Phase3HpCondition };
         hpbarUi.Init((int)hp, hpcolorChangeNum, gameObject.name);
         //죽는 상태 트리
@@ -425,6 +426,10 @@ public class BossBehaviour : MonoBehaviour,ITag
         Bt.Operator();
     }
 
+    private void ActivateHpUi()
+    {
+        hpbarUi.ActivateUI();
+    }
     private void SoundEffect(string name, bool isLoop)
     {
         soundManager.PlaySound(name, isLoop);

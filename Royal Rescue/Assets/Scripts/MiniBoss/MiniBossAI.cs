@@ -137,6 +137,7 @@ public class MiniBossAI : MonoBehaviour
     {
         if (isDie)
             gameObject.SetActive(false);
+
     }
     void Update()
     {

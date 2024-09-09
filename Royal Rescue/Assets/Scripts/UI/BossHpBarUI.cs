@@ -8,13 +8,13 @@ using UnityEngine.UI;
 public class BossHpBarUI : MonoBehaviour,ITag
 {
     [SerializeField] string detailTag;
-    Slider hpSlider;
-    TextMeshProUGUI TMPname;
+    [SerializeField] Slider hpSlider;
+    [SerializeField] TextMeshProUGUI TMPname;
     int maxHp = 1;
     float[] hpColorChangeNum= new float[3];
     string bossName = "";
 
-    private void Start()
+    private void OnEnable()
     {
         hpSlider = GetComponentInChildren<Slider>();
         TMPname = GetComponentInChildren<TextMeshProUGUI>();
