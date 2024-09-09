@@ -10,7 +10,7 @@ public class UIMenu : MonoBehaviour
     [SerializeField] protected List<TextMeshProUGUI> menuTexts;
     [SerializeField] protected Color menuColor, highlightMenuColor;
     [SerializeField] protected Color textColor, highlightTextColor;
-    protected int menuIndex = 0;
+    [SerializeField] protected int menuIndex = 0;
     protected int previousMenuIndex, maxMenuIndex;
     public static bool pressedConfirmBtn => Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Attack");
     public static bool pressedEscBtn => Input.GetKeyDown(KeyCode.Escape);
@@ -50,10 +50,10 @@ public class UIMenu : MonoBehaviour
         Color targetMenuColor = isHighlighted ? highlightMenuColor : menuColor;
         Color targetTextColor = isHighlighted ? highlightTextColor : textColor;
 
-        if (menuImages.Count > 0)
+        if (index < menuImages.Count)
             menuImages[index].color = targetMenuColor;
 
-        if (menuTexts.Count > 0)
+        if (index < menuTexts.Count)
             menuTexts[index].color = targetTextColor;
     }
 }
