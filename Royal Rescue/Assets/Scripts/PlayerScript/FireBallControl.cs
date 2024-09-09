@@ -14,6 +14,8 @@ public class FireBallControl : MonoBehaviour
     public GameObject explosionEffect; // 폭발 효과
     public GameObject target;
     PlayerControlManagerFix player;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,11 +24,7 @@ public class FireBallControl : MonoBehaviour
     }
     private void Update()
     {
-        //transform.position += throwForce * ballDir * Time.deltaTime;
-        //velocity.y += gravity * Time.deltaTime;
-        //transform.position += velocity * Time.deltaTime;
         Destroy(this.gameObject, 2f);
-        //포물선
         
     }
     // Update is called once per frame

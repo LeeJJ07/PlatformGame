@@ -1782,6 +1782,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   fieldView: {fileID: 0}
+  coin: 100
+  trajectoryVisualizerPrefab: {fileID: 0}
 --- !u!1 &327161575
 GameObject:
   m_ObjectHideFlags: 0
@@ -10925,6 +10927,10 @@ PrefabInstance:
       propertyPath: attackIcon
       value: 
       objectReference: {fileID: 1869919248}
+    - target: {fileID: 5130297143477228180, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
+      propertyPath: trajectoryVisualizerPrefab
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7054254038125191259, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       propertyPath: m_Name
       value: Player
