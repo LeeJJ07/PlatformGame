@@ -1,17 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class WarningZoneBehavior : MonoBehaviour,ITag
 {
     [Header("Detail Tag"), SerializeField]
     string detailTag = "";
+    [SerializeField] Color32 beginColor;
     [SerializeField]Material warningZoneMaterial;
-    [SerializeField, Range(0,2f)] float alphaChangeSpeed = 1;
-    int sign = 1;
-    Color warningZoneNewColor = new Color();
+    [SerializeField, Range(0,5f)] float alphaChangeSpeed = 1;
     [SerializeField, Range(0, 1f)]
     float min = 0.5f, max = 0.9f;
+
+    int ColorChangeSign = 1;
+    Color warningZoneNewColor = new Color();
 
     public bool CompareToTag(string detailTag)
     {
@@ -25,21 +25,22 @@ public class WarningZoneBehavior : MonoBehaviour,ITag
 
     private void Start()
     {
-        
-        warningZoneNewColor = warningZoneMaterial.color;
-        warningZoneNewColor.a = 0.5f;
+        warningZoneNewColor= beginColor;
     }
     void Update()
     {
         if(warningZoneNewColor.a >= max)
         {
-            sign *= -1;
+            warningZoneNewColor.a = max;
+            ColorChangeSign *= -1;
         }
         else if(warningZoneNewColor.a <= min)
         {
-            sign *= -1;
+            warningZoneNewColor.a = min;
+            ColorChangeSign *= -1;
         }
-        warningZoneNewColor.a -= alphaChangeSpeed * sign * Time.deltaTime;
+        Debug.Log($"alpha: {warningZoneNewColor.a}");
+        warningZoneNewColor.a -= alphaChangeSpeed * ColorChangeSign * Time.deltaTime;
         warningZoneMaterial.color = warningZoneNewColor;
     }
 }

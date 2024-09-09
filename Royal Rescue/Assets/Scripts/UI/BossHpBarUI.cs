@@ -7,6 +7,7 @@ using UnityEngine.UI;
 
 public class BossHpBarUI : MonoBehaviour,ITag
 {
+    [Header("오브젝트 비활성화 하지 말 것")]
     [SerializeField] string detailTag;
     [SerializeField] Slider hpSlider;
     [SerializeField] TextMeshProUGUI TMPname;

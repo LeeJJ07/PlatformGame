@@ -8,6 +8,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     [SerializeField] bool isActivate = false;
 
     [Header("Boss Values")]
+    [SerializeField] string bossName;
     [SerializeField] string detailTag;
     [SerializeField] GameObject warningPrefab;
     [SerializeField] Transform[] wallTransforms;
@@ -428,7 +429,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         }
 
         float[] hpcolorChangeNum = { Phase1HpCondition, Phase2HpCondition, Phase3HpCondition };
-        hpbarUi.Init((int)hp, hpcolorChangeNum, gameObject.name);
+        hpbarUi.Init((int)hp, hpcolorChangeNum, bossName);
         hpbarUi.ActivateUI();
     }
     private void SoundEffect(string name, bool isLoop)

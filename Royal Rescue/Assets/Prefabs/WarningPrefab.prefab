@@ -99,7 +99,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &875440469432302928
 Transform:
   m_ObjectHideFlags: 0
@@ -129,7 +129,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detailTag: WarningZone
+  colorChangeAniCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 1
+      outSlope: 1
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  beginColor:
+    serializedVersion: 2
+    rgba: 3862575871
   warningZoneMaterial: {fileID: 2100000, guid: ee248285845992f4e8b6696d3a3fce48, type: 2}
-  alphaChangeSpeed: 1
-  min: 0.5
+  alphaChangeSpeed: 2
+  min: 0.2
   max: 0.9
