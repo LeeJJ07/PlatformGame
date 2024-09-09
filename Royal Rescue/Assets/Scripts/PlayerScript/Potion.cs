@@ -53,9 +53,6 @@ public class Potion : MonoBehaviour
             {
                 Debug.Log("Not enough potion");
             }
-            
-
-            
         }
         text_Count.text = potionCount.ToString();
     }

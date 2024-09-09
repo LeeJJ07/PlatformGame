@@ -11,7 +11,8 @@ public class MiniBossAI : MonoBehaviour
     [SerializeField] float runSpeed;
 
     [Header("¼³Á¤")]
-    [SerializeField] GameObject player;
+    [SerializeField] PlayerControlManagerFix playerControl;
+    private GameObject player;
     [SerializeField] Transform startTrasform;
     [SerializeField] Animator animator;
 
@@ -66,7 +67,8 @@ public class MiniBossAI : MonoBehaviour
 
     private void Awake()
     {
-        player = GameDirector.instance.PlayerControl.gameObject;
+        playerControl = GameDirector.instance.PlayerControl;
+        player = playerControl.gameObject;
 
         transform.position = startTrasform.position;
 
@@ -174,10 +176,8 @@ public class MiniBossAI : MonoBehaviour
     {
         if (isDie) return;
 
-        
         if (other.CompareTag("Player"))
         {
-            Debug.Log("¿¡¿¡¿¨");
             Vector3 oppositeDir = (other.gameObject.transform.position - transform.position);
             other.gameObject.transform.position += new Vector3((oppositeDir.x * Time.deltaTime * 3f), 0f, 0f);
         }
