@@ -5,8 +5,6 @@ using TMPro;
 
 public class FadeInOut
 {
-    private const float FADEAMOUNT = 0.0001f;
-
     public static IEnumerator Fade(Image targetImage, bool isFadeIn, float fadeInSpeed, float fadeOutSpeed)
     {
         float initialAlpha = 1f;
@@ -25,7 +23,7 @@ public class FadeInOut
         while (true)
         {
             tempColor = targetImage.color;
-            tempColor.a += FADEAMOUNT * multiplier * fadeSpeed;
+            tempColor.a += multiplier * fadeSpeed * Time.deltaTime;
             targetImage.color = tempColor;
 
             if (isFadeIn && targetImage.color.a <= 0f) break;
@@ -47,7 +45,7 @@ public class FadeInOut
         }
         while (true)
         {
-            targetText.alpha += FADEAMOUNT * multiplier * fadeSpeed;
+            targetText.alpha += multiplier * fadeSpeed * Time.deltaTime;
 
             if (isFadeIn && targetText.alpha >= 1f) break;
             else if (!isFadeIn && targetText.alpha <= 0f) break;
@@ -68,7 +66,7 @@ public class FadeInOut
         }
         while (true)
         {
-            group.alpha += FADEAMOUNT * multiplier * fadeSpeed;
+            group.alpha += multiplier * fadeSpeed * Time.deltaTime;
 
             if (isFadeIn && group.alpha >= 1f) break;
             else if (!isFadeIn && group.alpha <= 0f) break;

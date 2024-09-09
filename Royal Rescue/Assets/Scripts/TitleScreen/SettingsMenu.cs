@@ -22,7 +22,7 @@ public class SettingsMenu : UIMenu
     [SerializeField] private List<string> fullScreenTextlist;
     [SerializeField] private TextMeshProUGUI fullScreenModeText, resolutionText;
 
-    private int resolutionIndex = 0;
+    private int resolutionIndex = -1;
     private bool isFullScreen = false;
 
 
@@ -32,8 +32,8 @@ public class SettingsMenu : UIMenu
         volumeSliders[(int)SoundType.EFFECT].value = ConvertVolumeToValue(SoundManager.Instance.CurrentSFXVolume);
         base.Start();
 
+        FindMatchingResolution();
         isFullScreen = Screen.fullScreen;
-        SetResolution(true);
     }
 
     void OnDisable()
@@ -61,6 +61,7 @@ public class SettingsMenu : UIMenu
                 {
                     isFullScreen = !isFullScreen;
                     fullScreenModeText.text = fullScreenTextlist[Convert.ToInt32(isFullScreen)];
+                    Screen.fullScreen = isFullScreen;
                 }
                 break;
             
@@ -91,19 +92,24 @@ public class SettingsMenu : UIMenu
         }
     }
 
-    private void SetResolution(bool findResolution = false)
+    private void FindMatchingResolution()
     {
-        if (findResolution)
+        for (int i = 4; i <= 8; i++)
         {
-            for (int i = 4; i <= 8; i++)
+            if (Screen.currentResolution.width == 240 * i)
             {
-                if (Screen.currentResolution.width == 240 * i)
-                {
-                    resolutionIndex = i;
-                    break;
-                }
+                resolutionIndex = i;
+                break;
             }
         }
+        if (resolutionIndex < 0)
+            resolutionIndex = MAX_RESOLUTION;
+        SetResolution();
+        fullScreenModeText.text = fullScreenTextlist[Convert.ToInt32(isFullScreen)];
+    }
+
+    private void SetResolution()
+    {
         resolutionIndex = Mathf.Clamp(resolutionIndex, MIN_RESOLUTION, MAX_RESOLUTION);
         (int, int) currentResolution = (240 * resolutionIndex, 135 * resolutionIndex);
         resolutionText.text = $"{currentResolution.Item1} x {currentResolution.Item2}";

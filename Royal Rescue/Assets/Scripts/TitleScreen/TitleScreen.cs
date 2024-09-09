@@ -87,7 +87,7 @@ public class TitleScreen : MonoBehaviour
 
         while (true)
         {
-            dof.focusDistance.value -= 0.001f * blurSpeed;
+            dof.focusDistance.value -= blurSpeed * Time.deltaTime;
             if (dof.focusDistance.value <= 0.1f)
             {
                 dof.focusDistance.value = 0.1f;
