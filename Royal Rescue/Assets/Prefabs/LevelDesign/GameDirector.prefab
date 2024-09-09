@@ -1330,6 +1330,14 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 52320e590bf774734a288886eba557ba, type: 3}
   - {fileID: 8300000, guid: 4b4dd7245f6104c8c8eb07ccf6b386ed, type: 3}
   - {fileID: 8300000, guid: 29bde6326b4c34ad8a12da475f79b50a, type: 3}
+  - {fileID: 8300000, guid: bce4ba5b73ed8fc4bb298b098525900a, type: 3}
+  - {fileID: 8300000, guid: 44e490411f1ea3146b3d35ed187c3360, type: 3}
+  - {fileID: 8300000, guid: 68fbb513daa368a48981718397c17a3d, type: 3}
+  - {fileID: 8300000, guid: c0fe04c7d95d76b419f00b4ac9b4ca8a, type: 3}
+  - {fileID: 8300000, guid: 97e1b261127544642a94ffc65e158586, type: 3}
+  - {fileID: 8300000, guid: 8e61379f5f91fa34580e15a10143aa9d, type: 3}
+  - {fileID: 8300000, guid: 15012f8283e022f489621cb07bed0bc5, type: 3}
+  - {fileID: 8300000, guid: 781643436a382ef43b6d368c36f8e33e, type: 3}
 --- !u!114 &2533501027961904576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5685,6 +5693,10 @@ PrefabInstance:
     - target: {fileID: 3601520343686597530, guid: 2cbc4efc07185c5499bd40ad64e61f1f, type: 3}
       propertyPath: m_Name
       value: MonsterHpUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 4233789792691266159, guid: 2cbc4efc07185c5499bd40ad64e61f1f, type: 3}
+      propertyPath: m_Name
+      value: GameUICamera
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
