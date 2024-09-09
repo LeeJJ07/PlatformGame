@@ -281,15 +281,7 @@ public class BossBehaviour : MonoBehaviour,ITag
 
     void Start()
     {
-        GameObject[] uiObjs = GameObject.FindGameObjectsWithTag("UI");
-        foreach (GameObject obj in uiObjs)
-        {
-            if (obj.GetComponent<ITag>().CompareToTag("BossHpUI"))
-                hpbarUi = obj.GetComponent<BossHpBarUI>();
-        }
-
-        float[] hpcolorChangeNum = { Phase1HpCondition, Phase2HpCondition, Phase3HpCondition };
-        hpbarUi.Init((int)hp, hpcolorChangeNum, gameObject.name);
+        
         //죽는 상태 트리
         dieSequence.AddNode(DieHpConditionDecorator);
         dieSequence.AddNode(DieNode);
@@ -428,6 +420,15 @@ public class BossBehaviour : MonoBehaviour,ITag
 
     private void ActivateHpUi()
     {
+        GameObject[] uiObjs = GameObject.FindGameObjectsWithTag("UI");
+        foreach (GameObject obj in uiObjs)
+        {
+            if (obj.GetComponent<ITag>().CompareToTag("BossHpUI"))
+                hpbarUi = obj.GetComponent<BossHpBarUI>();
+        }
+
+        float[] hpcolorChangeNum = { Phase1HpCondition, Phase2HpCondition, Phase3HpCondition };
+        hpbarUi.Init((int)hp, hpcolorChangeNum, gameObject.name);
         hpbarUi.ActivateUI();
     }
     private void SoundEffect(string name, bool isLoop)
