@@ -20,12 +20,13 @@ TagManager:
   - Skill
   - Director
   - Zone
-  - Boss
-  - DangerZone
-  - DropObject
   - Bomb
   - Weapon
   - SlashAttack
+  - Particle
+  - UI
+  - DropObject
+  - DangerZone
   layers:
   - Default
   - TransparentFX
