@@ -56,6 +56,8 @@ public class Monster : MonoBehaviour
     protected int playerMask;
 
     bool isHit = false;
+    [SerializeField] protected GameObject hitEffect;
+
     public Slider hpBarPrefab;
     public Vector3 hpBarOffset = new Vector3(0, -0.4f, 0);
 
@@ -245,7 +247,7 @@ public class Monster : MonoBehaviour
     {
         isHit = true;
         int dmg = 0;
-
+        
         animator.SetTrigger("takeAttack");
         switch (tag)
         {
@@ -264,6 +266,8 @@ public class Monster : MonoBehaviour
                 Debug.Log("슬래쉬 공격 받았다.");
                 break;
         }
+
+        Instantiate(hitEffect, transform.position + new Vector3(0.6f * getFacingDir(), 1.2f, 0), Quaternion.identity);
 
         curHp -= dmg; //playerControl.getDamage();
 
