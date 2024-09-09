@@ -1,75 +1,60 @@
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
 
+public enum ScreenState { INTRO, TITLE, MAIN };
 public class TitleScreen : MonoBehaviour
 {
-    private enum ScreenState { INTRO, TITLE, MAIN, HELP, SETTINGS };
-    private enum MenuState { START, HOWTOPLAY, SETTINGS, EXIT };
     private const float FADEAMOUNT = 0.0001f;
     
+    [SerializeField] private TitleMenu titleMenuControl;
     [SerializeField] private Image fadeCover;
     [SerializeField] private Animator cameraAnim;
-    [SerializeField] private TextMeshProUGUI titleText, startText;
+     [SerializeField] private TextMeshProUGUI titleText, startText;
     [SerializeField] private PostProcessVolume ppVolume;
-    [SerializeField] private CanvasGroup mainMenu;
-    [SerializeField] private float screenFadeSpeed, textFadeSpeed, menuFadeSpeed, blurSpeed;
+    [SerializeField] private CanvasGroup mainMenu, settingsMenu;
+    [SerializeField] private float screenFadeInSpeed, screenFadeOutSpeed, textFadeSpeed, menuFadeSpeed, blurSpeed;
     [SerializeField] private float initialFocusDistance;
-    [SerializeField] private ScreenState previousScreenState, currentScreenState;
+
+    [SerializeField] private ScreenState currentScreenState;
+    public ScreenState CurrentScreenState => currentScreenState;
+
     private DepthOfField dof;
 
-    void Awake()
+    void OnEnable()
     {
-        fadeCover.gameObject.SetActive(true);
-        titleText.gameObject.SetActive(false);
-        startText.gameObject.SetActive(false);
-        mainMenu.alpha = 0f;
-
-        ppVolume.profile.TryGetSettings(out dof);
-        previousScreenState = currentScreenState = ScreenState.INTRO;
+        SetPlayerEnabled(false);
+        Init();
+        StartCoroutine(StartIntro());
     }
 
-    void Start()
+    void OnDisable()
     {
-        StartCoroutine(StartIntro());
+        SetPlayerEnabled(true);
     }
 
     void Update()
     {
-        UpdateScreen();
+        if ((currentScreenState == ScreenState.TITLE) && UIMenu.pressedConfirmBtn)
+        {
+            SetScreenState(ScreenState.MAIN);
+            StartCoroutine(ShowMainMenu());
+        }
     }
     
-    private void UpdateScreen()
+    private void Init()
     {
-        switch (currentScreenState)
-        {
-            case ScreenState.INTRO:
-                break;
-
-            case ScreenState.TITLE:
-                if (Input.GetKeyDown(KeyCode.Return))
-                {
-                    previousScreenState = currentScreenState;
-                    currentScreenState = ScreenState.MAIN;
-                    StartCoroutine(ShowMainMenu());
-                }
-                break;
-
-            case ScreenState.MAIN:
-                break;
-            
-            case ScreenState.HELP:
-                break;
-        
-            case ScreenState.SETTINGS:
-                break;
-            
-            default:
-                break;
-        }
+        SetScreenState(ScreenState.INTRO);
+        ppVolume.profile.TryGetSettings(out dof);
+        fadeCover.gameObject.SetActive(true);
+        titleText.gameObject.SetActive(false);
+        startText.gameObject.SetActive(false);
+        settingsMenu.gameObject.SetActive(false);
+        titleMenuControl.enabled = false;
+        mainMenu.alpha = 0f;
+        settingsMenu.alpha = 0f;
     }
 
     private IEnumerator StartIntro()
@@ -87,13 +72,14 @@ public class TitleScreen : MonoBehaviour
         startText.gameObject.SetActive(true);
 
         yield return new WaitForSeconds(0.5f);
-        currentScreenState = ScreenState.TITLE;
+        SetScreenState(ScreenState.TITLE);
     }
 
     private IEnumerator Fade(Image targetImage, bool isFadeIn)
     {
         float initialAlpha = 1f;
         float multiplier = -1f;
+        float fadeSpeed = isFadeIn ? screenFadeInSpeed : screenFadeOutSpeed;
 
         if (!isFadeIn)
         {
@@ -107,7 +93,7 @@ public class TitleScreen : MonoBehaviour
         while (true)
         {
             tempColor = targetImage.color;
-            tempColor.a += FADEAMOUNT * multiplier * screenFadeSpeed;
+            tempColor.a += FADEAMOUNT * multiplier * fadeSpeed;
             targetImage.color = tempColor;
 
             if (isFadeIn && targetImage.color.a <= 0f) break;
@@ -159,16 +145,6 @@ public class TitleScreen : MonoBehaviour
         }
     }
 
-    private IEnumerator ShowMainMenu()
-    {
-        startText.gameObject.SetActive(false);
-        yield return Fade(titleText, false);
-        yield return BlurScreen();
-        yield return Fade(mainMenu, true);
-        
-        currentScreenState = ScreenState.MAIN;
-    }
-
     private IEnumerator BlurScreen()
     {
         if (!dof) yield break;
@@ -186,4 +162,58 @@ public class TitleScreen : MonoBehaviour
         }
     }
 
+    public void SetScreenState(ScreenState state)
+    {
+        currentScreenState = state;
+    }
+
+    private IEnumerator ShowMainMenu()
+    {
+        startText.gameObject.SetActive(false);
+        yield return Fade(titleText, false);
+        yield return BlurScreen();
+        yield return Fade(mainMenu, true);
+        
+        titleMenuControl.enabled = true;
+    }
+
+    private IEnumerator HideMainMenu(bool isCoverScreen = false)
+    {
+        titleMenuControl.enabled = false;
+
+        yield return Fade(mainMenu, false);
+
+        if (isCoverScreen)
+            yield return StartCoroutine(Fade(fadeCover, false));
+    }
+
+    public IEnumerator ShowSettingsMenu()
+    {
+        yield return HideMainMenu();
+        settingsMenu.gameObject.SetActive(true);
+        yield return Fade(settingsMenu, true);
+    }
+
+    public IEnumerator StartGame()
+    {
+        yield return HideMainMenu(true);
+
+        GameDirector.instance.ShowLoadingScreen();
+        StartCoroutine(GameDirector.instance.LoadNextStage());
+    }
+
+    private void SetPlayerEnabled(bool state)
+    {
+        if (!GameDirector.instance) return;
+        GameDirector.instance.PlayerControl.gameObject.SetActive(state);
+    }
+
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 }

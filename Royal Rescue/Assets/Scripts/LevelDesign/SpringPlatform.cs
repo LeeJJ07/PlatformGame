@@ -13,14 +13,12 @@ public class SpringPlatform : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             PlayerControlManagerFix player = GameDirector.instance.PlayerControl;
-            Rigidbody playerRb = player.GetComponent<Rigidbody>();
 
-            playerRb.isKinematic = true;
-            playerRb.isKinematic = false;
-            playerRb.AddForce(Vector3.up * springForce, ForceMode.Impulse);
+            player.SetPlayerKinematic(true);
+            player.SetPlayerKinematic(false);
+            player.AddForceToPlayer(Vector3.up * springForce, ForceMode.Impulse);
 
             springAnim.Play(AnimationHash.SPRING, -1, 0f);
-
             SoundManager.Instance.PlaySound("Spring");
         }
     }

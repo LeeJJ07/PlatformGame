@@ -18,14 +18,14 @@ public class GameDirector : MonoBehaviour
     }
     private PlayerControlManagerFix playerControl;
     public RoomController CurrentRoomControl => currentRoomControl;
-    [SerializeField] private RoomController currentRoomControl;
+    private RoomController currentRoomControl;
 
     [SerializeField] private GameObject uiCanvas, loadScreenFade;
     [SerializeField] private Camera loadingScreenCam;
     [SerializeField] private Animator loadscreenFadeAnim, shroomAnim, respawnAnim;
     [SerializeField] private float loadScreenDelay, respawnDelay;
     [SerializeField] private List<string> stageNames;
-    private int stageIndex = 0;
+    private int stageIndex = -1;
 
     void Awake()
     {
@@ -54,7 +54,7 @@ public class GameDirector : MonoBehaviour
                 return;
             }
         }
-        stageIndex = 0;
+        stageIndex = -1;
     }
 
     public IEnumerator LoadNextStage()
@@ -63,7 +63,7 @@ public class GameDirector : MonoBehaviour
         if (stageIndex >= stageNames.Count)
             stageIndex = stageNames.Count - 1;
 
-        playerControl.transform.SetParent(transform);
+        PlayerControl.transform.SetParent(transform);
 
         yield return new WaitForSeconds(0.1f);
         var asyncLoadStage = SceneManager.LoadSceneAsync(stageNames[stageIndex], LoadSceneMode.Single);
@@ -103,7 +103,7 @@ public class GameDirector : MonoBehaviour
         yield return new WaitForSeconds(0.8f);
 
         currentRoomControl.SetPlayerRespawnPosition(); 
-        playerControl.RevivePlayer();
+        PlayerControl.RevivePlayer();
 
         respawnAnim.Play(AnimationHash.RESPAWN_SCREEN_HIDE);
     }
