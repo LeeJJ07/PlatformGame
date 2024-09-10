@@ -4992,6 +4992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActivate: 1
+  bossName: "\uBD88\uB3C4\uB9C8\uBC40"
   detailTag: Boss
   warningPrefab: {fileID: 7360912941218823822, guid: 8e99ae799f6f16243aeb4a94dfced891, type: 3}
   wallTransforms:
