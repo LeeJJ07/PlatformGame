@@ -9,19 +9,23 @@ public class TitleMenu : UIMenu
     [SerializeField] private TitleScreen titleScreen;
     [SerializeField] private PromptMenu exitPromptControl;
     [SerializeField] private SettingsMenu settingsControl;
-    [SerializeField] private CanvasGroup mainMenuGroup, settingsMenuGroup;
-    [SerializeField] private GameObject exitPrompt, settingsMenu;
+    [SerializeField] private HelpMenu helpControl;
+    [SerializeField] private CanvasGroup mainMenuGroup, settingsMenuGroup, helpMenuGroup;
+    [SerializeField] private GameObject exitPrompt, settingsMenu, helpMenu;
 
     void Awake()
     {
         this.enabled = false;
         exitPromptControl.enabled = false;
+        helpControl.enabled = false;
         settingsControl.enabled = false;
 
         mainMenuGroup.alpha = 0f;
+        helpMenuGroup.alpha = 0f;
         settingsMenuGroup.alpha = 0f;
 
         exitPrompt.SetActive(false);
+        helpMenu.SetActive(false);
         settingsMenu.gameObject.SetActive(false);
     }
     protected override void Start()
@@ -46,6 +50,7 @@ public class TitleMenu : UIMenu
                     break;
 
                 case MenuState.HELP:
+                    StartCoroutine(ShowHelpMenu());
                     return;
 
                 case MenuState.SETTINGS:
@@ -87,6 +92,17 @@ public class TitleMenu : UIMenu
         settingsControl.enabled = true;
     }
 
+    private IEnumerator ShowHelpMenu()
+    {
+        yield return HideMainMenu();
+
+        helpMenu.SetActive(true);
+        yield return FadeInOut.Fade(helpMenuGroup, true, titleScreen.menuFadeSpeed);
+
+        helpControl.OnHelpCancelDelegate = EnableTitleMenu;
+        helpControl.enabled = true;
+    }
+
     private void ShowExitPrompt()
     {
         exitPromptControl.OnConfirmDelegate = QuitGame;
@@ -98,6 +114,7 @@ public class TitleMenu : UIMenu
 
     private void EnableTitleMenu()
     {
+        helpMenu.SetActive(false);
         settingsMenu.SetActive(false);
         exitPrompt.SetActive(false);
 

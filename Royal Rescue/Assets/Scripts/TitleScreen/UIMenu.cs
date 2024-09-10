@@ -10,7 +10,7 @@ public class UIMenu : MonoBehaviour
     [SerializeField] protected List<TextMeshProUGUI> menuTexts;
     [SerializeField] protected Color menuColor, highlightMenuColor;
     [SerializeField] protected Color textColor, highlightTextColor;
-    [SerializeField] protected int menuIndex = 0;
+    protected int menuIndex = 0;
     protected int previousMenuIndex, maxMenuIndex;
     public static bool pressedConfirmBtn => Input.GetKeyDown(KeyCode.Return) || Input.GetButtonDown("Attack");
     public static bool pressedEscBtn => Input.GetKeyDown(KeyCode.Escape);
