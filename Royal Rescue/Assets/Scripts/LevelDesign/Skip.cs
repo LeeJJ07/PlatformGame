@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -29,8 +31,11 @@ public class Skip : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
-            altarPortal = GameObject.Find("AltarPortal").GetComponent<AltarPortal>();
-            altarPortal.TryOpenStagePortal(true);
+            if (GameObject.Find("AltarPortal") != null)
+            {
+                altarPortal = GameObject.Find("AltarPortal").GetComponent<AltarPortal>();
+                altarPortal.TryOpenStagePortal(true);
+            }
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
