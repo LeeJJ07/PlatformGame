@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/TitleScreen.unity
+    guid: c77882d16e512ce49ba2ab5d88dd0f2c
+  - enabled: 1
     path: Assets/Scenes/JooWoan.unity
     guid: 8c33cbcb27117904fa520aa15abf3f80
   - enabled: 1

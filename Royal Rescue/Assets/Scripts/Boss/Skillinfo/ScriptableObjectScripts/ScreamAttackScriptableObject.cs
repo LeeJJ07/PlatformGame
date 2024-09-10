@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.EditorTools;
 using UnityEngine;
 [CreateAssetMenu(fileName = "BossSkills_ScreamAttack", menuName = "BossSkills/ScreamAttack")]
 public class ScreamAttackScriptableObject : ScriptableObject
