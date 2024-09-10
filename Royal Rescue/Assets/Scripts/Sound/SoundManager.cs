@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering.PostProcessing;
 public enum SoundType
 {
     BGM,
@@ -13,7 +14,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioMixer audioMixer;
     [SerializeField] private float currentBGMVolume, currentEffectVolume;
     private Dictionary<string, AudioClip> clipsDictionary;
-    [SerializeField] private AudioClip[] audioClips;
+    private AudioClip[] audioClips;
     private List<SoundPlayer> loopSounds;
     public static SoundManager Instance;
     public float CurrentBGMVolume => currentBGMVolume;
@@ -23,10 +24,12 @@ public class SoundManager : MonoBehaviour
     {
         Instance = this;
 
+        audioClips = Resources.LoadAll<AudioClip>("Sound");
         clipsDictionary = new Dictionary<string, AudioClip>();
+        
         foreach (AudioClip clip in audioClips)
         {
-            clipsDictionary.Add(clip.name, clip);
+            clipsDictionary[clip.name] = clip;
         }
 
         loopSounds = new List<SoundPlayer>();
