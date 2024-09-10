@@ -4956,8 +4956,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 5.2, z: 23}
-  m_Center: {x: -2.84217e-15, y: 3.2, z: 0.6999998}
+  m_Size: {x: 1, y: 2.6802378, z: 23}
+  m_Center: {x: -2.84217e-15, y: 4.4598813, z: 0.6999998}
 --- !u!65 &5449763429638808952
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4977,8 +4977,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 5.2, z: 22.9}
-  m_Center: {x: -2.84217e-15, y: 3.5, z: 0.6999998}
+  m_Size: {x: 1, y: 2.867632, z: 22.9}
+  m_Center: {x: -2.84217e-15, y: 4.6661844, z: 0.6999998}
 --- !u!114 &4123994617682032421
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4992,7 +4992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isActivate: 1
-  bossName: "\uBD88\uB3C4\uB9C8\uBC40"
+  bossName: "\uC2A4\uD2B8\uB808\uC2A4\uC5D0 \uCC0C\uB4E0 \uC6A9"
   detailTag: Boss
   warningPrefab: {fileID: 7360912941218823822, guid: 8e99ae799f6f16243aeb4a94dfced891, type: 3}
   wallTransforms:
