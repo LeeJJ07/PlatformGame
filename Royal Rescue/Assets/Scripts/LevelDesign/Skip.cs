@@ -20,6 +20,7 @@ public class Skip : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.K))
         {
+            Debug.Log("right");
             SwitchRoom(currentRoom.RoomId + 1);
         }
         if (Input.GetKeyDown(KeyCode.J))
