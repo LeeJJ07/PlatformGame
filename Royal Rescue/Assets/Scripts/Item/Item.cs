@@ -4,11 +4,24 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    Rigidbody rigid;
-    void Start()
-    {
-        rigid= GetComponent<Rigidbody>();
+    Collider col;
+    [SerializeField] GameObject effectPrefab;
 
-        rigid.AddForce(new Vector3(0, 1000f, 0));
+    private void Start()
+    {
+        col = GetComponent<Collider>();
+        Invoke("CanPickUp", 0.5f);
+    }
+    void CanPickUp()
+    {
+        col.enabled = true;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!other.CompareTag("Player"))
+            return;
+        Instantiate(effectPrefab, transform);
+        Destroy(gameObject);
     }
 }

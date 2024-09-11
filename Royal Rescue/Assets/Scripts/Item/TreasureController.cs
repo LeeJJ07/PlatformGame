@@ -91,6 +91,8 @@ public class TreasureController : MonoBehaviour
     void RandomItemCreate()
     {
         int idx = Random.Range(0, itemPrefabs.Length);
-        Instantiate(itemPrefabs[idx]);
+        GameObject item = Instantiate(itemPrefabs[idx]);
+        item.GetComponent<Rigidbody>().AddForce(Vector3.up * 1000);
+        item.GetComponent<Collider>().enabled = false;
     }
 }
