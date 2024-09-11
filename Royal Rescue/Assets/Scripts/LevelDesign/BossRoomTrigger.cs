@@ -16,12 +16,18 @@ public class BossRoomTrigger : DoorTrap
     protected override IEnumerator TrapPlayer()
     {
         yield return base.TrapPlayer();
+        GameDirector.instance.PlayerControl.FixatePlayerRigidBody(true);
 
         cutsceneCamAnim.gameObject.SetActive(true);
         float cameraAnimationLength = AnimationHash.GetAnimationLength(cutsceneCamAnim, "GuillotineCam_cage");
         yield return new WaitForSeconds(cameraAnimationLength + 1f);
 
-        cutsceneCamAnim.Play("GuillotineCam_player", -1, 0f);
+        cameraAnimationLength = AnimationHash.GetAnimationLength(cutsceneCamAnim, "GuillotineCam_player");
+        cutsceneCamAnim.Play(AnimationHash.BOSSROOM_CUTSCENE_PLAYER, -1, 0f);
+        yield return new WaitForSeconds(cameraAnimationLength + 1f);
+        
+        cutsceneCamAnim.gameObject.SetActive(false);
+        GameDirector.instance.PlayerControl.FixatePlayerRigidBody(false);
     }
 
     protected override bool CheckRoomClear()
@@ -31,6 +37,8 @@ public class BossRoomTrigger : DoorTrap
 
     protected override IEnumerator ReleasePlayer()
     {
+        GameDirector.instance.PlayerControl.FixatePlayerRigidBody(true);
+
         SwitchCamera(mainCamera, gemCamera);
         yield return new WaitForSeconds(0.2f);
 
@@ -43,5 +51,7 @@ public class BossRoomTrigger : DoorTrap
 
         SwitchCamera(doorCamera, mainCamera);
         portal.gameObject.SetActive(true);
+
+        GameDirector.instance.PlayerControl.FixatePlayerRigidBody(false);
     }
 }
