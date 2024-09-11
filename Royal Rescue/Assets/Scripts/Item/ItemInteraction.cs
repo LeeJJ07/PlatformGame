@@ -2,9 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CoinInteraction : MonoBehaviour
+public class ItemInteraction : MonoBehaviour
 {
+    Collider col;
     [SerializeField] private GameObject coinEffect;
+
+    private void Start()
+    {
+        col = GetComponent<Collider>();
+        Invoke("CanPickUp", 0.5f);
+    }
+    void CanPickUp()
+    {
+        col.enabled = true;
+    }
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))

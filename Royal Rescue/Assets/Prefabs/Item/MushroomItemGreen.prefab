@@ -72,7 +72,10 @@ PrefabInstance:
       addedObject: {fileID: 7043592093652215176}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 15c2a05631ba497cbf857064f8c13659, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -6493485906514639220}
+      addedObject: {fileID: 2209165369514486271}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 15c2a05631ba497cbf857064f8c13659, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5991202664705360406}
   m_SourcePrefab: {fileID: 100100000, guid: 15c2a05631ba497cbf857064f8c13659, type: 3}
 --- !u!1 &2186267516141195477 stripped
 GameObject:
@@ -127,7 +130,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &-6493485906514639220
+--- !u!114 &2209165369514486271
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,7 +139,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 2186267516141195477}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 383f3758df038a246b2b069089a96edf, type: 3}
+  m_Script: {fileID: 11500000, guid: ee7e69c37ac0840419e4a1a37a6dd7fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectPrefab: {fileID: 8271400594001470412, guid: 403ca708a5dfee14d915b21ed6f85bcb, type: 3}
+  coinEffect: {fileID: 8271400594001470412, guid: 403ca708a5dfee14d915b21ed6f85bcb, type: 3}
+--- !u!114 &5991202664705360406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2186267516141195477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c00ffda0394e334087df4492cad9405, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

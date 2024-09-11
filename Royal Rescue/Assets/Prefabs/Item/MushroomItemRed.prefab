@@ -72,7 +72,10 @@ PrefabInstance:
       addedObject: {fileID: 6134403562479920965}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 15c2a05631ba497cbf857064f8c13659, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8522847435065203393}
+      addedObject: {fileID: -907434588592598260}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 15c2a05631ba497cbf857064f8c13659, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -4285123434257649763}
   m_SourcePrefab: {fileID: 100100000, guid: 15c2a05631ba497cbf857064f8c13659, type: 3}
 --- !u!1 &6403366432721289831 stripped
 GameObject:
@@ -127,7 +130,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8522847435065203393
+--- !u!114 &-907434588592598260
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,7 +139,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 6403366432721289831}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 383f3758df038a246b2b069089a96edf, type: 3}
+  m_Script: {fileID: 11500000, guid: ee7e69c37ac0840419e4a1a37a6dd7fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectPrefab: {fileID: 8271400594001470412, guid: 403ca708a5dfee14d915b21ed6f85bcb, type: 3}
+  coinEffect: {fileID: 8271400594001470412, guid: 403ca708a5dfee14d915b21ed6f85bcb, type: 3}
+--- !u!114 &-4285123434257649763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6403366432721289831}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c00ffda0394e334087df4492cad9405, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
