@@ -30,7 +30,7 @@ public class TestSlot : MonoBehaviour, IPointerEnterHandler
         if (CurrentitemData.Type == ItemType.Potion)
         {
             Debug.Log("포션 먹는다");
-            TestInven.Instance.Remove(CurrentitemData);
+            //TestInven.Instance.Remove(CurrentitemData);
             // 포션은 소비아이템, 갯수가 0이되면 사라진다
         }
         Time.timeScale = 1.0f;
