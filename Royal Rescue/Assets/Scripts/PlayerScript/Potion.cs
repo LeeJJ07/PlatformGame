@@ -12,7 +12,7 @@ public class Potion : MonoBehaviour
 
     public TMP_Text textCoolTime;
     public GameObject player;
-    private Coroutine coolTimeRoutine;
+    //private Coroutine coolTimeRoutine;
     public GameObject thisSkill;
     public Image imgFill;
     public int skillCollDown;
@@ -87,7 +87,7 @@ public class Potion : MonoBehaviour
             yield return null;
         }
 
-        this.coolTimeRoutine = null;
+        //this.coolTimeRoutine = null;
 
     }
 }
