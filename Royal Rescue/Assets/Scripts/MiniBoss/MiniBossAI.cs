@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class MiniBossAI : MonoBehaviour
 {
     [Header("중간보스 능력치")]
     [SerializeField] float hp;
-    [SerializeField] float maxHp;
+    [SerializeField] float maxHp = 300;
     [SerializeField] float walkSpeed;
     [SerializeField] float runSpeed;
 
@@ -63,6 +64,11 @@ public class MiniBossAI : MonoBehaviour
     Sequence followPlayerSequence;
 
     bool isDie = false;
+    bool takeAttack = false;
+    [SerializeField] protected GameObject hitEffect;
+    public Material material;
+    private Color originalColor; // 원래 색상
+
     BehaviorTreeRunner bt;
 
     private void Awake()
@@ -100,8 +106,6 @@ public class MiniBossAI : MonoBehaviour
 
     void Start()
     {
-
-        maxHp = 100f;
         hp = maxHp;
 
         deadSequence.AddNode(checkDie);
@@ -186,7 +190,12 @@ public class MiniBossAI : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (isDie) return;
-
+        if (!other.CompareTag("Weapon")
+            || !other.CompareTag("SlashAttack")
+            || !other.CompareTag("Bomb"))
+            return;
+        if (takeAttack) return;
+        takeAttack = true;
         switch (other.tag)
         {
             case "Weapon":
@@ -199,5 +208,19 @@ public class MiniBossAI : MonoBehaviour
                 OnDamage(playerControl.GetBombDamage());
                 break;
         }
+        StartCoroutine(TakeDamaging());
+    }
+    IEnumerator TakeDamaging()
+    {
+        Instantiate(hitEffect, transform.position + new Vector3(0, 1.2f, 0), Quaternion.identity);
+        for (int i = 0;i< 4; i++)
+        {
+            originalColor = material.color;
+            material.color = new Color(255, 125, 100, 100);
+            yield return new WaitForSeconds(0.1f);  // 0.2초 동안 대기
+            material.color = originalColor;
+            yield return new WaitForSeconds(0.1f);
+        }
+        takeAttack = false;
     }
 }

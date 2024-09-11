@@ -57,7 +57,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     [SerializeField] private bool isDie = false;
 
     private int basicDamage;
-    private int slashAttackDamage;
+    private int slashAttackDamage = 10;
     private int bombDamage;
 
     public float invincibilityDuration = 2.0f;  // 무적 상태 지속 시간
@@ -108,7 +108,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
 
         basicDamage = weapons.GetComponent<WeaponControl>().damage;
-        slashAttackDamage = weapons.GetComponent<SwordWindControl>().slashDamage;
+        //slashAttackDamage = weapons.GetComponent<SwordWindControl>().slashDamage;
         bombDamage = fireBallPrefabs.GetComponent<FireBallControl>().bombDamage;
     }
     // Update is called once per frame

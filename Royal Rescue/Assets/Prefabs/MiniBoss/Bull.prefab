@@ -1191,7 +1191,7 @@ MonoBehaviour:
   maxHp: 100
   walkSpeed: 7
   runSpeed: 10
-  player: {fileID: 0}
+  playerControl: {fileID: 0}
   startTrasform: {fileID: 4172131224096474963}
   animator: {fileID: 4111837621694349700}
   skill1Probability: 15
@@ -1206,6 +1206,8 @@ MonoBehaviour:
   skill2DelayTime: 0
   baseAttackDelayTime: 1
   followDelayTime: 0
+  hitEffect: {fileID: 5643653902188550112, guid: 8bd77ba3e8988b54888f155a0340947c, type: 3}
+  material: {fileID: 2100000, guid: 2adcd0740dbab9543950e17d5421900e, type: 2}
 --- !u!1 &3852976472167282488
 GameObject:
   m_ObjectHideFlags: 0
