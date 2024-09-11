@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class BossRoomTrigger : DoorTrap
 {
-    [SerializeField] private Animator cutsceneCamAnim;
+    [SerializeField] private Animator cutsceneCamAnim, bossAnim;
 
     private BossBehaviour boss;
 
     protected override void Start()
     {
+        cutsceneCamAnim.gameObject.SetActive(false);
         boss = monsterHub.GetComponentInChildren<BossBehaviour>(true);
     }
 
@@ -19,13 +20,31 @@ public class BossRoomTrigger : DoorTrap
         GameDirector.instance.PlayerControl.FixatePlayerRigidBody(true);
 
         cutsceneCamAnim.gameObject.SetActive(true);
+
         float cameraAnimationLength = AnimationHash.GetAnimationLength(cutsceneCamAnim, "GuillotineCam_cage");
+        cutsceneCamAnim.Play(AnimationHash.BOSSROOM_CUTSCENE_CAGE, -1, 0f);
         yield return new WaitForSeconds(cameraAnimationLength + 1f);
+
+        boss.ActivateBoss();
+
+        cameraAnimationLength = AnimationHash.GetAnimationLength(cutsceneCamAnim, "GuillotineCam_boss_appear");
+        cutsceneCamAnim.Play(AnimationHash.BOSSROOM_CUTSCENE_BOSS_APPEAR, -1, 0f);
+        yield return new WaitForSeconds(cameraAnimationLength);
+
+        yield return new WaitForSeconds(1.8f);
+
+        cameraAnimationLength = AnimationHash.GetAnimationLength(cutsceneCamAnim, "GuillotineCam_boss_scream");
+        cutsceneCamAnim.Play(AnimationHash.BOSSROOM_CUTSCENE_BOSS_SCREAM, -1, 0f);
+        yield return new WaitForSeconds(cameraAnimationLength);
+
+        cameraAnimationLength = AnimationHash.GetAnimationLength(cutsceneCamAnim, "GuillotineCam_scream_shake");
+        cutsceneCamAnim.Play(AnimationHash.BOSSROOM_CUTSCENE_SHAKE, -1, 0f);
+        yield return new WaitForSeconds(cameraAnimationLength);
 
         cameraAnimationLength = AnimationHash.GetAnimationLength(cutsceneCamAnim, "GuillotineCam_player");
         cutsceneCamAnim.Play(AnimationHash.BOSSROOM_CUTSCENE_PLAYER, -1, 0f);
         yield return new WaitForSeconds(cameraAnimationLength + 1f);
-        
+
         cutsceneCamAnim.gameObject.SetActive(false);
         GameDirector.instance.PlayerControl.FixatePlayerRigidBody(false);
     }
