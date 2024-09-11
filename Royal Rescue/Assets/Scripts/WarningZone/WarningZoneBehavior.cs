@@ -39,7 +39,6 @@ public class WarningZoneBehavior : MonoBehaviour,ITag
             warningZoneNewColor.a = min;
             ColorChangeSign *= -1;
         }
-        Debug.Log($"alpha: {warningZoneNewColor.a}");
         warningZoneNewColor.a -= alphaChangeSpeed * ColorChangeSign * Time.deltaTime;
         warningZoneMaterial.color = warningZoneNewColor;
     }

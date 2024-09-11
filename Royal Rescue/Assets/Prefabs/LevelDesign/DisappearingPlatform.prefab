@@ -57,8 +57,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   platformRenderer: {fileID: 5919032675358246261}
   platformCollider: {fileID: 5587052670113688594}
-  speed: 0.01
-  state: 0
+  speed: 10
 --- !u!23 &5919032675358246261
 MeshRenderer:
   m_ObjectHideFlags: 0

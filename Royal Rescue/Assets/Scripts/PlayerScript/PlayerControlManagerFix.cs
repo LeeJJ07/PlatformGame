@@ -93,7 +93,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         rb = this.GetComponent<Rigidbody>();
         rb.useGravity = true;
         anim = GetComponentInChildren<Animator>();
-        Inventory.SetActive(false);
+        //Inventory.SetActive(false);
         attackIcon.SetActive(true);
         weapons.GetComponent<BoxCollider>().enabled = false;
         weapons.GetComponent<WeaponControl>().trailEffect.enabled = false;
@@ -145,14 +145,14 @@ public class PlayerControlManagerFix : MonoBehaviour
             }
 
 
-            if (Input.GetButtonDown("InventoryKey"))
+            /*if (Input.GetButtonDown("InventoryKey"))
             {
                 Inventory.SetActive(true);
             }
             if(isAttackEnhance)
             {
                 attackIcon.SetActive(false);
-            }
+            }*/
 
             setPostProcessCenter();
         }

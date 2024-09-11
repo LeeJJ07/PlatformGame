@@ -8,9 +8,12 @@ public class DisappearingPlatform : MonoBehaviour
     [SerializeField] private MeshRenderer platformRenderer;
     [SerializeField] private BoxCollider platformCollider;
     [SerializeField] private float speed;
+    private PlatformState state;
     private Color originalColor1, originalColor2;
 
-    [SerializeField] private PlatformState state;
+    private bool disappearCondition => (originalColor1.a > 0 && originalColor2.a > 0);
+    private bool appearCondition =>  (originalColor1.a < 1 && originalColor2.a < 1);
+
     void Awake()
     {
         originalColor1 = platformRenderer.materials[0].color;
@@ -23,11 +26,11 @@ public class DisappearingPlatform : MonoBehaviour
         switch (state)
         {
             case PlatformState.DISAPPEAR:
-                Disappear();
+                Fade(disappearCondition, -speed, state);
                 break;
             
             case PlatformState.APPEAR:
-                Appear();
+                Fade(appearCondition, speed, state);
                 break;
 
             default:
@@ -40,36 +43,19 @@ public class DisappearingPlatform : MonoBehaviour
         state = platformState;
     }
 
-    private void Disappear()
+    private void Fade(bool isFading, float fadeSpeed, PlatformState platformState)
     {
-        if (originalColor1.a > 0 && originalColor2.a > 0)
+        if (isFading)
         {
-            originalColor1 = new Color(originalColor1.r, originalColor1.g, originalColor1.b, originalColor1.a - speed);
+            originalColor1 = new Color(originalColor1.r, originalColor1.g, originalColor1.b, originalColor1.a + fadeSpeed * Time.deltaTime);
             platformRenderer.materials[0].color = originalColor1;
 
-            originalColor2 = new Color(originalColor2.r, originalColor2.g, originalColor2.b, originalColor2.a - speed);
+            originalColor2 = new Color(originalColor2.r, originalColor2.g, originalColor2.b, originalColor2.a + fadeSpeed * Time.deltaTime);
             platformRenderer.materials[1].color = originalColor2;
         }
         else
         {
-            platformCollider.enabled = false;
-            state = PlatformState.DEFAULT;
-        }
-    }
-
-    private void Appear()
-    {
-        if (originalColor1.a < 1 && originalColor2.a < 1)
-        {
-            originalColor1 = new Color(originalColor1.r, originalColor1.g, originalColor1.b, originalColor1.a + speed);
-            platformRenderer.materials[0].color = originalColor1;
-
-            originalColor2 = new Color(originalColor2.r, originalColor2.g, originalColor2.b, originalColor2.a + speed);
-            platformRenderer.materials[1].color = originalColor2;
-        }
-        else
-        {
-            platformCollider.enabled = true;
+            platformCollider.enabled = (platformState != PlatformState.DISAPPEAR);
             state = PlatformState.DEFAULT;
         }
     }
