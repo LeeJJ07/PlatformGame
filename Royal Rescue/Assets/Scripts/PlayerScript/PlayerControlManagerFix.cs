@@ -56,6 +56,10 @@ public class PlayerControlManagerFix : MonoBehaviour
     public bool isFbPossible = false;
     [SerializeField] private bool isDie = false;
 
+    private int basicDamage;
+    private int slashAttackDamage;
+    private int bombDamage;
+
     public float invincibilityDuration = 2.0f;  // 무적 상태 지속 시간
     private bool isInvincible = false;  // 무적 상태 여부
     private Renderer playerRenderer;  // 플레이어 렌더러
@@ -81,7 +85,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     [SerializeField] PostProcessVolume fieldView;
     private Vignette vignette;
 
-    [SerializeField] private int coin = 100; // 코인 갯수
+    [SerializeField] private int coin = 0; // 코인 갯수
     void Start()
     {
         playerRenderer = GetComponent<Renderer>();
@@ -102,6 +106,10 @@ public class PlayerControlManagerFix : MonoBehaviour
             onPlayerDeath += playerDie;
             onPlayerDeath += () => StartCoroutine(GameDirector.instance.RespawnScreenTransition());
         }
+
+        basicDamage = weapons.GetComponent<WeaponControl>().damage;
+        slashAttackDamage = weapons.GetComponent<SwordWindControl>().slashDamage;
+        bombDamage = fireBallPrefabs.GetComponent<FireBallControl>().bombDamage;
     }
     // Update is called once per frame
     void Update()
@@ -215,7 +223,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         if(!isDashPossible)
         {
             //rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y), ForceMode.Impulse);
-            Debug.Log("�뽬");
+            //Debug.Log("�뽬");
             dashPower = (isDirRight ? Vector3.right : Vector3.left) * dash;
             //rb.velocity = dashPower*moveSpeed;
             rb.AddForce(dashPower, ForceMode.VelocityChange);
@@ -226,7 +234,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
         else
         {
-            Debug.Log("�뽬 ��Ÿ����");
+            //Debug.Log("�뽬 ��Ÿ����");
         }
         
     }
@@ -405,19 +413,39 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
     }
 
-    //�÷��̾� ������ ���� �ܺ� ����
+    //ENFORCE, JEWEL, HEAL, POWER, HEALTH, ATTACKSPEED
+    private void OnTriggerEnter(Collider other)
+    {
+        switch (other.tag)
+        {
+            case "ENFORCE":
+                //?
+                break;
+            case "JEWEL":
+                break;
+            case "HEAL":
+                break;
+            case "POWER":
+                break;
+            case "HEALTH":
+                break;
+            case "ATTACKSPEED":
+                break;
+        }
+    }
 
+    
     public int GetBasicDamage()
     {
-        return weapons.GetComponent<WeaponControl>().damage;
+        return basicDamage;
     }
     public int GetSlashAttackDamage()
     {
-        return weapons.GetComponent<SwordWindControl>().slashDamage;
+        return slashAttackDamage;
     }
     public int GetBombDamage()
     {
-        return fireBallPrefabs.GetComponent<FireBallControl>().bombDamage;
+        return bombDamage;
     }
     //
     public void HurtPlayer(int damage)
@@ -507,7 +535,6 @@ public class PlayerControlManagerFix : MonoBehaviour
 
     private void OnParticleCollision(GameObject other)
     {
-        Debug.Log("�浹");
         switch (other.tag)
         {
             case "Poison":
