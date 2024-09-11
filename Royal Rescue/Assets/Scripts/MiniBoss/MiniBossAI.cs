@@ -190,19 +190,13 @@ public class MiniBossAI : MonoBehaviour
         switch (other.tag)
         {
             case "Weapon":
-                OnDamage(10);
-                Debug.Log("현재 체력은 " + hp);
-                Debug.Log("데미지는 : 10");
+                OnDamage(playerControl.GetBasicDamage());
                 break;
             case "SlashAttack":
-                OnDamage(20);
-                Debug.Log("현재 체력은 " + hp);
-                Debug.Log("데미지는 : 20");
+                OnDamage(playerControl.GetSlashAttackDamage());
                 break;
             case "Bomb":
-                OnDamage(30);
-                Debug.Log("현재 체력은 " + hp);
-                Debug.Log("데미지는 : 30");
+                OnDamage(playerControl.GetBombDamage());
                 break;
         }
     }

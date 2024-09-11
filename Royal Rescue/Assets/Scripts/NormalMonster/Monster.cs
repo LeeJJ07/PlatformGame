@@ -251,17 +251,17 @@ public class Monster : MonoBehaviour
         switch (tag)
         {
             case "Weapon":
-                dmg = 10; //playerControl.getDamage();
+                dmg = playerControl.GetBasicDamage();
                 Debug.Log("기본 공격 받았다.");
                 break;
             case "Bomb":
 
-                dmg = 20; //playerControl.getDamage();
+                dmg = playerControl.GetBombDamage();
                 Debug.Log("폭탄 공격 받았다.");
                 break;
             case "SlashAttack":
-                dmg = 30; //playerControl.getDamage();
-                
+                dmg = playerControl.GetSlashAttackDamage();
+
                 Debug.Log("슬래쉬 공격 받았다.");
                 break;
         }
