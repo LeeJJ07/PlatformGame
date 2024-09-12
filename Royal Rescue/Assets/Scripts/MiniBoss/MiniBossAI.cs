@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
+using TMPro;
 
 public class MiniBossAI : MonoBehaviour
 {
@@ -65,9 +66,16 @@ public class MiniBossAI : MonoBehaviour
 
     bool isDie = false;
     bool takeAttack = false;
-    [SerializeField] protected GameObject hitEffect;
+    [SerializeField] private GameObject hitEffect;
     public Material material;
     private Color originalColor; // 원래 색상
+
+    public Slider hpBarPrefab;
+    public Vector3 hpBarOffset = new Vector3(0, -0.4f, 0);
+
+    private Canvas uiCanvas;
+    private Slider hpBarSlider;
+    public GameObject DamageTextPrefab;
 
     BehaviorTreeRunner bt;
 
@@ -138,6 +146,8 @@ public class MiniBossAI : MonoBehaviour
         root.AddNode(followPlayerSequence);
 
         bt = new BehaviorTreeRunner(root);
+
+        SetHpBar();
     }
     private void OnEnable()
     {
@@ -191,28 +201,45 @@ public class MiniBossAI : MonoBehaviour
     {
         if (isDie) return;
         if (!other.CompareTag("Weapon")
-            || !other.CompareTag("SlashAttack")
-            || !other.CompareTag("Bomb"))
+            && !other.CompareTag("SlashAttack")
+            && !other.CompareTag("Bomb"))
             return;
         if (takeAttack) return;
+
+        int dmg = 0;
         takeAttack = true;
         switch (other.tag)
         {
             case "Weapon":
-                OnDamage(playerControl.GetBasicDamage());
+                dmg = playerControl.GetBasicDamage();
                 break;
             case "SlashAttack":
-                OnDamage(playerControl.GetSlashAttackDamage());
+                dmg = playerControl.GetSlashAttackDamage();
                 break;
             case "Bomb":
-                OnDamage(playerControl.GetBombDamage());
+                dmg = playerControl.GetBombDamage();
                 break;
         }
+        OnDamage(dmg);
+
+        hpBarSlider.value = (float)hp / (float)maxHp;
+
+        Vector3 nVec = new Vector3(0, 5f, 0);
+        var screenPos = Camera.main.WorldToScreenPoint(transform.position + nVec); // 몬스터의 월드 3d좌표를 스크린좌표로 변환
+        var localPos = Vector2.zero;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.GetComponent<RectTransform>(), screenPos, uiCanvas.worldCamera, out localPos); // 스크린 좌표를 다시 체력바 UI 캔버스 좌표로 변환
+
+        GameObject damageUI = Instantiate(DamageTextPrefab) as GameObject;
+        damageUI.GetComponent<DamageText>().damage = dmg;
+        damageUI.transform.SetParent(uiCanvas.transform, false);
+        damageUI.transform.localPosition = localPos;
+
         StartCoroutine(TakeDamaging());
     }
     IEnumerator TakeDamaging()
     {
         Instantiate(hitEffect, transform.position + new Vector3(0, 1.2f, 0), Quaternion.identity);
+
         for (int i = 0;i< 4; i++)
         {
             originalColor = material.color;
@@ -222,5 +249,17 @@ public class MiniBossAI : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         takeAttack = false;
+    }
+    private void SetHpBar()
+    {
+        uiCanvas = GameObject.Find("InGame Canvas").GetComponent<Canvas>();
+        Slider hpBar = Instantiate<Slider>(hpBarPrefab, uiCanvas.transform);
+        hpBarSlider = hpBar;
+
+        var _hpbar = hpBar.GetComponent<MonsterHpBar>();
+        _hpbar.targetTr = this.gameObject.transform;
+        _hpbar.offset = hpBarOffset;
+
+        hpBarSlider.value = hp / maxHp;
     }
 }

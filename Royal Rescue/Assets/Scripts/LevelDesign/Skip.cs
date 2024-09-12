@@ -13,21 +13,20 @@ public class Skip : MonoBehaviour
     public Room[] rooms => GameDirector.instance.CurrentRoomControl.rooms;
 
     private AltarPortal altarPortal;
-    
-    private void Start()
-    {
-    }
+        
     // Update is called once per frame
     void Update()
     {
+
         if(Input.GetKeyDown(KeyCode.K))
         {
-            Debug.Log("right");
-            SwitchRoom(currentRoom.RoomId + 1);
+            if(GameObject.Find("RoomControl") != null)
+                SwitchRoom(currentRoom.RoomId + 1);             
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
-            SwitchRoom(currentRoom.RoomId - 1);
+            if (GameObject.Find("RoomControl") != null)
+                SwitchRoom(currentRoom.RoomId - 1);
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
@@ -39,10 +38,13 @@ public class Skip : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.P))
         {
-            Monster[] monsters = currentRoom.GetComponentsInChildren<Monster>(true);
-            foreach (Monster monster in monsters)
+            if (GameObject.Find("RoomControl") != null)
             {
-                monster.gameObject.SetActive(false);
+                Monster[] monsters = currentRoom.GetComponentsInChildren<Monster>(true);
+                foreach (Monster monster in monsters)
+                {
+                    monster.gameObject.SetActive(false);
+                }
             }
         }
 
