@@ -20028,7 +20028,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
       propertyPath: bossName
-      value: "\uBD89\uC740 \uB3C4\uB9C8\uBC40"
+      value: Death Wing
+      objectReference: {fileID: 0}
+    - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: EntryDelay
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
       propertyPath: isActivate

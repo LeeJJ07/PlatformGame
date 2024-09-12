@@ -16,13 +16,11 @@ public class BossHpBarUI : MonoBehaviour,ITag
     float[] hpColorChangeNum= new float[3];
     string bossName = "";
 
-    private void OnEnable()
+    private void Awake()
     {
         HpbarAniCTRL=GetComponent<Animator>();
         hpSlider = GetComponentInChildren<Slider>();
         TMPname = GetComponentInChildren<TextMeshProUGUI>();
-        /*hpSlider.gameObject.SetActive(false);
-        TMPname.gameObject.SetActive(false);*/
     }
     public void Init(int maxHp, float[] hpColorChangeNum, string name)
     {
@@ -33,8 +31,6 @@ public class BossHpBarUI : MonoBehaviour,ITag
     }
     public void ActivateUI()
     {
-       /* hpSlider.gameObject.SetActive(true);
-        TMPname.gameObject.SetActive(true);*/
         hpSlider.value = 1;
         TMPname.text = bossName;
         HpbarAniCTRL.SetBool("isActivate", true);
@@ -42,15 +38,12 @@ public class BossHpBarUI : MonoBehaviour,ITag
     }
     public void DeActivateUI()
     {
-        /*hpSlider.gameObject.SetActive(false);
-        TMPname.gameObject.SetActive(false);*/
         HpbarAniCTRL.SetBool("isActivate", false);
         HpbarAniCTRL.SetBool("isDeActivate", true);
     }
     public void ChangeHpValue(int curHp)
     {
         hpSlider.value = (curHp/ (float)maxHp);
-        Debug.Log($"value: {(curHp / (float)maxHp)}\n maxHp: {maxHp}\ncurHp: {curHp}");
     }
 
     public string GetTag()

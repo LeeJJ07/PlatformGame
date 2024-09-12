@@ -23,6 +23,7 @@ public class BossBehaviour : MonoBehaviour,ITag
 
     [Header("Phase1")]
     [SerializeField] float Phase1HpCondition;
+    [SerializeField] float EntryDelay;
 
     [Header("PHASE1 Skill Info")]
     [SerializeField] FlameAttackScriptableObject Phase1flameAttackInfo;
@@ -83,6 +84,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     INode checkIncomingPhase1;
     INode phase1EntryLandNode;
     INode phase1EntryScreamNode;
+    INode phase1EntryafterDelay;
     INode phase1FlameAttackDelay;
     INode phase1ScreamAttackDelay;
 
@@ -194,6 +196,7 @@ public class BossBehaviour : MonoBehaviour,ITag
 
         phase1FlameAttackDelay = new NodeDelay(GetIsActiveGetHitAni, SetisDelayTime, Phase1flameAttackInfo.subSequenceDelay,aniController);
         phase1ScreamAttackDelay = new NodeDelay(GetIsActiveGetHitAni, SetisDelayTime, Phase1screamAttackInfo.subSequenceDelay,aniController);
+        phase1EntryafterDelay = new NodeDelay(GetIsActiveGetHitAni, SetisDelayTime, EntryDelay, aniController);
 
         phase2BasicAttackDelay = new NodeDelay(GetIsActiveGetHitAni, SetisDelayTime, Phase2basicAttackInfo.subSequenceDelay,aniController);
         phase2FlameAttackDelay = new NodeDelay(GetIsActiveGetHitAni, SetisDelayTime, Phase2flameAttackInfo.subSequenceDelay,aniController);
@@ -297,6 +300,8 @@ public class BossBehaviour : MonoBehaviour,ITag
 
         entryPhase1ActionSequence.AddNode(phase1EntryLandNode);
         entryPhase1ActionSequence.AddNode(phase1EntryScreamNode);
+        entryPhase1ActionSequence.AddNode(phase1EntryafterDelay);
+
         entryPhase1Sequence.AddNode(checkIncomingPhase1);
         entryPhase1Sequence.AddNode(entryPhase1ActionSequence);
         phase1AttackRandomSelector.AddNode(phase1FlameAttackSequence);
