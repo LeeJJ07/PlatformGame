@@ -351,12 +351,26 @@ public class PlayerControlManagerFix : MonoBehaviour
     public void IncreaseSpeed(float amount)
     {
         moveSpeed += amount;
-        Debug.Log("스피드가 " + amount + "만큼 증가");
+        if(amount < 0)
+            Debug.Log("스피드가 " + amount + "만큼 감소");
+        else
+            Debug.Log("스피드가 " + amount + "만큼 증가");
     }
     public void IncreaseAtk(int amount)
     {
         playerBasicATK += amount;
-        Debug.Log("공격력이 " + amount + "만큼 증가");
+        if (amount < 0)
+            Debug.Log("공격력이 " + amount + "만큼 감소");
+        else
+            Debug.Log("공격력이 " + amount + "만큼 증가");
+    }
+    public void IncreaseMaxHp(int amount)
+    {
+        playerMaxHP += amount;
+        if (amount < 0)
+            Debug.Log("최대 체력이 " + amount + "만큼 감소");
+        else
+            Debug.Log("최대 체력이 " + amount + "만큼 증가");
     }
     void playerDie()
     {

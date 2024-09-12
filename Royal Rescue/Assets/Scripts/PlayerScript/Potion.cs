@@ -8,10 +8,10 @@ public class Potion : MonoBehaviour
 {
     public UnityEngine.UI.Image itemImage; // 아이템의 이미지.
     private float coolTime;
-    public int potionCount;
+    public int potionCount;//포션 갯수 플레이어에게 받아와야함
 
     public TMP_Text textCoolTime;
-    public GameObject player;
+    private PlayerControlManagerFix playerCntl;
     //private Coroutine coolTimeRoutine;
     public GameObject thisSkill;
     public Image imgFill;
@@ -29,6 +29,7 @@ public class Potion : MonoBehaviour
     }
     void Start()
     {
+        playerCntl = GameDirector.instance.PlayerControl;
         this.textCoolTime.gameObject.SetActive(false);
 
         Init();
@@ -37,15 +38,15 @@ public class Potion : MonoBehaviour
     {
         if (Input.GetButtonDown("DrinkingPotion"))
         {
-            if(potionCount > 0 && player.GetComponent<PlayerControlManagerFix>().playerHP < player.GetComponent<PlayerControlManagerFix>().playerMaxHP)
+            if(potionCount > 0 && playerCntl.playerHP < playerCntl.playerMaxHP)
             {
-                if (player.GetComponent<PlayerControlManagerFix>().playerHP + 50 <= player.GetComponent<PlayerControlManagerFix>().playerMaxHP)
-                    player.GetComponent<PlayerControlManagerFix>().playerHP += 50;
+                if (playerCntl.playerHP + 50 <= playerCntl.playerMaxHP)
+                    playerCntl.playerHP += 50;
                 else
-                    player.GetComponent<PlayerControlManagerFix>().playerHP = player.GetComponent<PlayerControlManagerFix>().playerMaxHP;
+                    playerCntl.playerHP = playerCntl.playerMaxHP;
                 StartCoroutine(PotionCoolTimeRoutine());
             }
-            else if(player.GetComponent<PlayerControlManagerFix>().playerHP == player.GetComponent<PlayerControlManagerFix>().playerMaxHP)
+            else if(playerCntl.playerHP == playerCntl.playerMaxHP)
             {
                 Debug.Log("HP가 이미 최대치임");
             }

@@ -5,7 +5,8 @@ using UnityEngine;
 public class TestAtkPotion : TestItemEffect
 {
     private GameObject player;
-    public int increaseAtk = 5;
+    public int[] increaseAtk = {-5, 5 };
+    public int minAtk = 5;
     public void SetPlayer(GameObject playerOb)
     {
         player = playerOb;
@@ -17,7 +18,13 @@ public class TestAtkPotion : TestItemEffect
         PlayerControlManagerFix playerController = player.GetComponent<PlayerControlManagerFix>();
         if (playerController != null)
         {
-            playerController.IncreaseAtk(increaseAtk);
+            int randomPower = increaseAtk[Random.Range(0, increaseAtk.Length)];
+
+            if (playerController.playerBasicATK + randomPower < 5)
+            {
+                return false;
+            }
+            playerController.IncreaseAtk(randomPower);
             return true;
         }
         else

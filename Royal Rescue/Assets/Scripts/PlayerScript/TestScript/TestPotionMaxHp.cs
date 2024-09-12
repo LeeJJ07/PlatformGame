@@ -1,13 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[CreateAssetMenu(menuName = "ItemEft/Potion/SpeedUP")]
-public class TestSpeedPotion : TestItemEffect
+[CreateAssetMenu(menuName = "ItemEft/Potion/HealthUp")]
+public class TestPotionMaxHp : TestItemEffect
 {
     private GameObject player;
-    public float[] speedUpValue = {-1.0f, 1.0f, 2.0f };
-    public float maxSpeed = 15.0f;
-    public float minSpeed = 4.0f;
+    public int[] increaseMaxHp = { -20, 20 };
+    public int minHP = 40;
     public void SetPlayer(GameObject playerOb)
     {
         player = playerOb;
@@ -19,15 +18,13 @@ public class TestSpeedPotion : TestItemEffect
         PlayerControlManagerFix playerController = player.GetComponent<PlayerControlManagerFix>();
         if (playerController != null)
         {
-            float randomSpeed = speedUpValue[Random.Range(0, speedUpValue.Length)];
+            int randomMaxHp = increaseMaxHp[Random.Range(0, increaseMaxHp.Length)];
 
-
-            if(playerController.moveSpeed + randomSpeed < 4)
+            if (playerController.playerMaxHP + randomMaxHp < 40)
             {
                 return false;
             }
-
-            playerController.IncreaseSpeed(randomSpeed);
+            playerController.IncreaseMaxHp(randomMaxHp);
             return true;
         }
         else

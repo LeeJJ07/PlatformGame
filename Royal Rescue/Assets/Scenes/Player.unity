@@ -4341,6 +4341,11 @@ MonoBehaviour:
     itemImage: {fileID: 21300000, guid: 0a57bb61970b6e844a6fbf93282ed8d6, type: 3}
     efts:
     - {fileID: 11400000, guid: 3fcd2cc53c402b345b325b455bb3a7f4, type: 2}
+  - itemType: 1
+    itemName: HealthUp
+    itemImage: {fileID: 21300000, guid: c2ebadfcb9b8cbb4a8ae6f124b17e332, type: 3}
+    efts:
+    - {fileID: 11400000, guid: f646ff9bb675c7c4ba8cdf131d5ad4be, type: 2}
   fieldItemPrefab: {fileID: 8875361845925157717, guid: c1b28c5b8e5fec549bb66301b961628f, type: 3}
   pos:
   - {x: 19, y: 10, z: 0}
@@ -9829,19 +9834,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7054254038125191259, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
   m_PrefabInstance: {fileID: 4503517443478921989}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1748505002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1748504996}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2d0842d92e76ac44add9856960aeb72, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items: []
 --- !u!1001 &1770592617
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12497,10 +12489,6 @@ PrefabInstance:
       propertyPath: attackIcon
       value: 
       objectReference: {fileID: 1869919248}
-    - target: {fileID: 5130297143477228180, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
-      propertyPath: trajectoryVisualizerPrefab
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7054254038125191259, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       propertyPath: m_Name
       value: Player
@@ -12548,10 +12536,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7054254038125191259, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1748505002}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
 --- !u!1 &5777026298293757593
 GameObject:
