@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
+using TMPro;
 
 public class MiniBossAI : MonoBehaviour
 {
@@ -65,15 +66,15 @@ public class MiniBossAI : MonoBehaviour
 
     bool isDie = false;
     bool takeAttack = false;
-    [SerializeField] protected GameObject hitEffect;
+    [SerializeField] private GameObject hitEffect;
     public Material material;
     private Color originalColor; // 원래 색상
 
     public Slider hpBarPrefab;
     public Vector3 hpBarOffset = new Vector3(0, -0.4f, 0);
 
-    protected Canvas uiCanvas;
-    protected Slider hpBarSlider;
+    private Canvas uiCanvas;
+    private Slider hpBarSlider;
     public GameObject DamageTextPrefab;
 
     BehaviorTreeRunner bt;
@@ -145,6 +146,8 @@ public class MiniBossAI : MonoBehaviour
         root.AddNode(followPlayerSequence);
 
         bt = new BehaviorTreeRunner(root);
+
+        SetHpBar();
     }
     private void OnEnable()
     {
@@ -218,7 +221,6 @@ public class MiniBossAI : MonoBehaviour
                 break;
         }
         OnDamage(dmg);
-        hp -= dmg; //playerControl.getDamage();
 
         hpBarSlider.value = (float)hp / (float)maxHp;
 
@@ -238,7 +240,6 @@ public class MiniBossAI : MonoBehaviour
     {
         Instantiate(hitEffect, transform.position + new Vector3(0, 1.2f, 0), Quaternion.identity);
 
-
         for (int i = 0;i< 4; i++)
         {
             originalColor = material.color;
@@ -248,5 +249,17 @@ public class MiniBossAI : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         takeAttack = false;
+    }
+    private void SetHpBar()
+    {
+        uiCanvas = GameObject.Find("InGame Canvas").GetComponent<Canvas>();
+        Slider hpBar = Instantiate<Slider>(hpBarPrefab, uiCanvas.transform);
+        hpBarSlider = hpBar;
+
+        var _hpbar = hpBar.GetComponent<MonsterHpBar>();
+        _hpbar.targetTr = this.gameObject.transform;
+        _hpbar.offset = hpBarOffset;
+
+        hpBarSlider.value = hp / maxHp;
     }
 }

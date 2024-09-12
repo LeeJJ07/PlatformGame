@@ -384,7 +384,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         if (collision.gameObject.CompareTag("Floor") && Physics.Raycast(transform.position, Vector3.down, out hit, 1f))
         {
             isFloor = true;
-                anim.SetBool("isJump", false);
+            anim.SetBool("isJump", false);
             anim.SetBool("isDoubleJump", false);
             anim.SetBool("isGround", false);
             jumpCnt = jumpPossible;
