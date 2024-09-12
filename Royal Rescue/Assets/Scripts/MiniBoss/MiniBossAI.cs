@@ -78,7 +78,7 @@ public class MiniBossAI : MonoBehaviour
     public GameObject DamageTextPrefab;
 
     BehaviorTreeRunner bt;
-
+    [HideInInspector] public BossHpBarUI hpbarUi;
     private void Awake()
     {
         playerControl = GameDirector.instance.PlayerControl;
@@ -153,7 +153,15 @@ public class MiniBossAI : MonoBehaviour
     {
         if (isDie)
             gameObject.SetActive(false);
+        GameObject[] uiObjs = GameObject.FindGameObjectsWithTag("UI");
+        foreach (GameObject obj in uiObjs)
+        {
+            if (obj.GetComponent<ITag>().CompareToTag("BossHpUI"))
+                hpbarUi = obj.GetComponent<BossHpBarUI>();
+        }
 
+        hpbarUi.Init((int)maxHp, null, gameObject.name);
+        //hpbarUi.ActivateUI();
     }
     void Update()
     {
@@ -177,12 +185,14 @@ public class MiniBossAI : MonoBehaviour
     void OnDamage(int damage)
     {
         hp -= damage;
+        hpbarUi.ChangeHpValue((int)hp);
     }
     public int GetBaseAttackDamage() { return baseAttackDamage; }
     public int GetSkill1Damage() { return skill1Damage; }
     public int GetSkill2Damage() { return skill2Damage; }
     IEnumerator DeActive()
     {
+        hpbarUi.DeActivateUI();
         yield return new WaitForSeconds(3f);
         gameObject.SetActive(false);
     }
@@ -261,5 +271,6 @@ public class MiniBossAI : MonoBehaviour
         _hpbar.offset = hpBarOffset;
 
         hpBarSlider.value = hp / maxHp;
+        
     }
 }

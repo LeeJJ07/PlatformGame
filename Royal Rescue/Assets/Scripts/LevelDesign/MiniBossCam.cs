@@ -33,6 +33,8 @@ public class MiniBossCam : DoorTrap
 
         yield return new WaitForSeconds(1f);
         SwitchCamera(bossCamera, mainCamera);
+        yield return new WaitForSeconds(0.5f);
+        boss.hpbarUi.ActivateUI();
     }    
 
     protected override bool CheckRoomClear()
