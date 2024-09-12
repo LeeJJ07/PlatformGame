@@ -12,8 +12,6 @@ public class PlayerControlManagerFix : MonoBehaviour
     private delegate void OnPlayerDeath();
     private OnPlayerDeath onPlayerDeath;
 
-    //public GameObject[] PlayerHeart = new GameObject[5];
-
     public Material material;
     public float maxAlpha = 1f; // 최대 알파 값
     public float minAlpha = 0f; // 최소 알파 값
@@ -36,13 +34,10 @@ public class PlayerControlManagerFix : MonoBehaviour
     public GameObject attackIcon;
     public Transform fireBallSpawnPoint;
     [SerializeField] private int jumpPossible = 2;
-    //[SerializeField] private float lastGroundTime;
-    //[SerializeField] private float jumpPressTime;
     private float attackDelay;
     public float moveSpeed;
     public float JumpPower;
     bool isJumpDown;
-    //bool isJump;
     bool isDashbool;
     [SerializeField] private int jumpCnt = 0;
     [SerializeField] public bool isDirRight = true;
@@ -94,7 +89,6 @@ public class PlayerControlManagerFix : MonoBehaviour
         rb = this.GetComponent<Rigidbody>();
         rb.useGravity = true;
         anim = GetComponentInChildren<Animator>();
-        //Inventory.SetActive(false);
         attackIcon.SetActive(true);
         weapons.GetComponent<BoxCollider>().enabled = false;
         weapons.GetComponent<WeaponControl>().trailEffect.enabled = false;
@@ -109,7 +103,6 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
 
         basicDamage = weapons.GetComponent<WeaponControl>().damage;
-        //slashAttackDamage = weapons.GetComponent<SwordWindControl>().slashDamage;
         bombDamage = fireBallPrefabs.GetComponent<FireBallControl>().bombDamage;
     }
     // Update is called once per frame
@@ -126,10 +119,6 @@ public class PlayerControlManagerFix : MonoBehaviour
             {
                 CheckDash();
             }
-            /*if (Input.GetButtonDown("FireBallKey"))
-            {
-                ThrowBall();
-            }*/
             if (Input.GetButtonDown("FireBallKey"))
             {
                 holdTime = 0;
@@ -144,33 +133,22 @@ public class PlayerControlManagerFix : MonoBehaviour
             {
                 ThrowBall();
             }
-
-
-            /*if (Input.GetButtonDown("InventoryKey"))
-            {
-                Inventory.SetActive(true);
-            }
-            if(isAttackEnhance)
-            {
-                attackIcon.SetActive(false);
-            }*/
-
             setPostProcessCenter();
         }
     }
     void GetInput()
     {
         hAxis = Input.GetAxis("Horizontal");
-        vAxis = Input.GetAxis("Vertical");//
-        isJumpDown = Input.GetKeyDown(KeyCode.Space);//����
-        isAttackButton = Input.GetButtonDown("Attack");//����
+        vAxis = Input.GetAxis("Vertical");
+        isJumpDown = Input.GetKeyDown(KeyCode.Space);
+        isAttackButton = Input.GetButtonDown("Attack");
     }
     private void FixedUpdate()
     {
         if(!isDie)
         {
-            rb.velocity = new Vector2(hAxis * moveSpeed, rb.velocity.y);//�¿��̵�
-                                                                        //rb.AddForce(moveDir, ForceMode.VelocityChange);//��������;;
+            rb.velocity = new Vector2(hAxis * moveSpeed, rb.velocity.y);
+                                                              
             if (!isDirRight && hAxis > 0.0f)
             {
                 changeDir();
@@ -180,21 +158,7 @@ public class PlayerControlManagerFix : MonoBehaviour
                 changeDir();
             }
         }
-        
-        /*if(rb.velocity.y > 0)
-        {
-            Debug.DrawRay(rb.position, Vector3.down * 3f, Color.red);
-            RaycastHit2D hit = Physics2D.Raycast(rb.position,Vector3.down, 1);
-            if (hit.collider != null)
-            {
-                if(hit.distance < 0.1f)
-                {
-                    anim.SetBool("isJump", false);
-                    anim.SetBool("isDoubleJump", false);
-                    anim.SetTrigger("Land");
-                }
-            }
-        }*/
+
     }
     void changeDir()
     {
@@ -223,28 +187,18 @@ public class PlayerControlManagerFix : MonoBehaviour
     {
         if(!isDashPossible)
         {
-            //rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y), ForceMode.Impulse);
-            //Debug.Log("�뽬");
             dashPower = (isDirRight ? Vector3.right : Vector3.left) * dash;
-            //rb.velocity = dashPower*moveSpeed;
             rb.AddForce(dashPower, ForceMode.VelocityChange);
-            //rb.AddForce((dirRight ? Vector3.right : Vector3.left) * dash, ForceMode.Impulse);
             anim.SetTrigger("DashTr");
             isDashPossible = true;
             StartCoroutine("DashCoolDown");
-        }
-        else
-        {
-            //Debug.Log("�뽬 ��Ÿ����");
         }
         
     }
     void Jump()
     {
-        //touch = Input.GetTouch(0);
         if (isJumpDown && jumpCnt > 0)
         {
-            //curTabTime = Time.time;
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y) * 1.5f, ForceMode.Impulse);
             if (jumpCnt == 2)
@@ -258,7 +212,6 @@ public class PlayerControlManagerFix : MonoBehaviour
                 anim.SetBool("isDoubleJump", true);
             }
             jumpCnt--;
-            //lastTabTime = Time.time;
 
             SoundManager.Instance.PlaySound("Jump");
         }
@@ -271,6 +224,9 @@ public class PlayerControlManagerFix : MonoBehaviour
         equipWeapon = weapons.GetComponent<WeaponControl>();
         equipWeapon.gameObject.SetActive(true);
     }
+
+
+    //공격 관련 함수
     void Attack()
     {
         if (equipWeapon == null)
@@ -303,13 +259,8 @@ public class PlayerControlManagerFix : MonoBehaviour
             GameObject fBall;
             isFbPossible = true;
             fBall = Instantiate(fireBallPrefabs, fireBallSpawnPoint.position, fireBallSpawnPoint.rotation);
-            //float throwForce = Mathf.Lerp(minThrowPower, maxThrowPower, holdTime / maxHoldTime);
             fBall.GetComponent<FireBallControl>().throwForce = Mathf.Lerp(minThrowPower, maxThrowPower, holdTime / maxHoldTime);
             fBall.GetComponent<FireBallControl>().ballDir = isDirRight ? Vector3.right : Vector3.left;
-            //fBall.GetComponent<FireBallControl>().isFireball = true;
-            //Vector3 throwDir = (isDirRight ? Vector3.right : Vector3.left) + Vector3.up * 0.5f; // �ణ ���� ���� (������ ȿ��)
-            //fBall.GetComponent<FireBallControl>().Throw(throwDir);
-            //fBall.transform.position = fireBallSpawnPoint.transform.position;
             anim.SetTrigger("FireBallTr");
             skillCount -= 1;
             StartCoroutine("CheckFireBall");
@@ -335,12 +286,7 @@ public class PlayerControlManagerFix : MonoBehaviour
             {
                 fBall = Instantiate(SwordWindPrefabsL, fireBallSpawnPoint.position, fireBallSpawnPoint.rotation);
             }
-            //fBall = Instantiate(fireBallPrefabs, fireBallSpawnPoint.position, fireBallSpawnPoint.rotation);
             fBall.GetComponent<SwordWindControl>().ballDir = isDirRight ? Vector3.right : Vector3.left;
-            //fBall.GetComponent<FireBallControl>().isFireball = true;
-            //Vector3 throwDir = (isDirRight ? Vector3.right : Vector3.left) + Vector3.up * 0.5f; // �ణ ���� ���� (������ ȿ��)
-            //fBall.GetComponent<FireBallControl>().Throw(throwDir);
-            //fBall.transform.position = fireBallSpawnPoint.transform.position;
             anim.SetTrigger("FireBallTr");
             StartCoroutine("CheckAttack2");
         }
@@ -382,7 +328,6 @@ public class PlayerControlManagerFix : MonoBehaviour
 
         anim.SetTrigger("DieTr");
         anim.SetBool("isDiePlayer", isDie ? true : false);
-        //this.gameObject.SetActive(false);
     }
     
     public void RevivePlayer()
@@ -418,14 +363,6 @@ public class PlayerControlManagerFix : MonoBehaviour
         {
             jumpCnt = 0;
         }
-        /*
-        if(collision.gameObject.CompareTag("Floor") && Physics.Raycast(transform.position, isDirRight ? Vector3.right : Vector3.left, out hit, 1f) && !isFloor)
-        {
-            if (isDirRight)
-                this.transform.position += new Vector3(-0.1f, 0, 0 );
-            else
-                this.transform.position += new Vector3(0.1f, 0, 0);
-        }*/
         if (collision.gameObject.CompareTag("Enemy") && !isAttackButton)
         {
             EnemyControler enemy = collision.gameObject.GetComponent<EnemyControler>();
@@ -509,7 +446,6 @@ public class PlayerControlManagerFix : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
 
-        //yield return new WaitForSeconds(invincibilityDuration);
         isInvincible = false;  // 무적 상태 해제
         Debug.Log("무적상태 해제");
     }
@@ -619,49 +555,4 @@ public class PlayerControlManagerFix : MonoBehaviour
     public int GetCoin() { return coin; }
     public void SetCoin(int needCoin) { coin -= needCoin; }
 }
-/*
- * private Rigidbody rigid;
-    private Collider coll;
-    [SerializeField] private GameObject hand;
-    void Start()
-    {
-        rigid = GetComponent<Rigidbody>();
 
-@@ -22,10 +23,11 @@ public class PlayerController : MonoBehaviour
-    void Update()
-    {
-        h = Input.GetAxis("Horizontal");        // ??????
-        transform.position += new Vector3(h, 0, 0) * speed * Time.deltaTime;
-        this.transform.position += new Vector3(h, 0, 0) * speed * Time.deltaTime;
-        if (h > 1e-3 || h < -1e-3)
-            transform.rotation = Quaternion.Euler(0, h < 0 ? 0 : 180, 0);
-            this.transform.rotation = Quaternion.Euler(0, h < 0 ? 0 : 180, 0);
-        Jump();
-        Attack();
-    }
-    void Jump()
-    {
-
-@@ -38,4 +40,21 @@ public class PlayerController : MonoBehaviour
-    {
-        rigid.AddForce(Vector3.down * forceGravity);
-    }
-    void Attack()
-    {
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            StartCoroutine(Atk());
-        } 
-    }
-
-    IEnumerator Atk()
-    {
-        //90?? ????, -90?? ??????
-
-
-        hand.transform.eulerAngles = new Vector3(0, 0, 50f);
-        yield return new WaitForSeconds(1f);
-        hand.transform.eulerAngles = new Vector3(0, 0, -8f);
-    }
-}
- */
