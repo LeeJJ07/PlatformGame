@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 public class InventorySingleton : MonoBehaviour
@@ -24,7 +25,7 @@ public class InventorySingleton : MonoBehaviour
     public delegate void OnChangeItem();
     public OnChangeItem onChangeItem;
 
-    List<TestItem> items = new List<TestItem>();
+    public List<TestItem> items = new List<TestItem>();
 
     private int slotCnt;
     public int SlotCnt
@@ -40,7 +41,7 @@ public class InventorySingleton : MonoBehaviour
 
     void Start()
     {
-        slotCnt = 4;
+        slotCnt = 12;
     }
 
     public bool AddItem(TestItem _item)
@@ -54,8 +55,14 @@ public class InventorySingleton : MonoBehaviour
         }
         return false;
     }
-
-
+   
+    public void RemoveItem(int slotNum)
+    {
+        if (slotNum < 0 || slotNum >= items.Count) 
+            return;
+        items.RemoveAt(slotNum);
+        onChangeItem.Invoke();
+    }
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("FieldItem"))

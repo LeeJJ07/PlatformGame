@@ -17,14 +17,15 @@ public class TestInven : MonoBehaviour
     public GameObject inventoryPanel;
     bool aciveInventory = false;
 
-    public Slot[] slots;
+    public TestSlot[] slots;
     public Transform slotHolder;
 
     private void Start()
     {
         inven = InventorySingleton.Instance;
-        slots = slotHolder.GetComponentsInChildren<Slot>();
+        slots = slotHolder.GetComponentsInChildren<TestSlot>();
         inven.onSlotCntChange += SlotChange;
+        inven.onChangeItem += ReDrawSlotUI;
         inventoryPanel.SetActive(aciveInventory);
     }
 
@@ -32,6 +33,7 @@ public class TestInven : MonoBehaviour
     {
         for(int i = 0; i < slots.Length ; i++)
         {
+            slots[i].slotNum = i;
             if (i < inven.SlotCnt)
                 slots[i].GetComponent<Button>().interactable = true;
             else
@@ -51,5 +53,20 @@ public class TestInven : MonoBehaviour
     public void AddSlot()
     {
         inven.SlotCnt++;
+    }
+
+    public void ReDrawSlotUI()
+    {
+        for(int i = 0; i < slots.Length ; i++)
+        {
+            slots[i].RemoveSlot();
+        }
+        for (int i = 0; i < inven.items.Count ; i++)
+        {
+            slots[i].item = inven.items[i];
+            slots[i].slotNum = i;
+            slots[i].UpdateSlotUI();
+
+        }
     }
 }

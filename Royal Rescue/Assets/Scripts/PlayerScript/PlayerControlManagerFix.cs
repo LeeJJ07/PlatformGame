@@ -22,6 +22,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     public GameObject DamageEffect;
     public int playerMaxHP = 500;
     public int playerHP;
+    public int playerBasicATK = 0;
     public float hAxis;
     public float vAxis;
     public float dash = 5f;
@@ -347,6 +348,16 @@ public class PlayerControlManagerFix : MonoBehaviour
             return;
         
     }
+    public void IncreaseSpeed(float amount)
+    {
+        moveSpeed += amount;
+        Debug.Log("스피드가 " + amount + "만큼 증가");
+    }
+    public void IncreaseAtk(int amount)
+    {
+        playerBasicATK += amount;
+        Debug.Log("공격력이 " + amount + "만큼 증가");
+    }
     void playerDie()
     {
         isDie = true;
@@ -437,15 +448,15 @@ public class PlayerControlManagerFix : MonoBehaviour
     
     public int GetBasicDamage()
     {
-        return basicDamage;
+        return basicDamage + playerBasicATK;
     }
     public int GetSlashAttackDamage()
     {
-        return slashAttackDamage;
+        return slashAttackDamage + playerBasicATK;
     }
     public int GetBombDamage()
     {
-        return bombDamage;
+        return bombDamage + playerBasicATK;
     }
     //
     public void HurtPlayer(int damage)
