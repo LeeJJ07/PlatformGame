@@ -19,6 +19,7 @@ public class AnimationHash
     public static readonly int BOSSROOM_CUTSCENE_BOSS_APPEAR = Animator.StringToHash("GuillotineCam_boss_appear");
     public static readonly int BOSSROOM_CUTSCENE_BOSS_SCREAM = Animator.StringToHash("GuillotineCam_boss_scream");
     public static readonly int BOSSROOM_CUTSCENE_SHAKE       = Animator.StringToHash("GuillotineCam_scream_shake");
+    public static readonly int BOSSROOM_CUTSCENE_BOSS_DEATH  = Animator.StringToHash("BossDeathCam_focus");
 
 
     public static float GetAnimationLength(Animator anim, string animName)

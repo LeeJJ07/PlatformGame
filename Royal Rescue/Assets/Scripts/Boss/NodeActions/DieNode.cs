@@ -14,6 +14,7 @@ public class DieNode : INode
     float keepDieStateTime = 5f;
     float time = 0;
     bool isActiveAnime = false;
+    public bool IsActiveAnime => isActiveAnime;
     
     public DieNode(DeActiveObj deActiveObj, BossDie bossDie, Transform transform, Transform target, Animator aniController)
     {

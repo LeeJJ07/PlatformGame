@@ -35,13 +35,6 @@ public class AltarPortal : MonoBehaviour
 
     void Update()
     {
-        // if (test_openPortal)
-        // {
-        //     test_openPortal = false;
-        //     StartCoroutine(PlayPortalAnimation());
-        //     portalTrigger.enabled = true;
-        // }
-
         if (isPlayerInPortalRange && Input.GetButtonDown("Attack"))
         {
             portalTrigger.enabled = false;

@@ -22,7 +22,7 @@ public class DoorTrap : MonoBehaviour
         trapTrigger = GetComponent<BoxCollider>();
     }
 
-    protected void Update()
+    protected virtual void Update()
     {
         if (!hasClearedRoom && CheckRoomClear())
         {

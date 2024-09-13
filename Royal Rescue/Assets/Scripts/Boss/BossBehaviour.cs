@@ -614,5 +614,10 @@ public class BossBehaviour : MonoBehaviour,ITag
     {
         return this.detailTag==detailTag;
     }
+
+    public INode GetBossDeathNode()
+    {
+        return DieNode;
+    }
 }
 
