@@ -77,6 +77,8 @@ public class GameDirector : MonoBehaviour
 
     public void ShowLoadingScreen()
     {
+        SetPlayerRelatedObjects(false);
+
         uiCanvas.gameObject.SetActive(true);
         loadingScreenCam.enabled = true;
         shroomAnim.Play(AnimationHash.SHROOM_CHASE, -1, 0f);
