@@ -159,8 +159,8 @@ public class MiniBossAI : MonoBehaviour
             if (obj.GetComponent<ITag>().CompareToTag("BossHpUI"))
                 hpbarUi = obj.GetComponent<BossHpBarUI>();
         }
-
-        hpbarUi.Init((int)maxHp, null, gameObject.name);
+        if(hpbarUi)
+            hpbarUi.Init((int)maxHp, null, gameObject.name);
         //hpbarUi.ActivateUI();
     }
     void Update()
@@ -185,14 +185,16 @@ public class MiniBossAI : MonoBehaviour
     void OnDamage(int damage)
     {
         hp -= damage;
-        hpbarUi.ChangeHpValue((int)hp);
+        if (hpbarUi)
+            hpbarUi.ChangeHpValue((int)hp);
     }
     public int GetBaseAttackDamage() { return baseAttackDamage; }
     public int GetSkill1Damage() { return skill1Damage; }
     public int GetSkill2Damage() { return skill2Damage; }
     IEnumerator DeActive()
     {
-        hpbarUi.DeActivateUI();
+        if (hpbarUi)
+            hpbarUi.DeActivateUI();
         yield return new WaitForSeconds(3f);
         gameObject.SetActive(false);
     }

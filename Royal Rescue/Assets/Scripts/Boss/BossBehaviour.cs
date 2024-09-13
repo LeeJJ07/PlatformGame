@@ -434,8 +434,11 @@ public class BossBehaviour : MonoBehaviour,ITag
         }
 
         float[] hpcolorChangeNum = { Phase1HpCondition, Phase2HpCondition, Phase3HpCondition };
-        hpbarUi.Init((int)hp, hpcolorChangeNum, bossName);
-        hpbarUi.ActivateUI();
+        if (hpbarUi)
+        {
+            hpbarUi.Init((int)hp, hpcolorChangeNum, bossName);
+            hpbarUi.ActivateUI();
+        }
     }
     private void SoundEffect(string name, bool isLoop)
     {
@@ -474,8 +477,9 @@ public class BossBehaviour : MonoBehaviour,ITag
     private void BossDie()
     {
         isActivate = false;
-        hpbarUi.DeActivateUI();
         gameObject.SetActive(false);
+        if (hpbarUi)
+            hpbarUi.DeActivateUI();
     }
 
     //스폰한 몬스터들 비활성화
@@ -599,7 +603,8 @@ public class BossBehaviour : MonoBehaviour,ITag
                 //Debug.Log("슬래쉬 공격 받았다.");
                 break;
         }
-        hpbarUi.ChangeHpValue((int)hp);
+        if (hpbarUi)
+            hpbarUi.ChangeHpValue((int)hp);
         yield return new WaitForSeconds(0.5f);
         bossColliders[1].enabled = true;
         isHit=true;
