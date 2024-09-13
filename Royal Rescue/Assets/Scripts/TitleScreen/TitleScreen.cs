@@ -25,15 +25,10 @@ public class TitleScreen : MonoBehaviour
         currentScreenState = ScreenState.INTRO;
 
         Init();
-        SetPlayerEnabled(false);
+        GameDirector.instance.SetPlayerRelatedObjects(false);
         StartCoroutine(StartIntro());
     }
-
-    void OnDisable()
-    {
-        SetPlayerEnabled(true);
-    }
-
+    
     void Update()
     {
         if ((currentScreenState == ScreenState.TITLE) && UIMenu.pressedConfirmBtn)
@@ -95,11 +90,5 @@ public class TitleScreen : MonoBehaviour
             }
             yield return null;
         }
-    }
-
-    private void SetPlayerEnabled(bool state)
-    {
-        if (!GameDirector.instance) return;
-        GameDirector.instance.PlayerControl.gameObject.SetActive(state);
     }
 }

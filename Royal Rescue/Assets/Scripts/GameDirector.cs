@@ -4,8 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class GameDirector : MonoBehaviour
 {
-    private static GameDirector _instance = null;
     public static GameDirector instance => _instance;
+    public RoomController CurrentRoomControl => currentRoomControl;
 
     public PlayerControlManagerFix PlayerControl
     {
@@ -16,11 +16,11 @@ public class GameDirector : MonoBehaviour
             return playerControl;
         }
     }
+    private static GameDirector _instance = null;
     private PlayerControlManagerFix playerControl;
-    public RoomController CurrentRoomControl => currentRoomControl;
     private RoomController currentRoomControl;
 
-    [SerializeField] private GameObject uiCanvas, loadScreenFade;
+    [SerializeField] private GameObject uiCanvas, playerUiCanvas, loadScreenFade;
     [SerializeField] private Camera loadingScreenCam;
     [SerializeField] private Animator loadscreenFadeAnim, shroomAnim, respawnAnim;
     [SerializeField] private float loadScreenDelay, respawnDelay;
@@ -90,6 +90,7 @@ public class GameDirector : MonoBehaviour
         yield return new WaitForSeconds(loadScreenDelay);
 
         respawnAnim.Play(AnimationHash.RESPAWN_SCREEN_HIDE);
+        SetPlayerRelatedObjects(true);
 
         loadingScreenCam.enabled = false;
         uiCanvas.gameObject.SetActive(false);
@@ -111,5 +112,14 @@ public class GameDirector : MonoBehaviour
     public void SetCurrentRoomControl(RoomController roomControl)
     {
         currentRoomControl = roomControl;
+    }
+
+    public void SetPlayerRelatedObjects(bool state)
+    {
+        if (!_instance) return;
+        if (PlayerControl.gameObject.activeSelf == state) return;
+
+        PlayerControl.gameObject.SetActive(state);
+        playerUiCanvas.SetActive(state);
     }
 }
