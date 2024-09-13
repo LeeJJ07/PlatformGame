@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8507954942477712564}
   - component: {fileID: 8040776360862706352}
   - component: {fileID: 8646118435020058815}
+  - component: {fileID: -3069166521819198788}
   m_Layer: 0
   m_Name: Gem_Red
   m_TagString: Untagged
@@ -165,3 +166,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gemEffect: {fileID: 8271400594001470412, guid: 403ca708a5dfee14d915b21ed6f85bcb, type: 3}
+  gemType: 0
+--- !u!114 &-3069166521819198788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951714966129524596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e069b4901cc6b6041bb9e588fa2c8f7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 11400000, guid: 6d2fd7068cb5d6e40a256eb75530218c, type: 2}

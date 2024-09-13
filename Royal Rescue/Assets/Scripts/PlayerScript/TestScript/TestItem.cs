@@ -2,13 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum ItemType
-{
-    Equip,
-    Potion,
-    Etc
-}
-
 
 [System.Serializable]
 public class TestItem 
