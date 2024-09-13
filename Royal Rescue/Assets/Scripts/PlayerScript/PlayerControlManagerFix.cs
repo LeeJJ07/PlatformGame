@@ -554,5 +554,13 @@ public class PlayerControlManagerFix : MonoBehaviour
     }
     public int GetCoin() { return coin; }
     public void SetCoin(int needCoin) { coin -= needCoin; }
+   
+
+
+    //inventory 및 items : 종진
+    public void ToggleCursor(bool toggle)
+    {
+        Cursor.lockState = toggle ? CursorLockMode.None:CursorLockMode.Locked;
+    }
 }
 

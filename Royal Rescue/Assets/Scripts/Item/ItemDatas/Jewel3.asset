@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fdc96b642dc71b49876c08a087b1e2d, type: 3}
   m_Name: Jewel3
   m_EditorClassIdentifier: 
-  displayName: "\uBCF4\uC11D3"
-  dscription: "\uC7AC\uB2E8 \uD65C\uC131\uD654\uB97C \uC704\uD574 \uD544\uC694\uD55C
-    \uBCF4\uC11D3"
+  displayName: "\uC625"
+  description: 
   type: 0
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 0817d052f4f15834b96965b07ed19bf0, type: 3}
   canStack: 0
   maxStackAmount: 0
+  consumables: []
