@@ -23618,7 +23618,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2543874797531212918, guid: 5a451519f0a62f74f8398e216a2b0448, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -30751,8 +30752,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7b829174e5a633459722c8c3b4a140b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  go_InventoryBase: {fileID: 289659717}
-  go_SlotsParent: {fileID: 1640366758}
 --- !u!1001 &575773470
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -37265,7 +37264,6 @@ MonoBehaviour:
   itemImage: {fileID: 0}
   potionCount: 5
   textCoolTime: {fileID: 94444354}
-  player: {fileID: 0}
   thisSkill: {fileID: 828757596}
   imgFill: {fileID: 927593688}
   skillCollDown: 1
@@ -49289,7 +49287,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 173174702091522557, guid: 6f13e8c63c051924dae18774ad89adc0, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -55210,7 +55209,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8646118435020058815, guid: d586aa08e98f4504e80df1058d6ebd09, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -70618,8 +70618,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7b829174e5a633459722c8c3b4a140b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  go_InventoryBase: {fileID: 400863255}
-  go_SlotsParent: {fileID: 1999011577}
 --- !u!1001 &2122640992
 PrefabInstance:
   m_ObjectHideFlags: 0

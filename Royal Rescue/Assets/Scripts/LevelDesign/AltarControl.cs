@@ -32,5 +32,10 @@ public class AltarControl : MonoBehaviour
         ++activatedAltars;
         altarPortal.TryOpenStagePortal(activatedAltars == TOTALALTARS);
     }
+
+    static public void ResetAltar()
+    {
+        redGem = whiteGem = greenGem = 0;
+    }
 }
 

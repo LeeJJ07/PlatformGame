@@ -63,6 +63,7 @@ public class GameDirector : MonoBehaviour
         if (stageIndex >= stageNames.Count)
             stageIndex = stageNames.Count - 1;
 
+        AltarControl.ResetAltar();
         PlayerControl.transform.SetParent(transform);
 
         yield return new WaitForSeconds(0.1f);
