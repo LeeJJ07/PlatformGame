@@ -12,7 +12,7 @@ public class TestFindTarget : MonoBehaviour
     {
         
     }
-    private void Update()
+   private void Update()
     {
         if(Input.GetKeyDown(KeyCode.V))
         {
