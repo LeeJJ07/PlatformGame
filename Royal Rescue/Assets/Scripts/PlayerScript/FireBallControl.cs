@@ -9,7 +9,7 @@ public class FireBallControl : MonoBehaviour
     public bool isFireball = false;
     public float gravity = -9.81f;
     public Vector3 ballDir;
-    Vector3 velocity;
+
     public int bombDamage = 50; // 폭탄이 적에게 주는 데미지
     public GameObject explosionEffect; // 폭발 효과
     public GameObject target;

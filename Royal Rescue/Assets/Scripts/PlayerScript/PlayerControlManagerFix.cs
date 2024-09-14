@@ -1,4 +1,4 @@
-    using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Unity.VisualScripting;
@@ -38,13 +38,12 @@ public class PlayerControlManagerFix : MonoBehaviour
     public float moveSpeed;
     public float JumpPower;
     bool isJumpDown;
-    bool isDashbool;
     [SerializeField] private int jumpCnt = 0;
     [SerializeField] public bool isDirRight = true;
     [SerializeField] private bool isFloor = false;
-    [SerializeField] public bool isAttackButton = false;
-    [SerializeField] public bool isAttackSecond = false;
-    [SerializeField] public bool isSwordWindPossible = false;
+    [SerializeField] private bool isAttackButton = false;//
+    [SerializeField] private bool isAttackSecond = false;//
+    public bool isSwordWindPossible = false;
     public bool isAttackPossible = false;
     public bool isAttackEnhance = false;
     public bool isJumpEnhance = false;
@@ -52,18 +51,18 @@ public class PlayerControlManagerFix : MonoBehaviour
     public bool isFbPossible = false;
     [SerializeField] private bool isDie = false;
 
-    private int basicDamage;
-    private int slashAttackDamage = 10;
-    private int bombDamage;
+    private int basicDamage;//기본(근접 데미지)
+    private int slashAttackDamage = 10;//원거리 데미지
+    private int bombDamage;//폭탄 데미지
 
     public float invincibilityDuration = 2.0f;  // 무적 상태 지속 시간
     private bool isInvincible = false;  // 무적 상태 여부
     private Renderer playerRenderer;  // 플레이어 렌더러
 
-    [SerializeField]private float holdTime = 0.0f;
-    [SerializeField]private float maxHoldTime = 3.0f;
-    [SerializeField] private float minThrowPower = 5;
-    [SerializeField] private float maxThrowPower = 10;
+    [SerializeField]private float holdTime = 0.0f;//폭탄 차지 시간
+    [SerializeField]private float maxHoldTime = 3.0f;//폭탄 최대 차지 가능 시간
+    [SerializeField] private float minThrowPower = 5;//폭탄이 받는 최소 방향 파워
+    [SerializeField] private float maxThrowPower = 10;//최대 방향 파워
 
 
     public LayerMask layer;
@@ -160,6 +159,8 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
 
     }
+
+    //방향 및 이동 관련 함수 START
     void changeDir()
     {
         isDirRight = !isDirRight;
@@ -183,6 +184,10 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
         
     }
+    ////방향 및 이동 관련 함수 END
+
+
+    //대쉬 START
     void CheckDash()
     {
         if(!isDashPossible)
@@ -195,6 +200,11 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
         
     }
+
+    //대쉬 END
+
+
+    //점프, 2단 점프 START
     void Jump()
     {
         if (isJumpDown && jumpCnt > 0)
@@ -217,6 +227,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
 
     }
+    //점프, 2단 점프 END
     void Swap()
     {
         if (equipWeapon != null)
@@ -226,7 +237,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     }
 
 
-    //공격 관련 함수
+    //공격 관련 함수 START
     void Attack()
     {
         if (equipWeapon == null)
@@ -294,6 +305,31 @@ public class PlayerControlManagerFix : MonoBehaviour
             return;
         
     }
+
+    IEnumerator Swing()
+    {
+        yield return new WaitForSeconds(0.05f);
+        weapons.GetComponent<WeaponControl>().isAttackWeapon = false;
+        yield return new WaitForSeconds(0.25f);
+        weapons.GetComponent<BoxCollider>().enabled = false;
+        weapons.GetComponent<WeaponControl>().trailEffect.enabled = false;
+
+    }
+    IEnumerator CheckFireBall()
+    {
+        Debug.Log("남은 횟수 : " + skillCount);
+        yield return new WaitForSeconds(5f);
+        isFbPossible = false;
+    }
+    IEnumerator CheckAttack2()
+    {
+        yield return new WaitForSeconds(0.5f);
+        isSwordWindPossible = false;
+    }
+    //공격 관련 함수 END
+
+
+
     public void IncreaseSpeed(float amount)
     {
         moveSpeed += amount;
@@ -396,7 +432,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
     }
 
-    
+    //플레이어 피격시 외부에서 데미지를 받아올 수 있게
     public int GetBasicDamage()
     {
         return basicDamage + playerBasicATK;
@@ -409,7 +445,6 @@ public class PlayerControlManagerFix : MonoBehaviour
     {
         return bombDamage + playerBasicATK;
     }
-    //
     public void HurtPlayer(int damage)
     {
         if(isInvincible == false)
@@ -420,6 +455,11 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
         CheckPlayerDeath();
     }
+    //
+
+
+
+
     private void OnCollisionExit(Collision collision)
     {
         RaycastHit hit;
@@ -454,26 +494,6 @@ public class PlayerControlManagerFix : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Debug.Log("대쉬온");
         isDashPossible = false;
-    }
-    IEnumerator Swing()
-    {
-        yield return new WaitForSeconds(0.05f);
-        weapons.GetComponent<WeaponControl>().isAttackWeapon = false;
-        yield return new WaitForSeconds(0.25f);
-        weapons.GetComponent<BoxCollider>().enabled = false;
-        weapons.GetComponent<WeaponControl>().trailEffect.enabled = false;
-
-    }
-    IEnumerator CheckFireBall()
-    {
-        Debug.Log("남은 횟수 : " + skillCount);
-        yield return new WaitForSeconds(5f);
-        isFbPossible = false;
-    }
-    IEnumerator CheckAttack2()
-    {
-        yield return new WaitForSeconds(0.5f);
-        isSwordWindPossible = false;
     }
 
     void setPostProcessCenter()

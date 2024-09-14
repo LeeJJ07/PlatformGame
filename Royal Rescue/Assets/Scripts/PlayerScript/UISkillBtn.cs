@@ -17,7 +17,7 @@ public class UISkillBtn : MonoBehaviour
     public int skillCollDown;
 
 
-    public void Init()
+    public void Init()//해당 스크립트 돌아갈 때 상태 초기화
     {
         this.textCoolTime.gameObject.SetActive(false);
         this.imgFill.fillAmount = 0;
@@ -48,9 +48,9 @@ public class UISkillBtn : MonoBehaviour
                 coolTimeRoutine = StartCoroutine(FbCoolTimeRoutine());
             }
         }
-        //text_Count.text = fireBallCnt.ToString();
     }
 
+    //대쉬 쿨타임 코루틴
     private IEnumerator DashCoolTimeRoutine()
     {
         
@@ -65,7 +65,6 @@ public class UISkillBtn : MonoBehaviour
             this.textCoolTime.text = time.ToString("F1");
 
             var per = time / this.coolTime;
-            //Debug.Log(per);
             this.imgFill.fillAmount = per;
 
             if (time <= 0)
@@ -78,6 +77,8 @@ public class UISkillBtn : MonoBehaviour
         }
         this.coolTimeRoutine = null;
     }
+
+    //폭탄 쿨타임 코루틴
     private IEnumerator FbCoolTimeRoutine()
     {
         coolTime = skillCollDown;
@@ -91,7 +92,6 @@ public class UISkillBtn : MonoBehaviour
             this.textCoolTime.text = time.ToString("F1");
 
             var per = time / this.coolTime;
-            //Debug.Log(per);
             this.imgFill.fillAmount = per;
 
             if (time <= 0)
