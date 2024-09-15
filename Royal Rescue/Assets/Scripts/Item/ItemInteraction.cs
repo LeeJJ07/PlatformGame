@@ -22,7 +22,7 @@ public class ItemInteraction : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            itemObject.OnInteractCoin();
+            itemObject.OnInteract();
             gameObject.SetActive(false);
 
             GameObject effect = Instantiate(coinEffect, transform.parent);
