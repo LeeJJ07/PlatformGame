@@ -20,7 +20,8 @@ public class EndingCutscene : MonoBehaviour
     public void PlayRescueCutscene()
     {
         guillotineFlameThrowers.SetActive(false);
-        GameDirector.instance.SetPlayerRelatedObjects(false);
+        GameDirector.instance.SetPlayerUI(false);
+        GameDirector.instance.PlayerControl.SetPlayerEnabled(false);
         cutsceneAnim.Play(AnimationHash.ENDING_CUTSCENE_RESCUE, -1, 0f);
     }
 
