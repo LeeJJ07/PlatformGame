@@ -39,14 +39,11 @@ public class Inventory : MonoBehaviour
     {
         instance = this;
         controller = GetComponent<PlayerControlManagerFix>();
-    }
-    void Start()
-    {
+
         inventoryWindow.SetActive(false);
         slots = new ItemSlot[uidSlot.Length];
 
-        for(int i = 0; i < slots.Length; i++)
-        {
+        for (int i = 0; i < slots.Length; i++) {
             slots[i] = new ItemSlot();
             uidSlot[i].index = i;
             uidSlot[i].Clear();
