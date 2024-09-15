@@ -53,6 +53,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     public bool isFbPossible = false;
     [SerializeField] private bool isDie = false;
 
+    private int[] damageRange = {-5,-4,-3,-2,-1,0,1,2,3,4,5 };
     private int basicDamage;//기본(근접 데미지)
     private int slashAttackDamage = 10;//원거리 데미지
     private int bombDamage;//폭탄 데미지
@@ -189,12 +190,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
         else
         {
-            if (Input.GetButtonDown("Horizontal") && isFloor && !isRunning)
-            {
-                SoundManager.Instance.PlaySound("RunMove", true, SoundType.EFFECT);
-                isRunning = true;
-            }
-            if (Input.GetButton("Horizontal") && isFloor && !isRunning)
+            if ((Input.GetButtonDown("Horizontal") || Input.GetButton("Horizontal")) && isFloor && !isRunning)
             {
                 SoundManager.Instance.PlaySound("RunMove", true, SoundType.EFFECT);
                 isRunning = true;
@@ -472,15 +468,15 @@ public class PlayerControlManagerFix : MonoBehaviour
     //플레이어 피격시 외부에서 데미지를 받아올 수 있게
     public int GetBasicDamage()
     {
-        return basicDamage + playerBasicATK;
+        return basicDamage + playerBasicATK + damageRange[Random.Range(0, damageRange.Length)];
     }
     public int GetSlashAttackDamage()
     {
-        return slashAttackDamage + playerBasicATK;
+        return slashAttackDamage + playerBasicATK + damageRange[Random.Range(0, damageRange.Length)]; ;
     }
     public int GetBombDamage()
     {
-        return bombDamage + playerBasicATK;
+        return bombDamage + playerBasicATK + damageRange[Random.Range(0, damageRange.Length)]; ;
     }
     public void HurtPlayer(int damage)
     {
