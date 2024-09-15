@@ -60,8 +60,8 @@ public class GameDirector : MonoBehaviour
     public IEnumerator LoadNextStage()
     {
         ++stageIndex;
-        if (stageIndex >= stageNames.Count)
-            stageIndex = stageNames.Count - 1;
+        if (stageIndex == stageNames.Count)
+            stageIndex = 0;
 
         AltarControl.ResetAltar();
         PlayerControl.transform.SetParent(transform);
@@ -74,6 +74,12 @@ public class GameDirector : MonoBehaviour
             yield return null;
         }
         StartCoroutine(ExitLoadingScreen());
+    }
+
+    public void LoadTitleScreen()
+    {
+        PlayerControl.transform.SetParent(transform);
+        SceneManager.LoadScene("TitleScreen", LoadSceneMode.Single);
     }
 
     public void ShowLoadingScreen()
