@@ -44,6 +44,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     [SerializeField] private bool isAttackButton = false;//
     [SerializeField] private bool isAttackSecond = false;//
     private bool isSkillCharging = false;
+    private bool isRunning = false;
     public bool isSwordWindPossible = false;
     public bool isAttackPossible = false;
     public bool isAttackEnhance = false;
@@ -188,6 +189,25 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
         else
         {
+            if (Input.GetButtonDown("Horizontal") && isFloor && !isRunning)
+            {
+                SoundManager.Instance.PlaySound("RunMove", true, SoundType.EFFECT);
+                isRunning = true;
+            }
+            if (Input.GetButton("Horizontal") && isFloor && !isRunning)
+            {
+                SoundManager.Instance.PlaySound("RunMove", true, SoundType.EFFECT);
+                isRunning = true;
+            }
+            if (Input.GetButtonUp("Horizontal") ||  !isFloor)
+            {
+                if (isRunning)
+                {
+                    SoundManager.Instance.StopLoopSound("RunMove");
+                    isRunning = false;
+                }
+            }
+
             moveDir = new Vector3(hAxis, 0, vAxis);
             moveVec = new Vector3(hAxis, 0, vAxis).normalized;
 
@@ -205,6 +225,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     {
         if(!isDashPossible)
         {
+            SoundManager.Instance.PlaySound("DashMove");
             dashPower = (isDirRight ? Vector3.right : Vector3.left) * dash;
             rb.AddForce(dashPower, ForceMode.VelocityChange);
             anim.SetTrigger("DashTr");
@@ -465,6 +486,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     {
         if(isInvincible == false)
         {
+            SoundManager.Instance.PlaySound("BeDamage");
             playerHP -= damage;
             Debug.Log("맞음");
             StartCoroutine(Invincibility());
