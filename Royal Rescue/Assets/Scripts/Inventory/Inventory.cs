@@ -28,6 +28,7 @@ public class Inventory : MonoBehaviour
 
     private int curEquipIndex;
 
+    private PlayerControlManagerFix controller;
 
     [Header("Events")]
     public UnityEvent onOpenInventory;
@@ -35,6 +36,8 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
+        controller = GetComponent<PlayerControlManagerFix>();
+
         inventoryWindow.SetActive(false);
         slots = new ItemSlot[uidSlot.Length];
 
@@ -49,11 +52,11 @@ public class Inventory : MonoBehaviour
         if (inventoryWindow.activeInHierarchy) {
             inventoryWindow.SetActive(false);
             onCloseInventory?.Invoke();
-            GameDirector.instance.PlayerControl.ToggleCursor(false);
+            controller.ToggleCursor(false);
         } else {
             inventoryWindow.SetActive(true);
             onOpenInventory?.Invoke();
-            GameDirector.instance.PlayerControl.ToggleCursor(true);
+            controller.ToggleCursor(true);
         }
     }
 
