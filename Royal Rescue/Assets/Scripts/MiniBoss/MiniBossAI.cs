@@ -65,6 +65,7 @@ public class MiniBossAI : MonoBehaviour
     Sequence followPlayerSequence;
 
     bool isDie = false;
+    bool isPlayDie = false;
     bool takeAttack = false;
     [SerializeField] private GameObject hitEffect;
     public Material material;
@@ -76,6 +77,9 @@ public class MiniBossAI : MonoBehaviour
     private Canvas uiCanvas;
     private Slider hpBarSlider;
     public GameObject DamageTextPrefab;
+
+    [SerializeField]
+    private GameObject slashAttackItem;
 
     BehaviorTreeRunner bt;
     [HideInInspector] public BossHpBarUI hpbarUi;
@@ -167,7 +171,10 @@ public class MiniBossAI : MonoBehaviour
     {
         if (isDie)
         {
-            StartCoroutine(DeActive());
+            if (!isPlayDie) {
+                isPlayDie = true;
+                StartCoroutine(DeActive());
+            }
             return;
         }
 
@@ -192,6 +199,10 @@ public class MiniBossAI : MonoBehaviour
     public int GetSkill2Damage() { return skill2Damage; }
     IEnumerator DeActive()
     {
+        GameObject item = Instantiate(slashAttackItem);
+        item.GetComponent<Rigidbody>().AddForce(Vector3.up * 1000);
+        item.GetComponent<Collider>().enabled = false;
+
         hpbarUi.DeActivateUI();
         yield return new WaitForSeconds(3f);
         gameObject.SetActive(false);

@@ -734,7 +734,7 @@ GameObject:
   - component: {fileID: 7887261332250116183}
   - component: {fileID: 2508402177466343964}
   m_Layer: 0
-  m_Name: TreasureChest
+  m_Name: TreasureChestDiamond
   m_TagString: ChestMonster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -817,11 +817,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5e333fa35203f44fb0d85cc4f4129a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRuby: 0
+  isDiamond: 1
+  isJade: 0
+  isPotion: 0
   needRandomCoin: 0
   curCoin: 0
   minCoinNum: 5
   maxCoinNum: 11
-  hpBarOffset: {x: 0, y: -0.4, z: 0}
   treasureTextPrefab: {fileID: 8931323871595477075, guid: 67e8149a251867649b537c4e822b487a, type: 3}
   treasureCoinPrefab: {fileID: 8970643121904784803, guid: aa153b1b84cf7204e9b9977b367bce4e, type: 3}
   treasureParticlePrefab: {fileID: 1838949130018192, guid: 1e461830cb6e45c44a3801d425f0f2c2, type: 3}

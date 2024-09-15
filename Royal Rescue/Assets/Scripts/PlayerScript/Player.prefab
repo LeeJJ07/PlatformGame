@@ -287,7 +287,7 @@ GameObject:
   - component: {fileID: 7919289716281912371}
   - component: {fileID: 5130297143477228180}
   - component: {fileID: 5957443920983066934}
-  - component: {fileID: 7024807106570410655}
+  - component: {fileID: 8025715749833385659}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -369,7 +369,6 @@ MonoBehaviour:
   fireBallPrefabs: {fileID: 1431150921175369799, guid: 2f824c5b801c31e4faa701c8f58014f2, type: 3}
   SwordWindPrefabsR: {fileID: 1431150921175369799, guid: dc23214fb4d66d244ad45a285e6eab61, type: 3}
   SwordWindPrefabsL: {fileID: 1431150921175369799, guid: a1b0626921f8db74394cbb44cc3383be, type: 3}
-  Inventory: {fileID: 0}
   attackIcon: {fileID: 0}
   fireBallSpawnPoint: {fileID: 4987513842323046630}
   jumpPossible: 2
@@ -418,7 +417,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1.4, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7024807106570410655
+--- !u!114 &8025715749833385659
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -427,10 +426,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 7054254038125191259}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b2d0842d92e76ac44add9856960aeb72, type: 3}
+  m_Script: {fileID: 11500000, guid: 7f9927574f1b6ce4c8e85c2db2715406, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  items: []
+  uidSlot: []
+  inventoryWindow: {fileID: 0}
+  selectedItemName: {fileID: 0}
+  selectedItemDescription: {fileID: 0}
+  useButton: {fileID: 0}
+  dropButton: {fileID: 0}
+  onOpenInventory:
+    m_PersistentCalls:
+      m_Calls: []
+  onCloseInventory:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &8919627622507330317
 PrefabInstance:
   m_ObjectHideFlags: 0

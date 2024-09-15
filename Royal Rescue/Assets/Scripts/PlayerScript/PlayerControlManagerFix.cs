@@ -30,7 +30,6 @@ public class PlayerControlManagerFix : MonoBehaviour
     public GameObject fireBallPrefabs;
     public GameObject SwordWindPrefabsR;
     public GameObject SwordWindPrefabsL;
-    public GameObject Inventory;
     public GameObject attackIcon;
     public Transform fireBallSpawnPoint;
     [SerializeField] private int jumpPossible = 2;
@@ -115,6 +114,8 @@ public class PlayerControlManagerFix : MonoBehaviour
             Jump();
             Swap();
             Attack();
+            if (InventoryKeyDown())
+                Inventory.instance.Toggle();
             if (Input.GetButtonDown("Dash"))
             {
                 CheckDash();
@@ -553,9 +554,12 @@ public class PlayerControlManagerFix : MonoBehaviour
         return Input.GetKeyDown(KeyCode.Q);
     }
     public int GetCoin() { return coin; }
+    public void EatCoin() { coin++; }
     public void SetCoin(int needCoin) { coin -= needCoin; }
-   
 
+    public bool InventoryKeyDown() {
+        return Input.GetKeyDown(KeyCode.I);
+    }
 
     //inventory 및 items : 종진
     public void ToggleCursor(bool toggle)

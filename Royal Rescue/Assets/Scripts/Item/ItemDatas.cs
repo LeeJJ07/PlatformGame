@@ -31,6 +31,7 @@ public class ItemDatas : ScriptableObject
 {
     [Header("Info")]
     public string displayName;
+    [TextArea]
     public string description;
     public ItemType type;
     public Sprite icon;

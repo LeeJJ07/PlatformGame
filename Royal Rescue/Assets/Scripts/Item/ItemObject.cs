@@ -11,4 +11,8 @@ public class ItemObject : MonoBehaviour
         Inventory.instance.AddItem(item);
         Destroy(gameObject);
     }
+    public void OnInteractCoin() {
+        GameDirector.instance.PlayerControl.EatCoin();
+        Destroy(gameObject);
+    }
 }

@@ -1,4 +1,4 @@
-
+   
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -23,8 +23,6 @@ public class Inventory : MonoBehaviour
     private int selectedItemIndex;
     public TextMeshProUGUI selectedItemName;
     public TextMeshProUGUI selectedItemDescription;
-    //public TextMeshProUGUI selectedItemStatName;
-    //public TextMeshProUGUI selectedItemStatValue;
     public GameObject useButton;
     public GameObject dropButton;
 
@@ -55,17 +53,12 @@ public class Inventory : MonoBehaviour
         }
         ClearSelectItemWindow();
     }
-
-    public void Toggle()
-    {
-        if (inventoryWindow.activeInHierarchy)
-        {
+    public void Toggle() {
+        if (inventoryWindow.activeInHierarchy) {
             inventoryWindow.SetActive(false);
             onCloseInventory?.Invoke();
             controller.ToggleCursor(false);
-        }
-        else
-        {
+        } else {
             inventoryWindow.SetActive(true);
             onOpenInventory?.Invoke();
             controller.ToggleCursor(true);
@@ -100,11 +93,10 @@ public class Inventory : MonoBehaviour
         }
         ThrowItem(item);
     }
-    private void ThrowItem(ItemDatas item)
+    private void ThrowItem(ItemDatas item) //구현해야함
     {
         
     }
-    // Update is called once per frame
     void UpdateUI()
     {
         for(int i = 0; i < slots.Length; i++)
@@ -130,7 +122,7 @@ public class Inventory : MonoBehaviour
     {
         for(int i = 0; i < slots.Length; i++)
         {
-            if (slots[i].item = null)
+            if (slots[i].item == null)
                 return slots[i];
         }
         return null;
@@ -138,22 +130,18 @@ public class Inventory : MonoBehaviour
 
     public void SelectItem(int index)
     {
-        if (slots[index] == null) return;
+        if (slots[index].item == null) return;
+
+        for(int i = 0;i < uidSlot.Length; i++) {
+            uidSlot[i].SetOutline(false);
+        }
+        uidSlot[index].SetOutline(true);
 
         selectedItem = slots[index];
         selectedItemIndex = index;
 
         selectedItemName.text = selectedItem.item.displayName;
         selectedItemDescription.text = selectedItem.item.description;
-        //selectedItemStatName.text = string.Empty; //필요 x
-        //selectedItemStatValue.text = string.Empty; //필요 x
-
-        for(int i = 0; i < selectedItem.item.consumables.Length; i++)
-        {
-            //selectedItemStatName.text += selectedItem.item.consumables[i].type.ToString() + "\n";
-            //selectedItemStatValue.text += selectedItem.item.consumables[i].value.ToString() + "\n";
-        }
-
         useButton.SetActive(selectedItem.item.type == ItemType.Consumable);
         dropButton.SetActive(true);
     }
@@ -163,8 +151,6 @@ public class Inventory : MonoBehaviour
         selectedItem = null;
         selectedItemName.text = string.Empty;
         selectedItemDescription.text = string.Empty;
-        //selectedItemStatName.text= string.Empty;  
-        //selectedItemStatValue.text = string.Empty;
 
         useButton.SetActive(false);
         dropButton.SetActive(false);

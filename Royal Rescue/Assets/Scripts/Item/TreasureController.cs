@@ -6,12 +6,17 @@ using Unity.VisualScripting;
 
 public class TreasureController : MonoBehaviour
 {
+    [Header("상자 종류")]
+    [SerializeField] private bool isRuby;
+    [SerializeField] private bool isDiamond;
+    [SerializeField] private bool isJade;
+    [SerializeField] private bool isPotion;
+
+
     [SerializeField] int needRandomCoin = 0;
     [SerializeField] int curCoin = 0;
     [SerializeField] int minCoinNum = 5;
     [SerializeField] int maxCoinNum = 11;
-
-    public Vector3 hpBarOffset = new Vector3(0, -0.4f, 0);
 
     GameObject treasureText;
     protected Canvas uiCanvas;
@@ -85,12 +90,38 @@ public class TreasureController : MonoBehaviour
             yield return new WaitForSeconds(0.3f);
         }
         Instantiate(treasureParticlePrefab);
-        RandomItemCreate();
+        if (isPotion)
+            RandomItemCreate();
+        else if (isRuby)
+            RubyCreate();
+        else if (isDiamond)
+            DiamondCreate();
+        else if (isJade)
+            JadeCreate();
+
         Destroy(gameObject);
     }
     void RandomItemCreate()
     {
-        int idx = Random.Range(0, itemPrefabs.Length);
+        int idx = Random.Range(0, 4);
+        GameObject item = Instantiate(itemPrefabs[idx]);
+        item.GetComponent<Rigidbody>().AddForce(Vector3.up * 1000);
+        item.GetComponent<Collider>().enabled = false;
+    }
+    void RubyCreate() {
+        int idx = 4;
+        GameObject item = Instantiate(itemPrefabs[idx]);
+        item.GetComponent<Rigidbody>().AddForce(Vector3.up * 1000);
+        item.GetComponent<Collider>().enabled = false;
+    }
+    void DiamondCreate() {
+        int idx = 5;
+        GameObject item = Instantiate(itemPrefabs[idx]);
+        item.GetComponent<Rigidbody>().AddForce(Vector3.up * 1000);
+        item.GetComponent<Collider>().enabled = false;
+    }
+    void JadeCreate() {
+        int idx = 6;
         GameObject item = Instantiate(itemPrefabs[idx]);
         item.GetComponent<Rigidbody>().AddForce(Vector3.up * 1000);
         item.GetComponent<Collider>().enabled = false;

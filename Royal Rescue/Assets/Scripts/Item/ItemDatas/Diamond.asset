@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Diamond
   m_EditorClassIdentifier: 
   displayName: "\uB2E4\uC774\uC544\uBAAC\uB4DC"
-  description: 
+  description: aaaaaaaaaaaaaa
   type: 0
   icon: {fileID: 21300000, guid: c6c2c362de8a3364fa7a770b8eebb864, type: 3}
   canStack: 0

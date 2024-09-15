@@ -6,9 +6,11 @@ public class ItemInteraction : MonoBehaviour
 {
     Collider col;
     [SerializeField] private GameObject coinEffect;
+    private ItemObject itemObject;
 
     private void Start()
     {
+        itemObject = GetComponent<ItemObject>();
         col = GetComponent<Collider>();
         Invoke("CanPickUp", 0.5f);
     }
@@ -20,7 +22,7 @@ public class ItemInteraction : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("동전 획득!");
+            itemObject.OnInteractCoin();
             gameObject.SetActive(false);
 
             GameObject effect = Instantiate(coinEffect, transform.parent);

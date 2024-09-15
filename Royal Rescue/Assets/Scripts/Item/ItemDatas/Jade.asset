@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1fdc96b642dc71b49876c08a087b1e2d, type: 3}
-  m_Name: Jewel3
+  m_Name: Jade
   m_EditorClassIdentifier: 
   displayName: "\uC625"
-  description: 
+  description: aaaaaaaaaaaaaa
   type: 0
   icon: {fileID: 21300000, guid: 0817d052f4f15834b96965b07ed19bf0, type: 3}
   canStack: 0
