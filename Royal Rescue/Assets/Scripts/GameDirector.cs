@@ -78,7 +78,7 @@ public class GameDirector : MonoBehaviour
 
     public void ShowLoadingScreen()
     {
-        SetPlayerRelatedObjects(false);
+        SetPlayerUI(false);
 
         uiCanvas.gameObject.SetActive(true);
         loadingScreenCam.enabled = true;
@@ -93,7 +93,7 @@ public class GameDirector : MonoBehaviour
         yield return new WaitForSeconds(loadScreenDelay);
 
         respawnAnim.Play(AnimationHash.RESPAWN_SCREEN_HIDE);
-        SetPlayerRelatedObjects(true);
+        SetPlayerUI(true);
 
         loadingScreenCam.enabled = false;
         uiCanvas.gameObject.SetActive(false);
@@ -117,12 +117,9 @@ public class GameDirector : MonoBehaviour
         currentRoomControl = roomControl;
     }
 
-    public void SetPlayerRelatedObjects(bool state)
+    public void SetPlayerUI(bool state)
     {
         if (!_instance) return;
-        if (PlayerControl.gameObject.activeSelf == state) return;
-
-        PlayerControl.gameObject.SetActive(state);
         playerUiCanvas.SetActive(state);
     }
 }

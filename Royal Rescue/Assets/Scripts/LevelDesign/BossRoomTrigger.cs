@@ -80,6 +80,7 @@ public class BossRoomTrigger : DoorTrap
 
     protected override bool CheckRoomClear()
     {
+        if (bossDeathNode == null) return false;
         return bossDeathNode.IsActiveAnime;
     }
 }
