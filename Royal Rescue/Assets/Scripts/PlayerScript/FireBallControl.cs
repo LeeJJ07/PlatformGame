@@ -19,6 +19,7 @@ public class FireBallControl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        SoundManager.Instance.PlaySound("BombThrowing");
         rigidbody = GetComponent<Rigidbody >();
         rigidbody.AddForce((ballDir + Vector3.up * 1.5f) * throwForce, ForceMode.Impulse);//포물선
     }
@@ -31,19 +32,15 @@ public class FireBallControl : MonoBehaviour
     // 폭탄이 발사될 때 호출하는 함수
     private void OnCollisionEnter(Collision other)
     {
+        SoundManager.Instance.PlaySound("BombExplosion");
         if (other.gameObject.CompareTag("Enemy"))
         {
-            // 적에게 데미지를 입힘 (예시)
-            //EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
-            //if (enemyHealth != null)
-            //enemyHealth.TakeDamage(damage);
             EnemyControler enemyHP = other.gameObject.GetComponent<EnemyControler>();
             enemyHP.health -= bombDamage;
             Debug.Log("적에게 파이어볼 명중");
         }
         if (other.gameObject.CompareTag("Player"))
         {
-            // 플레이어와 충돌할 경우 아무 작업도 하지 않음
             return;
         }
         else
@@ -54,7 +51,6 @@ public class FireBallControl : MonoBehaviour
         {
             GameObject explosion = Instantiate(explosionEffect, transform.position, transform.rotation);
 
-            // 파티클의 재생 시간을 계산한 후, 해당 시간이 지나면 파티클 오브젝트를 삭제
             ParticleSystem ps = explosion.GetComponent<ParticleSystem>();
             if (ps != null)
             {
@@ -62,7 +58,6 @@ public class FireBallControl : MonoBehaviour
             }
             else
             {
-                // 파티클 시스템이 없을 경우, 안전하게 일정 시간 후에 삭제
                 Destroy(explosion, 3.0f);
             }
         }
