@@ -385,4 +385,12 @@ public class Monster : MonoBehaviour
 
         hpBarSlider.value = curHp / maxHp;
     }
+    public int GetMaxHp()
+    {
+        return (int)data.Hp;
+    }
+    public int GetCurHp()
+    {
+        return (int)curHp;
+    }
 }

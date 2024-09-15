@@ -16,14 +16,21 @@ public class BossHpBarUI : MonoBehaviour,ITag
     float[] hpColorChangeNum= new float[3];
     string bossName = "";
 
-    private void Awake()
+    /*private void OnEnable()
     {
         HpbarAniCTRL=GetComponent<Animator>();
         hpSlider = GetComponentInChildren<Slider>();
         TMPname = GetComponentInChildren<TextMeshProUGUI>();
-    }
+    }*/
     public void Init(int maxHp, float[] hpColorChangeNum, string name)
     {
+        if(!HpbarAniCTRL)
+            HpbarAniCTRL = GetComponent<Animator>();
+        if(!hpSlider)
+            hpSlider = GetComponentInChildren<Slider>();
+        if(!TMPname)
+            TMPname = GetComponentInChildren<TextMeshProUGUI>();
+
         this.maxHp = maxHp;
         this.hpColorChangeNum = hpColorChangeNum;
         this.bossName = name;
