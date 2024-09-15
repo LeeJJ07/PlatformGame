@@ -14,7 +14,7 @@ public class UISkillBtn : MonoBehaviour
     public GameObject thisSkill;
     public string skillName;
     public Image imgFill;
-    public int skillCollDown;
+    [SerializeField] private float skillCollDown = 3.0f;
 
 
     public void Init()//해당 스크립트 돌아갈 때 상태 초기화

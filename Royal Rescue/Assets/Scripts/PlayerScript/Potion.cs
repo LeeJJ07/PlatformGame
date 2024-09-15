@@ -40,6 +40,7 @@ public class Potion : MonoBehaviour
         {
             if(potionCount > 0 && playerCntl.playerHP < playerCntl.playerMaxHP)
             {
+                SoundManager.Instance.PlaySound("DrinkingPotion");
                 if (playerCntl.playerHP + 50 <= playerCntl.playerMaxHP)
                     playerCntl.playerHP += 50;
                 else
