@@ -20,6 +20,17 @@ public class AnimationHash
     public static readonly int BOSSROOM_CUTSCENE_BOSS_SCREAM = Animator.StringToHash("GuillotineCam_boss_scream");
     public static readonly int BOSSROOM_CUTSCENE_SHAKE       = Animator.StringToHash("GuillotineCam_scream_shake");
     public static readonly int BOSSROOM_CUTSCENE_BOSS_DEATH  = Animator.StringToHash("BossDeathCam_focus");
+    public static readonly int ENDING_CUTSCENE_RESCUE        = Animator.StringToHash("EndingCutscene_rescue");
+    public static readonly int ENDING_CUTSCENE_EXIT          = Animator.StringToHash("EndingCutscene_exit");
+    public static readonly int PLAYER_FULLSPIN               = Animator.StringToHash("FullSpin");
+    public static readonly int PLAYER_FALL_END               = Animator.StringToHash("Fall_End");
+    public static readonly int PLAYER_WALK                   = Animator.StringToHash("Walk");
+    public static readonly int PLAYER_VICTORY                = Animator.StringToHash("Victory");
+    public static readonly int PRINCESS_IDLE                 = Animator.StringToHash("Idle");
+    public static readonly int PRINCESS_FALL_START           = Animator.StringToHash("Fall_Start");
+    public static readonly int PRINCESS_FALL_END             = Animator.StringToHash("Fall_End");
+    public static readonly int PRINCESS_WALK                 = Animator.StringToHash("Walk");
+    public static readonly int PRINCESS_VICTORY              = Animator.StringToHash("Victory");
 
 
     public static float GetAnimationLength(Animator anim, string animName)

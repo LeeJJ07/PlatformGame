@@ -603,6 +603,11 @@ public class PlayerControlManagerFix : MonoBehaviour
         rb.velocity = new Vector3(x, y, z);
     }
 
+    public void SetPlayerEnabled(bool state)
+    {
+        gameObject.SetActive(state);
+    }
+
     public void AddForceToPlayer(Vector3 force, ForceMode mode)
     {
         rb.AddForce(force, mode);

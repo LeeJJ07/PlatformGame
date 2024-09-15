@@ -63,8 +63,6 @@ public class CameraFollow : MonoBehaviour
 
     public void ResetCameraPosition()
     {
-        target.SetParent(roomControl.CurrentRoom.transform);
-
         limitX = roomControl.CurrentRoom.cameraLeftBound.position.x + cameraHorizontalOffset;
         limitY = roomControl.CurrentRoom.cameraLeftBound.position.y + cameraBotOffset;
         transform.position = new Vector3(limitX, limitY, transform.position.z);

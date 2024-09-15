@@ -5,6 +5,7 @@ public class BossRoomTrigger : DoorTrap
 {
     [SerializeField] private Animator cutsceneCamAnim, bossDeathCamAnim, bossAnim;
     [SerializeField] private Camera bossDeathCamera;
+    [SerializeField] private EndingCutscene endingCutscene;
 
     private BossBehaviour boss;
     private DieNode bossDeathNode;
@@ -68,18 +69,13 @@ public class BossRoomTrigger : DoorTrap
         bossDeathCamAnim.Play(AnimationHash.BOSSROOM_CUTSCENE_BOSS_DEATH);
         yield return new WaitForSeconds(3f);
 
-        SwitchCamera(bossDeathCamera, doorCamera);
-        OpenIronWall();
-        yield return new WaitForSeconds(1.5f);
-
-        SwitchCamera(doorCamera, mainCamera);
-        portal.gameObject.SetActive(true);
-
         GameDirector.instance.PlayerControl.FixatePlayerRigidBody(false);
+        endingCutscene.PlayRescueCutscene();
     }
 
     protected override bool CheckRoomClear()
     {
+        if (bossDeathNode == null) return false;
         return bossDeathNode.IsActiveAnime;
     }
 }
