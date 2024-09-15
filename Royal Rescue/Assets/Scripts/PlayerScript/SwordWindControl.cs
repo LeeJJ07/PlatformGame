@@ -31,7 +31,6 @@ public class SwordWindControl : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Player"))
         {
-            // 플레이어와 충돌할 경우 아무 작업도 하지 않음
             return;
         }
         else
@@ -42,7 +41,6 @@ public class SwordWindControl : MonoBehaviour
         {
             GameObject explosion = Instantiate(explosionEffect, transform.position, transform.rotation);
 
-            // 파티클의 재생 시간을 계산한 후, 해당 시간이 지나면 파티클 오브젝트를 삭제
             ParticleSystem ps = explosion.GetComponent<ParticleSystem>();
             if (ps != null)
             {

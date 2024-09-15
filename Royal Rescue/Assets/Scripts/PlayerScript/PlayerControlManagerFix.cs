@@ -43,6 +43,8 @@ public class PlayerControlManagerFix : MonoBehaviour
     [SerializeField] private bool isFloor = false;
     [SerializeField] private bool isAttackButton = false;//
     [SerializeField] private bool isAttackSecond = false;//
+    private bool isSkillCharging = false;
+    private bool isRunning = false;
     public bool isSwordWindPossible = false;
     public bool isAttackPossible = false;
     public bool isAttackEnhance = false;
@@ -118,20 +120,32 @@ public class PlayerControlManagerFix : MonoBehaviour
             {
                 CheckDash();
             }
-            if (Input.GetButtonDown("FireBallKey"))
+            
+            if (skillCount > 0)
             {
-                holdTime = 0;
+                if (Input.GetButtonDown("FireBallKey"))
+                {
+                    SoundManager.Instance.PlaySound("BombCharging", true, SoundType.EFFECT);
+                    isSkillCharging = true;
+                    holdTime = 0;
+                }
+                if (Input.GetButton("FireBallKey"))
+                {
+                    holdTime += Time.deltaTime;
+                    holdTime = Mathf.Clamp(holdTime, 0, maxHoldTime);
+                }
+                if (Input.GetButtonUp("FireBallKey"))
+                {
+                    if(isSkillCharging)
+                    {
+                        SoundManager.Instance.StopLoopSound("BombCharging");
+                        isSkillCharging = false;
+                    }
+                    
+                    ThrowBall();
+                }
             }
-            if (Input.GetButton("FireBallKey"))
-            {
-                holdTime += Time.deltaTime;
-                holdTime = Mathf.Clamp(holdTime, 0, maxHoldTime);
-
-            }
-            if (Input.GetButtonUp("FireBallKey"))
-            {
-                ThrowBall();
-            }
+            
             setPostProcessCenter();
         }
     }
@@ -175,6 +189,25 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
         else
         {
+            if (Input.GetButtonDown("Horizontal") && isFloor && !isRunning)
+            {
+                SoundManager.Instance.PlaySound("RunMove", true, SoundType.EFFECT);
+                isRunning = true;
+            }
+            if (Input.GetButton("Horizontal") && isFloor && !isRunning)
+            {
+                SoundManager.Instance.PlaySound("RunMove", true, SoundType.EFFECT);
+                isRunning = true;
+            }
+            if (Input.GetButtonUp("Horizontal") ||  !isFloor)
+            {
+                if (isRunning)
+                {
+                    SoundManager.Instance.StopLoopSound("RunMove");
+                    isRunning = false;
+                }
+            }
+
             moveDir = new Vector3(hAxis, 0, vAxis);
             moveVec = new Vector3(hAxis, 0, vAxis).normalized;
 
@@ -192,6 +225,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     {
         if(!isDashPossible)
         {
+            SoundManager.Instance.PlaySound("DashMove");
             dashPower = (isDirRight ? Vector3.right : Vector3.left) * dash;
             rb.AddForce(dashPower, ForceMode.VelocityChange);
             anim.SetTrigger("DashTr");
@@ -209,6 +243,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     {
         if (isJumpDown && jumpCnt > 0)
         {
+
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             rb.AddForce(Vector3.up * Mathf.Sqrt(JumpPower * -Physics.gravity.y) * 1.5f, ForceMode.Impulse);
             if (jumpCnt == 2)
@@ -259,7 +294,9 @@ public class PlayerControlManagerFix : MonoBehaviour
             weapons.GetComponent<WeaponControl>().trailEffect.enabled = true;
             StopCoroutine("Swing");
             StartCoroutine("Swing");
+            SoundManager.Instance.PlaySound("AttackSound");
         }
+
     }
     
 
@@ -318,7 +355,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     IEnumerator CheckFireBall()
     {
         Debug.Log("남은 횟수 : " + skillCount);
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(3f);
         isFbPossible = false;
     }
     IEnumerator CheckAttack2()
@@ -449,6 +486,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     {
         if(isInvincible == false)
         {
+            SoundManager.Instance.PlaySound("BeDamage");
             playerHP -= damage;
             Debug.Log("맞음");
             StartCoroutine(Invincibility());
@@ -470,6 +508,7 @@ public class PlayerControlManagerFix : MonoBehaviour
             anim.SetBool("isGround", true);
         }
     }
+
     IEnumerator Invincibility()
     {
         isInvincible = true;  // 무적 상태 활성화
@@ -562,6 +601,11 @@ public class PlayerControlManagerFix : MonoBehaviour
     public void SetPlayerVelocity(float x, float y, float z)
     {
         rb.velocity = new Vector3(x, y, z);
+    }
+
+    public void SetPlayerEnabled(bool state)
+    {
+        gameObject.SetActive(state);
     }
 
     public void AddForceToPlayer(Vector3 force, ForceMode mode)

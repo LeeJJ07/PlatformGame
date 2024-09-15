@@ -25,8 +25,15 @@ public class TitleScreen : MonoBehaviour
         currentScreenState = ScreenState.INTRO;
 
         Init();
-        GameDirector.instance.SetPlayerRelatedObjects(false);
+        GameDirector.instance.SetPlayerUI(false);
+        GameDirector.instance.PlayerControl.SetPlayerEnabled(false);
         StartCoroutine(StartIntro());
+    }
+
+    void OnDisable()
+    {
+        if (GameDirector.instance)
+            GameDirector.instance.PlayerControl.SetPlayerEnabled(true);
     }
     
     void Update()
