@@ -20063,6 +20063,10 @@ PrefabInstance:
       value: Death Wing
       objectReference: {fileID: 0}
     - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
+      propertyPath: hitEffect
+      value: 
+      objectReference: {fileID: 7898571354433899400, guid: a4ddd8aa2169db04da8a3e3827398666, type: 3}
+    - target: {fileID: 4123994617682032421, guid: 80798bb92b62f6a49b8e3f5841413741, type: 3}
       propertyPath: EntryDelay
       value: 4.5
       objectReference: {fileID: 0}

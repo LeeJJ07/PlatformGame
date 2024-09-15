@@ -4,52 +4,58 @@ using UnityEngine;
 
 public class BossBehaviour : MonoBehaviour,ITag
 {
-    [Header("Boss Activate")]
+    [Header("보스 활성화")]
     [SerializeField] bool isActivate = false;
 
-    [Header("Boss Values")]
+    [Header("기본으로 들어갈 정보들")]
     [SerializeField] string bossName;
     [SerializeField] string detailTag;
+    [SerializeField] float hp = 100;
+    [SerializeField] float moveSpeed = 0;
     [SerializeField] GameObject warningPrefab;
+    [SerializeField] GameObject shockWave;
+    [SerializeField] ParticleSystem hitEffect;
     [SerializeField] Transform[] wallTransforms;
     [SerializeField] Transform[] spawnRange;
     [SerializeField] Transform playerTransform;
     [SerializeField] Transform flamePosition;
-    [SerializeField] Animator aniController;
-    [SerializeField] float hp = 100;
-    [SerializeField] float moveSpeed = 0;
-    [SerializeField] GameObject shockWave;
     [SerializeField] Collider[] bossColliders;
+    [SerializeField] Animator aniController;
 
-    [Header("Phase1")]
-    [SerializeField] float Phase1HpCondition;
+    [Header("보스 인트로 장면 이후 딜레이 시간")]
     [SerializeField] float EntryDelay;
 
-    [Header("PHASE1 Skill Info")]
+    [Header("페이즈1")]
+    [SerializeField] float Phase1HpCondition;
+
+    [Header("페이즈1 스킬정보")]
     [SerializeField] FlameAttackScriptableObject Phase1flameAttackInfo;
     [SerializeField] ScreamAttackScriptableObject Phase1screamAttackInfo;
 
-    [Header("Phase2")]
+    [Header("페이즈2")]
     [SerializeField] float Phase2HpCondition;
 
-    [Header("PHASE2 Skill Info")]
+    [Header("페이즈2 스킬정보")]
     [SerializeField] FlameAttackScriptableObject Phase2flameAttackInfo;
     [SerializeField] BreathAttackScriptableObject Phase2breathAttackInfo;
     [SerializeField] ScreamAttackScriptableObject Phase2screamAttackInfo;
     [SerializeField] BasicAttackScriptableObject Phase2basicAttackInfo;
 
-    [Header("Phase3")]
+    [Header("페이즈3")]
     [SerializeField] GameObject flamePrefabsObject;
     [SerializeField] GameObject angryLight;
     [SerializeField] float Phase3HpCondition;
     
-    [Header("PHASE3 Skill Info")]
+    [Header("페이즈3 스킬정보")]
     [SerializeField] FlameAttackScriptableObject Phase3flameAttackInfo;
     [SerializeField] ScreamAttackScriptableObject Phase3screamAttackInfo;
     [SerializeField] BasicAttackScriptableObject Phase3basicAttackInfo;
     [SerializeField] BreathAttackScriptableObject Phase3breathAttackInfo;
     [SerializeField] RushAttackScriptableObject Phase3RushAttackInfo;
+    
+    
     //공격범위
+    [Header("공격 가능거리")]
     [SerializeField] float basicAttackDistance;
     [SerializeField] float screamAttackDistance;
     [SerializeField] float flameAttackDistance;
@@ -588,6 +594,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         if (!isHit) yield break;
         isHit = false;
         bossColliders[1].enabled = false;
+        hitEffect.Play();
         switch (tag)
         {
             case "Weapon":
