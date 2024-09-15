@@ -81,6 +81,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     private Vignette vignette;
 
     [SerializeField] private int coin = 0; // 코인 갯수
+    public Inventory inventory;
     void Start()
     {
         playerRenderer = GetComponent<Renderer>();
@@ -103,6 +104,8 @@ public class PlayerControlManagerFix : MonoBehaviour
 
         basicDamage = weapons.GetComponent<WeaponControl>().damage;
         bombDamage = fireBallPrefabs.GetComponent<FireBallControl>().bombDamage;
+
+        inventory = GetComponent<Inventory>();
     }
     // Update is called once per frame
     void Update()
@@ -115,7 +118,7 @@ public class PlayerControlManagerFix : MonoBehaviour
             Swap();
             Attack();
             if (InventoryKeyDown())
-                Inventory.instance.Toggle();
+                inventory.Toggle();
             if (Input.GetButtonDown("Dash"))
             {
                 CheckDash();

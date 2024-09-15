@@ -41,7 +41,7 @@ public class ItemSlotUI : MonoBehaviour
     }
     public void OnButtonClick()
     {
-        Inventory.instance.SelectItem(index);
+        GameDirector.instance.PlayerControl.inventory.SelectItem(index);
     }
     public void SetOutline(bool _enabled) { outline.enabled = _enabled; }
 }

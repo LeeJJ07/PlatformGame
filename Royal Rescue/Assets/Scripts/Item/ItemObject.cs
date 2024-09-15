@@ -8,7 +8,7 @@ public class ItemObject : MonoBehaviour
     public ItemDatas item;
     public void OnInteract()
     {
-        Inventory.instance.AddItem(item);
+        GameDirector.instance.PlayerControl.inventory.AddItem(item);
         Destroy(gameObject);
     }
     public void OnInteractCoin() {

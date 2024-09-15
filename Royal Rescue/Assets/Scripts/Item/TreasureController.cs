@@ -19,7 +19,7 @@ public class TreasureController : MonoBehaviour
     [SerializeField] int maxCoinNum = 11;
 
     GameObject treasureText;
-    protected Canvas uiCanvas;
+    private Canvas uiCanvas;
     public GameObject treasureTextPrefab;
     public GameObject treasureCoinPrefab;
     public GameObject treasureParticlePrefab;
@@ -30,18 +30,6 @@ public class TreasureController : MonoBehaviour
     {
         needRandomCoin = Random.Range(minCoinNum, maxCoinNum);
         curCoin = needRandomCoin;
-
-        uiCanvas = GameObject.Find("InGame Canvas").GetComponent<Canvas>();
-        Vector3 nVec = new Vector3(0, 1.7f, 0);
-        var screenPos = Camera.main.WorldToScreenPoint(transform.position + nVec); // 몬스터의 월드 3d좌표를 스크린좌표로 변환
-        var localPos = Vector2.zero;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.GetComponent<RectTransform>(), screenPos, uiCanvas.worldCamera, out localPos);
-
-        treasureText = Instantiate(treasureTextPrefab) as GameObject;
-        treasureText.GetComponent<TreasureText>().curCoin = curCoin;
-        treasureText.transform.SetParent(uiCanvas.transform, false);
-        treasureText.transform.localPosition = localPos;
-        treasureText.SetActive(false);
     }
     private void Update()
     {
@@ -61,9 +49,22 @@ public class TreasureController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player") || treasureText == null)
+        if (!other.CompareTag("Player"))
             return;
-        treasureText.SetActive(true);
+        if (treasureText == null) {
+            uiCanvas = GameObject.Find("InGame Canvas").GetComponent<Canvas>();
+            Vector3 nVec = new Vector3(0, 1.7f, 0);
+            var screenPos = Camera.main.WorldToScreenPoint(transform.position + nVec);
+            var localPos = Vector2.zero;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.GetComponent<RectTransform>(), screenPos, uiCanvas.worldCamera, out localPos);
+
+            treasureText = Instantiate(treasureTextPrefab, uiCanvas.transform) as GameObject;
+            treasureText.GetComponent<TreasureText>().curCoin = curCoin;
+            treasureText.transform.SetParent(uiCanvas.transform, true);
+            treasureText.transform.localPosition = localPos;
+        }
+        else
+            treasureText.SetActive(true);
     }
     private void OnTriggerExit(Collider other)
     {
@@ -86,13 +87,14 @@ public class TreasureController : MonoBehaviour
         while (curCoin > 0)
         {
             curCoin--;
-            Instantiate(treasureCoinPrefab);
+            Instantiate(treasureCoinPrefab, transform);
             yield return new WaitForSeconds(0.3f);
         }
-        Instantiate(treasureParticlePrefab);
-        if (isPotion)
+        Instantiate(treasureParticlePrefab, transform.position, Quaternion.identity);
+        if (isPotion) {
             RandomItemCreate();
-        else if (isRuby)
+            Debug.Log("생겼다.");
+        } else if (isRuby)
             RubyCreate();
         else if (isDiamond)
             DiamondCreate();
@@ -104,25 +106,25 @@ public class TreasureController : MonoBehaviour
     void RandomItemCreate()
     {
         int idx = Random.Range(0, 4);
-        GameObject item = Instantiate(itemPrefabs[idx]);
+        GameObject item = Instantiate(itemPrefabs[idx],transform.position, Quaternion.identity);
         item.GetComponent<Rigidbody>().AddForce(Vector3.up * 1000);
         item.GetComponent<Collider>().enabled = false;
     }
     void RubyCreate() {
         int idx = 4;
-        GameObject item = Instantiate(itemPrefabs[idx]);
+        GameObject item = Instantiate(itemPrefabs[idx], transform.position, Quaternion.identity);
         item.GetComponent<Rigidbody>().AddForce(Vector3.up * 1000);
         item.GetComponent<Collider>().enabled = false;
     }
     void DiamondCreate() {
         int idx = 5;
-        GameObject item = Instantiate(itemPrefabs[idx]);
+        GameObject item = Instantiate(itemPrefabs[idx], transform.position, Quaternion.identity);
         item.GetComponent<Rigidbody>().AddForce(Vector3.up * 1000);
         item.GetComponent<Collider>().enabled = false;
     }
     void JadeCreate() {
         int idx = 6;
-        GameObject item = Instantiate(itemPrefabs[idx]);
+        GameObject item = Instantiate(itemPrefabs[idx], transform.position, Quaternion.identity);
         item.GetComponent<Rigidbody>().AddForce(Vector3.up * 1000);
         item.GetComponent<Collider>().enabled = false;
     }
