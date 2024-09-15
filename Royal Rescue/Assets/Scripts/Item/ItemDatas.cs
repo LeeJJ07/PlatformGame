@@ -11,6 +11,13 @@ public enum ItemType
     Consumable
 }
 
+public enum ResourceType 
+{
+    RUBY,
+    DIAMOND,
+    JADE,
+    ETC
+}
 public enum ConsumableType
 {
     HEAL,
@@ -42,4 +49,7 @@ public class ItemDatas : ScriptableObject
 
     [Header("Consumable")]
     public ItemDataConsumable[] consumables;
+
+    [Header("Resource")]
+    public ResourceType resource;
 }

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Jade
   m_EditorClassIdentifier: 
   displayName: "\uC625"
-  description: aaaaaaaaaaaaaa
+  description: "\uAF2D \uD544\uC694\uD55C \uC21C\uAC04\uC774 \uC628\uB2E4"
   type: 0
   icon: {fileID: 21300000, guid: 0817d052f4f15834b96965b07ed19bf0, type: 3}
   canStack: 0
   maxStackAmount: 0
   consumables: []
+  resource: 2

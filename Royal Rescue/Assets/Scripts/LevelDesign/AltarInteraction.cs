@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AltarInteraction : MonoBehaviour
 {
-    [SerializeField] private GemType gemType;
+    [SerializeField] private ResourceType resourceType;
     [SerializeField] private GameObject gem;
     private AltarControl altarControl;
     private bool isPlayerInAltarRange = false;
@@ -14,7 +14,7 @@ public class AltarInteraction : MonoBehaviour
         altarControl = GameObject.FindWithTag("AltarControl").GetComponent<AltarControl>();
     }
 
-    void OnTriggerStay(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (!isPlayerInAltarRange && other.gameObject.CompareTag("Player"))
         {
@@ -29,10 +29,11 @@ public class AltarInteraction : MonoBehaviour
 
     void Update()
     {
-        if (isPlayerInAltarRange && Input.GetButtonDown("Attack") && altarControl.CanActivateAltar(gemType))
+        if (isPlayerInAltarRange && Input.GetButtonDown("Attack") && altarControl.CanActivateAltar(resourceType))
         {
             gameObject.SetActive(false);
             gem.SetActive(true);
+            GameDirector.instance.PlayerControl.inventory.UseGem(resourceType);
             // Play Sound
             altarControl.ActivateAltar();
         }

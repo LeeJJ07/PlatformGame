@@ -19,4 +19,11 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: bc2a82bad85bcbb45b9892c69fabdd3b, type: 3}
   canStack: 1
   maxStackAmount: 10
-  consumables: []
+  consumables:
+  - type: 0
+    value: 100
+  - type: 0
+    value: 50
+  - type: 0
+    value: -30
+  resource: 3

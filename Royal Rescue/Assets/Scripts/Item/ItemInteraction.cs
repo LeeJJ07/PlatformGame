@@ -5,6 +5,7 @@ using UnityEngine;
 public class ItemInteraction : MonoBehaviour
 {
     Collider col;
+    [SerializeField] private GemType gemType;
     [SerializeField] private GameObject coinEffect;
     private ItemObject itemObject;
 
@@ -31,6 +32,9 @@ public class ItemInteraction : MonoBehaviour
             Destroy(effect, 0.9f);
 
             SoundManager.Instance.PlaySound("Coin");
+
         }
     }
 }
+
+

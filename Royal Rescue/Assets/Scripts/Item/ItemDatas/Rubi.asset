@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Rubi
   m_EditorClassIdentifier: 
   displayName: "\uB8E8\uBE44"
-  description: aaaaaaaaaaaaaa
+  description: "\uAF2D \uD544\uC694\uD55C \uC21C\uAC04\uC774 \uC628\uB2E4"
   type: 0
   icon: {fileID: 21300000, guid: a2dc374c2642bc844afc22a445e521e6, type: 3}
   canStack: 0

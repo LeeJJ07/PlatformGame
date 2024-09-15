@@ -185,7 +185,6 @@ public class PlayerControlManagerFix : MonoBehaviour
             anim.SetBool("Idle", moveVec == Vector3.zero && isFloor);
 
         }
-        
     }
     void CheckDash()
     {
@@ -298,6 +297,18 @@ public class PlayerControlManagerFix : MonoBehaviour
             return;
         
     }
+
+    public void IncreaseCurHp(int amount) 
+    {
+        playerHP += amount;
+        if (amount < 0)
+            Debug.Log("현재체력 " + amount + "만큼 감소");
+        else
+            Debug.Log("현재체력 " + amount + "만큼 증가");
+
+        if (playerHP > playerMaxHP) playerHP = playerMaxHP;
+        else if (playerHP < 0) playerHP = 0;
+    }
     public void IncreaseSpeed(float amount)
     {
         moveSpeed += amount;
@@ -305,6 +316,9 @@ public class PlayerControlManagerFix : MonoBehaviour
             Debug.Log("스피드가 " + amount + "만큼 감소");
         else
             Debug.Log("스피드가 " + amount + "만큼 증가");
+
+        if (moveSpeed > 5) moveSpeed = 5;           // maxMoveSpeed 5로 제한
+        else if (moveSpeed < 1) moveSpeed = 1;      // minMoveSpeed 1로 제한
     }
     public void IncreaseAtk(int amount)
     {
@@ -313,14 +327,22 @@ public class PlayerControlManagerFix : MonoBehaviour
             Debug.Log("공격력이 " + amount + "만큼 감소");
         else
             Debug.Log("공격력이 " + amount + "만큼 증가");
+
+        if (playerBasicATK < 0) playerBasicATK = 0;      // minAttack 10으로 제한
     }
     public void IncreaseMaxHp(int amount)
     {
         playerMaxHP += amount;
+        if (amount > 0)
+            IncreaseCurHp(amount);
+            
         if (amount < 0)
             Debug.Log("최대 체력이 " + amount + "만큼 감소");
         else
             Debug.Log("최대 체력이 " + amount + "만큼 증가");
+
+        if (playerMaxHP < 30) playerMaxHP = 30;      // MaxHp 하향 30으로 제한
+        playerHP = playerHP > playerMaxHP ? playerMaxHP : playerHP;
     }
     void playerDie()
     {

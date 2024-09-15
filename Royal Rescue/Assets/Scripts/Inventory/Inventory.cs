@@ -77,6 +77,19 @@ public class Inventory : MonoBehaviour
                 return;
             }
         }
+        if (item.type == ItemType.Resource) {
+            switch (item.resource) {
+                case ResourceType.RUBY:
+                    AltarControl.redGem++;
+                    break;
+                case ResourceType.DIAMOND:
+                    AltarControl.whiteGem++;
+                    break;
+                case ResourceType.JADE:
+                    AltarControl.greenGem++;
+                    break;
+            }
+        }
 
         ItemSlot emptySlot = GetEmptySlot();
         if (emptySlot != null)
@@ -86,6 +99,7 @@ public class Inventory : MonoBehaviour
             UpdateUI();
             return;
         }
+
         ThrowItem(item);
     }
     private void ThrowItem(ItemDatas item) //구현해야함
@@ -137,8 +151,8 @@ public class Inventory : MonoBehaviour
 
         selectedItemName.text = selectedItem.item.displayName;
         selectedItemDescription.text = selectedItem.item.description;
-        useButton.SetActive(selectedItem.item.type == ItemType.Consumable);
-        dropButton.SetActive(true);
+        useButton.SetActive(selectedItem.item.type == ItemType.Consumable || selectedItem.item.type == ItemType.Equipable);
+        dropButton.SetActive(selectedItem.item.type == ItemType.Consumable);
     }
 
     private void ClearSelectItemWindow()
@@ -154,21 +168,27 @@ public class Inventory : MonoBehaviour
     {
         if (selectedItem.item.type == ItemType.Consumable)
         {
-            for (int i = 0; i < selectedItem.item.consumables.Length; i++)
-            {
-                switch (selectedItem.item.consumables[i].type)
-                {
-                    case ConsumableType.HEAL:
-                        //conditions.Heal(selectedItem.item.consumables[i].value);
-                        break;
-                    case ConsumableType.POWER:
-                        break;
-                    case ConsumableType.HEALTH:
-                        break;
-                    case ConsumableType.MOVESPEED:
-                        break;
-                }
+            int randNum = Random.Range(0, 10), i = 0;
+            if (randNum < 3) i = 0;
+            else if (randNum < 8) i = 1;
+            else if (randNum < 10) i = 2;
+
+            switch (selectedItem.item.consumables[i].type) {
+                case ConsumableType.HEAL:
+                    GameDirector.instance.PlayerControl.IncreaseCurHp((int)selectedItem.item.consumables[i].value);
+                    break;
+                case ConsumableType.POWER:
+                    GameDirector.instance.PlayerControl.IncreaseAtk((int)selectedItem.item.consumables[i].value);
+                    break;
+                case ConsumableType.HEALTH:
+                    GameDirector.instance.PlayerControl.IncreaseMaxHp((int)selectedItem.item.consumables[i].value);
+                    break;
+                case ConsumableType.MOVESPEED:
+                    GameDirector.instance.PlayerControl.IncreaseSpeed((int)selectedItem.item.consumables[i].value);
+                    break;
             }
+        }else if(selectedItem.item.type == ItemType.Equipable) {
+            GameDirector.instance.PlayerControl.isAttackEnhance = true;
         }
         RemoveSelectedItem();
     }
@@ -210,5 +230,22 @@ public class Inventory : MonoBehaviour
     public bool HasItems(ItemDatas item, int quantity)
     {
         return false;
+    }
+
+    public void UseGem(ResourceType resourceType) {
+        for (int i = 0; i < slots.Length; i++) {
+            if (slots[i].item == null || slots[i].item.resource != resourceType)
+                continue;
+
+            // 자원의 수량을 감소시키고, 수량이 0이 되면 해당 아이템을 제거
+            slots[i].quantity--;
+            if (slots[i].quantity <= 0) {
+                slots[i].item = null;
+            }
+
+            ClearSelectItemWindow();
+            UpdateUI();
+            break;
+        }
     }
 }
