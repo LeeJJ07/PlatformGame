@@ -2037,7 +2037,6 @@ MonoBehaviour:
   maxAlpha: 1
   minAlpha: 0
   DamageEffect: {fileID: 0}
-  SkillCharheEft: {fileID: 0}
   playerMaxHP: 500
   playerHP: 500
   playerBasicATK: 0
@@ -2051,6 +2050,8 @@ MonoBehaviour:
   SwordWindPrefabsR: {fileID: 0}
   SwordWindPrefabsL: {fileID: 0}
   attackIcon: {fileID: 0}
+  SkillCharheEft: {fileID: 0}
+  SkillPCharheEft: {fileID: 0}
   fireBallSpawnPoint: {fileID: 0}
   jumpPossible: 2
   moveSpeed: 0
@@ -2059,19 +2060,20 @@ MonoBehaviour:
   isDirRight: 1
   isFloor: 0
   isAttackButton: 0
+  isAttackSecond: 0
   isSwordWindPossible: 0
   isAttackPossible: 0
   isAttackEnhance: 0
   isJumpEnhance: 0
   isDashPossible: 0
-  isBombStart: 0
-  isFbPossible: 0
   isDie: 0
   invincibilityDuration: 2
   holdTime: 0
   maxHoldTime: 3
   minThrowPower: 5
   maxThrowPower: 20
+  isBombStart: 0
+  isFbPossible: 0
   layer:
     serializedVersion: 2
     m_Bits: 0
@@ -6073,7 +6075,7 @@ Transform:
   m_GameObject: {fileID: 870815472}
   serializedVersion: 2
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
-  m_LocalPosition: {x: 0, y: 3, z: 0}
+  m_LocalPosition: {x: -1.705, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
