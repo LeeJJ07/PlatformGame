@@ -21,7 +21,7 @@ public class IdleMonster : Monster
         base.Start();
         awakeDistance = data.AwakeRange;
 
-        animator.SetBool("isLive", false);
+        animator.SetBool("isLive", isLive);
         switch (this.tag)
         {
             case "ChestMonster":

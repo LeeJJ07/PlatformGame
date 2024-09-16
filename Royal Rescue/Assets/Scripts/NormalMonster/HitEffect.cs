@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class HitEffect : MonoBehaviour
 {
+    [SerializeField] bool isDestroyafterEnd = true;
     IEnumerator Start()
     {
         yield return new WaitForSeconds(2f);
@@ -11,6 +12,10 @@ public class HitEffect : MonoBehaviour
     }
     void OnDie()
     {
-        Destroy(gameObject);
+        Debug.Log($"isDestroyafterEnd: {isDestroyafterEnd}");
+        if(isDestroyafterEnd)
+            Destroy(gameObject);
+        else
+            gameObject.SetActive(false);
     }
 }

@@ -49,7 +49,7 @@ public class ObjectPulling
         {
             foreach (GameObject obj in objList)
             {
-                if (!obj.activeSelf)
+                if (obj.activeSelf)
                 {
                     return obj;
                 }

@@ -13,9 +13,17 @@ MonoBehaviour:
   m_Name: MoveSpeedPotion
   m_EditorClassIdentifier: 
   displayName: "\uC774\uB3D9 \uC18D\uB3C4 \uC99D\uAC00 \uD3EC\uC158"
-  dscription: "\uC774\uB3D9\uC18D\uB3C4\uAC00 \uC99D\uAC00\uD569\uB2C8\uB2E4.\\n(
-    +2 / +1 / -1 - \uD655\uB960 : 30% / 50% / 10% )"
+  description: "\uC774\uB3D9 \uC18D\uB3C4\uAC00 \uC99D\uAC00\uB429\uB2C8\uB2E4\n\n\uC774\uB3D9
+    \uC18D\uB3C4\n +2 / +1 / -1  \n\n\uD655\uB960\n30% / 50% / 10%"
   type: 2
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: ae814121618aefe44823268111585d69, type: 3}
   canStack: 1
   maxStackAmount: 3
+  consumables:
+  - type: 3
+    value: 2
+  - type: 3
+    value: 1
+  - type: 3
+    value: -1
+  resource: 3

@@ -12321,7 +12321,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e82d33e548a4154495761b911ed3087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gemType: 0
+  resourceType: 0
   gem: {fileID: 194143452}
 --- !u!65 &403931061
 BoxCollider:
@@ -20017,7 +20017,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e82d33e548a4154495761b911ed3087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gemType: 1
+  resourceType: 0
   gem: {fileID: 398828692}
 --- !u!65 &697982595
 BoxCollider:
@@ -57732,7 +57732,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e82d33e548a4154495761b911ed3087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gemType: 2
+  resourceType: 0
   gem: {fileID: 31772138}
 --- !u!65 &1767243065
 BoxCollider:
@@ -68143,6 +68143,10 @@ PrefabInstance:
     - target: {fileID: 5341001745198403682, guid: b9278a55f9c25a1419cabe52f613380d, type: 3}
       propertyPath: player
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5341001745198403682, guid: b9278a55f9c25a1419cabe52f613380d, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5341001745198403682, guid: b9278a55f9c25a1419cabe52f613380d, type: 3}
       propertyPath: startPosition

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 //살려줘...
 
 public class BossBehaviour : MonoBehaviour,ITag
@@ -14,7 +15,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     [SerializeField] float moveSpeed = 0;
     [SerializeField] GameObject warningPrefab;
     [SerializeField] GameObject shockWave;
-    [SerializeField] ParticleSystem hitEffect;
+    [SerializeField] GameObject hitEffect;
     [SerializeField] Transform[] wallTransforms;
     [SerializeField] Transform[] spawnRange;
     [SerializeField] Transform playerTransform;
@@ -503,7 +504,9 @@ public class BossBehaviour : MonoBehaviour,ITag
 
     private int GetSpawnMonsterCount()
     {
-        return pullingDirector.GetSpawnCountWithTag("Monster");
+        int count = pullingDirector.GetSpawnCountWithTag("Monster");
+        Debug.Log($"count: {count}");
+        return count;
     }
 
     //ITag를사용한 오브젝트들 랜덤스폰
@@ -523,7 +526,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     //ITag를사용한 오브젝트 랜덤스폰
     private GameObject SpawnObjectWithITag(GameObject obj, Vector3 posi)
     {
-        return pullingDirector.SpawnObjectwithITag(obj.tag, obj.GetComponent<ITag>(), posi);
+         return pullingDirector.SpawnObjectwithITag(obj.tag, obj.GetComponent<ITag>(), posi);
     }
 
     //지정한 위치와 갯수만큼 객체 활성화
@@ -592,9 +595,17 @@ public class BossBehaviour : MonoBehaviour,ITag
     IEnumerator OnDamage(string tag)
     {
         if (!isHit) yield break;
+
+        GameObject hitEffectObj = SpawnObjectWithITag(hitEffect, transform.position);
+        if (hitEffectObj)
+        {
+            hitEffectObj.GetComponent<ParticleSystem>().Play();
+            hitEffectObj.GetComponent<HitEffect>().StartCoroutine("Start");
+
+        }
+
         isHit = false;
         bossColliders[1].enabled = false;
-        hitEffect.Play();
         switch (tag)
         {
             case "Weapon":
@@ -614,6 +625,8 @@ public class BossBehaviour : MonoBehaviour,ITag
             hpbarUi.ChangeHpValue((int)hp);
         yield return new WaitForSeconds(0.5f);
         bossColliders[1].enabled = true;
+        
+        
         isHit=true;
     }
 

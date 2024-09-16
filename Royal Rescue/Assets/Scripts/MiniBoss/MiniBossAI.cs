@@ -6,33 +6,33 @@ using TMPro;
 
 public class MiniBossAI : MonoBehaviour
 {
-    [Header("Áß°£º¸½º ´É·ÂÄ¡")]
+    [Header("ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½É·ï¿½Ä¡")]
     [SerializeField] float hp;
     [SerializeField] float maxHp = 300;
     [SerializeField] float walkSpeed;
     [SerializeField] float runSpeed;
 
-    [Header("¼³Á¤")]
+    [Header("ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] PlayerControlManagerFix playerControl;
     private GameObject player;
     [SerializeField] Transform startTrasform;
     [SerializeField] Animator animator;
 
-    [Header("½ºÅ³ »ç¿ë È®·ü")]
+    [Header("ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ È®ï¿½ï¿½")]
     [SerializeField] int skill1Probability = 25;
     [SerializeField] int skill2Probability = 33;
 
-    [Header("½ºÅ³ µ¥¹ÌÁö")]
+    [Header("ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] int skill1Damage = 10;
     [SerializeField] int skill2Damage = 10;
     [SerializeField] int baseAttackDamage = 10;
 
-    [Header("½ºÅ³ ¹üÀ§")]
+    [Header("ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] float skill1Range= 20f;
     [SerializeField] float skill2Range = 10f;
     [SerializeField] float baseAttackRange = 5f;
 
-    [Header("°ø°Ý µô·¹ÀÌ")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField] float skill1DelayTime = 0.5f;
     [SerializeField] float skill2DelayTime = 0.5f;
     [SerializeField] float baseAttackDelayTime = 0.5f;
@@ -65,10 +65,11 @@ public class MiniBossAI : MonoBehaviour
     Sequence followPlayerSequence;
 
     bool isDie = false;
+    bool isPlayDie = false;
     bool takeAttack = false;
     [SerializeField] private GameObject hitEffect;
     public Material material;
-    private Color originalColor; // ¿ø·¡ »ö»ó
+    private Color originalColor; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     public Slider hpBarPrefab;
     public Vector3 hpBarOffset = new Vector3(0, -0.4f, 0);
@@ -76,6 +77,9 @@ public class MiniBossAI : MonoBehaviour
     private Canvas uiCanvas;
     private Slider hpBarSlider;
     public GameObject DamageTextPrefab;
+
+    [SerializeField]
+    private GameObject slashAttackItem;
 
     BehaviorTreeRunner bt;
     [HideInInspector] public BossHpBarUI hpbarUi;
@@ -167,7 +171,10 @@ public class MiniBossAI : MonoBehaviour
     {
         if (isDie)
         {
-            StartCoroutine(DeActive());
+            if (!isPlayDie) {
+                isPlayDie = true;
+                StartCoroutine(DeActive());
+            }
             return;
         }
 
@@ -193,8 +200,11 @@ public class MiniBossAI : MonoBehaviour
     public int GetSkill2Damage() { return skill2Damage; }
     IEnumerator DeActive()
     {
-        if (hpbarUi)
-            hpbarUi.DeActivateUI();
+        GameObject item = Instantiate(slashAttackItem);
+        item.GetComponent<Rigidbody>().AddForce(Vector3.up * 1000);
+        item.GetComponent<Collider>().enabled = false;
+
+        hpbarUi.DeActivateUI();
         yield return new WaitForSeconds(3f);
         gameObject.SetActive(false);
     }
@@ -237,9 +247,9 @@ public class MiniBossAI : MonoBehaviour
         hpBarSlider.value = (float)hp / (float)maxHp;
 
         Vector3 nVec = new Vector3(0, 5f, 0);
-        var screenPos = Camera.main.WorldToScreenPoint(transform.position + nVec); // ¸ó½ºÅÍÀÇ ¿ùµå 3dÁÂÇ¥¸¦ ½ºÅ©¸°ÁÂÇ¥·Î º¯È¯
+        var screenPos = Camera.main.WorldToScreenPoint(transform.position + nVec); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 3dï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½Å©ï¿½ï¿½ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½È¯
         var localPos = Vector2.zero;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.GetComponent<RectTransform>(), screenPos, uiCanvas.worldCamera, out localPos); // ½ºÅ©¸° ÁÂÇ¥¸¦ ´Ù½Ã Ã¼·Â¹Ù UI Äµ¹ö½º ÁÂÇ¥·Î º¯È¯
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.GetComponent<RectTransform>(), screenPos, uiCanvas.worldCamera, out localPos); // ï¿½ï¿½Å©ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½Ù½ï¿½ Ã¼ï¿½Â¹ï¿½ UI Äµï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ ï¿½ï¿½È¯
 
         GameObject damageUI = Instantiate(DamageTextPrefab) as GameObject;
         damageUI.GetComponent<DamageText>().damage = dmg;
@@ -256,7 +266,7 @@ public class MiniBossAI : MonoBehaviour
         {
             originalColor = material.color;
             material.color = new Color(255, 125, 100, 100);
-            yield return new WaitForSeconds(0.1f);  // 0.2ÃÊ µ¿¾È ´ë±â
+            yield return new WaitForSeconds(0.1f);  // 0.2ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
             material.color = originalColor;
             yield return new WaitForSeconds(0.1f);
         }

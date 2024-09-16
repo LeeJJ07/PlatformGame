@@ -66,6 +66,8 @@ public class GameDirector : MonoBehaviour
         AltarControl.ResetAltar();
         PlayerControl.transform.SetParent(transform);
 
+        SoundManager.Instance.StopLoopSound("BlizzardCastle");
+
         yield return new WaitForSeconds(0.1f);
         var asyncLoadStage = SceneManager.LoadSceneAsync(stageNames[stageIndex], LoadSceneMode.Single);
 
@@ -103,6 +105,7 @@ public class GameDirector : MonoBehaviour
 
         loadingScreenCam.enabled = false;
         uiCanvas.gameObject.SetActive(false);
+        SoundManager.Instance.PlaySound("BlizzardCastle", true, SoundType.BGM);
     }
 
     public IEnumerator RespawnScreenTransition()

@@ -23,6 +23,7 @@ public class EventBossHpBarBehavior : MonoBehaviour
 
     void Update()
     {
+        
         if (hpbarUi&& !isActive)
         {
             hpbarUi.Init(monster.GetMaxHp(), null, BossName);
@@ -35,5 +36,13 @@ public class EventBossHpBarBehavior : MonoBehaviour
             hpbarUi.DeActivateUI();
         }
         hpbarUi.ChangeHpValue(hp);
+    }
+    private void OnDisable()
+    {
+        if(isActive)
+        {
+            hpbarUi.DeActivateUI();
+            isActive = false;
+        }
     }
 }
