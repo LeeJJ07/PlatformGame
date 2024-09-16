@@ -15,7 +15,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private float currentBGMVolume, currentEffectVolume;
     private Dictionary<string, AudioClip> clipsDictionary;
     private AudioClip[] audioClips;
-    [SerializeField] private List<SoundPlayer> loopSounds;
+    private List<SoundPlayer> loopSounds;
     public static SoundManager Instance;
     public float CurrentBGMVolume => currentBGMVolume;
     public float CurrentSFXVolume => currentEffectVolume;

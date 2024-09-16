@@ -6285,6 +6285,7 @@ MonoBehaviour:
   detailTag: BossHpUI
   hpSlider: {fileID: 8897661870386956386}
   TMPname: {fileID: 2549228387652236397}
+  HpbarAniCTRL: {fileID: 6998546988016722504}
 --- !u!95 &6998546988016722504
 Animator:
   serializedVersion: 5

@@ -7,21 +7,20 @@ using UnityEngine.UI;
 
 public class BossHpBarUI : MonoBehaviour,ITag
 {
-    [Header("오브젝트 비활성화 하지 말 것")]
     [SerializeField] string detailTag;
     [SerializeField] Slider hpSlider;
     [SerializeField] TextMeshProUGUI TMPname;
-    Animator HpbarAniCTRL;
+    [SerializeField] Animator HpbarAniCTRL;
     int maxHp = 1;
     float[] hpColorChangeNum= new float[3];
     string bossName = "";
 
-    /*private void OnEnable()
+    private void OnEnable()
     {
         HpbarAniCTRL=GetComponent<Animator>();
         hpSlider = GetComponentInChildren<Slider>();
         TMPname = GetComponentInChildren<TextMeshProUGUI>();
-    }*/
+    }
     public void Init(int maxHp, float[] hpColorChangeNum, string name)
     {
         if(!HpbarAniCTRL)
