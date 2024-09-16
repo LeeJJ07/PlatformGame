@@ -12,13 +12,15 @@ public class PlayerControlManagerFix : MonoBehaviour
     private delegate void OnPlayerDeath();
     private OnPlayerDeath onPlayerDeath;
 
+    const int PLAYER_MAX_HP = 500;
+
     public Material material;
     public float maxAlpha = 1f; // 최대 알파 값
     public float minAlpha = 0f; // 최소 알파 값
     private Color originalColor; // 원래 색상
 
     public GameObject DamageEffect;
-    public int playerMaxHP = 500;
+    public int playerMaxHP = PLAYER_MAX_HP;
     public int playerHP;
     public int playerBasicATK = 0;
     public float hAxis;
@@ -66,7 +68,6 @@ public class PlayerControlManagerFix : MonoBehaviour
     [SerializeField] private float minThrowPower = 5;//폭탄이 받는 최소 방향 파워
     [SerializeField] private float maxThrowPower = 10;//최대 방향 파워
 
-
     public LayerMask layer;
 
     Rigidbody rb;
@@ -84,6 +85,13 @@ public class PlayerControlManagerFix : MonoBehaviour
 
     [SerializeField] private int coin = 0; // 코인 갯수
     public Inventory inventory;
+
+    // 엔딩 후 타이틀 화면 복귀 시 참조할 플레이어의 초기 스테이터스 ///
+    private float ogMoveSpeed;
+    private int ogPlayerBasicATK, ogCoin;
+
+    ///////////////////////////////////////////////////////////////
+
     void Start()
     {
         playerRenderer = GetComponent<Renderer>();
@@ -108,6 +116,8 @@ public class PlayerControlManagerFix : MonoBehaviour
         bombDamage = fireBallPrefabs.GetComponent<FireBallControl>().bombDamage;
 
         inventory = GetComponent<Inventory>();
+
+        CachePlayerStatus();
     }
     // Update is called once per frame
     void Update()
@@ -649,6 +659,21 @@ public class PlayerControlManagerFix : MonoBehaviour
     public void ToggleCursor(bool toggle)
     {
         Cursor.lockState = toggle ? CursorLockMode.None:CursorLockMode.Locked;
+    }
+
+    private void CachePlayerStatus()
+    {
+        ogMoveSpeed = moveSpeed;
+        ogPlayerBasicATK = playerBasicATK;
+        ogCoin = coin;
+    }
+
+    public void ResetPlayerStatus()
+    {
+        playerHP = playerMaxHP = PLAYER_MAX_HP;
+        moveSpeed = ogMoveSpeed;
+        playerBasicATK = ogPlayerBasicATK;
+        coin = ogCoin;
     }
 }
 
