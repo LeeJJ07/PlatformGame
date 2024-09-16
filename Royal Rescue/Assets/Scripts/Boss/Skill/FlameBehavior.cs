@@ -8,6 +8,7 @@ public class FlameBehavior : MonoBehaviour,ITag
     [SerializeField] ParticleSystem explosionParticle;
     [SerializeField] string[] ignoreTagList;
     [SerializeField] float moveSpeed;
+    [SerializeField] float deActiveTime = 0;
     int damage = 0;
     Coroutine skillCoroutine;
     Transform target;
@@ -19,7 +20,7 @@ public class FlameBehavior : MonoBehaviour,ITag
         flameParticle.Play();
         explosionParticle.Stop();
         skillCoroutine = StartCoroutine("ActiveFlameSkill");
-     
+        StartCoroutine("DeActiveFlameSkill");
     }
     public void SetDamage(int damage)
     {
@@ -54,6 +55,11 @@ public class FlameBehavior : MonoBehaviour,ITag
             StartCoroutine("WaitDeActiveFlameSkill");
 
         }
+    }
+    IEnumerator DeActiveFlameSkill()
+    {
+        yield return new WaitForSeconds(deActiveTime);
+        gameObject.SetActive(false);
     }
     IEnumerator ActiveFlameSkill()
     {

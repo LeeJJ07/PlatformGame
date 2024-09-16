@@ -83,20 +83,18 @@ public class DropObjBehavior : MonoBehaviour,ITag
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag.Equals("Player"))
+        if(!other.tag.Equals("Player")) return;
+        if (destroyObj)
         {
-            if (destroyObj)
-            {
-                this.gameObject.SetActive(false);
-            }
-            if (rigid != null)
-            {
-                rigid.isKinematic = false;
-            }
-          
-            //플레이어 데미지 전달 로직작성 블럭
-            player.HurtPlayer(damage);
+            this.gameObject.SetActive(false);
         }
+        if (rigid != null)
+        {
+            rigid.isKinematic = false;
+        }
+
+        //플레이어 데미지 전달 로직작성 블럭
+        player.HurtPlayer(damage);
         if (deactiveWarningZoneObj != null)
             deactiveWarningZoneObj.SetActive(false);
 

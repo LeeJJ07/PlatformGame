@@ -51,6 +51,8 @@ public class IdleMonster : Monster
     }
     new void Update()
     {
+
+        //보스가 노멀몬스터 스폰시 가만이 있는 문제해결을위해 추가한 코드 : (IsPossibleAwake()||isLive)
         if (!isAwake && (IsPossibleAwake()||isLive))
         {
             isAwake = true;

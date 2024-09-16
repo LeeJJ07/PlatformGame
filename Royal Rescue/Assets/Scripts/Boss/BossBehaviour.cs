@@ -505,7 +505,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     private int GetSpawnMonsterCount()
     {
         int count = pullingDirector.GetSpawnCountWithTag("Monster");
-        Debug.Log($"count: {count}");
+        Debug.Log($"Monster count: {count}");
         return count;
     }
 

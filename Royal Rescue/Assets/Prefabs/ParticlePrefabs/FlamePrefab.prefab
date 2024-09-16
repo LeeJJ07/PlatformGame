@@ -101,6 +101,7 @@ MonoBehaviour:
   explosionParticle: {fileID: 3599827170578653174}
   ignoreTagList: []
   moveSpeed: 20
+  deActiveTime: 8
 --- !u!1001 &189676919323409035
 PrefabInstance:
   m_ObjectHideFlags: 0
