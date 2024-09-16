@@ -30,7 +30,6 @@ public class PlayerControlManagerFix : MonoBehaviour
     public GameObject fireBallPrefabs;
     public GameObject SwordWindPrefabsR;
     public GameObject SwordWindPrefabsL;
-    public GameObject Inventory;
     public GameObject attackIcon;
     public Transform fireBallSpawnPoint;
     [SerializeField] private int jumpPossible = 2;
@@ -84,6 +83,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     private Vignette vignette;
 
     [SerializeField] private int coin = 0; // 코인 갯수
+    public Inventory inventory;
     void Start()
     {
         playerRenderer = GetComponent<Renderer>();
@@ -106,6 +106,8 @@ public class PlayerControlManagerFix : MonoBehaviour
 
         basicDamage = weapons.GetComponent<WeaponControl>().damage;
         bombDamage = fireBallPrefabs.GetComponent<FireBallControl>().bombDamage;
+
+        inventory = GetComponent<Inventory>();
     }
     // Update is called once per frame
     void Update()
@@ -117,6 +119,8 @@ public class PlayerControlManagerFix : MonoBehaviour
             Jump();
             Swap();
             Attack();
+            if (InventoryKeyDown())
+                inventory.Toggle();
             if (Input.GetButtonDown("Dash"))
             {
                 CheckDash();
@@ -211,7 +215,6 @@ public class PlayerControlManagerFix : MonoBehaviour
             anim.SetBool("Idle", moveVec == Vector3.zero && isFloor);
 
         }
-        
     }
     ////방향 및 이동 관련 함수 END
 
@@ -363,6 +366,17 @@ public class PlayerControlManagerFix : MonoBehaviour
 
 
 
+    public void IncreaseCurHp(int amount) 
+    {
+        playerHP += amount;
+        if (amount < 0)
+            Debug.Log("현재체력 " + amount + "만큼 감소");
+        else
+            Debug.Log("현재체력 " + amount + "만큼 증가");
+
+        if (playerHP > playerMaxHP) playerHP = playerMaxHP;
+        else if (playerHP < 0) playerHP = 0;
+    }
     public void IncreaseSpeed(float amount)
     {
         moveSpeed += amount;
@@ -370,6 +384,9 @@ public class PlayerControlManagerFix : MonoBehaviour
             Debug.Log("스피드가 " + amount + "만큼 감소");
         else
             Debug.Log("스피드가 " + amount + "만큼 증가");
+
+        if (moveSpeed > 5) moveSpeed = 5;           // maxMoveSpeed 5로 제한
+        else if (moveSpeed < 1) moveSpeed = 1;      // minMoveSpeed 1로 제한
     }
     public void IncreaseAtk(int amount)
     {
@@ -378,14 +395,22 @@ public class PlayerControlManagerFix : MonoBehaviour
             Debug.Log("공격력이 " + amount + "만큼 감소");
         else
             Debug.Log("공격력이 " + amount + "만큼 증가");
+
+        if (playerBasicATK < 0) playerBasicATK = 0;      // minAttack 10으로 제한
     }
     public void IncreaseMaxHp(int amount)
     {
         playerMaxHP += amount;
+        if (amount > 0)
+            IncreaseCurHp(amount);
+            
         if (amount < 0)
             Debug.Log("최대 체력이 " + amount + "만큼 감소");
         else
             Debug.Log("최대 체력이 " + amount + "만큼 증가");
+
+        if (playerMaxHP < 30) playerMaxHP = 30;      // MaxHp 하향 30으로 제한
+        playerHP = playerHP > playerMaxHP ? playerMaxHP : playerHP;
     }
     void playerDie()
     {
@@ -613,6 +638,17 @@ public class PlayerControlManagerFix : MonoBehaviour
         return Input.GetKeyDown(KeyCode.Q);
     }
     public int GetCoin() { return coin; }
+    public void EatCoin() { coin++; }
     public void SetCoin(int needCoin) { coin -= needCoin; }
+
+    public bool InventoryKeyDown() {
+        return Input.GetKeyDown(KeyCode.I);
+    }
+
+    //inventory 및 items : 종진
+    public void ToggleCursor(bool toggle)
+    {
+        Cursor.lockState = toggle ? CursorLockMode.None:CursorLockMode.Locked;
+    }
 }
 

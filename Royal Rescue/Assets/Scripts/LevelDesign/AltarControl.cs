@@ -9,17 +9,17 @@ public class AltarControl : MonoBehaviour
 
     private int activatedAltars = 0;
 
-    public bool CanActivateAltar(GemType gemType)
+    public bool CanActivateAltar(ResourceType resourceType)
     {
-        switch (gemType)
+        switch (resourceType)
         {
-            case GemType.RED:
+            case ResourceType.RUBY:
                 return redGem > 0;
 
-            case GemType.WHITE:
+            case ResourceType.DIAMOND:
                 return whiteGem > 0;                
 
-            case GemType.GREEN:
+            case ResourceType.JADE:
                 return greenGem > 0;
             
             default:

@@ -6,7 +6,7 @@ using UnityEngine;
 public class TreasureItem : MonoBehaviour
 {
     float time = 0.0f;
-    float speed = 30.0f;
+    float speed = 50.0f;
 
     GameObject player;
     void Start()
