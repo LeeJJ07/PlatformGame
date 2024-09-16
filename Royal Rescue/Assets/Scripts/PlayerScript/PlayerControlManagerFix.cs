@@ -33,6 +33,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     public GameObject SwordWindPrefabsR;
     public GameObject SwordWindPrefabsL;
     public GameObject attackIcon;
+    public GameObject SkillCharheEft;
     public Transform fireBallSpawnPoint;
     [SerializeField] private int jumpPossible = 2;
     private float attackDelay;
@@ -44,14 +45,14 @@ public class PlayerControlManagerFix : MonoBehaviour
     [SerializeField] private bool isFloor = false;
     [SerializeField] private bool isAttackButton = false;//
     [SerializeField] private bool isAttackSecond = false;//
-    private bool isSkillCharging = false;
+
     private bool isRunning = false;
     public bool isSwordWindPossible = false;
     public bool isAttackPossible = false;
     public bool isAttackEnhance = false;
     public bool isJumpEnhance = false;
     public bool isDashPossible = false;
-    public bool isFbPossible = false;
+    
     [SerializeField] private bool isDie = false;
 
     private int[] damageRange = {-5,-4,-3,-2,-1,0,1,2,3,4,5 };
@@ -67,6 +68,12 @@ public class PlayerControlManagerFix : MonoBehaviour
     [SerializeField]private float maxHoldTime = 3.0f;//폭탄 최대 차지 가능 시간
     [SerializeField] private float minThrowPower = 5;//폭탄이 받는 최소 방향 파워
     [SerializeField] private float maxThrowPower = 10;//최대 방향 파워
+
+
+    private bool isSkillCharging = false;
+    public bool isBombStart = false;
+    public bool isFbPossible = false;
+
 
     public LayerMask layer;
 
@@ -100,6 +107,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         rb.useGravity = true;
         anim = GetComponentInChildren<Animator>();
         attackIcon.SetActive(true);
+        SkillCharheEft.SetActive(false);
         weapons.GetComponent<BoxCollider>().enabled = false;
         weapons.GetComponent<WeaponControl>().trailEffect.enabled = false;
 
@@ -135,32 +143,37 @@ public class PlayerControlManagerFix : MonoBehaviour
             {
                 CheckDash();
             }
-            
-            if (skillCount > 0)
+
+            if (skillCount > 0 && !isFbPossible)
             {
-                if (Input.GetButtonDown("FireBallKey"))
+                if (Input.GetButtonDown("FireBallKey") && !isBombStart)
                 {
                     SoundManager.Instance.PlaySound("BombCharging", true, SoundType.EFFECT);
+                    isBombStart = true;
                     isSkillCharging = true;
                     holdTime = 0;
                 }
-                if (Input.GetButton("FireBallKey"))
+                if (Input.GetButton("FireBallKey") && isBombStart)
                 {
+                    SkillCharheEft.SetActive(true);
                     holdTime += Time.deltaTime;
                     holdTime = Mathf.Clamp(holdTime, 0, maxHoldTime);
                 }
-                if (Input.GetButtonUp("FireBallKey"))
+                if (Input.GetButtonUp("FireBallKey") && isBombStart)
                 {
-                    if(isSkillCharging)
+                    if (isSkillCharging)
                     {
                         SoundManager.Instance.StopLoopSound("BombCharging");
                         isSkillCharging = false;
+                        SkillCharheEft.SetActive(false);
                     }
-                    
+
                     ThrowBall();
+
                 }
             }
-            
+
+
             setPostProcessCenter();
         }
     }
@@ -366,6 +379,8 @@ public class PlayerControlManagerFix : MonoBehaviour
         Debug.Log("남은 횟수 : " + skillCount);
         yield return new WaitForSeconds(3f);
         isFbPossible = false;
+        isBombStart = false;
+
     }
     IEnumerator CheckAttack2()
     {
