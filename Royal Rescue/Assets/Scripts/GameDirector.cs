@@ -81,6 +81,7 @@ public class GameDirector : MonoBehaviour
     public void LoadTitleScreen()
     {
         PlayerControl.transform.SetParent(transform);
+        PlayerControl.ResetPlayerStatus();
         SceneManager.LoadScene("TitleScreen", LoadSceneMode.Single);
     }
 
@@ -130,5 +131,10 @@ public class GameDirector : MonoBehaviour
     {
         if (!_instance) return;
         playerUiCanvas.SetActive(state);
+    }
+
+    public void SetCursorVisibility(bool state)
+    {
+        Cursor.visible = state;
     }
 }

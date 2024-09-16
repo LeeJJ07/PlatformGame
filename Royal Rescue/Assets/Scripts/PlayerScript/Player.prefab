@@ -261,6 +261,7 @@ Transform:
   - {fileID: 84325309842763873}
   - {fileID: 4987513842323046630}
   - {fileID: 8419265431982665598}
+  - {fileID: 4815837983674948732}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &7919289716281912371
@@ -306,6 +307,7 @@ MonoBehaviour:
   maxAlpha: 1
   minAlpha: 0
   DamageEffect: {fileID: 0}
+  SkillCharheEft: {fileID: 5499693760683822270}
   playerMaxHP: 500
   playerHP: 500
   playerBasicATK: 0
@@ -327,12 +329,12 @@ MonoBehaviour:
   isDirRight: 1
   isFloor: 0
   isAttackButton: 0
-  isAttackSecond: 0
   isSwordWindPossible: 1
   isAttackPossible: 0
   isAttackEnhance: 0
   isJumpEnhance: 0
   isDashPossible: 0
+  isBombStart: 0
   isFbPossible: 0
   isDie: 0
   invincibilityDuration: 2
@@ -345,6 +347,7 @@ MonoBehaviour:
     m_Bits: 0
   fieldView: {fileID: 3060221139843355700}
   coin: 0
+  inventory: {fileID: 0}
 --- !u!65 &5957443920983066934
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -390,6 +393,73 @@ MonoBehaviour:
   onCloseInventory:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1001 &8525673138943316232
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8270665678267749835}
+    m_Modifications:
+    - target: {fileID: 3784164627823791476, guid: e37604d015945a04a9bcc7cdfa1ba178, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3784164627823791476, guid: e37604d015945a04a9bcc7cdfa1ba178, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3784164627823791476, guid: e37604d015945a04a9bcc7cdfa1ba178, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3784164627823791476, guid: e37604d015945a04a9bcc7cdfa1ba178, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3784164627823791476, guid: e37604d015945a04a9bcc7cdfa1ba178, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3784164627823791476, guid: e37604d015945a04a9bcc7cdfa1ba178, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3784164627823791476, guid: e37604d015945a04a9bcc7cdfa1ba178, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3784164627823791476, guid: e37604d015945a04a9bcc7cdfa1ba178, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3784164627823791476, guid: e37604d015945a04a9bcc7cdfa1ba178, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3784164627823791476, guid: e37604d015945a04a9bcc7cdfa1ba178, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4180344148180835766, guid: e37604d015945a04a9bcc7cdfa1ba178, type: 3}
+      propertyPath: m_Name
+      value: EffectPos
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e37604d015945a04a9bcc7cdfa1ba178, type: 3}
+--- !u!4 &4815837983674948732 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3784164627823791476, guid: e37604d015945a04a9bcc7cdfa1ba178, type: 3}
+  m_PrefabInstance: {fileID: 8525673138943316232}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5499693760683822270 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4180344148180835766, guid: e37604d015945a04a9bcc7cdfa1ba178, type: 3}
+  m_PrefabInstance: {fileID: 8525673138943316232}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8919627622507330317
 PrefabInstance:
   m_ObjectHideFlags: 0

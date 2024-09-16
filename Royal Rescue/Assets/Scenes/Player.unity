@@ -1084,7 +1084,7 @@ RectTransform:
   m_Father: {fileID: 1991954067}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2037,6 +2037,7 @@ MonoBehaviour:
   maxAlpha: 1
   minAlpha: 0
   DamageEffect: {fileID: 0}
+  SkillCharheEft: {fileID: 0}
   playerMaxHP: 500
   playerHP: 500
   playerBasicATK: 0
@@ -2049,7 +2050,6 @@ MonoBehaviour:
   fireBallPrefabs: {fileID: 0}
   SwordWindPrefabsR: {fileID: 0}
   SwordWindPrefabsL: {fileID: 0}
-  Inventory: {fileID: 0}
   attackIcon: {fileID: 0}
   fireBallSpawnPoint: {fileID: 0}
   jumpPossible: 2
@@ -2059,12 +2059,12 @@ MonoBehaviour:
   isDirRight: 1
   isFloor: 0
   isAttackButton: 0
-  isAttackSecond: 0
   isSwordWindPossible: 0
   isAttackPossible: 0
   isAttackEnhance: 0
   isJumpEnhance: 0
   isDashPossible: 0
+  isBombStart: 0
   isFbPossible: 0
   isDie: 0
   invincibilityDuration: 2
@@ -2077,6 +2077,7 @@ MonoBehaviour:
     m_Bits: 0
   fieldView: {fileID: 0}
   coin: 100
+  inventory: {fileID: 0}
 --- !u!1 &327161575
 GameObject:
   m_ObjectHideFlags: 0
@@ -2190,7 +2191,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1309e6d3e367e2e4c853d905aae660b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  camTarget: {fileID: 1560537023}
+  camTarget: {fileID: 0}
   minRange: {x: 0, y: 0}
   maxRange: {x: 0, y: 0}
   distX: 0.5
@@ -3275,9 +3276,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4913efd1fc084024f91b34c6ca575d7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryPanel: {fileID: 1605831659}
-  slots: []
-  slotHolder: {fileID: 1173387088}
 --- !u!1001 &475204389
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3547,7 +3545,6 @@ MonoBehaviour:
   itemImage: {fileID: 0}
   potionCount: 5
   textCoolTime: {fileID: 834676695}
-  player: {fileID: 1748504996}
   thisSkill: {fileID: 488780652}
   imgFill: {fileID: 1009902103}
   skillCollDown: 1
@@ -4321,45 +4318,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f598f4ebabf7014ea6b70ca54679b85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ItemsDB:
-  - itemType: 0
-    itemName: Sword
-    itemImage: {fileID: 21300000, guid: bb1bdd56c1352fb419836f9c2b0bf4bf, type: 3}
-    efts: []
-  - itemType: 1
-    itemName: GreenPotion
-    itemImage: {fileID: 21300000, guid: 0356dd311f7dcb4448e48aea31cf2302, type: 3}
-    efts:
-    - {fileID: 11400000, guid: c01502108eba53a4492786ef19b4218f, type: 2}
-  - itemType: 1
-    itemName: YellowPotion
-    itemImage: {fileID: 21300000, guid: 810da1fe6de3fa84dbc1a0f03a4b88ca, type: 3}
-    efts:
-    - {fileID: 11400000, guid: 555599d3fcd5cbc469646520938a2829, type: 2}
-  - itemType: 1
-    itemName: RedPotion
-    itemImage: {fileID: 21300000, guid: 0a57bb61970b6e844a6fbf93282ed8d6, type: 3}
-    efts:
-    - {fileID: 11400000, guid: 3fcd2cc53c402b345b325b455bb3a7f4, type: 2}
-  - itemType: 1
-    itemName: HealthUp
-    itemImage: {fileID: 21300000, guid: c2ebadfcb9b8cbb4a8ae6f124b17e332, type: 3}
-    efts:
-    - {fileID: 11400000, guid: f646ff9bb675c7c4ba8cdf131d5ad4be, type: 2}
-  fieldItemPrefab: {fileID: 8875361845925157717, guid: c1b28c5b8e5fec549bb66301b961628f, type: 3}
-  pos:
-  - {x: 19, y: 10, z: 0}
-  - {x: 30, y: 10, z: 0}
-  - {x: 20, y: 10, z: 0}
-  - {x: -8, y: 5, z: 0}
-  - {x: -7, y: 5, z: 0}
-  - {x: -5, y: 5, z: 0}
-  - {x: -3, y: 5, z: 0}
-  - {x: -1, y: 5, z: 0}
-  - {x: 8, y: 5, z: 0}
-  - {x: 10, y: 5, z: 0}
-  - {x: 12, y: 5, z: 0}
-  - {x: 14, y: 5, z: 0}
 --- !u!4 &689708766
 Transform:
   m_ObjectHideFlags: 0
@@ -4799,6 +4757,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textCoolTime: {fileID: 418476869}
   player: {fileID: 1748504996}
+  skillTimer: 0
   thisSkill: {fileID: 726620561}
   skillName: FireBallKey
   imgFill: {fileID: 1055480040}
@@ -5432,7 +5391,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &818545503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9255,6 +9214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textCoolTime: {fileID: 388883242}
   player: {fileID: 1748504996}
+  skillTimer: 0
   thisSkill: {fileID: 1456422681}
   skillName: Dash
   imgFill: {fileID: 714490635}
@@ -9331,11 +9291,6 @@ MonoBehaviour:
   m_Spacing: {x: 0, y: 0}
   m_Constraint: 1
   m_ConstraintCount: 2
---- !u!4 &1560537023 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4226406644614449768, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
-  m_PrefabInstance: {fileID: 4503517443478921989}
-  m_PrefabAsset: {fileID: 0}
 --- !u!224 &1579357303 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 3455567942349079406, guid: de7d82fc3e316844a9c3597f28f6c320, type: 3}
@@ -12481,14 +12436,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5130297143477228180, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
-      propertyPath: Inventory
-      value: 
-      objectReference: {fileID: 1866529477}
-    - target: {fileID: 5130297143477228180, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
-      propertyPath: attackIcon
-      value: 
-      objectReference: {fileID: 1869919248}
     - target: {fileID: 7054254038125191259, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       propertyPath: m_Name
       value: Player
