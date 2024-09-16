@@ -81,6 +81,7 @@ public class GameDirector : MonoBehaviour
     public void LoadTitleScreen()
     {
         PlayerControl.transform.SetParent(transform);
+        PlayerControl.ResetPlayerStatus();
         SceneManager.LoadScene("TitleScreen", LoadSceneMode.Single);
     }
 
