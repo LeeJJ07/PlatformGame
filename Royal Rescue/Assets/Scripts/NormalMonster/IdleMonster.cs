@@ -51,7 +51,7 @@ public class IdleMonster : Monster
     }
     new void Update()
     {
-        if (!isAwake && IsPossibleAwake())
+        if (!isAwake && (IsPossibleAwake()||isLive))
         {
             isAwake = true;
             animator.SetBool("isLive", true);

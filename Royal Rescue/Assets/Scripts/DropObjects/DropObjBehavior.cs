@@ -76,7 +76,7 @@ public class DropObjBehavior : MonoBehaviour,ITag
     {
         yield return new WaitForSeconds(delayTime);
         warningZoneSpawnRay = new Ray(transform.position, Vector3.down);
-        Physics.Raycast(warningZoneSpawnRay, out warningZoneSpawnHit, 50, detectLayer);
+        Physics.Raycast(warningZoneSpawnRay, out warningZoneSpawnHit, 500f, detectLayer);
         deactiveWarningZoneObj = pulling.SpawnObject(dangerZoneObj.tag, warningZoneSpawnHit.point);
         isEndDelay = true;
     }
@@ -93,13 +93,14 @@ public class DropObjBehavior : MonoBehaviour,ITag
             {
                 rigid.isKinematic = false;
             }
-            if (deactiveWarningZoneObj != null)
-                deactiveWarningZoneObj.SetActive(false);
-            
-            isEndDelay = false;
+          
             //플레이어 데미지 전달 로직작성 블럭
             player.HurtPlayer(damage);
         }
+        if (deactiveWarningZoneObj != null)
+            deactiveWarningZoneObj.SetActive(false);
+
+        isEndDelay = false;
     }
 
     public string GetTag()
