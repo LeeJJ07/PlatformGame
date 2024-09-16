@@ -4,37 +4,26 @@ using UnityEngine;
 
 public class GemInteraction : MonoBehaviour
 {
-    [SerializeField] private GameObject gemEffect;
     [SerializeField] private GemType gemType;
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("보석 획득!");
-            gameObject.SetActive(false);
-
-            GameObject effect = Instantiate(gemEffect, transform.parent);
-            effect.transform.position = other.transform.position;
-            effect.GetComponent<ParticleSystem>().Play();
-            Destroy(effect, 0.9f);
-
-            // 임시 코드 ... 추후에 인벤토리 내 아이템을 늘려서 개수 확인하는 식으로 변경 ////
             switch (gemType)
             {
-                case GemType.RED:
+                case GemType.RUBY:
                     AltarControl.redGem++;
                     break;
 
-                case GemType.WHITE:
+                case GemType.DIAMOND:
                     AltarControl.whiteGem++;
                     break;
 
-                case GemType.GREEN:
+                case GemType.JADE:
                     AltarControl.greenGem++;
                     break;
             }
-            /////////////////////////////////////////////////////////////////
         }
     }
 }
-public enum GemType { RED, WHITE, GREEN }; // 추후에 enum 없앰
+public enum GemType { RUBY, DIAMOND, JADE }; // 추후에 enum 없앰
