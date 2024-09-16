@@ -23,6 +23,7 @@ public class TitleScreen : MonoBehaviour
     void OnEnable()
     {
         currentScreenState = ScreenState.INTRO;
+        GameDirector.instance.SetCursorVisibility(true);
 
         Init();
         GameDirector.instance.SetPlayerUI(false);
@@ -33,7 +34,10 @@ public class TitleScreen : MonoBehaviour
     void OnDisable()
     {
         if (GameDirector.instance)
+        {
             GameDirector.instance.PlayerControl.SetPlayerEnabled(true);
+            GameDirector.instance.SetCursorVisibility(false);
+        }
     }
     
     void Update()

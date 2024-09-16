@@ -132,4 +132,9 @@ public class GameDirector : MonoBehaviour
         if (!_instance) return;
         playerUiCanvas.SetActive(state);
     }
+
+    public void SetCursorVisibility(bool state)
+    {
+        Cursor.visible = state;
+    }
 }
