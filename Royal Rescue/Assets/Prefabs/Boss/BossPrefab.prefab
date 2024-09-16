@@ -4994,7 +4994,11 @@ MonoBehaviour:
   isActivate: 1
   bossName: "\uC2A4\uD2B8\uB808\uC2A4\uC5D0 \uCC0C\uB4E0 \uC6A9"
   detailTag: Boss
+  hp: 300
+  moveSpeed: 5
   warningPrefab: {fileID: 7360912941218823822, guid: 8e99ae799f6f16243aeb4a94dfced891, type: 3}
+  shockWave: {fileID: 3257248776282636964, guid: 0ca9b61117dfe9a489792a44806bdd5e, type: 3}
+  hitEffect: {fileID: 5643653902188550112, guid: a4ddd8aa2169db04da8a3e3827398666, type: 3}
   wallTransforms:
   - {fileID: 0}
   - {fileID: 0}
@@ -5003,13 +5007,11 @@ MonoBehaviour:
   - {fileID: 0}
   playerTransform: {fileID: 0}
   flamePosition: {fileID: 8299470050138828525}
-  aniController: {fileID: 8299470050131196015}
-  hp: 300
-  moveSpeed: 5
-  shockWave: {fileID: 3257248776282636964, guid: 0ca9b61117dfe9a489792a44806bdd5e, type: 3}
   bossColliders:
   - {fileID: 2424326631092252458}
   - {fileID: 5449763429638808952}
+  aniController: {fileID: 8299470050131196015}
+  EntryDelay: 0
   Phase1HpCondition: 300
   Phase1flameAttackInfo: {fileID: 11400000, guid: b7ed442ee7a98d743baac1d0978ac10a, type: 2}
   Phase1screamAttackInfo: {fileID: 11400000, guid: 2b5637f32b346b8429e8fc667a707c30, type: 2}

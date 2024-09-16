@@ -33,7 +33,7 @@ public class Monster : MonoBehaviour
     public bool isDetect;
     public bool isAttack;
     public bool detecting;
-
+    public bool isLive = false;
     protected int maxHp;
     protected int curHp;
     protected int damage;
