@@ -76,7 +76,6 @@ public class GameDirector : MonoBehaviour
             yield return null;
         }
         StartCoroutine(ExitLoadingScreen());
-        SoundManager.Instance.PlaySound("BlizzardCastle", true, SoundType.BGM);
     }
 
     public void LoadTitleScreen()
@@ -106,6 +105,7 @@ public class GameDirector : MonoBehaviour
 
         loadingScreenCam.enabled = false;
         uiCanvas.gameObject.SetActive(false);
+        SoundManager.Instance.PlaySound("BlizzardCastle", true, SoundType.BGM);
     }
 
     public IEnumerator RespawnScreenTransition()
