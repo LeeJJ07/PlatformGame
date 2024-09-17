@@ -34,6 +34,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     public GameObject SwordWindPrefabsL;
     public GameObject attackIcon;
     public GameObject SkillCharheEft;
+    public GameObject SkillPCharheEft;
     public Transform fireBallSpawnPoint;
     [SerializeField] private int jumpPossible = 2;
     private float attackDelay;
@@ -108,6 +109,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         attackIcon.SetActive(true);
         SkillCharheEft.SetActive(false);
+        SkillPCharheEft.SetActive(false);
         weapons.GetComponent<BoxCollider>().enabled = false;
         weapons.GetComponent<WeaponControl>().trailEffect.enabled = false;
 
@@ -158,6 +160,10 @@ public class PlayerControlManagerFix : MonoBehaviour
                     SkillCharheEft.SetActive(true);
                     holdTime += Time.deltaTime;
                     holdTime = Mathf.Clamp(holdTime, 0, maxHoldTime);
+                    if(holdTime >= 3.0f)
+                    {
+                        SkillPCharheEft.SetActive(true);
+                    }
                 }
                 if (Input.GetButtonUp("FireBallKey") && isBombStart)
                 {
@@ -166,6 +172,7 @@ public class PlayerControlManagerFix : MonoBehaviour
                         SoundManager.Instance.StopLoopSound("BombCharging");
                         isSkillCharging = false;
                         SkillCharheEft.SetActive(false);
+                        SkillPCharheEft.SetActive(false);
                     }
 
                     ThrowBall();
