@@ -513,7 +513,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5077239768377374836
 Transform:
   m_ObjectHideFlags: 0
@@ -652,7 +652,7 @@ MonoBehaviour:
   hpBarPrefab: {fileID: 8677396949248983754, guid: 11036c294b2303440810d64f5593febb, type: 3}
   hpBarOffset: {x: 0, y: -0.4, z: 0}
   DamageTextPrefab: {fileID: 3445122839428053434, guid: d60b9d755d64c5a408d421b8188fc290, type: 3}
-  awakeDistance: 2.5
+  awakeDistance: 0
 --- !u!114 &181296102013456004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -678,6 +678,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142bc0fcaccfe6d44aaecd6f3dca5e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 1b163131955901041b9a3109c2037694, type: 2}
 --- !u!114 &2705526824022758548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -690,6 +691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64ae24632f621b04685c1e05b129a61e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 1b163131955901041b9a3109c2037694, type: 2}
   exclamation: {fileID: 7673280182803430966}
 --- !u!114 &3699907287344309713
 MonoBehaviour:
@@ -703,7 +705,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b85d10b456dcf1147a7c1c34e0907eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 1b163131955901041b9a3109c2037694, type: 2}
   hitPoint: {fileID: 4634562615265955720}
+  AttackSoundsync: 0.45
 --- !u!114 &6254048051884603304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -716,6 +720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0e90d9781fbb0144ac413c7c6dae451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 1b163131955901041b9a3109c2037694, type: 2}
 --- !u!114 &3049211878469285242
 MonoBehaviour:
   m_ObjectHideFlags: 0

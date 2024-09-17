@@ -8,6 +8,7 @@ public class ChaseState : MonoBehaviour, IState
     private Animator animator;
     private Monster monster;
 
+    [SerializeField] protected NormalMonsterData data;
     [SerializeField] GameObject exclamation;
 
     float flowTime = 0f;
@@ -28,6 +29,7 @@ public class ChaseState : MonoBehaviour, IState
         }
         if (!monster.LookPlayer())
             monster.FlipX();
+        StartCoroutine("StartSoundEffect");
     }
     public void UpdateState()
     {
@@ -56,4 +58,20 @@ public class ChaseState : MonoBehaviour, IState
         animator.SetBool("isChase", false);
         exclamation.SetActive(false);
     }
+
+    IEnumerator StartSoundEffect()
+    {
+        while (true)
+        {
+            if (Physics.Raycast(transform.position, Vector3.down, 2f, LayerMask.GetMask("Ground")))
+            {
+                SoundManager.Instance.StopLoopSound(data.ChaseSound);
+                SoundManager.Instance.StopLoopSound(data.PatrolSound);
+                SoundManager.Instance.PlaySound(data.ChaseSound, true);
+                yield break;
+            }
+            yield return null;
+        }
+    }
+
 }

@@ -20,3 +20,7 @@ MonoBehaviour:
   moveSpeed: 6
   runSpeed: 0
   detectingAngle: 75
+  patrolSound: BeHolderMove
+  chaseSound: BeHolderMove
+  attackSound: BeHolderShootLaser
+  dieSound: MonsterDie

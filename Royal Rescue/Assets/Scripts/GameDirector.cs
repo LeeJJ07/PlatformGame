@@ -42,7 +42,6 @@ public class GameDirector : MonoBehaviour
         else
             Destroy(gameObject);
     }
-
     private void SetCurrentStageIndex()
     {
         Scene scene = SceneManager.GetActiveScene();

@@ -29,4 +29,16 @@ public class NormalMonsterData : ScriptableObject
     [SerializeField]
     private float detectingAngle;
     public float DetectingAngle { get { return detectingAngle; } }
+    [SerializeField]
+    private string patrolSound;
+    public string PatrolSound { get {  return patrolSound; } }
+    [SerializeField]
+    private string chaseSound;
+    public string ChaseSound { get { return chaseSound; } }
+    [SerializeField]
+    private string attackSound;
+    public string AttackSound { get { return attackSound; } }
+    [SerializeField]
+    private string dieSound;
+    public string DieSound { get { return dieSound; } }
 }

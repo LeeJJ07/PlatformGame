@@ -174,10 +174,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss_AngryMushroom
       objectReference: {fileID: 0}
-    - target: {fileID: 8854714597802012400, guid: ab23cb4290596bb48ab089b535664b49, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -194,10 +190,6 @@ PrefabInstance:
     - target: {fileID: 2895879474864152614, guid: 7754dc1e98dd5364a85a9532529839bf, type: 3}
       propertyPath: m_Name
       value: Boss_Turtle
-      objectReference: {fileID: 0}
-    - target: {fileID: 2895879474864152614, guid: 7754dc1e98dd5364a85a9532529839bf, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6700310105058393339, guid: 7754dc1e98dd5364a85a9532529839bf, type: 3}
       propertyPath: m_LocalPosition.x
@@ -244,50 +236,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7754dc1e98dd5364a85a9532529839bf, type: 3}
---- !u!114 &410458094 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6254048051884603304, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
-  m_PrefabInstance: {fileID: 508492608}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0e90d9781fbb0144ac413c7c6dae451, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &410458095 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3699907287344309713, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
-  m_PrefabInstance: {fileID: 508492608}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b85d10b456dcf1147a7c1c34e0907eac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &410458096 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2705526824022758548, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
-  m_PrefabInstance: {fileID: 508492608}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64ae24632f621b04685c1e05b129a61e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &410458097 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2143243269857024930, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
-  m_PrefabInstance: {fileID: 508492608}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 142bc0fcaccfe6d44aaecd6f3dca5e34, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &508492608
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -296,46 +244,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4997017697694755608, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
-      propertyPath: data
-      value: 
-      objectReference: {fileID: 11400000, guid: 1b163131955901041b9a3109c2037694, type: 2}
-    - target: {fileID: 4997017697694755608, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
-      propertyPath: isLive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4997017697694755608, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
-      propertyPath: hitEffect
-      value: 
-      objectReference: {fileID: 5643653902188550112, guid: 8bd77ba3e8988b54888f155a0340947c, type: 3}
-    - target: {fileID: 4997017697694755608, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
-      propertyPath: chaseState
-      value: 
-      objectReference: {fileID: 410458096}
-    - target: {fileID: 4997017697694755608, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
-      propertyPath: deathState
-      value: 
-      objectReference: {fileID: 410458094}
-    - target: {fileID: 4997017697694755608, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
-      propertyPath: attackState
-      value: 
-      objectReference: {fileID: 410458095}
-    - target: {fileID: 4997017697694755608, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
-      propertyPath: hpBarPrefab
-      value: 
-      objectReference: {fileID: 8677396949248983754, guid: 11036c294b2303440810d64f5593febb, type: 3}
-    - target: {fileID: 4997017697694755608, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
-      propertyPath: patrolState
-      value: 
-      objectReference: {fileID: 410458097}
-    - target: {fileID: 4997017697694755608, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
-      propertyPath: awakeDistance
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4997017697694755608, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
-      propertyPath: DamageTextPrefab
-      value: 
-      objectReference: {fileID: 3445122839428053434, guid: d60b9d755d64c5a408d421b8188fc290, type: 3}
     - target: {fileID: 5077239768377374836, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2
@@ -379,10 +287,6 @@ PrefabInstance:
     - target: {fileID: 5506683884172181178, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
       propertyPath: m_Name
       value: Boss_SmileMushroom
-      objectReference: {fileID: 0}
-    - target: {fileID: 5506683884172181178, guid: 5f575737c0af93043ac57beb4779b730, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1042,10 +946,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss_Beholder
       objectReference: {fileID: 0}
-    - target: {fileID: 2897208131545264541, guid: 2b0a4689a87b6b042b8803f25e2e0800, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1264,10 +1164,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boss_Slime
       objectReference: {fileID: 0}
-    - target: {fileID: 8084919204812644092, guid: 3d42bc3a07ef11c41ab5cb99a0edfbae, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1284,10 +1180,6 @@ PrefabInstance:
     - target: {fileID: 7493431075636079889, guid: 75958b2e7fb08994ca33fc3f6529821c, type: 3}
       propertyPath: m_Name
       value: Boss_Cactus
-      objectReference: {fileID: 0}
-    - target: {fileID: 7493431075636079889, guid: 75958b2e7fb08994ca33fc3f6529821c, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9207845841766309276, guid: 75958b2e7fb08994ca33fc3f6529821c, type: 3}
       propertyPath: m_LocalPosition.x

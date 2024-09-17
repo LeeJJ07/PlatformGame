@@ -20,3 +20,7 @@ MonoBehaviour:
   moveSpeed: 2
   runSpeed: 3
   detectingAngle: 50
+  patrolSound: MonsterChase
+  chaseSound: MonsterChase
+  attackSound: MonsterAttack
+  dieSound: MonsterDie

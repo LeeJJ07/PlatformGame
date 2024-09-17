@@ -15,6 +15,7 @@ public class RangedAttackState : AttackState
 
         animator.SetBool("isAttack", true);
         afterShootTime = 0f;
+        AttackSoundsync = attackSpeed;
     }
     public override void UpdateState()
     {
@@ -22,9 +23,12 @@ public class RangedAttackState : AttackState
         monster.transform.rotation = Quaternion.Euler(0, 180f - 90f * curDirX, 0);
 
         afterShootTime += Time.deltaTime;
-        if(afterShootTime > attackSpeed)
+        if (afterShootTime > attackSpeed)
         {
             afterShootTime = 0;
+            SoundManager.Instance.StopLoopSound(data.PatrolSound);
+            SoundManager.Instance.StopLoopSound(data.ChaseSound);
+            SoundManager.Instance.PlaySound(data.AttackSound);
             Instantiate(projectile, monster.transform.position + new Vector3(0f, 1.3f, 0f), monster.transform.rotation);
         }
     }

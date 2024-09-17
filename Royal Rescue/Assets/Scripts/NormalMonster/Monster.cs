@@ -1,13 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using Unity.IO.LowLevel.Unsafe;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.PostProcessing;
 using UnityEngine.UI;
-using TMPro;
 
 public class Monster : MonoBehaviour
 {
@@ -123,7 +116,6 @@ public class Monster : MonoBehaviour
         {
             UpdateState(EState.DEATH);
             monsterStateContext.CurrentState.UpdateState();
-
             if (hpBarSlider != null)
                 Destroy(hpBarSlider.gameObject);
 
@@ -135,6 +127,7 @@ public class Monster : MonoBehaviour
                 if (CanSeePlayer(0.5f))
                 {
                     isDetect = true;
+                    
                     UpdateState(EState.CHASE);
                 }
                 break;
@@ -239,6 +232,7 @@ public class Monster : MonoBehaviour
             if(!LookPlayer())
                 FlipX();
             if (isHit) return;
+            SoundManager.Instance.PlaySound("MonsterHitDamage");
             StartCoroutine(OnDamage(other.gameObject.tag));
         }
     }
@@ -246,7 +240,6 @@ public class Monster : MonoBehaviour
     {
         isHit = true;
         int dmg = 0;
-        
         animator.SetTrigger("takeAttack");
         switch (tag)
         {
@@ -392,5 +385,10 @@ public class Monster : MonoBehaviour
     public int GetCurHp()
     {
         return (int)curHp;
+    }
+    private void OnDisable()
+    {
+        SoundManager.Instance.StopLoopSound(data.ChaseSound);
+        SoundManager.Instance.StopLoopSound(data.PatrolSound);
     }
 }

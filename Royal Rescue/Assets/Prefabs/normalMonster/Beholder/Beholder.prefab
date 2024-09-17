@@ -1210,6 +1210,7 @@ MonoBehaviour:
   isDetect: 0
   isAttack: 0
   detecting: 0
+  isLive: 0
   toGroundDistance: 2
   toWallDistance: 2
   facingDir: 1
@@ -1229,6 +1230,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142bc0fcaccfe6d44aaecd6f3dca5e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: dee04f4465db2c4409ce73fab15c6ce4, type: 2}
 --- !u!114 &3374959597766693554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1241,7 +1243,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54eb3078fdfdcef40b8d844e3e29c957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: dee04f4465db2c4409ce73fab15c6ce4, type: 2}
   hitPoint: {fileID: 0}
+  AttackSoundsync: 0
   projectile: {fileID: 2998339043173544459, guid: af932cdfa6174ee4ca3b63cb051301bd, type: 3}
   attackSpeed: 0.5
 --- !u!114 &5334547176081078864
@@ -1256,6 +1260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0e90d9781fbb0144ac413c7c6dae451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: dee04f4465db2c4409ce73fab15c6ce4, type: 2}
 --- !u!1 &6748000881107759533
 GameObject:
   m_ObjectHideFlags: 0

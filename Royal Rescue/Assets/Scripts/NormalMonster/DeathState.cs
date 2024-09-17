@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DeathState : MonoBehaviour, IState
 {
+    [SerializeField] NormalMonsterData data;
     private Animator animator;
     private Monster monster;
 
@@ -19,6 +20,10 @@ public class DeathState : MonoBehaviour, IState
             monster.transform.position -= new Vector3(0f, 0.7f, 0f);
         animator.SetBool("isDie", true);
         span = 0f;
+
+        SoundManager.Instance.StopLoopSound(data.PatrolSound);
+        SoundManager.Instance.StopLoopSound(data.ChaseSound);
+        SoundManager.Instance.PlaySound("MonsterDie");
     }
     public void UpdateState()
     {

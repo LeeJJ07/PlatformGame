@@ -1,13 +1,11 @@
 using System.Collections;
-using System.Collections.Generic;
-using System.Threading;
-using UnityEditor;
 using UnityEngine;
 
 public class PatrolState : MonoBehaviour, IState
 {
     private Animator animator;
     private Monster monster;
+    [SerializeField] protected NormalMonsterData data;
 
     public void EnterState()
     {
@@ -15,6 +13,7 @@ public class PatrolState : MonoBehaviour, IState
         if (!monster) monster = GetComponent<Monster>();
 
         animator.SetBool("isPatrol", true);
+        StartCoroutine(StartSoundEffect());
     }
     public void UpdateState()
     {
@@ -28,5 +27,19 @@ public class PatrolState : MonoBehaviour, IState
     public void ExitState()
     {
         animator.SetBool("isPatrol", false);
+    }
+    IEnumerator StartSoundEffect()
+    {
+        while (true) 
+        {
+            if(Physics.Raycast(transform.position, Vector3.down, 2f, LayerMask.GetMask("Ground")))
+            {
+                SoundManager.Instance.StopLoopSound(data.PatrolSound);
+                SoundManager.Instance.StopLoopSound(data.ChaseSound);
+                SoundManager.Instance.PlaySound(data.PatrolSound, true);
+                yield break;
+            }
+            yield return null;
+        }
     }
 }

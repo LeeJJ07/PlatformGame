@@ -351,7 +351,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6700310105058393339
 Transform:
   m_ObjectHideFlags: 0
@@ -502,6 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142bc0fcaccfe6d44aaecd6f3dca5e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: d3dc64b083d37fe4aa2fbf499a0eda1c, type: 2}
 --- !u!114 &3194322916334244622
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -514,6 +515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64ae24632f621b04685c1e05b129a61e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: d3dc64b083d37fe4aa2fbf499a0eda1c, type: 2}
   exclamation: {fileID: 5103026724596481305}
 --- !u!114 &374424326491190285
 MonoBehaviour:
@@ -527,7 +529,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b85d10b456dcf1147a7c1c34e0907eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: d3dc64b083d37fe4aa2fbf499a0eda1c, type: 2}
   hitPoint: {fileID: 7540192068439716918}
+  AttackSoundsync: 0.23
 --- !u!114 &7460002306570082575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -540,6 +544,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0e90d9781fbb0144ac413c7c6dae451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: d3dc64b083d37fe4aa2fbf499a0eda1c, type: 2}
 --- !u!114 &2762116220192993034
 MonoBehaviour:
   m_ObjectHideFlags: 0

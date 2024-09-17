@@ -587,6 +587,7 @@ MonoBehaviour:
   isDetect: 0
   isAttack: 0
   detecting: 0
+  isLive: 0
   toGroundDistance: 1
   toWallDistance: 0.5
   facingDir: 1
@@ -620,6 +621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142bc0fcaccfe6d44aaecd6f3dca5e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: e7eab0df7219ab344aa58a99c8defee4, type: 2}
 --- !u!114 &7901142262291957670
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -632,6 +634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64ae24632f621b04685c1e05b129a61e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: e7eab0df7219ab344aa58a99c8defee4, type: 2}
   exclamation: {fileID: 8515485360273220890}
 --- !u!114 &6049505428092940588
 MonoBehaviour:
@@ -645,7 +648,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b85d10b456dcf1147a7c1c34e0907eac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: e7eab0df7219ab344aa58a99c8defee4, type: 2}
   hitPoint: {fileID: 2566144069597348956}
+  AttackSoundsync: 0
 --- !u!114 &4811801451882433572
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -658,6 +663,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0e90d9781fbb0144ac413c7c6dae451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: e7eab0df7219ab344aa58a99c8defee4, type: 2}
 --- !u!1 &6511703974913406166
 GameObject:
   m_ObjectHideFlags: 0

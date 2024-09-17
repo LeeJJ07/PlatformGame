@@ -55,18 +55,19 @@ public class PullingDirector : MonoBehaviour
         foreach (ObjectPulling pulling in pullingList)
         {
             pullingObjList = pulling.GetObjectList();
-            if (pulling.GetObject().CompareTag("Monster"))
+            GameObject obj = pulling.GetObjectType();
+            if (obj!=null&&obj.CompareTag("Monster"))
             {
-                foreach (GameObject obj in pullingObjList)
+                foreach (GameObject monsterObj in pullingObjList)
                 {
-                    obj.GetComponent<Monster>().setDie();
+                    monsterObj.GetComponent<Monster>().setDie();
                 }
             }
             else
             {
-                foreach (GameObject obj in pullingObjList)
+                foreach (GameObject otherObj in pullingObjList)
                 {
-                    obj.SetActive(false);
+                    otherObj.SetActive(false);
                 }
             }
             

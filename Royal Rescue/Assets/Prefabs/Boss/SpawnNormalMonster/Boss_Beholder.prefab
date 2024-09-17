@@ -671,7 +671,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2202348210298922360
 Transform:
   m_ObjectHideFlags: 0
@@ -821,6 +821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 142bc0fcaccfe6d44aaecd6f3dca5e34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: dee04f4465db2c4409ce73fab15c6ce4, type: 2}
 --- !u!114 &1041657317503109165
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -833,7 +834,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54eb3078fdfdcef40b8d844e3e29c957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: dee04f4465db2c4409ce73fab15c6ce4, type: 2}
   hitPoint: {fileID: 0}
+  AttackSoundsync: 0.3
   projectile: {fileID: 2998339043173544459, guid: af932cdfa6174ee4ca3b63cb051301bd, type: 3}
   attackSpeed: 1
 --- !u!114 &7609955183996774358
@@ -848,6 +851,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0e90d9781fbb0144ac413c7c6dae451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: dee04f4465db2c4409ce73fab15c6ce4, type: 2}
 --- !u!114 &86735578705420647
 MonoBehaviour:
   m_ObjectHideFlags: 0
