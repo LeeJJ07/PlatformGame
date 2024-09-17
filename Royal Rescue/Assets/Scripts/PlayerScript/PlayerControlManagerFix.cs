@@ -162,6 +162,7 @@ public class PlayerControlManagerFix : MonoBehaviour
                     holdTime = Mathf.Clamp(holdTime, 0, maxHoldTime);
                     if(holdTime >= 3.0f)
                     {
+                        SkillCharheEft.SetActive(false);
                         SkillPCharheEft.SetActive(true);
                     }
                 }
