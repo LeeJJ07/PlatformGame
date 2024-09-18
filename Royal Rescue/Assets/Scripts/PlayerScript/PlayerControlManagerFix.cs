@@ -163,7 +163,7 @@ public class PlayerControlManagerFix : MonoBehaviour
                     if(holdTime >= 3.0f)
                     {
                         SkillCharheEft.SetActive(false);
-                        SkillPCharheEft.SetActive(true);
+                        //SkillPCharheEft.SetActive(true);
                     }
                 }
                 if (Input.GetButtonUp("FireBallKey") && isBombStart)
@@ -173,7 +173,7 @@ public class PlayerControlManagerFix : MonoBehaviour
                         SoundManager.Instance.StopLoopSound("BombCharging");
                         isSkillCharging = false;
                         SkillCharheEft.SetActive(false);
-                        SkillPCharheEft.SetActive(false);
+                        //SkillPCharheEft.SetActive(false);
                     }
 
                     ThrowBall();

@@ -34,8 +34,8 @@ public class PatrolState : MonoBehaviour, IState
     public void ExitState()
     {
         animator.SetBool("isPatrol", false);
-        isActiveSound = false;
         StopCoroutine("StartSoundEffect");
+        isActiveSound = false;
     }
     IEnumerator StartSoundEffect()
     {
@@ -44,11 +44,12 @@ public class PatrolState : MonoBehaviour, IState
         float soundDelay = 0;
         while(true)
         {
-            if(animator.GetCurrentAnimatorStateInfo(0).IsName("Chase"))
+            if(animator.GetCurrentAnimatorStateInfo(0).IsName("Patrol"))
             {
-                soundDelay = animator.GetCurrentAnimatorStateInfo(0).length/2;
+                soundDelay = animator.GetCurrentAnimatorStateInfo(0).length;
                 break;
             }
+            yield return null;
         }
         while (true) 
         {

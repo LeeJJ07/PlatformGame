@@ -63,8 +63,8 @@ public class ChaseState : MonoBehaviour, IState
     {
         animator.SetBool("isChase", false);
         exclamation.SetActive(false);
-        isActiveSound = false;
         StopCoroutine("StartSoundEffect");
+        isActiveSound = false;
     }
 
     IEnumerator StartSoundEffect()
@@ -76,9 +76,10 @@ public class ChaseState : MonoBehaviour, IState
         {
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Chase"))
             {
-                soundDelay = animator.GetCurrentAnimatorStateInfo(0).length / 2;
+                soundDelay = animator.GetCurrentAnimatorStateInfo(0).length;
                 break;
             }
+            yield return null;
         }
         while (true)
         {
