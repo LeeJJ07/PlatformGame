@@ -436,7 +436,6 @@ MonoBehaviour:
   isDirRight: 1
   isFloor: 0
   isAttackButton: 0
-  isAttackSecond: 0
   isSwordWindPossible: 1
   isAttackPossible: 0
   isAttackEnhance: 0
@@ -456,6 +455,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   fieldView: {fileID: 3060221139843355700}
+  DamageTextPrefab: {fileID: 0}
   coin: 0
   coinUI: {fileID: 0}
   inventory: {fileID: 0}
@@ -504,6 +504,7 @@ MonoBehaviour:
   onCloseInventory:
     m_PersistentCalls:
       m_Calls: []
+  useItemTextPrefab: {fileID: 5943618923925618071, guid: f1bf5de94de95254cb89a60a7299da76, type: 3}
 --- !u!1001 &8287832613855240167
 PrefabInstance:
   m_ObjectHideFlags: 0
