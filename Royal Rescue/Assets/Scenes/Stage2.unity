@@ -258,6 +258,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8507465494778958662, guid: 30cc57dfe7639dd4f8e4e77ea4e49d05, type: 3}
   m_PrefabInstance: {fileID: 4246190}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4246192 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5749906868379211012, guid: 30cc57dfe7639dd4f8e4e77ea4e49d05, type: 3}
+  m_PrefabInstance: {fileID: 4246190}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4858094 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5857613640802040770, guid: 23a1cc2e9d37eb044aaeedd714eefb7c, type: 3}
@@ -10698,7 +10703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddd4dbf472d71414f90ca5d5551d85e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gem: {fileID: 0}
+  gem: {fileID: 4246192}
   particle: {fileID: 0}
 --- !u!1001 &362249331
 PrefabInstance:
