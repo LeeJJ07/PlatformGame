@@ -11182,6 +11182,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7466427623040300025, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
+      propertyPath: m_TagString
+      value: InGameUI
+      objectReference: {fileID: 0}
     - target: {fileID: 7635015812050295078, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
       propertyPath: m_Name
       value: GameDirector (1)
