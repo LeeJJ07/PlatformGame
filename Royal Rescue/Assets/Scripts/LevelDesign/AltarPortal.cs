@@ -35,7 +35,7 @@ public class AltarPortal : MonoBehaviour
 
     void Update()
     {
-        if (isPlayerInPortalRange && Input.GetButtonDown("Attack"))
+        if (isPlayerInPortalRange && portalTrigger.enabled && Input.GetButtonDown("Attack"))
         {
             portalTrigger.enabled = false;
             StartCoroutine(EnterPortal());

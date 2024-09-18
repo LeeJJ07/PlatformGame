@@ -11,7 +11,6 @@ public class TreasureController : MonoBehaviour {
     [SerializeField] private bool isJade;
     [SerializeField] private bool isPotion;
 
-
     [SerializeField] int needRandomCoin = 0;
     [SerializeField] int curCoin = 0;
     [SerializeField] int minCoinNum = 5;
@@ -62,6 +61,7 @@ public class TreasureController : MonoBehaviour {
         treasureText.GetComponent<TextMeshPro>().color = Color.white;
     }
     IEnumerator InputCoinActive() {
+        GameDirector.instance.PlayerControl.FixatePlayerRigidBody(true);
         treasureText.GetComponent<TreasureText>().curCoin = 0;
         treasureText.GetComponent<TextMeshPro>().color = Color.yellow;
         yield return new WaitForSeconds(1f);
@@ -82,11 +82,11 @@ public class TreasureController : MonoBehaviour {
             JadeCreate();
 
         Destroy(gameObject);
+        GameDirector.instance.PlayerControl.FixatePlayerRigidBody(false);
     }
 
     private void SetText() 
     {
-
         uiCanvas = GameObject.Find("InGame Canvas").GetComponent<Canvas>();
 
         treasureText = Instantiate<GameObject>(treasureTextPrefab, uiCanvas.transform);
@@ -95,6 +95,7 @@ public class TreasureController : MonoBehaviour {
         _treasureText.targetTr = this.gameObject.transform;
         _treasureText.offset = new Vector3(0, 1.7f, 0);
         _treasureText.curCoin = curCoin;
+        _treasureText.gameObject.SetActive(false);
     }
     void RandomItemCreate() {
         int idx = Random.Range(0, 4);

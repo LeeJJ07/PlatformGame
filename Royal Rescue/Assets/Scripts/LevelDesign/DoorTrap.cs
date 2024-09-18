@@ -16,8 +16,12 @@ public class DoorTrap : MonoBehaviour
 
     private Monster[] monsters;
 
+    GameObject inGameUI;
+
     protected virtual void Start()
     {
+        inGameUI = GameObject.FindWithTag("InGameUI");
+
         monsters = monsterHub.GetComponentsInChildren<Monster>(true);
         trapTrigger = GetComponent<BoxCollider>();
     }
@@ -42,6 +46,7 @@ public class DoorTrap : MonoBehaviour
     protected virtual IEnumerator TrapPlayer()
     {
         GameDirector.instance.PlayerControl.FixatePlayerRigidBody(true);
+        inGameUI.SetActive(false);
 
         portal.gameObject.SetActive(false);
         SwitchCamera(mainCamera, doorCamera);
@@ -50,6 +55,7 @@ public class DoorTrap : MonoBehaviour
         
         SwitchCamera(mainCamera, doorCamera);
 
+        inGameUI.SetActive(true);
         GameDirector.instance.PlayerControl.FixatePlayerRigidBody(false);
     }
     protected virtual IEnumerator ReleasePlayer()

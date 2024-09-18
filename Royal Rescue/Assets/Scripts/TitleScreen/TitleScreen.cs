@@ -36,7 +36,7 @@ public class TitleScreen : MonoBehaviour
         if (GameDirector.instance)
         {
             GameDirector.instance.PlayerControl.SetPlayerEnabled(true);
-            GameDirector.instance.SetCursorVisibility(false);
+            GameDirector.instance.PlayerControl.ToggleCursor(false);
         }
     }
     

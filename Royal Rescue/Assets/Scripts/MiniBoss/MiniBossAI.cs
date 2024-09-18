@@ -71,11 +71,7 @@ public class MiniBossAI : MonoBehaviour
     public Material material;
     private Color originalColor; // ���� ����
 
-    public Slider hpBarPrefab;
-    public Vector3 hpBarOffset = new Vector3(0, -0.4f, 0);
-
     private Canvas uiCanvas;
-    private Slider hpBarSlider;
     public GameObject DamageTextPrefab;
 
     [SerializeField]
@@ -151,7 +147,7 @@ public class MiniBossAI : MonoBehaviour
 
         bt = new BehaviorTreeRunner(root);
 
-        SetHpBar();
+        uiCanvas = GameObject.Find("InGame Canvas").GetComponent<Canvas>();
     }
     private void OnEnable()
     {
@@ -244,12 +240,10 @@ public class MiniBossAI : MonoBehaviour
         }
         OnDamage(dmg);
 
-        hpBarSlider.value = (float)hp / (float)maxHp;
-
         Vector3 nVec = new Vector3(0, 5f, 0);
         var screenPos = Camera.main.WorldToScreenPoint(transform.position + nVec); // ������ ���� 3d��ǥ�� ��ũ����ǥ�� ��ȯ
         var localPos = Vector2.zero;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.GetComponent<RectTransform>(), screenPos, uiCanvas.worldCamera, out localPos); // ��ũ�� ��ǥ�� �ٽ� ü�¹� UI ĵ���� ��ǥ�� ��ȯ
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.GetComponent<RectTransform>(), screenPos, uiCanvas.worldCamera, out localPos);
 
         GameObject damageUI = Instantiate(DamageTextPrefab) as GameObject;
         damageUI.GetComponent<DamageText>().damage = dmg;
@@ -271,18 +265,5 @@ public class MiniBossAI : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         takeAttack = false;
-    }
-    private void SetHpBar()
-    {
-        uiCanvas = GameObject.Find("InGame Canvas").GetComponent<Canvas>();
-        Slider hpBar = Instantiate<Slider>(hpBarPrefab, uiCanvas.transform);
-        hpBarSlider = hpBar;
-
-        var _hpbar = hpBar.GetComponent<MonsterHpBar>();
-        _hpbar.targetTr = this.gameObject.transform;
-        _hpbar.offset = hpBarOffset;
-
-        hpBarSlider.value = hp / maxHp;
-        
     }
 }

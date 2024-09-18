@@ -28,6 +28,7 @@ TagManager:
   - DropObject
   - DangerZone
   - FieldItem
+  - InGameUI
   layers:
   - Default
   - TransparentFX
