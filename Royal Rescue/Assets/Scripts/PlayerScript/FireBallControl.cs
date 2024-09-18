@@ -5,9 +5,9 @@ using UnityEngine;
 public class FireBallControl : MonoBehaviour
 {
     Rigidbody rigidbody;
-    public float throwForce;
+    public float throwForce = 10.0f;
     public bool isFireball = false;
-    public float gravity = -9.81f;
+    //public float gravity = -9.81f;
     public Vector3 ballDir;
 
     public int bombDamage = 50; // 폭탄이 적에게 주는 데미지
