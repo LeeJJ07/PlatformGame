@@ -740,6 +740,7 @@ public class PlayerControlManagerFix : MonoBehaviour
 
     public void ResetPlayerStatus()
     {
+        inventory.ResetItemSlots();
         playerHP = playerMaxHP = PLAYER_MAX_HP;
         moveSpeed = ogMoveSpeed;
         playerBasicATK = ogPlayerBasicATK;

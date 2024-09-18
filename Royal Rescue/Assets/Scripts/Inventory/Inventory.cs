@@ -39,7 +39,10 @@ public class Inventory : MonoBehaviour
     {
         inventoryWindow.SetActive(false);
         slots = new ItemSlot[uidSlot.Length];
-
+        ResetItemSlots();
+    }
+    public void ResetItemSlots()
+    {
         for (int i = 0; i < slots.Length; i++) {
             slots[i] = new ItemSlot();
             uidSlot[i].index = i;

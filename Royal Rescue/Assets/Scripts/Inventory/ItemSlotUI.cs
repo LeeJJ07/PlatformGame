@@ -34,6 +34,7 @@ public class ItemSlotUI : MonoBehaviour
     }
     public void Clear()
     {
+        if (outline == null) outline = GetComponent<Outline>();
         outline.enabled = false;
         curSlot = null;
         icon.gameObject.SetActive(false);
