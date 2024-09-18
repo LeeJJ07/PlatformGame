@@ -16,7 +16,7 @@ public class DoorTrap : MonoBehaviour
 
     private Monster[] monsters;
 
-    GameObject inGameUI;
+    protected GameObject inGameUI;
 
     protected virtual void Start()
     {

@@ -12,6 +12,8 @@ public class BossRoomTrigger : DoorTrap
 
     protected override void Start()
     {
+        inGameUI = GameObject.FindWithTag("InGameUI");
+
         cutsceneCamAnim.gameObject.SetActive(false);
         boss = monsterHub.GetComponentInChildren<BossBehaviour>(true);
         bossDeathNode = (DieNode)boss.GetBossDeathNode();

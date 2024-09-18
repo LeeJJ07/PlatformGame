@@ -45,7 +45,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     [SerializeField] public bool isDirRight = true;
     [SerializeField] private bool isFloor = false;
     [SerializeField] private bool isAttackButton = false;//
-    [SerializeField] private bool isAttackSecond = false;//
+    //[SerializeField] private bool isAttackSecond = false;//
 
     private bool isRunning = false;
     public bool isSwordWindPossible = false;
@@ -614,12 +614,13 @@ public class PlayerControlManagerFix : MonoBehaviour
     void ReduceFieldOfView()
     {
         if (isAddicted) return;
-        isAddicted = true;
+        
 
         StartCoroutine(ReduceReduceFieldOfViewSlowly());
     }
     IEnumerator ReduceReduceFieldOfViewSlowly()
     {
+        isAddicted = true;
         for (int i = 0; i < 100; i++)
         {
             fieldView.weight += 0.01f;
@@ -631,6 +632,7 @@ public class PlayerControlManagerFix : MonoBehaviour
             fieldView.weight -= 0.01f;
             yield return new WaitForSeconds(0.02f);
         }
+        isAddicted = false;
     }
 
     public void FixatePlayerRigidBody(bool isFixated)
