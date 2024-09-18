@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class AltarInteraction : MonoBehaviour
 {
@@ -34,7 +35,7 @@ public class AltarInteraction : MonoBehaviour
             gameObject.SetActive(false);
             gem.SetActive(true);
             GameDirector.instance.PlayerControl.inventory.UseGem(resourceType);
-            // Play Sound
+            SoundManager.Instance.PlaySound("InputGem");
             altarControl.ActivateAltar();
         }
     }
