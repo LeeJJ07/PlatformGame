@@ -521,27 +521,6 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
     }
 
-    //ENFORCE, JEWEL, HEAL, POWER, HEALTH, ATTACKSPEED
-    private void OnTriggerEnter(Collider other)
-    {
-        switch (other.tag)
-        {
-            case "ENFORCE":
-                //?
-                break;
-            case "JEWEL":
-                break;
-            case "HEAL":
-                break;
-            case "POWER":
-                break;
-            case "HEALTH":
-                break;
-            case "ATTACKSPEED":
-                break;
-        }
-    }
-
     //플레이어 피격시 외부에서 데미지를 받아올 수 있게
     public int GetBasicDamage()
     {
@@ -567,10 +546,6 @@ public class PlayerControlManagerFix : MonoBehaviour
         CheckPlayerDeath();
     }
     //
-
-
-
-
     private void OnCollisionExit(Collision collision)
     {
         RaycastHit hit;
@@ -697,7 +672,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         return Input.GetKeyDown(KeyCode.I);
     }
 
-    //inventory 및 items : 종진
+    //inventory 및 items
     public void ToggleCursor(bool toggle)
     {
         Cursor.lockState = toggle ? CursorLockMode.None:CursorLockMode.Locked;

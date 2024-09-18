@@ -603,6 +603,7 @@ MonoBehaviour:
   chaseState: {fileID: 2702174801716283572}
   attackState: {fileID: 974978444599367642}
   deathState: {fileID: 7767230435941515528}
+  isIdle: 1
   isDetect: 0
   isAttack: 0
   detecting: 0

@@ -23,6 +23,7 @@ public class Monster : MonoBehaviour
     protected Animator animator;
     protected Collider coll;
 
+    public bool isIdle;
     public bool isDetect;
     public bool isAttack;
     public bool detecting;
@@ -101,7 +102,8 @@ public class Monster : MonoBehaviour
         wallLayerMask = 1 << LayerMask.NameToLayer("Wall");
         playerMask = 1 << LayerMask.NameToLayer("Player");
 
-        SetHpBar();
+        if(!isIdle)
+            SetHpBar();
     }
     private void OnEnable()
     {
