@@ -26,14 +26,11 @@ public class TreasureText : MonoBehaviour
 
         textMP = GetComponent<TextMeshPro>();
         textMP.text = "필요 코인 \n: " + curCoin.ToString();
-
     }
     private void Update()
     {
         if (isSuccess)
-        {
             return;
-        }
 
         if (Camera.main == null || targetTr == null)
             return;

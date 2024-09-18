@@ -34,6 +34,9 @@ public class Inventory : MonoBehaviour
     public UnityEvent onOpenInventory;
     public UnityEvent onCloseInventory;
 
+    private Canvas uiCanvas;
+    public GameObject useItemTextPrefab;
+
     private void Awake()
     {
         controller = GetComponent<PlayerControlManagerFix>();
@@ -166,8 +169,12 @@ public class Inventory : MonoBehaviour
     }
     public void OnUseButton()
     {
+        uiCanvas = GameObject.Find("InGame Canvas").GetComponent<Canvas>();
+        GameObject useItemUI = Instantiate(useItemTextPrefab, uiCanvas.transform) as GameObject;
+        string useText = "";
+
         if (selectedItem.item.type == ItemType.Consumable)
-        {
+        {  
             int randNum = Random.Range(0, 10), i = 0;
             if (randNum < 3) i = 0;
             else if (randNum < 8) i = 1;
@@ -176,20 +183,29 @@ public class Inventory : MonoBehaviour
             switch (selectedItem.item.consumables[i].type) {
                 case ConsumableType.HEAL:
                     GameDirector.instance.PlayerControl.IncreaseCurHp((int)selectedItem.item.consumables[i].value);
+                    useText = "현재 체력 ";
                     break;
                 case ConsumableType.POWER:
                     GameDirector.instance.PlayerControl.IncreaseAtk((int)selectedItem.item.consumables[i].value);
+                    useText = "공격력 ";
                     break;
                 case ConsumableType.HEALTH:
                     GameDirector.instance.PlayerControl.IncreaseMaxHp((int)selectedItem.item.consumables[i].value);
+                    useText = "최대 체력 ";
                     break;
                 case ConsumableType.MOVESPEED:
                     GameDirector.instance.PlayerControl.IncreaseSpeed((int)selectedItem.item.consumables[i].value);
+                    useText = "이동 속도 ";
                     break;
             }
-        }else if(selectedItem.item.type == ItemType.Equipable) {
+            if ((int)selectedItem.item.consumables[i].value > 0) useText += (int)selectedItem.item.consumables[i].value + " 증가!";
+            else useText += -(int)selectedItem.item.consumables[i].value + " 감소!";
+            
+        } else if(selectedItem.item.type == ItemType.Equipable) {
             GameDirector.instance.PlayerControl.isAttackEnhance = true;
+            useText += "원거리 공격으로 강화 완료!";
         }
+        useItemUI.GetComponent<ItemText>().itemText = useText;
         RemoveSelectedItem();
     }
     public void OnEquipButton()

@@ -145,6 +145,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee7e69c37ac0840419e4a1a37a6dd7fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gemType: 0
   coinEffect: {fileID: 8271400594001470412, guid: 403ca708a5dfee14d915b21ed6f85bcb, type: 3}
 --- !u!114 &-4285123434257649763
 MonoBehaviour:
@@ -171,3 +172,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: eda0b2cd2761c274e9b19c4499ca8ffa, type: 2}
+  getItemTextPrefab: {fileID: 5943618923925618071, guid: f1bf5de94de95254cb89a60a7299da76, type: 3}

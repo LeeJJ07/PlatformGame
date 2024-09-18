@@ -167,6 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: 90c6fa1bac87f8e4d82f0e187370dc32, type: 2}
+  getItemTextPrefab: {fileID: 5943618923925618071, guid: f1bf5de94de95254cb89a60a7299da76, type: 3}
 --- !u!114 &-8801867104695459541
 MonoBehaviour:
   m_ObjectHideFlags: 0
