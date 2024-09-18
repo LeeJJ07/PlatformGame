@@ -6,33 +6,33 @@ using TMPro;
 
 public class MiniBossAI : MonoBehaviour
 {
-    [Header("�߰����� �ɷ�ġ")]
+    [Header("중간 보스 능력치")]
     [SerializeField] float hp;
     [SerializeField] float maxHp = 300;
     [SerializeField] float walkSpeed;
     [SerializeField] float runSpeed;
 
-    [Header("����")]
+    [Header("중간 보스 관련 오브젝트 및 애니메이터")]
     [SerializeField] PlayerControlManagerFix playerControl;
     private GameObject player;
     [SerializeField] Transform startTrasform;
     [SerializeField] Animator animator;
 
-    [Header("��ų ��� Ȯ��")]
+    [Header("공격 확률")]
     [SerializeField] int skill1Probability = 25;
     [SerializeField] int skill2Probability = 33;
 
-    [Header("��ų ������")]
+    [Header("공격 데미지")]
     [SerializeField] int skill1Damage = 10;
     [SerializeField] int skill2Damage = 10;
     [SerializeField] int baseAttackDamage = 10;
 
-    [Header("��ų ����")]
+    [Header("공격 범위")]
     [SerializeField] float skill1Range= 20f;
     [SerializeField] float skill2Range = 10f;
     [SerializeField] float baseAttackRange = 5f;
 
-    [Header("���� ������")]
+    [Header("공격 딜레이 시간")]
     [SerializeField] float skill1DelayTime = 0.5f;
     [SerializeField] float skill2DelayTime = 0.5f;
     [SerializeField] float baseAttackDelayTime = 0.5f;
@@ -69,7 +69,7 @@ public class MiniBossAI : MonoBehaviour
     bool takeAttack = false;
     [SerializeField] private GameObject hitEffect;
     public Material material;
-    private Color originalColor; // ���� ����
+    private Color originalColor;
 
     private Canvas uiCanvas;
     public GameObject DamageTextPrefab;
@@ -161,7 +161,6 @@ public class MiniBossAI : MonoBehaviour
         }
         if(hpbarUi)
             hpbarUi.Init((int)maxHp, null, gameObject.name);
-        //hpbarUi.ActivateUI();
     }
     void Update()
     {
@@ -241,7 +240,7 @@ public class MiniBossAI : MonoBehaviour
         OnDamage(dmg);
 
         Vector3 nVec = new Vector3(0, 5f, 0);
-        var screenPos = Camera.main.WorldToScreenPoint(transform.position + nVec); // ������ ���� 3d��ǥ�� ��ũ����ǥ�� ��ȯ
+        var screenPos = Camera.main.WorldToScreenPoint(transform.position + nVec);
         var localPos = Vector2.zero;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.GetComponent<RectTransform>(), screenPos, uiCanvas.worldCamera, out localPos);
 
@@ -260,7 +259,7 @@ public class MiniBossAI : MonoBehaviour
         {
             originalColor = material.color;
             material.color = new Color(255, 125, 100, 100);
-            yield return new WaitForSeconds(0.1f);  // 0.2�� ���� ���
+            yield return new WaitForSeconds(0.1f);
             material.color = originalColor;
             yield return new WaitForSeconds(0.1f);
         }

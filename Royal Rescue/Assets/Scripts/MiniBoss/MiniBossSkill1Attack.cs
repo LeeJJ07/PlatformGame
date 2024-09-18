@@ -37,9 +37,10 @@ public class MiniBossSkill1Attack : INode
             if (time == 0f)
             {
                 transform.eulerAngles = new Vector3(0f, 180f - 90 * dirX / Mathf.Abs(dirX), 0f);
-                transform.GetChild(3).gameObject.SetActive(true);
                 animator.SetTrigger("skill1");
                 
+            }else if (time > 0.6f && !transform.GetChild(3).gameObject.activeSelf) {
+                transform.GetChild(3).gameObject.SetActive(true);
             }
             delay = true;
             time += Time.deltaTime;

@@ -33,8 +33,9 @@ public class MiniBossBaseAttack : INode
         {
             animator.SetTrigger("baseAttack");
             transform.eulerAngles = new Vector3(0f, 180f - 90 * dirX / Mathf.Abs(dirX), 0f);
-            transform.GetChild(2).gameObject.SetActive(true);
         }
+        else if(time>0.4f && !transform.GetChild(2).gameObject.activeSelf)
+            transform.GetChild(2).gameObject.SetActive(true);
         time += Time.deltaTime;
         return INode.NodeState.Running;
     }

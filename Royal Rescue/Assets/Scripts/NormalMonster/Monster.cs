@@ -280,7 +280,7 @@ public class Monster : MonoBehaviour
         damageUI.transform.localPosition = localPos;
 
         coll.enabled = false;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         coll.enabled = true;
 
         isHit = false;
