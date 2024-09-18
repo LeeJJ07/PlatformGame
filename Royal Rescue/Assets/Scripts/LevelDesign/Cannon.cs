@@ -11,7 +11,7 @@ public class Cannon : MonoBehaviour
 
     void OnEnable()
     {
-        InvokeRepeating("FireCannonBall", 0.2f, fireInterval);
+        InvokeRepeating("FireCannonBall", 3f, fireInterval);
     }
 
     void OnDisable()
