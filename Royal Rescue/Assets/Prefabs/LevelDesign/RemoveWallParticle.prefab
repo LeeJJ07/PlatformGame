@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4596544553357837919}
   - component: {fileID: 3005581896905022112}
   m_Layer: 0
-  m_Name: WallExplosion
+  m_Name: RemoveWallParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
