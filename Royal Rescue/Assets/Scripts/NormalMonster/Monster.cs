@@ -263,7 +263,7 @@ public class Monster : MonoBehaviour
 
         Instantiate(hitEffect, transform.position + new Vector3(0.6f * getFacingDir(), 1.2f, 0), Quaternion.identity);
 
-        curHp -= dmg; //playerControl.getDamage();
+        curHp -= dmg;
 
         hpBarSlider.value = (float)curHp / (float)maxHp;
 

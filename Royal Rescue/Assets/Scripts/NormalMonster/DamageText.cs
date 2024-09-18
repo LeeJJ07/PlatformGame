@@ -16,6 +16,10 @@ public class DamageText : MonoBehaviour
     [HideInInspector] public Vector3 offset = Vector3.zero;
     [HideInInspector] public Transform targetTr;
 
+    [HideInInspector] public float colorR = 1f;
+    [HideInInspector] public float colorG = 1f;
+    [HideInInspector] public float colorB = 1f;
+
     private void Start()
     {
         textMP = GetComponent<TextMeshPro>();
@@ -27,7 +31,7 @@ public class DamageText : MonoBehaviour
     private void Update()
     {
         transform.Translate(new Vector3(0, textUpSpeed * Time.deltaTime, 0));
-        textMP.color = new Color(1, 1, 1, Mathf.Lerp(textMP.color.a, 0, Time.deltaTime*alphaSpeed));
+        textMP.color = new Color(colorR, colorG, colorB, Mathf.Lerp(textMP.color.a, 0, Time.deltaTime*alphaSpeed));
     }
     
     private void DestroyDamageText()

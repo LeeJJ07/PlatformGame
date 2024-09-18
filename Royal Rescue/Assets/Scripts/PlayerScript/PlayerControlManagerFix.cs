@@ -79,7 +79,6 @@ public class PlayerControlManagerFix : MonoBehaviour
     public bool isBombStart = false;
     public bool isFbPossible = false;
 
-
     public LayerMask layer;
 
     Rigidbody rb;
@@ -94,6 +93,9 @@ public class PlayerControlManagerFix : MonoBehaviour
     bool isAddicted;
     [SerializeField] PostProcessVolume fieldView;
     private Vignette vignette;
+
+    private Canvas uiCanvas;
+    public GameObject DamageTextPrefab;
 
     [SerializeField] private int coin = 0; // 코인 갯수
     [SerializeField] private CoinUI coinUI;
@@ -142,6 +144,8 @@ public class PlayerControlManagerFix : MonoBehaviour
         bombDamage = fireBallPrefabs.GetComponent<FireBallControl>().bombDamage;
 
         inventory = GetComponent<Inventory>();
+
+        uiCanvas = GameObject.Find("InGame Canvas").GetComponent<Canvas>();
 
         CachePlayerStatus();
         coinUI.UpdateCoinText(coin);
@@ -580,7 +584,19 @@ public class PlayerControlManagerFix : MonoBehaviour
         {
             SoundManager.Instance.PlaySound("BeDamage");
             playerHP -= damage;
-            Debug.Log("맞음");
+
+            Vector3 nVec = new Vector3(0, 1.5f, 0);
+            var screenPos = Camera.main.WorldToScreenPoint(transform.position + nVec);
+            var localPos = Vector2.zero;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.GetComponent<RectTransform>(), screenPos, uiCanvas.worldCamera, out localPos); // 스크린 좌표를 다시 체력바 UI 캔버스 좌표로 변환
+
+            GameObject damageUI = Instantiate(DamageTextPrefab) as GameObject;
+            damageUI.GetComponent<DamageText>().damage = -damage;
+            damageUI.transform.SetParent(uiCanvas.transform, false);
+            damageUI.transform.localPosition = localPos;
+            damageUI.GetComponent<DamageText>().colorG = 0f;
+            damageUI.GetComponent<DamageText>().colorB = 0f;
+
             StartCoroutine(Invincibility());
         }
         CheckPlayerDeath();
