@@ -22,8 +22,6 @@ public class MiniBossCam : DoorTrap
         yield return new WaitForSeconds(1f);
 
         SwitchCamera(mainCamera, doorCamera);
-
-        GameDirector.instance.PlayerControl.FixatePlayerRigidBody(false);
         StartCoroutine(BossPlayer());
     }
 
@@ -34,6 +32,8 @@ public class MiniBossCam : DoorTrap
         yield return new WaitForSeconds(1f);
         SwitchCamera(bossCamera, mainCamera);
         yield return new WaitForSeconds(0.5f);
+        
+        GameDirector.instance.PlayerControl.FixatePlayerRigidBody(false);
         boss.hpbarUi.ActivateUI();
     }    
 
