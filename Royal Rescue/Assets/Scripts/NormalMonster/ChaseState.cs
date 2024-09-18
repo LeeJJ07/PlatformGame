@@ -64,13 +64,16 @@ public class ChaseState : MonoBehaviour, IState
         animator.SetBool("isChase", false);
         exclamation.SetActive(false);
         isActiveSound = false;
+        StopCoroutine("StartSoundEffect");
     }
 
     IEnumerator StartSoundEffect()
     {
+        Debug.Log("ChaseState");
         float soundDelay = 0;
         while (true)
         {
+            Debug.Log($"TransitionDelay Chase");
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Chase"))
             {
                 soundDelay = animator.GetCurrentAnimatorStateInfo(0).length;

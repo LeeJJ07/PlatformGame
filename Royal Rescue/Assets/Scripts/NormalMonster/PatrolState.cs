@@ -36,14 +36,16 @@ public class PatrolState : MonoBehaviour, IState
     {
         animator.SetBool("isPatrol", false);
         isActiveSound = false;
+        StopCoroutine("StartSoundEffect");
     }
     IEnumerator StartSoundEffect()
     {
+        Debug.Log("PatrolState");
         float soundDelay = 0;
         while(true)
         {
-            Debug.Log($"TransitionDelay");
 
+            Debug.Log($"TransitionDelay Patrol");
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Patrol"))
             {
                 soundDelay = animator.GetCurrentAnimatorStateInfo(0).length;
