@@ -365,6 +365,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 24517012}
   m_CullTransparentMesh: 1
+--- !u!1 &51926755 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8930727382215864658, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
+  m_PrefabInstance: {fileID: 1994628353}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &61337289
 GameObject:
   m_ObjectHideFlags: 0
@@ -11135,15 +11140,13 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5871504914781970716, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
-<<<<<<< HEAD
+      propertyPath: SkillPCharheEft
+      value: 
+      objectReference: {fileID: 51926755}
+    - target: {fileID: 5871504914781970716, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
       propertyPath: DamageTextPrefab
       value: 
       objectReference: {fileID: 3445122839428053434, guid: d60b9d755d64c5a408d421b8188fc290, type: 3}
-=======
-      propertyPath: SkillPCharheEft
-      value: 
-      objectReference: {fileID: 2215109573512715581, guid: 1935679478a87e249ae886d0b25efe4c, type: 3}
->>>>>>> feature_mergeTest_FixMonsterSoundTOmain
     - target: {fileID: 6844445951288654855, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
