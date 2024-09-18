@@ -29,6 +29,7 @@ TagManager:
   - DangerZone
   - FieldItem
   - InGameUI
+  - AltarText
   layers:
   - Default
   - TransparentFX
