@@ -92,6 +92,18 @@ public class PlayerControlManagerFix : MonoBehaviour
     private Vignette vignette;
 
     [SerializeField] private int coin = 0; // 코인 갯수
+    [SerializeField] private CoinUI coinUI;
+
+    public int Coin
+    {
+        get { return coin; }
+        set
+        {
+            coin = value;
+            coinUI.UpdateCoinText(coin);
+        }
+    } 
+
     public Inventory inventory;
 
     // 엔딩 후 타이틀 화면 복귀 시 참조할 플레이어의 초기 스테이터스 ///
@@ -128,6 +140,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         inventory = GetComponent<Inventory>();
 
         CachePlayerStatus();
+        coinUI.UpdateCoinText(coin);
     }
     // Update is called once per frame
     void Update()
@@ -677,8 +690,8 @@ public class PlayerControlManagerFix : MonoBehaviour
         return Input.GetKeyDown(KeyCode.Q);
     }
     public int GetCoin() { return coin; }
-    public void EatCoin() { coin++; }
-    public void SetCoin(int needCoin) { coin -= needCoin; }
+    public void EatCoin() { Coin++; }
+    public void SetCoin(int needCoin) { Coin -= needCoin; }
 
     public bool InventoryKeyDown() {
         return Input.GetKeyDown(KeyCode.I);
