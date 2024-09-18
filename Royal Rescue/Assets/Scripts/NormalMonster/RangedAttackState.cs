@@ -26,8 +26,6 @@ public class RangedAttackState : AttackState
         if (afterShootTime > attackSpeed)
         {
             afterShootTime = 0;
-            SoundManager.Instance.StopLoopSound(data.PatrolSound);
-            SoundManager.Instance.StopLoopSound(data.ChaseSound);
             SoundManager.Instance.PlaySound(data.AttackSound);
             Instantiate(projectile, monster.transform.position + new Vector3(0f, 1.3f, 0f), monster.transform.rotation);
         }

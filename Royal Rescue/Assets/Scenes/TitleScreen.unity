@@ -365,6 +365,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 24517012}
   m_CullTransparentMesh: 1
+--- !u!1 &51926755 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8930727382215864658, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
+  m_PrefabInstance: {fileID: 1994628353}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &61337289
 GameObject:
   m_ObjectHideFlags: 0
@@ -11134,6 +11139,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5871504914781970716, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
+      propertyPath: SkillPCharheEft
+      value: 
+      objectReference: {fileID: 51926755}
     - target: {fileID: 5871504914781970716, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
       propertyPath: DamageTextPrefab
       value: 

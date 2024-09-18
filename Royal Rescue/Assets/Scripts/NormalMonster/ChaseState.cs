@@ -14,6 +14,8 @@ public class ChaseState : MonoBehaviour, IState
     float flowTime = 0f;
     float detectMontionTime = 1f;
 
+    bool isActiveSound = false;
+
     public void EnterState()
     {
         if (!animator) animator = GetComponent<Animator>();
@@ -29,7 +31,11 @@ public class ChaseState : MonoBehaviour, IState
         }
         if (!monster.LookPlayer())
             monster.FlipX();
-        StartCoroutine("StartSoundEffect");
+        if(!isActiveSound)
+        {
+            isActiveSound = true;
+            StartCoroutine("StartSoundEffect");
+        }
     }
     public void UpdateState()
     {
@@ -57,18 +63,31 @@ public class ChaseState : MonoBehaviour, IState
     {
         animator.SetBool("isChase", false);
         exclamation.SetActive(false);
+        isActiveSound = false;
+        StopCoroutine("StartSoundEffect");
     }
 
     IEnumerator StartSoundEffect()
     {
+        Debug.Log("ChaseState");
+        float soundDelay = 0;
+        while (true)
+        {
+            Debug.Log($"TransitionDelay Chase");
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Chase"))
+            {
+                soundDelay = animator.GetCurrentAnimatorStateInfo(0).length;
+                break;
+            }
+            yield return null;
+        }
         while (true)
         {
             if (Physics.Raycast(transform.position, Vector3.down, 2f, LayerMask.GetMask("Ground")))
             {
-                SoundManager.Instance.StopLoopSound(data.ChaseSound);
-                SoundManager.Instance.StopLoopSound(data.PatrolSound);
-                SoundManager.Instance.PlaySound(data.ChaseSound, true);
-                yield break;
+                if (!isActiveSound) yield break;
+                SoundManager.Instance.PlaySound(data.PatrolSound);
+                yield return new WaitForSeconds(soundDelay);
             }
             yield return null;
         }
