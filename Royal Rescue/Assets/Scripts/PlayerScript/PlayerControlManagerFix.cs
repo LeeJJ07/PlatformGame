@@ -71,6 +71,10 @@ public class PlayerControlManagerFix : MonoBehaviour
     [SerializeField] private float maxThrowPower = 10;//최대 방향 파워
 
 
+    public LineRenderer lineRenderer;//궤적용
+    public int trajectoryResolution = 30; // 궤적의 점 최대수
+    private Vector3 ballDirection; // 폭탄의 방향
+
     private bool isSkillCharging = false;
     public bool isBombStart = false;
     public bool isFbPossible = false;
@@ -178,6 +182,8 @@ public class PlayerControlManagerFix : MonoBehaviour
                         SkillCharheEft.SetActive(false);
                         SkillPCharheEft.SetActive(true);
                     }
+                    ballDirection = ((isDirRight ? Vector3.right : Vector3.left) + Vector3.up) * 1.3f; //라인렌더러용 방향 설정
+                    ShowTrajectory(fireBallSpawnPoint.position, ballDirection, Mathf.Lerp(minThrowPower, maxThrowPower, holdTime / maxHoldTime));
                 }
                 if (Input.GetButtonUp("FireBallKey") && isBombStart)
                 {
@@ -361,6 +367,9 @@ public class PlayerControlManagerFix : MonoBehaviour
             anim.SetTrigger("FireBallTr");
             skillCount -= 1;
             StartCoroutine("CheckFireBall");
+
+
+            ClearTrajectory(); // 궤적을 지움
         }
         else if (skillCount == 0)
         {
@@ -369,6 +378,37 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
         
     }
+
+    void ShowTrajectory(Vector3 startPosition, Vector3 direction, float force)
+    {
+        Vector3[] points = new Vector3[trajectoryResolution];
+        Vector3 velocity = direction * force; // 초기 속도
+
+        float simulationTimeStep = 0.1f;
+        float totalTime = 2.0f;
+
+        // 포물선 궤적 계산
+        for (int i = 0; i < trajectoryResolution; i++)
+        {
+            float time = i * simulationTimeStep;
+
+            if (time > totalTime)
+                break;
+            // 포물선 공식: 초기 위치 + 속도 * 시간 + 0.5 * 중력 * 시간^2
+            points[i] = startPosition + velocity * time + 0.5f * Physics.gravity * time * time;
+        }
+
+        lineRenderer.positionCount = points.Length;
+        lineRenderer.SetPositions(points);
+    }
+
+    // 궤적을 지우는 함수
+    void ClearTrajectory()
+    {
+        lineRenderer.positionCount = 0;
+    }
+
+
     public void SwordWind()
     {  
         if (isAttackPossible)

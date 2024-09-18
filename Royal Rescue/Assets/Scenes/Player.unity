@@ -2072,6 +2072,8 @@ MonoBehaviour:
   maxHoldTime: 3
   minThrowPower: 5
   maxThrowPower: 20
+  lineRenderer: {fileID: 0}
+  trajectoryResolution: 30
   isBombStart: 0
   isFbPossible: 0
   layer:
@@ -2079,6 +2081,7 @@ MonoBehaviour:
     m_Bits: 0
   fieldView: {fileID: 0}
   coin: 100
+  coinUI: {fileID: 0}
   inventory: {fileID: 0}
 --- !u!1 &327161575
 GameObject:
