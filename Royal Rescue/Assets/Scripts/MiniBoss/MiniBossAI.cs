@@ -150,8 +150,6 @@ public class MiniBossAI : MonoBehaviour
         root.AddNode(followPlayerSequence);
 
         bt = new BehaviorTreeRunner(root);
-
-        SetHpBar();
     }
     private void OnEnable()
     {
@@ -271,18 +269,5 @@ public class MiniBossAI : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         takeAttack = false;
-    }
-    private void SetHpBar()
-    {
-        uiCanvas = GameObject.Find("InGame Canvas").GetComponent<Canvas>();
-        Slider hpBar = Instantiate<Slider>(hpBarPrefab, uiCanvas.transform);
-        hpBarSlider = hpBar;
-
-        var _hpbar = hpBar.GetComponent<MonsterHpBar>();
-        _hpbar.targetTr = this.gameObject.transform;
-        _hpbar.offset = hpBarOffset;
-
-        hpBarSlider.value = hp / maxHp;
-        
     }
 }
