@@ -15,6 +15,7 @@ public class TreasureCoin : MonoBehaviour
     [SerializeField] private float rotSpeed = 160f;
     void Start()
     {
+        SoundManager.Instance.PlaySound("InputCoin");
         mRenderer = GetComponent<MeshRenderer>();
         coinColor = mRenderer.material.GetColor("_Color");
 

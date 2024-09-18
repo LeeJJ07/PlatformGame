@@ -71,6 +71,9 @@ public class TreasureController : MonoBehaviour {
             Instantiate(treasureCoinPrefab, transform);
             yield return new WaitForSeconds(0.3f);
         }
+
+        SoundManager.Instance.PlaySound("OpenTreasure");
+
         Instantiate(treasureParticlePrefab, transform.position, Quaternion.identity);
         if (isPotion) {
             RandomItemCreate();

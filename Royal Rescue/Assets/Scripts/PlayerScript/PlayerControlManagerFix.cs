@@ -481,8 +481,8 @@ public class PlayerControlManagerFix : MonoBehaviour
         else
             Debug.Log("스피드가 " + amount + "만큼 증가");
 
-        if (moveSpeed > 5) moveSpeed = 5;           // maxMoveSpeed 5로 제한
-        else if (moveSpeed < 1) moveSpeed = 1;      // minMoveSpeed 1로 제한
+        if (moveSpeed > 12) moveSpeed = 12;           // maxMoveSpeed 12로 제한
+        else if (moveSpeed < 5) moveSpeed = 5;      // minMoveSpeed 5로 제한
     }
     public void IncreaseAtk(int amount)
     {
@@ -565,7 +565,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
     }
 
-    //플레이어 피격시 외부에서 데미지를 받아올 수 있게
+    //플레이어 피격시 외부에서 데미지를 받아올 수 있게 -> 이부분 수정 필요
     public int GetBasicDamage()
     {
         return basicDamage + playerBasicATK + damageRange[Random.Range(0, damageRange.Length)];
