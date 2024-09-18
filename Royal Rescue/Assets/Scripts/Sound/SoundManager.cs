@@ -63,7 +63,7 @@ public class SoundManager : MonoBehaviour
             }
         }
 
-        //Debug.LogError(clipName + "을 찾을 수 없습니다.");
+        Debug.LogWarning(clipName + "을 찾을 수 없습니다.");
     }
 
     public void PlaySound(string clipName, bool isLoop = false, SoundType type = SoundType.EFFECT)
