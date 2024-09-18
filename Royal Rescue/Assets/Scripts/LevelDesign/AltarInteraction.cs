@@ -11,7 +11,6 @@ public class AltarInteraction : MonoBehaviour
     private bool isPlayerInAltarRange = false;
 
     private TextMeshProUGUI altarText;
-    private bool isTextOn = false;
 
     void Start()
     {
@@ -28,7 +27,20 @@ public class AltarInteraction : MonoBehaviour
         {
             isPlayerInAltarRange = true;
 
-            altarText.text = "[Z] : " + resourceType.ToString() + " 올리기";
+            string resourceName = "";
+            switch(resourceType)
+            {
+                case ResourceType.RUBY:
+                    resourceName = "루비";
+                    break;
+                case ResourceType.DIAMOND:
+                    resourceName = "다이아몬드";
+                    break;
+                case ResourceType.JADE:
+                    resourceName = "옥";
+                    break;
+            }
+            altarText.text = "[Z] : " + resourceName + " 올리기";
             altarText.gameObject.SetActive(true);
         }
     }

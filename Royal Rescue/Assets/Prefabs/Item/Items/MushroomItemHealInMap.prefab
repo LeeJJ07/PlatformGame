@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &6219677360448214825
+--- !u!1001 &1339336456016981380
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -51,10 +51,10 @@ PrefabInstance:
     - target: {fileID: -6422308782938267371, guid: 15c2a05631ba497cbf857064f8c13659, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: cc73c96474aa433e8b99209fccd68cdb, type: 2}
+      objectReference: {fileID: 2100000, guid: 053098cc642e98240998807f7a8b98dc, type: 2}
     - target: {fileID: 919132149155446097, guid: 15c2a05631ba497cbf857064f8c13659, type: 3}
       propertyPath: m_Name
-      value: MushroomItemMoveSpeed
+      value: MushroomItemHealInMap
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 15c2a05631ba497cbf857064f8c13659, type: 3}
       propertyPath: m_TagString
@@ -66,32 +66,29 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 15c2a05631ba497cbf857064f8c13659, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7886988284145705109}
+      addedObject: {fileID: -1615731380266939811}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 15c2a05631ba497cbf857064f8c13659, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6233663108658771508}
+      addedObject: {fileID: 7043592093652215176}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 15c2a05631ba497cbf857064f8c13659, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1441292863076817427}
+      addedObject: {fileID: 2209165369514486271}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 15c2a05631ba497cbf857064f8c13659, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 994767170637414409}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 15c2a05631ba497cbf857064f8c13659, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -6357536288531261355}
+      addedObject: {fileID: -8129414921993279999}
   m_SourcePrefab: {fileID: 100100000, guid: 15c2a05631ba497cbf857064f8c13659, type: 3}
---- !u!1 &6526228553577736824 stripped
+--- !u!1 &2186267516141195477 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 15c2a05631ba497cbf857064f8c13659, type: 3}
-  m_PrefabInstance: {fileID: 6219677360448214825}
+  m_PrefabInstance: {fileID: 1339336456016981380}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &7886988284145705109
+--- !u!65 &-1615731380266939811
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6526228553577736824}
+  m_GameObject: {fileID: 2186267516141195477}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -106,13 +103,13 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.75, y: 0.75, z: 0.75}
   m_Center: {x: 0, y: 0.45, z: 0}
---- !u!54 &6233663108658771508
+--- !u!54 &7043592093652215176
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6526228553577736824}
+  m_GameObject: {fileID: 2186267516141195477}
   serializedVersion: 4
   m_Mass: 1
   m_Drag: 0
@@ -133,13 +130,13 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1441292863076817427
+--- !u!114 &2209165369514486271
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6526228553577736824}
+  m_GameObject: {fileID: 2186267516141195477}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee7e69c37ac0840419e4a1a37a6dd7fc, type: 3}
@@ -147,29 +144,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gemType: 0
   coinEffect: {fileID: 8271400594001470412, guid: 403ca708a5dfee14d915b21ed6f85bcb, type: 3}
---- !u!114 &994767170637414409
+--- !u!114 &-8129414921993279999
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6526228553577736824}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c00ffda0394e334087df4492cad9405, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &-6357536288531261355
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6526228553577736824}
+  m_GameObject: {fileID: 2186267516141195477}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e069b4901cc6b6041bb9e588fa2c8f7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item: {fileID: 11400000, guid: eb593ee5547360e409002934bfb73060, type: 2}
+  item: {fileID: 11400000, guid: a5eae1294e3a15c4a9ce97b32fc59f61, type: 2}
   getItemTextPrefab: {fileID: 5943618923925618071, guid: f1bf5de94de95254cb89a60a7299da76, type: 3}
