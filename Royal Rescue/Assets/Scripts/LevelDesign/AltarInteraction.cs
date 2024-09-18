@@ -10,9 +10,16 @@ public class AltarInteraction : MonoBehaviour
     private AltarControl altarControl;
     private bool isPlayerInAltarRange = false;
 
+    private TextMeshProUGUI altarText;
+    private bool isTextOn = false;
+
     void Start()
     {
         altarControl = GameObject.FindWithTag("AltarControl").GetComponent<AltarControl>();
+
+        //연산량이 많을 수도 있음..
+        altarText = GameObject.Find("InGame Canvas").GetComponent<Canvas>().GetComponentInChildren<TextMeshProUGUI>(true);
+        altarText.gameObject.SetActive(false);
     }
 
     void OnTriggerEnter(Collider other)
@@ -20,12 +27,17 @@ public class AltarInteraction : MonoBehaviour
         if (!isPlayerInAltarRange && other.gameObject.CompareTag("Player"))
         {
             isPlayerInAltarRange = true;
+
+            altarText.text = "[Z] : " + resourceType.ToString() + " 올리기";
+            altarText.gameObject.SetActive(true);
         }
     }
 
     void OnTriggerExit(Collider other)
     {
         isPlayerInAltarRange = false;
+
+        altarText.gameObject.SetActive(false);
     }
 
     void Update()
@@ -34,6 +46,7 @@ public class AltarInteraction : MonoBehaviour
         {
             gameObject.SetActive(false);
             gem.SetActive(true);
+            altarText.gameObject.SetActive(false);
             GameDirector.instance.PlayerControl.inventory.UseGem(resourceType);
             SoundManager.Instance.PlaySound("InputGem");
             altarControl.ActivateAltar();
