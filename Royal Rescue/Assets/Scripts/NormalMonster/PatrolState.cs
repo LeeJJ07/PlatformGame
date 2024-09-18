@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
 public class PatrolState : MonoBehaviour, IState
@@ -7,13 +8,19 @@ public class PatrolState : MonoBehaviour, IState
     private Monster monster;
     [SerializeField] protected NormalMonsterData data;
 
+    bool isActiveSound = false;
+
     public void EnterState()
     {
         if (!animator) animator = GetComponent<Animator>();
         if (!monster) monster = GetComponent<Monster>();
 
         animator.SetBool("isPatrol", true);
-        StartCoroutine(StartSoundEffect());
+        if(!isActiveSound)
+        {
+            isActiveSound = true;
+            StartCoroutine(StartSoundEffect());
+        }
     }
     public void UpdateState()
     {
@@ -27,17 +34,28 @@ public class PatrolState : MonoBehaviour, IState
     public void ExitState()
     {
         animator.SetBool("isPatrol", false);
+        isActiveSound = false;
+        StopCoroutine("StartSoundEffect");
     }
     IEnumerator StartSoundEffect()
     {
+        SoundManager.Instance.StopLoopSound(data.PatrolSound);
+        SoundManager.Instance.StopLoopSound(data.ChaseSound);
+        float soundDelay = 0;
+        while(true)
+        {
+            if(animator.GetCurrentAnimatorStateInfo(0).IsName("Chase"))
+            {
+                soundDelay = animator.GetCurrentAnimatorStateInfo(0).length/2;
+                break;
+            }
+        }
         while (true) 
         {
             if(Physics.Raycast(transform.position, Vector3.down, 2f, LayerMask.GetMask("Ground")))
             {
-                SoundManager.Instance.StopLoopSound(data.PatrolSound);
-                SoundManager.Instance.StopLoopSound(data.ChaseSound);
-                SoundManager.Instance.PlaySound(data.PatrolSound, true);
-                yield break;
+                SoundManager.Instance.PlaySound(data.PatrolSound);
+                yield return new WaitForSeconds(soundDelay);
             }
             yield return null;
         }
