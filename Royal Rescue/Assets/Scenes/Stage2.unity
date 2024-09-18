@@ -10599,7 +10599,7 @@ GameObject:
   - component: {fileID: 359123284}
   - component: {fileID: 359123287}
   m_Layer: 7
-  m_Name: Floor1 (5)
+  m_Name: RemoveWall
   m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10614,11 +10614,11 @@ Transform:
   m_GameObject: {fileID: 359123282}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.3290823, y: -0.49206662, z: -0.14000002}
+  m_LocalPosition: {x: -3.3290787, y: -0.49206734, z: -0.14000002}
   m_LocalScale: {x: 1.4569323, y: 5.144138, z: 4.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1669995904}
+  m_Father: {fileID: 2076026434}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &359123284
 BoxCollider:
@@ -10704,7 +10704,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gem: {fileID: 4246192}
-  particle: {fileID: 0}
+  particle: {fileID: 358637981425055526, guid: af05f881cb674dc4da961058d792b7d8, type: 3}
 --- !u!1001 &362249331
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50199,7 +50199,6 @@ Transform:
   - {fileID: 863843703}
   - {fileID: 1201999653}
   - {fileID: 1931738938}
-  - {fileID: 359123283}
   m_Father: {fileID: 1052407412}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1672821076
@@ -66477,6 +66476,7 @@ Transform:
   - {fileID: 126805001}
   - {fileID: 20616893}
   - {fileID: 1586355286}
+  - {fileID: 359123283}
   m_Father: {fileID: 1052407412}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &2076959847 stripped
