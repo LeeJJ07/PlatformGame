@@ -206,6 +206,8 @@ public class PlayerControlManagerFix : MonoBehaviour
             {
                 changeDir();
             }
+            //if(moveVec == Vector3.zero)
+                //SoundManager.Instance.StopLoopSound("RunMove");
         }
 
     }
@@ -222,25 +224,29 @@ public class PlayerControlManagerFix : MonoBehaviour
         if(!isAttackPossible)
         {
             moveDir = Vector3.zero;
+            if (isRunning)
+            {
+                SoundManager.Instance.StopLoopSound("RunMove");
+                isRunning = false;
+            }
         }
         else
         {
-            if ((Input.GetButtonDown("Horizontal") || Input.GetButton("Horizontal")) && isFloor && !isRunning)
+            moveDir = new Vector3(hAxis, 0, vAxis);
+            moveVec = new Vector3(hAxis, 0, vAxis).normalized;
+            if (moveVec != Vector3.zero && isFloor && !isRunning)
             {
                 SoundManager.Instance.PlaySound("RunMove", true, SoundType.EFFECT);
                 isRunning = true;
             }
-            if (Input.GetButtonUp("Horizontal") ||  !isFloor)
+            else if ((moveVec == Vector3.zero || !isFloor) && isRunning)
             {
-                if (isRunning)
-                {
+
                     SoundManager.Instance.StopLoopSound("RunMove");
                     isRunning = false;
-                }
             }
 
-            moveDir = new Vector3(hAxis, 0, vAxis);
-            moveVec = new Vector3(hAxis, 0, vAxis).normalized;
+            
 
             anim.SetBool("Run", moveVec != Vector3.zero && isFloor);
             anim.SetBool("Idle", moveVec == Vector3.zero && isFloor);
