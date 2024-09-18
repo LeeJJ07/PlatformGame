@@ -87,7 +87,6 @@ public class TreasureController : MonoBehaviour {
 
     private void SetText() 
     {
-
         uiCanvas = GameObject.Find("InGame Canvas").GetComponent<Canvas>();
 
         treasureText = Instantiate<GameObject>(treasureTextPrefab, uiCanvas.transform);
@@ -96,6 +95,7 @@ public class TreasureController : MonoBehaviour {
         _treasureText.targetTr = this.gameObject.transform;
         _treasureText.offset = new Vector3(0, 1.7f, 0);
         _treasureText.curCoin = curCoin;
+        _treasureText.gameObject.SetActive(false);
     }
     void RandomItemCreate() {
         int idx = Random.Range(0, 4);

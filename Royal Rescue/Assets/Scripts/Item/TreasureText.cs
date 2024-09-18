@@ -27,7 +27,7 @@ public class TreasureText : MonoBehaviour
         textMP = GetComponent<TextMeshPro>();
         textMP.text = "필요 코인 \n: " + curCoin.ToString();
 
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
     private void Update()
     {
