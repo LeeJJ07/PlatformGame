@@ -321,7 +321,7 @@ MonoBehaviour:
   SwordWindPrefabsL: {fileID: 1431150921175369799, guid: a1b0626921f8db74394cbb44cc3383be, type: 3}
   attackIcon: {fileID: 0}
   SkillCharheEft: {fileID: 5499693760683822270}
-  SkillPCharheEft: {fileID: 0}
+  SkillPCharheEft: {fileID: 2215109573512715581, guid: 1935679478a87e249ae886d0b25efe4c, type: 3}
   fireBallSpawnPoint: {fileID: 4987513842323046630}
   jumpPossible: 2
   moveSpeed: 7

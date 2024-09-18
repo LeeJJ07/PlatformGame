@@ -16,7 +16,8 @@ public class PatrolState : MonoBehaviour, IState
         if (!monster) monster = GetComponent<Monster>();
 
         animator.SetBool("isPatrol", true);
-        if(!isActiveSound)
+
+        if (!isActiveSound)
         {
             isActiveSound = true;
             StartCoroutine(StartSoundEffect());
@@ -34,17 +35,16 @@ public class PatrolState : MonoBehaviour, IState
     public void ExitState()
     {
         animator.SetBool("isPatrol", false);
-        StopCoroutine("StartSoundEffect");
         isActiveSound = false;
     }
     IEnumerator StartSoundEffect()
     {
-        SoundManager.Instance.StopLoopSound(data.PatrolSound);
-        SoundManager.Instance.StopLoopSound(data.ChaseSound);
         float soundDelay = 0;
         while(true)
         {
-            if(animator.GetCurrentAnimatorStateInfo(0).IsName("Patrol"))
+            Debug.Log($"TransitionDelay");
+
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Patrol"))
             {
                 soundDelay = animator.GetCurrentAnimatorStateInfo(0).length;
                 break;
@@ -53,8 +53,11 @@ public class PatrolState : MonoBehaviour, IState
         }
         while (true) 
         {
-            if(Physics.Raycast(transform.position, Vector3.down, 2f, LayerMask.GetMask("Ground")))
+            Debug.Log("PlaySound!");
+
+            if (Physics.Raycast(transform.position, Vector3.down, 2f, LayerMask.GetMask("Ground")))
             {
+                if(!isActiveSound) yield break;
                 SoundManager.Instance.PlaySound(data.PatrolSound);
                 yield return new WaitForSeconds(soundDelay);
             }

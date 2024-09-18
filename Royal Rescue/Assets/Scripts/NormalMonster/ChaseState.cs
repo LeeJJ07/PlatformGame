@@ -63,14 +63,11 @@ public class ChaseState : MonoBehaviour, IState
     {
         animator.SetBool("isChase", false);
         exclamation.SetActive(false);
-        StopCoroutine("StartSoundEffect");
         isActiveSound = false;
     }
 
     IEnumerator StartSoundEffect()
     {
-        SoundManager.Instance.StopLoopSound(data.PatrolSound);
-        SoundManager.Instance.StopLoopSound(data.ChaseSound);
         float soundDelay = 0;
         while (true)
         {
@@ -85,6 +82,7 @@ public class ChaseState : MonoBehaviour, IState
         {
             if (Physics.Raycast(transform.position, Vector3.down, 2f, LayerMask.GetMask("Ground")))
             {
+                if (!isActiveSound) yield break;
                 SoundManager.Instance.PlaySound(data.PatrolSound);
                 yield return new WaitForSeconds(soundDelay);
             }
