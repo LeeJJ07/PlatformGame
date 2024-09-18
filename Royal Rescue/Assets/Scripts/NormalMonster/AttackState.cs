@@ -51,8 +51,6 @@ public class AttackState : MonoBehaviour, IState
         float aniDuration= 0;
         bool isStartSound = false;
 
-        SoundManager.Instance.StopLoopSound(data.PatrolSound);
-        SoundManager.Instance.StopLoopSound(data.ChaseSound);
         while (true)
         {
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Attack"))

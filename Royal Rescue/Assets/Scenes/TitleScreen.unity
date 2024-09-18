@@ -11134,6 +11134,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5871504914781970716, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
+      propertyPath: SkillPCharheEft
+      value: 
+      objectReference: {fileID: 2215109573512715581, guid: 1935679478a87e249ae886d0b25efe4c, type: 3}
     - target: {fileID: 6844445951288654855, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
