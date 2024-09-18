@@ -1039,7 +1039,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &3203300680544057469
 Transform:
   m_ObjectHideFlags: 0
@@ -3735,7 +3735,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4381094548737953167
 Transform:
   m_ObjectHideFlags: 0
@@ -4426,6 +4426,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textCoolTime: {fileID: 3784793338974477832}
   player: {fileID: 0}
+  skillTimer: 0
   thisSkill: {fileID: 5525605359373548517}
   skillName: FireBallKey
   imgFill: {fileID: 4439810422844160063}
@@ -5592,6 +5593,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textCoolTime: {fileID: 4606461163008209929}
   player: {fileID: 0}
+  skillTimer: 0
   thisSkill: {fileID: 7222776542431089184}
   skillName: Dash
   imgFill: {fileID: 8378828574077587578}
