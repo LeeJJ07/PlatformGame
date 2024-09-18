@@ -13,7 +13,8 @@ public class TitleScreen : MonoBehaviour
     [SerializeField] private PostProcessVolume ppVolume;
     [SerializeField] private Image screenCover;
     [SerializeField] private float initialFocusDistance;
-    
+    [SerializeField] private Texture2D cursor;
+
     private DepthOfField dof;
     private ScreenState currentScreenState;
 
@@ -22,6 +23,7 @@ public class TitleScreen : MonoBehaviour
 
     void OnEnable()
     {
+        Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
         currentScreenState = ScreenState.INTRO;
         GameDirector.instance.SetCursorVisibility(true);
 
@@ -36,7 +38,7 @@ public class TitleScreen : MonoBehaviour
         if (GameDirector.instance)
         {
             GameDirector.instance.PlayerControl.SetPlayerEnabled(true);
-            GameDirector.instance.PlayerControl.ToggleCursor(false);
+            GameDirector.instance.SetCursorVisibility(false);
         }
     }
     

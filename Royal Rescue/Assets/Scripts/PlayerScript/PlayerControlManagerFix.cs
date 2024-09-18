@@ -204,7 +204,6 @@ public class PlayerControlManagerFix : MonoBehaviour
                 }
             }
 
-
             setPostProcessCenter();
         }
     }
@@ -731,10 +730,6 @@ public class PlayerControlManagerFix : MonoBehaviour
     }
 
     //inventory 및 items
-    public void ToggleCursor(bool toggle)
-    {
-        Cursor.lockState = toggle ? CursorLockMode.None:CursorLockMode.Locked;
-    }
 
     private void CachePlayerStatus()
     {
