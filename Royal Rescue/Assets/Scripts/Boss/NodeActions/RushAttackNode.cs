@@ -3,9 +3,11 @@ using UnityEngine;
 public class RushAttackNode : INode
 {
     //낙하물 생성 함수
-    public delegate void SpawnFunction(GameObject[] objs,int spawnCount);
-    SpawnFunction spawnRocks;
+    public delegate void SpawnFunction(GameObject[] objs,int spawnCount); 
+    public delegate void PlaySound(string name, bool isLoop);
 
+    SpawnFunction spawnRocks;
+    PlaySound playSound;
     RushAttackScriptableObject rushAttackInfo;
     Animator aniController;
 
@@ -14,12 +16,14 @@ public class RushAttackNode : INode
     Collider[] bossColliders;
 
     float skillSpan = 0;
+    float soundSpan = 0;
     int rotDir = -1;
     bool isActiveAnime = false;
     
-    public RushAttackNode(RushAttackScriptableObject rushAttackInfo,Collider[] bossColliders ,SpawnFunction spawnRock ,Animator aniController, Transform transform,Transform target)
+    public RushAttackNode(RushAttackScriptableObject rushAttackInfo, PlaySound playSound, Collider[] bossColliders ,SpawnFunction spawnRock ,Animator aniController, Transform transform,Transform target)
     {
         this.rushAttackInfo = rushAttackInfo;
+        this.playSound = playSound;
         this.transform = transform;
         this.target = target;
         this.aniController = aniController;
@@ -35,7 +39,7 @@ public class RushAttackNode : INode
         ActiveAnimation();
         Debug.Log("RushAttack Running");
         skillSpan += Time.deltaTime;
-       
+        soundSpan += Time.deltaTime;
 
         transform.position += transform.forward * rushAttackInfo.rushSpeed * Time.deltaTime;
         Collider[] colliders =  Physics.OverlapSphere(transform.position, rushAttackInfo.hitRange, rushAttackInfo.DetectLayers); 
@@ -47,10 +51,15 @@ public class RushAttackNode : INode
                 bossCollider.enabled = true;
             isActiveAnime = false;
             skillSpan = 0;
+            soundSpan = 0;
             return INode.NodeState.Success;
         }
 
-        
+        if(soundSpan>rushAttackInfo.playSoundTime)
+        {
+            soundSpan = 0;
+            playSound("Boss_Rush", false);
+        }
         if(colliders!= null)
         {
             foreach (Collider collider in colliders)
