@@ -6,6 +6,8 @@ public class MiniBossCam : DoorTrap
 {
     private MiniBossAI boss;
     [SerializeField] protected Camera bossCamera;
+    [SerializeField] protected Animator ironWallAnim2;
+    [SerializeField] protected RoomPortal portal2;
     protected override void Start()
     {
         boss = monsterHub.GetComponentInChildren<MiniBossAI>(true);
@@ -17,14 +19,39 @@ public class MiniBossCam : DoorTrap
         GameDirector.instance.PlayerControl.FixatePlayerRigidBody(true);
 
         portal.gameObject.SetActive(false);
+        portal2.gameObject.SetActive(false);
         SwitchCamera(mainCamera, doorCamera);
-        CloseIronWall();
+        
+        ironWallAnim.Play("IronWall_close");
+        ironWallAnim2.Play("IronWall_close");
         yield return new WaitForSeconds(1f);
 
         SwitchCamera(mainCamera, doorCamera);
         StartCoroutine(BossPlayer());
     }
+    protected override IEnumerator ReleasePlayer()
+    {
+        GameDirector.instance.PlayerControl.FixatePlayerRigidBody(true);
 
+        SwitchCamera(mainCamera, gemCamera);
+        yield return new WaitForSeconds(0.2f);
+
+        if (reward) reward.SetActive(true);
+        yield return new WaitForSeconds(1f);
+
+        SwitchCamera(gemCamera, doorCamera);
+        ironWallAnim.Play("IronWall_open");
+        ironWallAnim2.Play("IronWall_open");
+
+        yield return new WaitForSeconds(1.5f);
+
+        SwitchCamera(doorCamera, mainCamera);
+        trapTrigger.enabled = false;
+        portal.gameObject.SetActive(true);
+        portal2.gameObject.SetActive(true);
+
+        GameDirector.instance.PlayerControl.FixatePlayerRigidBody(false);
+    }
     protected IEnumerator BossPlayer()
     {
         SwitchCamera(mainCamera, bossCamera);
