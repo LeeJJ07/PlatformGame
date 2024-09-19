@@ -37,7 +37,6 @@ public class BossHpBarUI : MonoBehaviour,ITag
     }
     public void ActivateUI()
     {
-        hpSlider.value = 1;
         TMPname.text = bossName;
         HpbarAniCTRL.SetBool("isActivate", true);
         HpbarAniCTRL.SetBool("isDeActivate", false);

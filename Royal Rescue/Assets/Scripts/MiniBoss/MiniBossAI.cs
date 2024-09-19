@@ -160,7 +160,7 @@ public class MiniBossAI : MonoBehaviour
             if (obj.GetComponent<ITag>().CompareToTag("BossHpUI"))
                 hpbarUi = obj.GetComponent<BossHpBarUI>();
         }
-        if(hpbarUi)
+        if(hpbarUi&&!isPlayerOutRoom)
             hpbarUi.Init((int)maxHp, null, gameObject.name);
         if (isPlayerOutRoom)
             hpbarUi.ActivateUI();

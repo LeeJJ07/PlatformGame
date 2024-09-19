@@ -67846,6 +67846,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5341001745198403682, guid: b9278a55f9c25a1419cabe52f613380d, type: 3}
+      propertyPath: hitEffect
+      value: 
+      objectReference: {fileID: 5643653902188550112, guid: 140ae681c784a4d409f03a41371ce945, type: 3}
+    - target: {fileID: 5341001745198403682, guid: b9278a55f9c25a1419cabe52f613380d, type: 3}
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
