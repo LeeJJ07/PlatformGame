@@ -67,6 +67,7 @@ public class MiniBossAI : MonoBehaviour
     bool isDie = false;
     bool isPlayDie = false;
     bool takeAttack = false;
+    bool isPlayerOutRoom = false;
     [SerializeField] private GameObject hitEffect;
     public Material material;
     private Color originalColor;
@@ -161,6 +162,8 @@ public class MiniBossAI : MonoBehaviour
         }
         if(hpbarUi)
             hpbarUi.Init((int)maxHp, null, gameObject.name);
+        if (isPlayerOutRoom)
+            hpbarUi.ActivateUI();
     }
     void Update()
     {
@@ -264,5 +267,13 @@ public class MiniBossAI : MonoBehaviour
             yield return new WaitForSeconds(0.1f);
         }
         takeAttack = false;
+    }
+    private void OnDisable()
+    {
+        if(hpbarUi)
+        {
+            hpbarUi.DeActivateUI();
+            isPlayerOutRoom = true;
+        }
     }
 }
