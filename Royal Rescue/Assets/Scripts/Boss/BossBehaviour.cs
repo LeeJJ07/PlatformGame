@@ -5,10 +5,10 @@ using UnityEngine.UIElements;
 
 public class BossBehaviour : MonoBehaviour,ITag
 {
-    [Header("���� Ȱ��ȭ")]
+    [Header("보스 활성화")]
     [SerializeField] bool isActivate = false;
 
-    [Header("�⺻���� �� ������")]
+    [Header("보스 필수 컴포넌트들")]
     [SerializeField] string bossName;
     [SerializeField] string detailTag;
     [SerializeField] float hp = 100;
@@ -23,31 +23,31 @@ public class BossBehaviour : MonoBehaviour,ITag
     [SerializeField] Collider[] bossColliders;
     [SerializeField] Animator aniController;
 
-    [Header("���� ��Ʈ�� ��� ���� ������ �ð�")]
+    [Header("보스 인트로 후 딜레이")]
     [SerializeField] float EntryDelay;
 
-    [Header("������1")]
+    [Header("페이즈1 HP조건")]
     [SerializeField] float Phase1HpCondition;
 
-    [Header("������1 ��ų����")]
+    [Header("페이즈1 스킬 정보들")]
     [SerializeField] FlameAttackScriptableObject Phase1flameAttackInfo;
     [SerializeField] ScreamAttackScriptableObject Phase1screamAttackInfo;
 
-    [Header("������2")]
+    [Header("페이즈2")]
     [SerializeField] float Phase2HpCondition;
 
-    [Header("������2 ��ų����")]
+    [Header("페이즈2 스킬 정보들")]
     [SerializeField] FlameAttackScriptableObject Phase2flameAttackInfo;
     [SerializeField] BreathAttackScriptableObject Phase2breathAttackInfo;
     [SerializeField] ScreamAttackScriptableObject Phase2screamAttackInfo;
     [SerializeField] BasicAttackScriptableObject Phase2basicAttackInfo;
 
-    [Header("������3")]
+    [Header("페이즈3")]
     [SerializeField] GameObject flamePrefabsObject;
     [SerializeField] GameObject angryLight;
     [SerializeField] float Phase3HpCondition;
     
-    [Header("������3 ��ų����")]
+    [Header("페이즈3 스킬 정보들")]
     [SerializeField] FlameAttackScriptableObject Phase3flameAttackInfo;
     [SerializeField] ScreamAttackScriptableObject Phase3screamAttackInfo;
     [SerializeField] BasicAttackScriptableObject Phase3basicAttackInfo;
@@ -56,7 +56,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     
     
     //���ݹ���
-    [Header("���� ���ɰŸ�")]
+    [Header("스킬 공격가능 거리")]
     [SerializeField] float basicAttackDistance;
     [SerializeField] float screamAttackDistance;
     [SerializeField] float flameAttackDistance;
@@ -73,7 +73,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     PlayerControlManagerFix playerControl;
     BossHpBarUI hpbarUi;
 
-    #region ��� ������(�ൿ���, ���ǳ��)
+    #region 보스 행동트리 노드들
     ////////////////////
     INode IntroNode;
     INode DieNode;
@@ -126,7 +126,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     INode phase3WarningRushAttackNode;
     #endregion
 
-    #region Sequence, Selector, Parallel, RamdomSelector ������
+    #region Sequence, Selector, Parallel, RamdomSelector 
     Selector root;
     Sequence dieSequence;
 
@@ -183,7 +183,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         playerTransform = GameObject.FindWithTag("Player").transform;
        
         root = new Selector();
-        //���� ����
+        //조건 노드들
         
         DieHpConditionDecorator = new CheckHp(GetHp, 0,-100);
         phase1HpConditionDecorator = new CheckHp(GetHp, Phase1HpCondition, Phase2HpCondition);
@@ -217,9 +217,9 @@ public class BossBehaviour : MonoBehaviour,ITag
         phase3BreathAttackDelay = new NodeDelay(GetIsActiveGetHitAni, SetisDelayTime, Phase3breathAttackInfo.subSequenceDelay, aniController);
         phase3RushAttackDelay = new NodeDelay(GetIsActiveGetHitAni, SetisDelayTime, Phase3RushAttackInfo.subSequenceDelay,aniController);
 
-        //�ൿ ����
+        //스킬 노드들
         moveNode = new MoveNode(transform, playerTransform, aniController, moveSpeed);
-        DieNode = new DieNode(DeActivateSpawnObjs,BossDie, transform, playerTransform, aniController);
+        DieNode = new DieNode(DeActivateSpawnObjs, SoundEffect, BossDie, transform, playerTransform, aniController);
         phase1FlameAttackNode = new FlameAttackNode(Phase1flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController,transform,playerTransform, SoundEffect);
         phase1ScreamAttackNode = new ScreamAttackNode(Phase1screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase1EntryLandNode = new EntryPhase1LandNode(transform, playerTransform, aniController);
@@ -235,24 +235,24 @@ public class BossBehaviour : MonoBehaviour,ITag
         phase3FlameAttackNode = new FlameAttackNode(Phase3flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController,transform,playerTransform, SoundEffect);
         phase3ScreamAttackNode = new ScreamAttackNode(Phase3screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase3BasicAttackNode = new BasicAttackNode(Phase3basicAttackInfo, aniController, flamePosition, transform, playerTransform);
-        phase3RushAttackNode = new RushAttackNode(Phase3RushAttackInfo, bossColliders,RandomSpawnObjectsWithITag, aniController, transform, playerTransform);
+        phase3RushAttackNode = new RushAttackNode(Phase3RushAttackInfo, SoundEffect, bossColliders,RandomSpawnObjectsWithITag, aniController, transform, playerTransform);
         phase3WarningRushAttackNode = new WarningRushAttack(SpawnObjects, angryLight, warningPrefab,transform, Phase3RushAttackInfo.warningDelay);
         phase3BreathAttackNode = new BreathAttackNode(SpawnObjectWithITag, Phase3breathAttackInfo, aniController, flamePosition, transform, playerTransform, SoundEffect);
 
 
-        //������, ������ ����
+        //Sequence, Selector, Parallel...
         dieSequence = new Sequence();
 
         phase1 = new Parallel();
         phase1ActionSelector = new Selector();
-        phase1AttackRandomSelector = new RandomSelector("phase1 RandomSequence");
+        phase1AttackRandomSelector = new RandomSelector();
         entryPhase1ActionSequence = new Sequence();
         entryPhase1Sequence = new Sequence();
         phase1FlameAttackSequence = new Sequence();
         phase1ScreamAttackSequence = new Sequence();
 
         phase2 = new Parallel();
-        phase2ActionSelector = new Selector("phase2ActionSelector");
+        phase2ActionSelector = new Selector();
         phase2FlameAttackSelector = new Selector();
         phase2BasicAttackSelector = new Selector();
         phase2BreathAttackSelector = new Selector();
@@ -266,7 +266,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         phase2ScreamAttackSequence = new Sequence();
         phase2FlameAttackSequence = new Sequence();
 
-        phase2AttackRandomSelector = new RandomSelector("phase2 RandomSequence");
+        phase2AttackRandomSelector = new RandomSelector();
         
         entryPhase2Sequence= new Sequence();
 
@@ -294,12 +294,12 @@ public class BossBehaviour : MonoBehaviour,ITag
     void Start()
     {
         
-        //�״� ���� Ʈ��
+        //Die노드 트리구성
         dieSequence.AddNode(DieHpConditionDecorator);
         dieSequence.AddNode(DieNode);
 
 
-        //������1 Ʈ��
+        //페이즈1 트리구성
         phase1FlameAttackSequence.AddNode(phase1FlameAttackNode);
         phase1FlameAttackSequence.AddNode(phase1FlameAttackDelay);
         phase1ScreamAttackSequence.AddNode(phase1CheckSpawnCount);
@@ -320,7 +320,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         phase1.AddNode(phase1ActionSelector);
 
 
-        //������2 Ʈ��
+        //페이즈2 트리구성
         phase2ScreamAttackSequence.AddNode(phase2CheckSpawnCount);
         phase2ScreamAttackSequence.AddNode(phase2ScreamAttackNode);
         phase2ScreamAttackSequence.AddNode(phase2ScreamAttackDelay);
@@ -363,7 +363,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         phase2.AddNode(phase2HpConditionDecorator);
         phase2.AddNode(phase2ActionSelector);
 
-        //������3 Ʈ��
+        //페이즈3 트리구성
         phase3BasicAttackSequence.AddNode(phase3BasicAttackNode);
         phase3BasicAttackSequence.AddNode(phase3BasicAttackDelay);
 
@@ -405,10 +405,10 @@ public class BossBehaviour : MonoBehaviour,ITag
         entryPhase3Sequence.AddNode(checkIncomingPhase3);
         entryPhase3Sequence.AddNode(phase3EntryNode);
 
-        phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
         phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
 
         phase3ActionSelector.AddNode(entryPhase3Sequence);
@@ -416,7 +416,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         phase3.AddNode(phase3HpConditionDecorator);
         phase3.AddNode(phase3ActionSelector);
 
-
+        //보스 트리구성
         root.AddNode(dieSequence);
         root.AddNode(phase1);
         root.AddNode(phase2);
@@ -463,20 +463,13 @@ public class BossBehaviour : MonoBehaviour,ITag
     {
         isDelayTime = value;
     }
-    //���� Ȱ��ȭ�� �� ���
+
+    //보스 활성화 함수
     public void ActivateBoss()
     {
         isActivate = true;
     }
 
-    /// <summary>
-    /// ���� ������ �޴� �Լ�
-    /// </summary>
-    /// <param name="damage">������ ���� ���� �Ű�����</param>
-    public void HitDamage(int damage)
-    {
-        hp -= damage;
-    }
 
     private float GetHp()
     {
@@ -491,14 +484,14 @@ public class BossBehaviour : MonoBehaviour,ITag
             hpbarUi.DeActivateUI();
     }
 
-    //������ ���͵� ��Ȱ��ȭ
+    //스폰한 모든 몬스터 비활성화
     private void DeActivateSpawnObjs()
     {
         pullingDirector.DeActivateSpawnObjects();
         isDie = true;
     }
 
-    //��� ��ƼŬ ����
+    //스폰한 모든 파티클들 비활성화
     private void DeActivateParticles()
     {
         pullingDirector.DeActivateObjectsWithTag("Particle");
@@ -511,7 +504,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         return count;
     }
 
-    //ITag������� ������Ʈ�� ��������
+    //ITag를 사용한 오브젝트 스폰
     private void RandomSpawnObjectsWithITag(GameObject[] objs, int spawnCount)
     {
         for (int i = 0; i < spawnCount; i++)
@@ -525,13 +518,13 @@ public class BossBehaviour : MonoBehaviour,ITag
         
     }
 
-    //ITag������� ������Ʈ ��������
+    //ITag를 사용하여 지정한 위치에 오브젝트 스폰
     private GameObject SpawnObjectWithITag(GameObject obj, Vector3 posi)
     {
          return pullingDirector.SpawnObjectwithITag(obj.tag, obj.GetComponent<ITag>(), posi);
     }
 
-    //������ ��ġ�� ������ŭ ��ü Ȱ��ȭ
+    //지정한 숫자만큼 오브젝트 스폰
     private GameObject[] SpawnObjects(GameObject obj, Vector3 posi ,int count)
     {
         GameObject[] spawnObjs = new GameObject[count];
@@ -571,7 +564,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         }
     }
 
-    //�÷��̾��� �������� ���� �� GetHit�ִϸ��̼� ����ϴ� �ڷ�ƾ �Լ�
+    //피격 애니메이션 재생 코루틴
     IEnumerator hitAniCoroutine()
     {
         if (!isDelayTime) yield break;
@@ -594,7 +587,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         isActiveGetHitAni = false;
     }
 
-    //�÷��̾��� �������� �޴� �ڷ�ƾ �Լ�
+    //피격 데미지 받는 코루틴
     IEnumerator OnDamage(string tag)
     {
         if (!isHit) yield break;
@@ -613,15 +606,15 @@ public class BossBehaviour : MonoBehaviour,ITag
         {
             case "Weapon":
                 hp -= playerControl.GetBasicDamage();
-                //Debug.Log("�⺻ ���� �޾Ҵ�.");
+                //Debug.Log("일반 공격 받음");
                 break;
             case "Bomb":
                 hp -= playerControl.GetBombDamage();
-                //Debug.Log("��ź ���� �޾Ҵ�.");
+                //Debug.Log("폭탄공격 받음");
                 break;
             case "SlashAttack":
                 hp -= playerControl.GetSlashAttackDamage();
-                //Debug.Log("������ ���� �޾Ҵ�.");
+                //Debug.Log("검기 공격 받음");
                 break;
         }
         if (hpbarUi)
