@@ -34,12 +34,11 @@ public class TreasureText : MonoBehaviour
 
         if (Camera.main == null || targetTr == null)
             return;
-        var screenPos = Camera.main.WorldToScreenPoint(targetTr.position + offset); // 몬스터의 월드 3d좌표를 스크린좌표로 변환
+        var screenPos = Camera.main.WorldToScreenPoint(targetTr.position + offset);
 
         var localPos = Vector2.zero;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectParent, screenPos, uiCamera, out localPos); // 스크린 좌표를 다시 체력바 UI 캔버스 좌표로 변환
-
-        rectHp.localPosition = localPos; // 체력바 위치조정
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(rectParent, screenPos, uiCamera, out localPos);
+        rectHp.localPosition = localPos;
 
         if (curCoin > 0)
         {
