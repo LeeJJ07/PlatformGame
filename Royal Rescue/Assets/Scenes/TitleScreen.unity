@@ -10431,7 +10431,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1919825962}
   - component: {fileID: 1919825961}
-  - component: {fileID: 1919825960}
   - component: {fileID: 1919825964}
   - component: {fileID: 1919825963}
   - component: {fileID: 1919825965}
@@ -10442,14 +10441,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1919825960
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1919825959}
-  m_Enabled: 1
 --- !u!20 &1919825961
 Camera:
   m_ObjectHideFlags: 0
@@ -11121,6 +11112,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5761225302723845602, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5871504914781970716, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
+      propertyPath: coin
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6844445951288654855, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}

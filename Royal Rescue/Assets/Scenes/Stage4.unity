@@ -78034,7 +78034,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2103336729}
   - component: {fileID: 2103336728}
-  - component: {fileID: 2103336727}
   - component: {fileID: 2103336725}
   - component: {fileID: 2103336726}
   m_Layer: 0
@@ -78121,14 +78120,6 @@ MonoBehaviour:
   m_BeforeTransparentBundles: []
   m_BeforeStackBundles: []
   m_AfterStackBundles: []
---- !u!81 &2103336727
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2103336724}
-  m_Enabled: 1
 --- !u!20 &2103336728
 Camera:
   m_ObjectHideFlags: 0
