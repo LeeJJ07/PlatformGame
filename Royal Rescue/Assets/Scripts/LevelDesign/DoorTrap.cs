@@ -65,13 +65,19 @@ public class DoorTrap : MonoBehaviour
         SwitchCamera(mainCamera, gemCamera);
         yield return new WaitForSeconds(0.2f);
 
-        if (reward) reward.SetActive(true);
+        if (reward)
+        {
+            reward.SetActive(true);
+            reward.GetComponent<Collider>().enabled = false;
+        }
         yield return new WaitForSeconds(1f);
 
         SwitchCamera(gemCamera, doorCamera);
         OpenIronWall();
         yield return new WaitForSeconds(1.5f);
-        
+
+        reward.GetComponent<Collider>().enabled = true;
+
         SwitchCamera(doorCamera, mainCamera);
         trapTrigger.enabled = false;
         portal.gameObject.SetActive(true);

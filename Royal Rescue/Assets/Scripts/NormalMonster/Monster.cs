@@ -388,9 +388,4 @@ public class Monster : MonoBehaviour
     {
         return (int)curHp;
     }
-    private void OnDisable()
-    {
-        SoundManager.Instance.StopLoopSound(data.ChaseSound);
-        SoundManager.Instance.StopLoopSound(data.PatrolSound);
-    }
 }

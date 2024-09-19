@@ -75,9 +75,6 @@ public class MiniBossAI : MonoBehaviour
     private Canvas uiCanvas;
     public GameObject DamageTextPrefab;
 
-    [SerializeField]
-    private GameObject slashAttackItem;
-
     BehaviorTreeRunner bt;
     [HideInInspector] public BossHpBarUI hpbarUi;
     private void Awake()
@@ -201,10 +198,6 @@ public class MiniBossAI : MonoBehaviour
     public int GetSkill2Damage() { return skill2Damage; }
     IEnumerator DeActive()
     {
-        GameObject item = Instantiate(slashAttackItem);
-        item.GetComponent<Rigidbody>().AddForce(Vector3.up * 1000);
-        item.GetComponent<Collider>().enabled = false;
-
         hpbarUi.DeActivateUI();
         yield return new WaitForSeconds(3f);
         gameObject.SetActive(false);
