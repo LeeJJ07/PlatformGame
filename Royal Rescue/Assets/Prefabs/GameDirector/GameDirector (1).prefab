@@ -421,6 +421,7 @@ GameObject:
   - component: {fileID: 3748731358761348103}
   - component: {fileID: 6791463320511623116}
   - component: {fileID: 4749512370824008248}
+  - component: {fileID: 4807578440597556800}
   m_Layer: 0
   m_Name: SoundManager
   m_TagString: Untagged
@@ -456,8 +457,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: 070d5a53684457849ad0c22f14019ac4, type: 2}
-  currentBGMVolume: -20
-  currentEffectVolume: -20
+  currentBGMVolume: 0
+  currentEffectVolume: 0
 --- !u!114 &4749512370824008248
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -470,6 +471,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2935889e0d892284b97949f67da287f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!81 &4807578440597556800
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 324226595904764221}
+  m_Enabled: 1
 --- !u!1 &433400799470305942
 GameObject:
   m_ObjectHideFlags: 0
@@ -6510,7 +6519,7 @@ GameObject:
   - component: {fileID: 2816153291010540167}
   m_Layer: 0
   m_Name: GameDirector (1)
-  m_TagString: InGameUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
