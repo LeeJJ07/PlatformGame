@@ -6,6 +6,7 @@ public class GameDirector : MonoBehaviour
 {
     public static GameDirector instance => _instance;
     public RoomController CurrentRoomControl => currentRoomControl;
+    public bool IsLoadingScreen => loadingScreenCam.enabled;
 
     public PlayerControlManagerFix PlayerControl
     {
@@ -65,6 +66,7 @@ public class GameDirector : MonoBehaviour
         AltarControl.ResetAltar();
         PlayerControl.transform.SetParent(transform);
         PlayerControl.FixatePlayerRigidBody(true);
+        SetPlayerInventoryUI(false);
 
         SoundManager.Instance.StopLoopSound("BlizzardCastle");
 

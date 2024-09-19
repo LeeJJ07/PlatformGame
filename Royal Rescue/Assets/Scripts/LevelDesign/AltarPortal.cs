@@ -3,16 +3,15 @@ using UnityEngine;
 
 public class AltarPortal : MonoBehaviour
 {
+    public static bool IsEnteringAltarPortal = false;
+
     [SerializeField] private Camera mainCam, portalCam;
     [SerializeField] private BoxCollider portalTrigger;
     [SerializeField] private Transform stagePortal;
     [SerializeField] private Animator coffinAnim, portalCamAnim;
     [SerializeField] private ParticleSystem portalTrailEffect, portalSparkleEffect;
     private CameraFollow cameraFollow;
-
     private bool isPlayerInPortalRange = false;
-    // [SerializeField] private bool test_openPortal; /////
-
 
     void Start()
     {
@@ -73,14 +72,16 @@ public class AltarPortal : MonoBehaviour
     IEnumerator EnterPortal()
     {
         mainCam.enabled = false;
-        portalCam.enabled = true;
+        portalCam.enabled = IsEnteringAltarPortal = true;
+        GameDirector.instance.PlayerControl.FixatePlayerRigidBody(true);
+        GameDirector.instance.SetPlayerInventoryUI(false);
 
         yield return new WaitForSeconds(0.5f);
         portalCamAnim.Play(AnimationHash.PORTALCAM_ZOOM);
 
         yield return new WaitForSeconds(1.5f);
 
-        portalCam.enabled = false;
+        portalCam.enabled = IsEnteringAltarPortal = false;
         GameDirector.instance.ShowLoadingScreen();
         StartCoroutine(GameDirector.instance.LoadNextStage());
     }
