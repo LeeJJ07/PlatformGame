@@ -23,13 +23,15 @@ public class TitleScreen : MonoBehaviour
 
     void OnEnable()
     {
-        Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
         currentScreenState = ScreenState.INTRO;
-        GameDirector.instance.SetCursorVisibility(true);
 
         Init();
-        GameDirector.instance.SetPlayerUI(false);
+        Cursor.SetCursor(cursor, Vector2.zero, CursorMode.Auto);
+        GameDirector.instance.SetCursorVisibility(true);
+        GameDirector.instance.SetPlayerStatusUI(false);
+        GameDirector.instance.SetPlayerInventoryUI(false);
         GameDirector.instance.PlayerControl.SetPlayerEnabled(false);
+
         StartCoroutine(StartIntro());
     }
 

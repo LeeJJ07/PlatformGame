@@ -6617,6 +6617,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiCanvas: {fileID: 2771430953049782395}
   playerUiCanvas: {fileID: 1832487282107713257}
+  playerInventoryCanvas: {fileID: 2630085651747628996}
   loadScreenFade: {fileID: 1398317422201383123}
   loadingScreenCam: {fileID: 7558620901123320077}
   loadscreenFadeAnim: {fileID: 2637093259760955808}

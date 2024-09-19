@@ -20,7 +20,7 @@ public class GameDirector : MonoBehaviour
     private PlayerControlManagerFix playerControl;
     private RoomController currentRoomControl;
 
-    [SerializeField] private GameObject uiCanvas, playerUiCanvas, loadScreenFade;
+    [SerializeField] private GameObject uiCanvas, playerUiCanvas, playerInventoryCanvas, loadScreenFade;
     [SerializeField] private Camera loadingScreenCam;
     [SerializeField] private Animator loadscreenFadeAnim, shroomAnim, respawnAnim;
     [SerializeField] private float loadScreenDelay, respawnDelay;
@@ -87,7 +87,7 @@ public class GameDirector : MonoBehaviour
 
     public void ShowLoadingScreen()
     {
-        SetPlayerUI(false);
+        SetPlayerStatusUI(false);
 
         uiCanvas.gameObject.SetActive(true);
         loadingScreenCam.enabled = true;
@@ -102,7 +102,7 @@ public class GameDirector : MonoBehaviour
         yield return new WaitForSeconds(loadScreenDelay);
 
         respawnAnim.Play(AnimationHash.RESPAWN_SCREEN_HIDE);
-        SetPlayerUI(true);
+        SetPlayerStatusUI(true);
 
         loadingScreenCam.enabled = false;
         uiCanvas.gameObject.SetActive(false);
@@ -128,10 +128,15 @@ public class GameDirector : MonoBehaviour
         currentRoomControl = roomControl;
     }
 
-    public void SetPlayerUI(bool state)
+    public void SetPlayerStatusUI(bool state)
     {
         if (!_instance) return;
         playerUiCanvas.SetActive(state);
+    }
+
+    public void SetPlayerInventoryUI(bool state)
+    {
+        playerInventoryCanvas.SetActive(state);
     }
 
     public void SetCursorVisibility(bool state)

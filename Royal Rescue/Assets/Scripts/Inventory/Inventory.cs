@@ -51,6 +51,8 @@ public class Inventory : MonoBehaviour
         ClearSelectItemWindow();
     }
     public void Toggle() {
+        if (slots.Length == 0) return;
+        
         if (inventoryWindow.activeInHierarchy) {
             inventoryWindow.SetActive(false);
             onCloseInventory?.Invoke();
