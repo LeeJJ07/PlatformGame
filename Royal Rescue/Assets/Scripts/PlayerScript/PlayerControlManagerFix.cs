@@ -58,7 +58,7 @@ public class PlayerControlManagerFix : MonoBehaviour
 
     private int[] damageRange = {-5,-4,-3,-2,-1,0,1,2,3,4,5 };
     private int basicDamage;//기본(근접 데미지)
-    private int slashAttackDamage = 10;//원거리 데미지
+    private int slashAttackDamage;//원거리 데미지
     private int bombDamage;//폭탄 데미지
 
     public float invincibilityDuration = 2.0f;  // 무적 상태 지속 시간
@@ -142,6 +142,7 @@ public class PlayerControlManagerFix : MonoBehaviour
 
         basicDamage = weapons.GetComponent<WeaponControl>().damage;
         bombDamage = fireBallPrefabs.GetComponent<FireBallControl>().bombDamage;
+        slashAttackDamage = SwordWindPrefabsL.GetComponent<SwordWindControl>().slashDamage;
 
         inventory = GetComponent<Inventory>();
 
@@ -344,11 +345,11 @@ public class PlayerControlManagerFix : MonoBehaviour
             if (!isAttackEnhance)
             {
                 anim.SetTrigger("AttackTr");
+                weapons.GetComponent<BoxCollider>().enabled = true;
             }
             else if (isAttackEnhance)
                 SwordWind();
             attackDelay = 0;
-            weapons.GetComponent<BoxCollider>().enabled = true ;
             weapons.GetComponent<WeaponControl>().trailEffect.enabled = true;
             StopCoroutine("Swing");
             StartCoroutine("Swing");
