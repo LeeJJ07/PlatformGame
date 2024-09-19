@@ -10431,7 +10431,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1919825962}
   - component: {fileID: 1919825961}
-  - component: {fileID: 1919825960}
   - component: {fileID: 1919825964}
   - component: {fileID: 1919825963}
   - component: {fileID: 1919825965}
@@ -10442,14 +10441,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1919825960
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1919825959}
-  m_Enabled: 1
 --- !u!20 &1919825961
 Camera:
   m_ObjectHideFlags: 0
@@ -11123,6 +11114,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5871504914781970716, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
+      propertyPath: coin
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6844445951288654855, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -11147,6 +11142,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7006858839818874748, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: bc2a82bad85bcbb45b9892c69fabdd3b, type: 3}
     - target: {fileID: 7465788617988866221, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

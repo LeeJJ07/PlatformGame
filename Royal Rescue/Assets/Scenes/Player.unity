@@ -1084,7 +1084,7 @@ RectTransform:
   m_Father: {fileID: 1991954067}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2060,7 +2060,6 @@ MonoBehaviour:
   isDirRight: 1
   isFloor: 0
   isAttackButton: 0
-  isAttackSecond: 0
   isSwordWindPossible: 0
   isAttackPossible: 0
   isAttackEnhance: 0
@@ -2080,6 +2079,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   fieldView: {fileID: 0}
+  DamageTextPrefab: {fileID: 0}
   coin: 100
   coinUI: {fileID: 0}
   inventory: {fileID: 0}
@@ -3248,7 +3248,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &459637307
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5396,7 +5396,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &818545503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7456,7 +7456,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 0356dd311f7dcb4448e48aea31cf2302, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bc2a82bad85bcbb45b9892c69fabdd3b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

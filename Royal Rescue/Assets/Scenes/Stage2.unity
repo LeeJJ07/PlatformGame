@@ -64976,7 +64976,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1886259407}
   - component: {fileID: 1886259406}
-  - component: {fileID: 1886259405}
   - component: {fileID: 1886259404}
   - component: {fileID: 1886259408}
   m_Layer: 0
@@ -65003,14 +65002,6 @@ MonoBehaviour:
   cameraHorizontalOffset: 10
   cameraBotOffset: 8
   cameraTopOffset: 5
---- !u!81 &1886259405
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1886259403}
-  m_Enabled: 1
 --- !u!20 &1886259406
 Camera:
   m_ObjectHideFlags: 0

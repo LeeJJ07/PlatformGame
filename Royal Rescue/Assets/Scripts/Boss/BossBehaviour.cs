@@ -70,6 +70,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     PullingDirector pullingDirector;
     SoundManager soundManager;
     BehaviorTreeRunner Bt;
+    PlayerControlManagerFix playerControl;
     BossHpBarUI hpbarUi;
 
     #region 노드 변수들(행동노드, 조건노드)
@@ -423,6 +424,7 @@ public class BossBehaviour : MonoBehaviour,ITag
 
         angryLight.SetActive(false);
         flamePrefabsObject.SetActive(false);
+        playerControl = GameDirector.instance.PlayerControl;
         Bt = new BehaviorTreeRunner(root);
     }
     void Update()
@@ -539,14 +541,18 @@ public class BossBehaviour : MonoBehaviour,ITag
         }
         return spawnObjs;
     }
-
     
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, Phase3RushAttackInfo.hitRange);
     }
     private void OnTriggerEnter(Collider other)
+    {
+        
+    }
+    private void OnCollisionEnter(Collision other)
     {
         if (isDie) return;
         if ((other.gameObject.tag == "Weapon"
@@ -609,15 +615,15 @@ public class BossBehaviour : MonoBehaviour,ITag
         switch (tag)
         {
             case "Weapon":
-                hp -= 10f; //playerControl.getDamage();
+                hp -= playerControl.GetBasicDamage();
                 //Debug.Log("기본 공격 받았다.");
                 break;
             case "Bomb":
-                hp -= 20f; //playerControl.getDamage();
+                hp -= playerControl.GetBombDamage();
                 //Debug.Log("폭탄 공격 받았다.");
                 break;
             case "SlashAttack":
-                hp -= 30f; //playerControl.getDamage();
+                hp -= playerControl.GetSlashAttackDamage();
                 //Debug.Log("슬래쉬 공격 받았다.");
                 break;
         }
