@@ -64,6 +64,7 @@ public class GameDirector : MonoBehaviour
 
         AltarControl.ResetAltar();
         PlayerControl.transform.SetParent(transform);
+        PlayerControl.FixatePlayerRigidBody(true);
 
         SoundManager.Instance.StopLoopSound("BlizzardCastle");
 
@@ -105,6 +106,7 @@ public class GameDirector : MonoBehaviour
 
         loadingScreenCam.enabled = false;
         uiCanvas.gameObject.SetActive(false);
+        PlayerControl.FixatePlayerRigidBody(false);
         SoundManager.Instance.PlaySound("BlizzardCastle", true, SoundType.BGM);
     }
 

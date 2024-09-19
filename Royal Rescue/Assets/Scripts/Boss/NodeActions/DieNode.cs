@@ -1,10 +1,13 @@
 using UnityEngine;
+using static DieNode;
 
 public class DieNode : INode
 {
     public delegate void DeActiveObj();
+    public delegate void PlaySound(string name, bool isLoop);
     public delegate void BossDie();
     DeActiveObj deActiveSpawnObj;
+    PlaySound playSound;
     BossDie bossDie;
     Transform transform;
     Transform target;
@@ -16,9 +19,10 @@ public class DieNode : INode
     bool isActiveAnime = false;
     public bool IsActiveAnime => isActiveAnime;
     
-    public DieNode(DeActiveObj deActiveObj, BossDie bossDie, Transform transform, Transform target, Animator aniController)
+    public DieNode(DeActiveObj deActiveObj, PlaySound playSound, BossDie bossDie, Transform transform, Transform target, Animator aniController)
     {
         this.deActiveSpawnObj = deActiveObj;
+        this.playSound = playSound;
         this.bossDie = bossDie;
         this.transform = transform;
         this.target = target;
@@ -30,10 +34,8 @@ public class DieNode : INode
     {
         ActiveAnimation();
         time += Time.deltaTime;
-        Debug.Log("Die Running");
         if (time>animationDuration)
         {
-            Debug.Log("Die Success");
             deActiveSpawnObj();
             animationDuration = 0;
             isActiveAnime = false;
@@ -48,6 +50,7 @@ public class DieNode : INode
         aniController.SetTrigger("DieTrigger");
         if (aniController.GetCurrentAnimatorStateInfo(0).IsName("Die"))
         {
+            playSound("Boss_Die", false);
             deActiveSpawnObj();
             animationDuration = aniController.GetCurrentAnimatorStateInfo(0).length + keepDieStateTime;
             Vector3 dir = target.position - transform.position;

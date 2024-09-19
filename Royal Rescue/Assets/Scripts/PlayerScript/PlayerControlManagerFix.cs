@@ -56,7 +56,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     
     [SerializeField] private bool isDie = false;
 
-    private int[] damageRange = {-5,-4,-3,-2,-1,0,1,2,3,4,5 };
+    private int damageRange;
     private int basicDamage;//기본(근접 데미지)
     private int slashAttackDamage;//원거리 데미지
     private int bombDamage;//폭탄 데미지
@@ -81,7 +81,7 @@ public class PlayerControlManagerFix : MonoBehaviour
 
     public LayerMask layer;
 
-    Rigidbody rb;
+    [SerializeField] private Rigidbody rb;
     Animator anim;
     WeaponControl equipWeapon;
  
@@ -470,47 +470,30 @@ public class PlayerControlManagerFix : MonoBehaviour
     public void IncreaseCurHp(int amount) 
     {
         playerHP += amount;
-        if (amount < 0)
-            Debug.Log("현재체력 " + amount + "만큼 감소");
-        else
-            Debug.Log("현재체력 " + amount + "만큼 증가");
 
         if (playerHP > playerMaxHP) playerHP = playerMaxHP;
         else if (playerHP < 0) playerHP = 0;
     }
     public void IncreaseSpeed(float amount)
     {
-        moveSpeed += amount;
-        if(amount < 0)
-            Debug.Log("스피드가 " + amount + "만큼 감소");
-        else
-            Debug.Log("스피드가 " + amount + "만큼 증가");
+        moveSpeed += amount * 0.5f;
 
-        if (moveSpeed > 12) moveSpeed = 12;           // maxMoveSpeed 12로 제한
-        else if (moveSpeed < 5) moveSpeed = 5;      // minMoveSpeed 5로 제한
+        if (moveSpeed > 9) moveSpeed = 9;
+        else if (moveSpeed < 5) moveSpeed = 5;
     }
     public void IncreaseAtk(int amount)
     {
         playerBasicATK += amount;
-        if (amount < 0)
-            Debug.Log("공격력이 " + amount + "만큼 감소");
-        else
-            Debug.Log("공격력이 " + amount + "만큼 증가");
 
-        if (playerBasicATK < 0) playerBasicATK = 0;      // minAttack 10으로 제한
+        if (playerBasicATK < 0) playerBasicATK = 0;
     }
     public void IncreaseMaxHp(int amount)
     {
         playerMaxHP += amount;
         if (amount > 0)
             IncreaseCurHp(amount);
-            
-        if (amount < 0)
-            Debug.Log("최대 체력이 " + amount + "만큼 감소");
-        else
-            Debug.Log("최대 체력이 " + amount + "만큼 증가");
 
-        if (playerMaxHP < 30) playerMaxHP = 30;      // MaxHp 하향 30으로 제한
+        if (playerMaxHP < 30) playerMaxHP = 30;
         playerHP = playerHP > playerMaxHP ? playerMaxHP : playerHP;
     }
     void playerDie()
@@ -571,18 +554,10 @@ public class PlayerControlManagerFix : MonoBehaviour
     }
 
     //플레이어 피격시 외부에서 데미지를 받아올 수 있게 -> 이부분 수정 필요
-    public int GetBasicDamage()
-    {
-        return basicDamage + playerBasicATK + damageRange[Random.Range(0, damageRange.Length)];
-    }
-    public int GetSlashAttackDamage()
-    {
-        return slashAttackDamage + playerBasicATK + damageRange[Random.Range(0, damageRange.Length)]; ;
-    }
-    public int GetBombDamage()
-    {
-        return bombDamage + playerBasicATK + damageRange[Random.Range(0, damageRange.Length)]; ;
-    }
+    private int randomBaseDamage() { return playerBasicATK + Random.Range(-5, 5); }
+    public int GetBasicDamage(){ return basicDamage + randomBaseDamage(); }
+    public int GetSlashAttackDamage(){ return slashAttackDamage + randomBaseDamage(); }
+    public int GetBombDamage(){ return bombDamage + randomBaseDamage(); }
     public void HurtPlayer(int damage)
     {
         if(isInvincible == false)

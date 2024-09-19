@@ -1,14 +1,14 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
-//»ì·ÁÁà...
+//ï¿½ï¿½ï¿½ï¿½ï¿½...
 
 public class BossBehaviour : MonoBehaviour,ITag
 {
-    [Header("º¸½º È°¼ºÈ­")]
+    [Header("ë³´ìŠ¤ í™œì„±í™”")]
     [SerializeField] bool isActivate = false;
 
-    [Header("±âº»À¸·Î µé¾î°¥ Á¤º¸µé")]
+    [Header("ë³´ìŠ¤ í•„ìˆ˜ ì»´í¬ë„ŒíŠ¸ë“¤")]
     [SerializeField] string bossName;
     [SerializeField] string detailTag;
     [SerializeField] float hp = 100;
@@ -23,31 +23,31 @@ public class BossBehaviour : MonoBehaviour,ITag
     [SerializeField] Collider[] bossColliders;
     [SerializeField] Animator aniController;
 
-    [Header("º¸½º ÀÎÆ®·Î Àå¸é ÀÌÈÄ µô·¹ÀÌ ½Ã°£")]
+    [Header("ë³´ìŠ¤ ì¸íŠ¸ë¡œ í›„ ë”œë ˆì´")]
     [SerializeField] float EntryDelay;
 
-    [Header("ÆäÀÌÁî1")]
+    [Header("í˜ì´ì¦ˆ1 HPì¡°ê±´")]
     [SerializeField] float Phase1HpCondition;
 
-    [Header("ÆäÀÌÁî1 ½ºÅ³Á¤º¸")]
+    [Header("í˜ì´ì¦ˆ1 ìŠ¤í‚¬ ì •ë³´ë“¤")]
     [SerializeField] FlameAttackScriptableObject Phase1flameAttackInfo;
     [SerializeField] ScreamAttackScriptableObject Phase1screamAttackInfo;
 
-    [Header("ÆäÀÌÁî2")]
+    [Header("í˜ì´ì¦ˆ2")]
     [SerializeField] float Phase2HpCondition;
 
-    [Header("ÆäÀÌÁî2 ½ºÅ³Á¤º¸")]
+    [Header("í˜ì´ì¦ˆ2 ìŠ¤í‚¬ ì •ë³´ë“¤")]
     [SerializeField] FlameAttackScriptableObject Phase2flameAttackInfo;
     [SerializeField] BreathAttackScriptableObject Phase2breathAttackInfo;
     [SerializeField] ScreamAttackScriptableObject Phase2screamAttackInfo;
     [SerializeField] BasicAttackScriptableObject Phase2basicAttackInfo;
 
-    [Header("ÆäÀÌÁî3")]
+    [Header("í˜ì´ì¦ˆ3")]
     [SerializeField] GameObject flamePrefabsObject;
     [SerializeField] GameObject angryLight;
     [SerializeField] float Phase3HpCondition;
     
-    [Header("ÆäÀÌÁî3 ½ºÅ³Á¤º¸")]
+    [Header("í˜ì´ì¦ˆ3 ìŠ¤í‚¬ ì •ë³´ë“¤")]
     [SerializeField] FlameAttackScriptableObject Phase3flameAttackInfo;
     [SerializeField] ScreamAttackScriptableObject Phase3screamAttackInfo;
     [SerializeField] BasicAttackScriptableObject Phase3basicAttackInfo;
@@ -55,8 +55,8 @@ public class BossBehaviour : MonoBehaviour,ITag
     [SerializeField] RushAttackScriptableObject Phase3RushAttackInfo;
     
     
-    //°ø°İ¹üÀ§
-    [Header("°ø°İ °¡´É°Å¸®")]
+    //ï¿½ï¿½ï¿½İ¹ï¿½ï¿½ï¿½
+    [Header("ìŠ¤í‚¬ ê³µê²©ê°€ëŠ¥ ê±°ë¦¬")]
     [SerializeField] float basicAttackDistance;
     [SerializeField] float screamAttackDistance;
     [SerializeField] float flameAttackDistance;
@@ -73,7 +73,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     PlayerControlManagerFix playerControl;
     BossHpBarUI hpbarUi;
 
-    #region ³ëµå º¯¼öµé(Çàµ¿³ëµå, Á¶°Ç³ëµå)
+    #region ë³´ìŠ¤ í–‰ë™íŠ¸ë¦¬ ë…¸ë“œë“¤
     ////////////////////
     INode IntroNode;
     INode DieNode;
@@ -126,7 +126,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     INode phase3WarningRushAttackNode;
     #endregion
 
-    #region Sequence, Selector, Parallel, RamdomSelector º¯¼öµé
+    #region Sequence, Selector, Parallel, RamdomSelector 
     Selector root;
     Sequence dieSequence;
 
@@ -138,7 +138,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     Selector phase1ActionSelector;
     RandomSelector phase1AttackRandomSelector;
 
-    Parallel phase2;//º¸½ºÃ¼·Â>30%    Sequence EntryPhase2Sequence;
+    Parallel phase2;//ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½>30%    Sequence EntryPhase2Sequence;
     Parallel phase2basicAttackmoveParallel;
     Parallel phase2screamAttackmoveParallel;
     Parallel phase2breathAttackmoveParallel;
@@ -156,7 +156,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     Sequence phase2ScreamAttackSequence;
 
 
-    Parallel phase3;//º¸½ºÃ¼·Â<=30%
+    Parallel phase3;//ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½<=30%
     Parallel phase3basicAttackmoveParallel;
     Parallel phase3screamAttackmoveParallel;
     Parallel phase3flameAttackmoveParallel;
@@ -183,7 +183,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         playerTransform = GameObject.FindWithTag("Player").transform;
        
         root = new Selector();
-        //Á¶°Ç ³ëµåµé
+        //ì¡°ê±´ ë…¸ë“œë“¤
         
         DieHpConditionDecorator = new CheckHp(GetHp, 0,-100);
         phase1HpConditionDecorator = new CheckHp(GetHp, Phase1HpCondition, Phase2HpCondition);
@@ -217,9 +217,9 @@ public class BossBehaviour : MonoBehaviour,ITag
         phase3BreathAttackDelay = new NodeDelay(GetIsActiveGetHitAni, SetisDelayTime, Phase3breathAttackInfo.subSequenceDelay, aniController);
         phase3RushAttackDelay = new NodeDelay(GetIsActiveGetHitAni, SetisDelayTime, Phase3RushAttackInfo.subSequenceDelay,aniController);
 
-        //Çàµ¿ ³ëµåµé
+        //ìŠ¤í‚¬ ë…¸ë“œë“¤
         moveNode = new MoveNode(transform, playerTransform, aniController, moveSpeed);
-        DieNode = new DieNode(DeActivateSpawnObjs,BossDie, transform, playerTransform, aniController);
+        DieNode = new DieNode(DeActivateSpawnObjs, SoundEffect, BossDie, transform, playerTransform, aniController);
         phase1FlameAttackNode = new FlameAttackNode(Phase1flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController,transform,playerTransform, SoundEffect);
         phase1ScreamAttackNode = new ScreamAttackNode(Phase1screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase1EntryLandNode = new EntryPhase1LandNode(transform, playerTransform, aniController);
@@ -235,24 +235,24 @@ public class BossBehaviour : MonoBehaviour,ITag
         phase3FlameAttackNode = new FlameAttackNode(Phase3flameAttackInfo, SpawnObjectWithITag, flamePosition, aniController,transform,playerTransform, SoundEffect);
         phase3ScreamAttackNode = new ScreamAttackNode(Phase3screamAttackInfo, RandomSpawnObjectsWithITag, SpawnObjectWithITag, aniController, flamePosition);
         phase3BasicAttackNode = new BasicAttackNode(Phase3basicAttackInfo, aniController, flamePosition, transform, playerTransform);
-        phase3RushAttackNode = new RushAttackNode(Phase3RushAttackInfo, bossColliders,RandomSpawnObjectsWithITag, aniController, transform, playerTransform);
+        phase3RushAttackNode = new RushAttackNode(Phase3RushAttackInfo, SoundEffect, bossColliders,RandomSpawnObjectsWithITag, aniController, transform, playerTransform);
         phase3WarningRushAttackNode = new WarningRushAttack(SpawnObjects, angryLight, warningPrefab,transform, Phase3RushAttackInfo.warningDelay);
         phase3BreathAttackNode = new BreathAttackNode(SpawnObjectWithITag, Phase3breathAttackInfo, aniController, flamePosition, transform, playerTransform, SoundEffect);
 
 
-        //½ÃÄö½º, ¼¿·ºÅÍ ³ëµåµé
+        //Sequence, Selector, Parallel...
         dieSequence = new Sequence();
 
         phase1 = new Parallel();
         phase1ActionSelector = new Selector();
-        phase1AttackRandomSelector = new RandomSelector("phase1 RandomSequence");
+        phase1AttackRandomSelector = new RandomSelector();
         entryPhase1ActionSequence = new Sequence();
         entryPhase1Sequence = new Sequence();
         phase1FlameAttackSequence = new Sequence();
         phase1ScreamAttackSequence = new Sequence();
 
         phase2 = new Parallel();
-        phase2ActionSelector = new Selector("phase2ActionSelector");
+        phase2ActionSelector = new Selector();
         phase2FlameAttackSelector = new Selector();
         phase2BasicAttackSelector = new Selector();
         phase2BreathAttackSelector = new Selector();
@@ -266,7 +266,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         phase2ScreamAttackSequence = new Sequence();
         phase2FlameAttackSequence = new Sequence();
 
-        phase2AttackRandomSelector = new RandomSelector("phase2 RandomSequence");
+        phase2AttackRandomSelector = new RandomSelector();
         
         entryPhase2Sequence= new Sequence();
 
@@ -294,12 +294,12 @@ public class BossBehaviour : MonoBehaviour,ITag
     void Start()
     {
         
-        //Á×´Â »óÅÂ Æ®¸®
+        //Dieë…¸ë“œ íŠ¸ë¦¬êµ¬ì„±
         dieSequence.AddNode(DieHpConditionDecorator);
         dieSequence.AddNode(DieNode);
 
 
-        //ÆäÀÌÁö1 Æ®¸®
+        //í˜ì´ì¦ˆ1 íŠ¸ë¦¬êµ¬ì„±
         phase1FlameAttackSequence.AddNode(phase1FlameAttackNode);
         phase1FlameAttackSequence.AddNode(phase1FlameAttackDelay);
         phase1ScreamAttackSequence.AddNode(phase1CheckSpawnCount);
@@ -320,7 +320,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         phase1.AddNode(phase1ActionSelector);
 
 
-        //ÆäÀÌÁö2 Æ®¸®
+        //í˜ì´ì¦ˆ2 íŠ¸ë¦¬êµ¬ì„±
         phase2ScreamAttackSequence.AddNode(phase2CheckSpawnCount);
         phase2ScreamAttackSequence.AddNode(phase2ScreamAttackNode);
         phase2ScreamAttackSequence.AddNode(phase2ScreamAttackDelay);
@@ -363,7 +363,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         phase2.AddNode(phase2HpConditionDecorator);
         phase2.AddNode(phase2ActionSelector);
 
-        //ÆäÀÌÁö3 Æ®¸®
+        //í˜ì´ì¦ˆ3 íŠ¸ë¦¬êµ¬ì„±
         phase3BasicAttackSequence.AddNode(phase3BasicAttackNode);
         phase3BasicAttackSequence.AddNode(phase3BasicAttackDelay);
 
@@ -405,10 +405,10 @@ public class BossBehaviour : MonoBehaviour,ITag
         entryPhase3Sequence.AddNode(checkIncomingPhase3);
         entryPhase3Sequence.AddNode(phase3EntryNode);
 
-        phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
-        phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
+        //phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
         phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
 
         phase3ActionSelector.AddNode(entryPhase3Sequence);
@@ -416,7 +416,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         phase3.AddNode(phase3HpConditionDecorator);
         phase3.AddNode(phase3ActionSelector);
 
-
+        //ë³´ìŠ¤ íŠ¸ë¦¬êµ¬ì„±
         root.AddNode(dieSequence);
         root.AddNode(phase1);
         root.AddNode(phase2);
@@ -463,20 +463,13 @@ public class BossBehaviour : MonoBehaviour,ITag
     {
         isDelayTime = value;
     }
-    //º¸½º È°¼ºÈ­ÇÒ ¶§ »ç¿ë
+
+    //ë³´ìŠ¤ í™œì„±í™” í•¨ìˆ˜
     public void ActivateBoss()
     {
         isActivate = true;
     }
 
-    /// <summary>
-    /// º¸½º µ¥¹ÌÁö ¹Ş´Â ÇÔ¼ö
-    /// </summary>
-    /// <param name="damage">µ¥¹ÌÁö Àü´Ş ¹ŞÀ» ¸Å°³º¯¼ö</param>
-    public void HitDamage(int damage)
-    {
-        hp -= damage;
-    }
 
     private float GetHp()
     {
@@ -491,14 +484,14 @@ public class BossBehaviour : MonoBehaviour,ITag
             hpbarUi.DeActivateUI();
     }
 
-    //½ºÆùÇÑ ¸ó½ºÅÍµé ºñÈ°¼ºÈ­
+    //ìŠ¤í°í•œ ëª¨ë“  ëª¬ìŠ¤í„° ë¹„í™œì„±í™”
     private void DeActivateSpawnObjs()
     {
         pullingDirector.DeActivateSpawnObjects();
         isDie = true;
     }
 
-    //¸ğµç ÆÄÆ¼Å¬ Á¾·á
+    //ìŠ¤í°í•œ ëª¨ë“  íŒŒí‹°í´ë“¤ ë¹„í™œì„±í™”
     private void DeActivateParticles()
     {
         pullingDirector.DeActivateObjectsWithTag("Particle");
@@ -511,7 +504,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         return count;
     }
 
-    //ITag¸¦»ç¿ëÇÑ ¿ÀºêÁ§Æ®µé ·£´ı½ºÆù
+    //ITagë¥¼ ì‚¬ìš©í•œ ì˜¤ë¸Œì íŠ¸ ìŠ¤í°
     private void RandomSpawnObjectsWithITag(GameObject[] objs, int spawnCount)
     {
         for (int i = 0; i < spawnCount; i++)
@@ -525,13 +518,13 @@ public class BossBehaviour : MonoBehaviour,ITag
         
     }
 
-    //ITag¸¦»ç¿ëÇÑ ¿ÀºêÁ§Æ® ·£´ı½ºÆù
+    //ITagë¥¼ ì‚¬ìš©í•˜ì—¬ ì§€ì •í•œ ìœ„ì¹˜ì— ì˜¤ë¸Œì íŠ¸ ìŠ¤í°
     private GameObject SpawnObjectWithITag(GameObject obj, Vector3 posi)
     {
          return pullingDirector.SpawnObjectwithITag(obj.tag, obj.GetComponent<ITag>(), posi);
     }
 
-    //ÁöÁ¤ÇÑ À§Ä¡¿Í °¹¼ö¸¸Å­ °´Ã¼ È°¼ºÈ­
+    //ì§€ì •í•œ ìˆ«ìë§Œí¼ ì˜¤ë¸Œì íŠ¸ ìŠ¤í°
     private GameObject[] SpawnObjects(GameObject obj, Vector3 posi ,int count)
     {
         GameObject[] spawnObjs = new GameObject[count];
@@ -550,20 +543,17 @@ public class BossBehaviour : MonoBehaviour,ITag
     }
     private void OnTriggerEnter(Collider other)
     {
-        
-    }
-    private void OnCollisionEnter(Collision other)
-    {
         if (isDie) return;
-        if ((other.gameObject.tag == "Weapon"
-           || other.gameObject.tag == "Bomb"
-           || other.gameObject.tag == "SlashAttack"))
+        if (other.GetComponent<Collider>().CompareTag("Weapon")
+           || other.GetComponent<Collider>().CompareTag("Bomb")
+           || other.GetComponent<Collider>().CompareTag("SlashAttack"))
         {
             StartCoroutine(OnDamage(other.gameObject.tag));
             StartCoroutine(hitAniCoroutine());
         }
-
     }
+    
+   
     private void OnTriggerStay(Collider other)
     {
         if (isDie) return;
@@ -574,7 +564,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         }
     }
 
-    //ÇÃ·¹ÀÌ¾îÀÇ µ¥¹ÌÁö¸¦ ¹ŞÀ» ¶§ GetHit¾Ö´Ï¸ŞÀÌ¼Ç Àç»ıÇÏ´Â ÄÚ·çÆ¾ ÇÔ¼ö
+    //í”¼ê²© ì• ë‹ˆë©”ì´ì…˜ ì¬ìƒ ì½”ë£¨í‹´
     IEnumerator hitAniCoroutine()
     {
         if (!isDelayTime) yield break;
@@ -597,7 +587,7 @@ public class BossBehaviour : MonoBehaviour,ITag
         isActiveGetHitAni = false;
     }
 
-    //ÇÃ·¹ÀÌ¾îÀÇ µ¥¹ÌÁö¸¦ ¹Ş´Â ÄÚ·çÆ¾ ÇÔ¼ö
+    //í”¼ê²© ë°ë¯¸ì§€ ë°›ëŠ” ì½”ë£¨í‹´
     IEnumerator OnDamage(string tag)
     {
         if (!isHit) yield break;
@@ -616,15 +606,15 @@ public class BossBehaviour : MonoBehaviour,ITag
         {
             case "Weapon":
                 hp -= playerControl.GetBasicDamage();
-                //Debug.Log("±âº» °ø°İ ¹Ş¾Ò´Ù.");
+                //Debug.Log("ì¼ë°˜ ê³µê²© ë°›ìŒ");
                 break;
             case "Bomb":
                 hp -= playerControl.GetBombDamage();
-                //Debug.Log("ÆøÅº °ø°İ ¹Ş¾Ò´Ù.");
+                //Debug.Log("í­íƒ„ê³µê²© ë°›ìŒ");
                 break;
             case "SlashAttack":
                 hp -= playerControl.GetSlashAttackDamage();
-                //Debug.Log("½½·¡½¬ °ø°İ ¹Ş¾Ò´Ù.");
+                //Debug.Log("ê²€ê¸° ê³µê²© ë°›ìŒ");
                 break;
         }
         if (hpbarUi)

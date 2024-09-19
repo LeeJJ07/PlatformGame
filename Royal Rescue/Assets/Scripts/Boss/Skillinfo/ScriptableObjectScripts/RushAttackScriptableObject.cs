@@ -17,5 +17,6 @@ public class RushAttackScriptableObject : ScriptableObject
     public float rushSpeed = 0;
     public float hitRange = 0;
     public float subSequenceDelay;
+    public float playSoundTime;
     public int damage = 0;
 }
