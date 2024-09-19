@@ -5,9 +5,11 @@ using UnityEngine;
 public class MiniBossCam : DoorTrap
 {
     private MiniBossAI boss;
+    [SerializeField] private GameObject reward2;
     [SerializeField] protected Camera bossCamera;
     [SerializeField] protected Animator ironWallAnim2;
     [SerializeField] protected RoomPortal portal2;
+
     protected override void Start()
     {
         boss = monsterHub.GetComponentInChildren<MiniBossAI>(true);
@@ -36,7 +38,11 @@ public class MiniBossCam : DoorTrap
         SwitchCamera(mainCamera, gemCamera);
         yield return new WaitForSeconds(0.2f);
 
-        if (reward) reward.SetActive(true);
+        if (reward)
+        {
+            reward.SetActive(true);
+            reward2.SetActive(true);
+        }
         yield return new WaitForSeconds(1f);
 
         SwitchCamera(gemCamera, doorCamera);
