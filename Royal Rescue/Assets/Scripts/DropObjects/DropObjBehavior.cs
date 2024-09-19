@@ -50,7 +50,10 @@ public class DropObjBehavior : MonoBehaviour,ITag
 
         if (detectGroundHit.collider != null)
         {
-
+            if (detailTag == "DropObject")
+            {
+                SoundManager.Instance.PlaySound("RockFallDown");
+            }
             if (destroyObj)
             {
                 this.gameObject.SetActive(false);
@@ -61,6 +64,7 @@ public class DropObjBehavior : MonoBehaviour,ITag
             }
             if (deactiveWarningZoneObj != null)
                 deactiveWarningZoneObj.SetActive(false);
+            
             isEndDelay = false;
 
             deactiveWarningZoneObj = null;

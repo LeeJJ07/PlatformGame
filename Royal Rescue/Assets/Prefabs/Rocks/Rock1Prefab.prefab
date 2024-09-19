@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0effee5faff3b8c4eb8331de5073596b, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0effee5faff3b8c4eb8331de5073596b, type: 3}
       propertyPath: m_IsActive
@@ -150,6 +150,6 @@ MonoBehaviour:
   damage: 15
   rayDistance: 1
   destroyObj: 1
-  detectLayers:
-  - serializedVersion: 2
+  detectLayer:
+    serializedVersion: 2
     m_Bits: 128
