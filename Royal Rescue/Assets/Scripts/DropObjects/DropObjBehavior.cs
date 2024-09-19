@@ -50,21 +50,19 @@ public class DropObjBehavior : MonoBehaviour,ITag
 
         if (detectGroundHit.collider != null)
         {
-            if (detectGroundHit.collider.tag.Equals("Floor"))
-            {
 
-                if (destroyObj)
-                {
-                    this.gameObject.SetActive(false);
-                }
-                if (rigid != null)
-                {
-                    rigid.isKinematic = false;
-                }
-                if (deactiveWarningZoneObj != null)
-                    deactiveWarningZoneObj.SetActive(false);
-                isEndDelay = false;
+            if (destroyObj)
+            {
+                this.gameObject.SetActive(false);
             }
+            if (rigid != null)
+            {
+                rigid.isKinematic = false;
+            }
+            if (deactiveWarningZoneObj != null)
+                deactiveWarningZoneObj.SetActive(false);
+            isEndDelay = false;
+
             deactiveWarningZoneObj = null;
         }
 
