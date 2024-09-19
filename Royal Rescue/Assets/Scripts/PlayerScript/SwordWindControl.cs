@@ -23,11 +23,12 @@ public class SwordWindControl : MonoBehaviour
     }
     private void OnCollisionEnter(Collision other)
     {
+        Debug.Log(other.collider.tag);
         if (other.gameObject.CompareTag("Monster"))
         {
-            EnemyControler enemyHP = other.gameObject.GetComponent<EnemyControler>();
+           /* EnemyControler enemyHP = other.gameObject.GetComponent<EnemyControler>();
             enemyHP.health -= slashDamage;
-            Debug.Log("적에게 검기 명중");
+            Debug.Log("적에게 검기 명중");*/
         }
         if (other.gameObject.CompareTag("Player"))
         {
