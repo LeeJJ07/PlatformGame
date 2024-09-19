@@ -741,8 +741,8 @@ MonoBehaviour:
   damage: 1
   rayDistance: 1
   destroyObj: 0
-  detectLayers:
-  - serializedVersion: 2
+  detectLayer:
+    serializedVersion: 2
     m_Bits: 128
 --- !u!1 &5613197173567522933
 GameObject:

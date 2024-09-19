@@ -14,9 +14,8 @@ public class DropObjBehavior : MonoBehaviour,ITag
     [SerializeField] int damage = 30;
     [SerializeField] float rayDistance = 0.5f;
     [SerializeField] bool destroyObj = false;
-    [SerializeField] LayerMask[] detectLayers;
+    [SerializeField] LayerMask detectLayer;
     PlayerControlManagerFix player;
-    int detectLayer = 0;
     Ray warningZoneSpawnRay;
     RaycastHit warningZoneSpawnHit;
     Ray detectGroundRay;
@@ -30,11 +29,7 @@ public class DropObjBehavior : MonoBehaviour,ITag
         
         pulling = GameObject.FindWithTag("Director").GetComponent<PullingDirector>();
         player = GameObject.FindWithTag("Player").GetComponent<PlayerControlManagerFix>();
-        foreach (LayerMask layer in detectLayers)
-        {
-            detectLayer |= layer;
-        }
-       
+
     }
     void OnEnable()
     {
@@ -42,18 +37,22 @@ public class DropObjBehavior : MonoBehaviour,ITag
         {
             rigid.isKinematic = true;
         }
+        detectGroundRay = new Ray(transform.position + Vector3.down * 0.5f, Vector3.down);
+
         StartCoroutine(DropCoroutine());
     }
     void Update()
     {
         detectGroundRay = new Ray(transform.position, Vector3.down);
-        Debug.DrawRay(detectGroundRay.origin, detectGroundRay.direction, Color.green);
         Physics.Raycast(detectGroundRay, out detectGroundHit, rayDistance, detectLayer);
+
+        Debug.DrawRay(detectGroundRay.origin, detectGroundRay.direction, Color.green);
+
         if (detectGroundHit.collider != null)
         {
             if (detectGroundHit.collider.tag.Equals("Floor"))
             {
-                
+
                 if (destroyObj)
                 {
                     this.gameObject.SetActive(false);
@@ -62,12 +61,14 @@ public class DropObjBehavior : MonoBehaviour,ITag
                 {
                     rigid.isKinematic = false;
                 }
-                if(deactiveWarningZoneObj!=null)
+                if (deactiveWarningZoneObj != null)
                     deactiveWarningZoneObj.SetActive(false);
                 isEndDelay = false;
             }
             deactiveWarningZoneObj = null;
         }
+
+
         if (isEndDelay)
             transform.position += Vector3.down * dropSpeed * Time.deltaTime;
         
@@ -83,22 +84,6 @@ public class DropObjBehavior : MonoBehaviour,ITag
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!other.tag.Equals("Player")) return;
-        if (destroyObj)
-        {
-            this.gameObject.SetActive(false);
-        }
-        if (rigid != null)
-        {
-            rigid.isKinematic = false;
-        }
-
-        //플레이어 데미지 전달 로직작성 블럭
-        player.HurtPlayer(damage);
-        if (deactiveWarningZoneObj != null)
-            deactiveWarningZoneObj.SetActive(false);
-
-        isEndDelay = false;
     }
 
     public string GetTag()
