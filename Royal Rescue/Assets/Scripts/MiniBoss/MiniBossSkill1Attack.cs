@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class MiniBossSkill1Attack : INode
 {
+    public delegate float Hp();
+    Hp hp;
+
     Transform transform;
     Transform playerTransform;
     Animator animator;
@@ -13,8 +16,9 @@ public class MiniBossSkill1Attack : INode
     bool delay = false;
     float time = 0f;
 
-    public MiniBossSkill1Attack(Transform transform, Transform playerTransform, Animator animator, float runSpeed)
+    public MiniBossSkill1Attack(Transform transform, Transform playerTransform, Animator animator, float runSpeed, Hp hp)
     {
+        this.hp = hp;
         this.transform = transform;
         this.playerTransform = playerTransform;
         this.animator = animator;
@@ -26,6 +30,9 @@ public class MiniBossSkill1Attack : INode
 
     public INode.NodeState Evaluate()
     {
+        if (hp() <= 0)
+            return INode.NodeState.Success;
+
         float dirX = (playerTransform.position - transform.position).x;
         if (!isAttack)
         {

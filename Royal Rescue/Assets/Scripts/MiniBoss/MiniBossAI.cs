@@ -92,14 +92,14 @@ public class MiniBossAI : MonoBehaviour
         lookPlayer = new LookPlayer(transform, player.transform);
         checkSkill1Probability = new CheckProbability(skill1Probability);
         checkSkill1Range = new CheckAttackRange(transform, player.transform, skill1Range);
-        skill1AttackAction = new MiniBossSkill1Attack(transform, player.transform, animator, runSpeed);
+        skill1AttackAction = new MiniBossSkill1Attack(transform, player.transform, animator, runSpeed, Hp);
         skill1AttackActionDelay = new ActionDelay(animator, skill1DelayTime);
         checkSkill2Probability = new CheckProbability(skill2Probability);
         checkSkill2Range = new CheckAttackRange(transform, player.transform, skill2Range);
-        skill2AttackAction = new MiniBossSkill2Attack(transform, player.transform, animator);
+        skill2AttackAction = new MiniBossSkill2Attack(transform, player.transform, animator, Hp);
         skill2AttackActionDelay = new ActionDelay(animator, skill2DelayTime);
         checkBaseAttackRange = new CheckAttackRange(transform, player.transform, baseAttackRange);
-        baseAttackAction = new MiniBossBaseAttack(transform,player.transform, animator);
+        baseAttackAction = new MiniBossBaseAttack(transform,player.transform, animator, Hp);
         baseAttackActionDelay = new ActionDelay(animator, baseAttackDelayTime);
         followPlayer = new FollowPlayer(transform, player.transform, animator, walkSpeed, Hp);
         followPlayerDelay = new ActionDelay(animator, followDelayTime);

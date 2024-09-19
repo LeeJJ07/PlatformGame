@@ -541,14 +541,18 @@ public class BossBehaviour : MonoBehaviour,ITag
         }
         return spawnObjs;
     }
-
     
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, Phase3RushAttackInfo.hitRange);
     }
     private void OnTriggerEnter(Collider other)
+    {
+        
+    }
+    private void OnCollisionEnter(Collision other)
     {
         if (isDie) return;
         if ((other.gameObject.tag == "Weapon"
