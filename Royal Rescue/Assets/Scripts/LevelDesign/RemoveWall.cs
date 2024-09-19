@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class RemoveWall : MonoBehaviour
@@ -10,7 +11,7 @@ public class RemoveWall : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (gem.activeSelf == false)
+        if (gem.IsDestroyed())
         {
             gameObject.SetActive(false);
             GameObject effect = Instantiate(particle, transform.parent);
