@@ -6625,7 +6625,7 @@ MonoBehaviour:
   loadScreenDelay: 1.5
   respawnDelay: 1.5
   stageNames:
-  - JooWoan
+  - Stage1
   - Stage2
   - Stage3
   - Stage4
