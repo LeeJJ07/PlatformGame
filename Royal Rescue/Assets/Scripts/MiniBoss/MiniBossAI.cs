@@ -84,7 +84,7 @@ public class MiniBossAI : MonoBehaviour
     {
         playerControl = GameDirector.instance.PlayerControl;
         player = playerControl.gameObject;
-
+        
         transform.position = startTrasform.position;
 
         checkDie = new CheckMiniBossHp(Hp);
@@ -116,6 +116,9 @@ public class MiniBossAI : MonoBehaviour
     void Start()
     {
         hp = maxHp;
+
+        material.color = new Color(1f, 1f, 1f, 1f);
+        originalColor = material.color;
 
         deadSequence.AddNode(checkDie);
         deadSequence.AddNode(dieAction);

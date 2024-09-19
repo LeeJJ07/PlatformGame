@@ -584,17 +584,20 @@ public class PlayerControlManagerFix : MonoBehaviour
             SoundManager.Instance.PlaySound("BeDamage");
             playerHP -= damage;
 
-            Vector3 nVec = new Vector3(0, 1.5f, 0);
-            var screenPos = Camera.main.WorldToScreenPoint(transform.position + nVec);
-            var localPos = Vector2.zero;
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.GetComponent<RectTransform>(), screenPos, uiCanvas.worldCamera, out localPos); // 스크린 좌표를 다시 체력바 UI 캔버스 좌표로 변환
+            if (Camera.main != null)
+            {
+                Vector3 nVec = new Vector3(0, 1.5f, 0);
+                var screenPos = Camera.main.WorldToScreenPoint(transform.position + nVec);
+                var localPos = Vector2.zero;
+                RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.GetComponent<RectTransform>(), screenPos, uiCanvas.worldCamera, out localPos); // 스크린 좌표를 다시 체력바 UI 캔버스 좌표로 변환
 
-            GameObject damageUI = Instantiate(DamageTextPrefab) as GameObject;
-            damageUI.GetComponent<DamageText>().damage = -damage;
-            damageUI.transform.SetParent(uiCanvas.transform, false);
-            damageUI.transform.localPosition = localPos;
-            damageUI.GetComponent<DamageText>().colorG = 0f;
-            damageUI.GetComponent<DamageText>().colorB = 0f;
+                GameObject damageUI = Instantiate(DamageTextPrefab) as GameObject;
+                damageUI.GetComponent<DamageText>().damage = -damage;
+                damageUI.transform.SetParent(uiCanvas.transform, false);
+                damageUI.transform.localPosition = localPos;
+                damageUI.GetComponent<DamageText>().colorG = 0f;
+                damageUI.GetComponent<DamageText>().colorB = 0f;
+            }
 
             StartCoroutine(Invincibility());
         }
