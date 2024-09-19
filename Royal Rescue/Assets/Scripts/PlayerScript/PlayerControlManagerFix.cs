@@ -204,7 +204,10 @@ public class PlayerControlManagerFix : MonoBehaviour
 
                 }
             }
-
+            if (isAttackEnhance)
+                attackIcon.SetActive(false);
+            else
+                attackIcon.SetActive(true);
             setPostProcessCenter();
         }
     }
@@ -348,7 +351,9 @@ public class PlayerControlManagerFix : MonoBehaviour
                 weapons.GetComponent<BoxCollider>().enabled = true;
             }
             else if (isAttackEnhance)
+            {
                 SwordWind();
+            }
             attackDelay = 0;
             weapons.GetComponent<WeaponControl>().trailEffect.enabled = true;
             StopCoroutine("Swing");
