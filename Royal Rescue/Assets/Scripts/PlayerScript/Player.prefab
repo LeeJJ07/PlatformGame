@@ -454,6 +454,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 0
+  rb: {fileID: 7919289716281912371}
   fieldView: {fileID: 3060221139843355700}
   DamageTextPrefab: {fileID: 0}
   coin: 0

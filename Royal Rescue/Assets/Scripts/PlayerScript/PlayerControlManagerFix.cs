@@ -81,7 +81,7 @@ public class PlayerControlManagerFix : MonoBehaviour
 
     public LayerMask layer;
 
-    Rigidbody rb;
+    [SerializeField] private Rigidbody rb;
     Animator anim;
     WeaponControl equipWeapon;
  
