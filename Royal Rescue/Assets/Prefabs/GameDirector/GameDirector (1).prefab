@@ -3158,7 +3158,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d9df73903847d5f42809344823aa02c3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1096b907350f2e2479bf31ef904e1551, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6932,7 +6932,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: d9df73903847d5f42809344823aa02c3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1096b907350f2e2479bf31ef904e1551, type: 3}
   m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8086,7 +8086,7 @@ PrefabInstance:
       objectReference: {fileID: 7789183561881017163}
     - target: {fileID: 5130297143477228180, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       propertyPath: isAttackEnhance
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5130297143477228180, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       propertyPath: DamageTextPrefab
