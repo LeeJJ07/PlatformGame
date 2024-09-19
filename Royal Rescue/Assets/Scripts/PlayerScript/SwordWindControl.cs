@@ -23,7 +23,7 @@ public class SwordWindControl : MonoBehaviour
     }
     private void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.gameObject.CompareTag("Monster"))
         {
             EnemyControler enemyHP = other.gameObject.GetComponent<EnemyControler>();
             enemyHP.health -= slashDamage;
