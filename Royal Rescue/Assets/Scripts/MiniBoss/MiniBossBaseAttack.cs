@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class MiniBossBaseAttack : INode
 {
+    public delegate float Hp();
+    Hp hp;
+
     Transform transform;
     Transform playerTransform;
     Animator animator;
     float time = 0f;
-    public MiniBossBaseAttack(Transform transform, Transform playerTransform, Animator animator)
+    public MiniBossBaseAttack(Transform transform, Transform playerTransform, Animator animator, Hp hp)
     {
+        this.hp = hp;
         this.transform = transform;
         this.playerTransform = playerTransform;
         this.animator = animator;
@@ -21,6 +25,9 @@ public class MiniBossBaseAttack : INode
 
     public INode.NodeState Evaluate()
     {
+        if (hp() <= 0)
+            return INode.NodeState.Success;
+
         float dirX = (playerTransform.position - transform.position).x;
         if (time > 1f)
         {

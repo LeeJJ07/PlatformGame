@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class MiniBossSkill2Attack : INode
 {
+    public delegate float Hp();
+    Hp hp;
+
     Transform transform;
     Transform playerTransform;
     Animator animator;
     float time = 0f;
     bool isIdle = false;
-    public MiniBossSkill2Attack(Transform transform, Transform playerTransform, Animator animator)
+    public MiniBossSkill2Attack(Transform transform, Transform playerTransform, Animator animator, Hp hp)
     {
+        this.hp = hp;
         this.transform = transform;
         this.playerTransform = playerTransform;
         this.animator = animator;
@@ -21,6 +25,9 @@ public class MiniBossSkill2Attack : INode
 
     public INode.NodeState Evaluate()
     {
+        if(hp()<=0)
+            return INode.NodeState.Success;
+
         float dirX = (playerTransform.position - transform.position).x;
         if(time > 7f)
         {
