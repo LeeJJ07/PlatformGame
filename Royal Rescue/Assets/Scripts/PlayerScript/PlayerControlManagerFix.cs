@@ -728,7 +728,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         playerHP = playerMaxHP = PLAYER_MAX_HP;
         moveSpeed = ogMoveSpeed;
         playerBasicATK = ogPlayerBasicATK;
-        coin = ogCoin;
+        Coin = ogCoin;
     }
 }
 
