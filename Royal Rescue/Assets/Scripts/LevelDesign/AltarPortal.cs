@@ -54,6 +54,8 @@ public class AltarPortal : MonoBehaviour
     {
         cameraFollow.SetFollowTarget(stagePortal);
         coffinAnim.Play(AnimationHash.COFFINDOOR_OPEN);
+        SoundManager.Instance.PlaySound("coffin_open_1");
+        SoundManager.Instance.PlaySound("coffin_open_2");
 
         yield return new WaitForSeconds(0.2f);
 
