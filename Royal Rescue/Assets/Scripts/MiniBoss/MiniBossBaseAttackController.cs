@@ -10,6 +10,6 @@ public class BaseAttack : MonoBehaviour
         if (!other.gameObject.CompareTag("Player"))
             return;
 
-        GameDirector.instance.PlayerControl.HurtPlayer(miniBoss.GetBaseAttackDamage());
+        GameDirector.instance.PlayerControl.HurtPlayer(miniBoss.GetBaseAttackDamage() + Random.Range(-10, 10));
     }
 }
