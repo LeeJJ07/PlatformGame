@@ -382,6 +382,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
         else if (skillCount == 0)
         {
+            UISkillBtn uiSkillBtn = GetComponent<UISkillBtn>();
             Debug.Log("횟수를 모두 사용");
             return;
         }

@@ -10,11 +10,11 @@ public class UISkillBtn : MonoBehaviour
 
     public TMP_Text textCoolTime;
     public GameObject player;
-    [SerializeField]private bool skillTimer = false;
-    private Coroutine coolTimeRoutine;
     public GameObject thisSkill;
     public string skillName;
     public Image imgFill;
+    private int skillCnt;
+    private Coroutine coolTimeRoutine;
     [SerializeField] private float skillCollDown = 3.0f;
 
 
@@ -32,11 +32,7 @@ public class UISkillBtn : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetButtonDown("FireBallKey") && !skillTimer)
-        {
-                skillTimer = true;
-        }
-
+        skillCnt = player.GetComponent<PlayerControlManagerFix>().skillCount;
         if (Input.GetButtonDown(skillName) && coolTimeRoutine == null)
         {
             if (skillName == "Dash")
@@ -44,12 +40,11 @@ public class UISkillBtn : MonoBehaviour
                 coolTimeRoutine = StartCoroutine(DashCoolTimeRoutine());
             }
         }
-        else if (Input.GetButtonUp(skillName) && coolTimeRoutine == null && skillTimer)
+        else if (Input.GetButtonUp(skillName) && coolTimeRoutine == null)
         {
-            if (skillName == "FireBallKey")
+            if (skillName == "FireBallKey" && skillCnt > 0)
             {
                 coolTimeRoutine = StartCoroutine(FbCoolTimeRoutine());
-                StartCoroutine(FbTimerRoutine());
             }
         }
     }
@@ -111,11 +106,7 @@ public class UISkillBtn : MonoBehaviour
         
 
     }
-    private IEnumerator FbTimerRoutine()
-    {
-        yield return new WaitForSeconds(3f);
-        skillTimer = false;
-    }
+    
 
 
 }
