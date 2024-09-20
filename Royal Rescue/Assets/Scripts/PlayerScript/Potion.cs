@@ -16,6 +16,7 @@ public class Potion : MonoBehaviour
     public GameObject thisSkill;
     public Image imgFill;
     public int skillCollDown;
+    private bool isDrinkingPotion = true;
 
     // 필요한 컴포넌트.
     [SerializeField]
@@ -36,11 +37,12 @@ public class Potion : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetButtonDown("DrinkingPotion"))
+        if (Input.GetButtonDown("DrinkingPotion") && isDrinkingPotion)
         {
             if(potionCount > 0 && playerCntl.playerHP < playerCntl.playerMaxHP)
             {
                 SoundManager.Instance.PlaySound("DrinkingPotion");
+                isDrinkingPotion = false;
                 if (playerCntl.playerHP + 50 <= playerCntl.playerMaxHP)
                     playerCntl.playerHP += 50;
                 else
@@ -82,6 +84,7 @@ public class Potion : MonoBehaviour
 
             if (time <= 0)
             {
+                isDrinkingPotion = true;
                 Debug.Log("약빨기 가능");
                 this.textCoolTime.gameObject.SetActive(false);
                 break;

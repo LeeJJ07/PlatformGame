@@ -2078,6 +2078,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 0
+  rb: {fileID: 0}
   fieldView: {fileID: 0}
   DamageTextPrefab: {fileID: 0}
   coin: 100
@@ -11368,7 +11369,7 @@ MonoBehaviour:
   hpBar: {fileID: 1989262453}
   maxHp: 0
   currentHp: 0
-  PlayerHpText: {fileID: 529458800}
+  PlayerHpText: {fileID: 0}
   player: {fileID: 1748504996}
 --- !u!114 &1989262453
 MonoBehaviour:
@@ -12441,6 +12442,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4987513842323046630, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5130297143477228180, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
+      propertyPath: trajectoryResolution
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 7054254038125191259, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       propertyPath: m_Name
       value: Player
