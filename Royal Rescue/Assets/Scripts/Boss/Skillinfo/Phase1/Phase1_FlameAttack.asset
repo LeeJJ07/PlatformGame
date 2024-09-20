@@ -16,7 +16,7 @@ MonoBehaviour:
   soundClipName: Boss_FireBall
   flameAttackDistance: 25
   flameCount: 3
-  damage: 3
+  damage: 20
   flameSpeed: 5
   subSequenceDelay: 2
   isContinuousParticleAttack: 0

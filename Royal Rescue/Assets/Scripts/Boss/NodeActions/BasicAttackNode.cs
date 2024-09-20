@@ -34,7 +34,7 @@ public class BasicAttackNode : INode
         time += Time.deltaTime;
         if(time > attackTime&& !isAttackPlayer)
         {
-            Collider[] hitCollider = Physics.OverlapBox(attackPosi.position, new Vector3(3, 1, 1),Quaternion.identity,LayerMask.GetMask("Player"));
+            Collider[] hitCollider = Physics.OverlapBox(attackPosi.position, new Vector3(5, 5, 1), Quaternion.identity,LayerMask.GetMask("Player"));
             if(hitCollider!=null)
             {
                 foreach(Collider hit in hitCollider)

@@ -86,10 +86,12 @@ public class DoorTrap : MonoBehaviour
     }
     protected void CloseIronWall()
     {
+        SoundManager.Instance.PlaySound("cell_bars_close");
         ironWallAnim.Play("IronWall_close");
     }
     protected void OpenIronWall()
     {
+        SoundManager.Instance.PlaySound("cell_bars_open");
         ironWallAnim.Play("IronWall_open");
     }
     protected void SwitchCamera(Camera currentCamera, Camera subCamera)

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   soundClipName: Boss_BasicAttack
   BasicAttackDistance: 7
-  damage: 5
+  damage: 30
   subSequenceDelay: 0.2

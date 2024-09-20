@@ -26,6 +26,7 @@ public class MiniBossCam : DoorTrap
         
         ironWallAnim.Play("IronWall_close");
         ironWallAnim2.Play("IronWall_close");
+        SoundManager.Instance.PlaySound("cell_bars_close");
         yield return new WaitForSeconds(1f);
 
         SwitchCamera(mainCamera, doorCamera);
@@ -48,6 +49,7 @@ public class MiniBossCam : DoorTrap
         SwitchCamera(gemCamera, doorCamera);
         ironWallAnim.Play("IronWall_open");
         ironWallAnim2.Play("IronWall_open");
+        SoundManager.Instance.PlaySound("cell_bars_open");
 
         yield return new WaitForSeconds(1.5f);
 

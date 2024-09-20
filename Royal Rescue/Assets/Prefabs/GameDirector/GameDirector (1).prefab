@@ -4892,7 +4892,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textCoolTime: {fileID: 3784793338974477832}
-  player: {fileID: 0}
+  player: {fileID: 8623269734687855571}
   skillTimer: 0
   thisSkill: {fileID: 5525605359373548517}
   skillName: FireBallKey

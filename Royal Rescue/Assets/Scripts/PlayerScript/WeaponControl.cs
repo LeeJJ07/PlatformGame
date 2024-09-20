@@ -4,8 +4,6 @@ using UnityEngine;
 //HP,피격,사망애니메이션, 무기충돌처리
 public class WeaponControl : MonoBehaviour
 {
-    //public enum Type { Melee, Range };
-    //public Type type;
     public int damage = 25;
     public float rate;
     public bool isAttackWeapon;

@@ -2078,6 +2078,7 @@ MonoBehaviour:
   layer:
     serializedVersion: 2
     m_Bits: 0
+  rb: {fileID: 0}
   fieldView: {fileID: 0}
   DamageTextPrefab: {fileID: 0}
   coin: 100
@@ -11368,7 +11369,7 @@ MonoBehaviour:
   hpBar: {fileID: 1989262453}
   maxHp: 0
   currentHp: 0
-  PlayerHpText: {fileID: 529458800}
+  PlayerHpText: {fileID: 0}
   player: {fileID: 1748504996}
 --- !u!114 &1989262453
 MonoBehaviour:
