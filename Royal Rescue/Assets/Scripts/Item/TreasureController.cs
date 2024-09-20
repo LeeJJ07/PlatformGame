@@ -33,7 +33,7 @@ public class TreasureController : MonoBehaviour {
     private void Update() {
         if (treasureText == null || !treasureText.activeSelf || successInputCoin)
             return;
-        if (!GameDirector.instance.PlayerControl.InputCoinKeyDown())
+        if (!GameDirector.instance.PlayerControl.GetButtonDownAttack())
             return;
         if (curCoin > GameDirector.instance.PlayerControl.GetCoin()) {
             StartCoroutine(CantInputCoin());

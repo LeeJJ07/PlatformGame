@@ -151,7 +151,6 @@ public class PlayerControlManagerFix : MonoBehaviour
         CachePlayerStatus();
         coinUI.UpdateCoinText(coin);
     }
-    // Update is called once per frame
     void Update()
     {
         if (AllowUserInput())
@@ -232,8 +231,6 @@ public class PlayerControlManagerFix : MonoBehaviour
             {
                 changeDir();
             }
-            //if(moveVec == Vector3.zero)
-                //SoundManager.Instance.StopLoopSound("RunMove");
         }
 
     }
@@ -271,8 +268,6 @@ public class PlayerControlManagerFix : MonoBehaviour
                     SoundManager.Instance.StopLoopSound("RunMove");
                     isRunning = false;
             }
-
-            
 
             anim.SetBool("Run", moveVec != Vector3.zero && isFloor);
             anim.SetBool("Idle", moveVec == Vector3.zero && isFloor);
@@ -458,7 +453,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     }
     //공격 관련 함수 END
 
-
+    public bool GetButtonDownAttack() { return isAttackButton; }
 
     public void IncreaseCurHp(int amount) 
     {
@@ -685,10 +680,6 @@ public class PlayerControlManagerFix : MonoBehaviour
     public void AddForceToPlayer(Vector3 force, ForceMode mode)
     {
         rb.AddForce(force, mode);
-    }
-    public bool InputCoinKeyDown()
-    {
-        return Input.GetKeyDown(KeyCode.Q);
     }
     public int GetCoin() { return coin; }
     public void EatCoin() { Coin++; }
