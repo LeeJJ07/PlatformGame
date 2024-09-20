@@ -247,17 +247,12 @@ public class Monster : MonoBehaviour
         {
             case "Weapon":
                 dmg = playerControl.GetBasicDamage();
-                Debug.Log("기본 공격 받았다.");
                 break;
             case "Bomb":
-
                 dmg = playerControl.GetBombDamage();
-                Debug.Log("폭탄 공격 받았다.");
                 break;
             case "SlashAttack":
                 dmg = playerControl.GetSlashAttackDamage();
-
-                Debug.Log("슬래쉬 공격 받았다.");
                 break;
         }
 

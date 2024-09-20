@@ -20,7 +20,6 @@ public class AttackState : MonoBehaviour, IState
         if (!animator) animator = GetComponent<Animator>();
         if (!monster) monster = GetComponent<Monster>();
         
-        Debug.Log("AttackState");
         animator.SetBool("isAttack", true);
         hitPoint.SetActive(true);
         
@@ -28,7 +27,6 @@ public class AttackState : MonoBehaviour, IState
     public virtual void UpdateState()
     {
         curDirX = monster.getDirectionPlayerX();
-        Debug.Log("AttackState Running");
         monster.transform.rotation = Quaternion.Euler(0, 180f - 90f * curDirX, 0);
         if (!isRunningCorouting)
         {

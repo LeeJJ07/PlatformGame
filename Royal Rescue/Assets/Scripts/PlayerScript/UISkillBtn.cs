@@ -54,7 +54,6 @@ public class UISkillBtn : MonoBehaviour
     {
         
         coolTime = dashCollDown;
-        Debug.Log(textCoolTime);
         this.textCoolTime.gameObject.SetActive(true);
         var time = this.coolTime;
 
@@ -68,7 +67,6 @@ public class UISkillBtn : MonoBehaviour
 
             if (time <= 0)
             {
-                Debug.Log("대쉬 온");
                 this.textCoolTime.gameObject.SetActive(false);
                 break;
             }
@@ -81,7 +79,6 @@ public class UISkillBtn : MonoBehaviour
     private IEnumerator FbCoolTimeRoutine()
     {
         coolTime = skillCollDown;
-        Debug.Log(textCoolTime);
         this.textCoolTime.gameObject.SetActive(true);
         var time = this.coolTime;
 
@@ -95,7 +92,6 @@ public class UISkillBtn : MonoBehaviour
 
             if (time <= 0)
             {
-                Debug.Log("스킬온");
                 this.textCoolTime.gameObject.SetActive(false);
                 break;
             }

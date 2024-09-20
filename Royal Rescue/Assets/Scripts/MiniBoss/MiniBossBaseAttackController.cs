@@ -11,6 +11,5 @@ public class BaseAttack : MonoBehaviour
             return;
 
         GameDirector.instance.PlayerControl.HurtPlayer(miniBoss.GetBaseAttackDamage());
-        Debug.Log("플레이어 기본공격 "+ miniBoss.GetBaseAttackDamage());
     }
 }

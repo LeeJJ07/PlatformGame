@@ -11,6 +11,5 @@ public class MiniBossSkill1AttackController : MonoBehaviour
             return;
 
         GameDirector.instance.PlayerControl.HurtPlayer(miniBoss.GetSkill1Damage());
-        Debug.Log("플레이어 스킬 1 "+ miniBoss.GetSkill1Damage());
     }
 }

@@ -73,6 +73,7 @@ public class FlameBehavior : MonoBehaviour,ITag
     }
     IEnumerator WaitDeActiveFlameSkill()
     {
+        SoundManager.Instance.PlaySound("FireBallExplosion");
         yield return new WaitForSeconds(explosionParticle.main.duration);
         
         explosionParticle.Stop();

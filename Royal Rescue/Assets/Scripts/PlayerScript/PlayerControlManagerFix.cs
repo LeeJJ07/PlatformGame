@@ -374,18 +374,11 @@ public class PlayerControlManagerFix : MonoBehaviour
             fBall.GetComponent<FireBallControl>().throwForce = Mathf.Lerp(minThrowPower, maxThrowPower, holdTime / maxHoldTime);
             fBall.GetComponent<FireBallControl>().ballDir = isDirRight ? Vector3.right : Vector3.left;
             anim.SetTrigger("FireBallTr");
-            //skillCount -= 1;
             StartCoroutine("CheckFireBall");
 
 
             ClearTrajectory(); // 궤적을 지움
         }
-        /*
-        else if (skillCount == 0)
-        {
-            Debug.Log("횟수를 모두 사용");
-            return;
-        }*/
         
     }
 
@@ -527,7 +520,6 @@ public class PlayerControlManagerFix : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        Debug.DrawRay(transform.position + Vector3.up, Vector3.down * 1f, Color.red);
         RaycastHit hit;
         if (collision.gameObject.CompareTag("Floor") && Physics.Raycast(transform.position, Vector3.down, out hit, 1f))
         {
@@ -547,7 +539,6 @@ public class PlayerControlManagerFix : MonoBehaviour
             if(!isInvincible)
             {
                 playerHP -= enemy.enemyAtk;
-                Debug.Log("맞음");
             }
             
         }
@@ -588,7 +579,6 @@ public class PlayerControlManagerFix : MonoBehaviour
     private void OnCollisionExit(Collision collision)
     {
         RaycastHit hit;
-        Debug.DrawRay(transform.position + Vector3.up, Vector3.down * 3f, Color.red);
         if (collision.gameObject.tag == "Floor" && !Physics.Raycast(transform.position, Vector3.down, out hit, 1f))
         {
             isFloor = false;
@@ -599,12 +589,9 @@ public class PlayerControlManagerFix : MonoBehaviour
     IEnumerator Invincibility()
     {
         isInvincible = true;  // 무적 상태 활성화
-        Debug.Log("무적상태 진입");
-        // 시각적 피드백(예: 깜빡이기 효과)
         
         for (float i = 0; i <= invincibilityDuration; i += 0.4f)
         {
-            Debug.Log("깜빡");
             originalColor = material.color;
             material.color = new Color(255, 130, 100, 255);
             yield return new WaitForSeconds(0.05f);  // 0.2초 동안 대기
@@ -613,12 +600,10 @@ public class PlayerControlManagerFix : MonoBehaviour
         }
 
         isInvincible = false;  // 무적 상태 해제
-        Debug.Log("무적상태 해제");
     }
     IEnumerator DashCoolDown()
     {
         yield return new WaitForSeconds(1f);
-        Debug.Log("대쉬온");
         isDashPossible = false;
     }
 

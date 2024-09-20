@@ -6,9 +6,8 @@ using UnityEngine.UI;
 
 public class Potion : MonoBehaviour
 {
-    public UnityEngine.UI.Image itemImage; // ¾ÆÀÌÅÛÀÇ ÀÌ¹ÌÁö.
+    public UnityEngine.UI.Image itemImage; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½.
     private float coolTime;
-    public int potionCount;//Æ÷¼Ç °¹¼ö ÇÃ·¹ÀÌ¾î¿¡°Ô ¹Þ¾Æ¿Í¾ßÇÔ
 
     public TMP_Text textCoolTime;
     private PlayerControlManagerFix playerCntl;
@@ -18,7 +17,7 @@ public class Potion : MonoBehaviour
     public int skillCollDown;
     private bool isDrinkingPotion = true;
 
-    // ÇÊ¿äÇÑ ÄÄÆ÷³ÍÆ®.
+    // ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®.
     [SerializeField]
     private UnityEngine.UI.Text text_Count;
     [SerializeField]
@@ -39,7 +38,7 @@ public class Potion : MonoBehaviour
     {
         if (Input.GetButtonDown("DrinkingPotion") && isDrinkingPotion)
         {
-            if(potionCount > 0 && playerCntl.playerHP < playerCntl.playerMaxHP)
+            if(playerCntl.inventory.healPotionCount > 0 && playerCntl.playerHP < playerCntl.playerMaxHP)
             {
                 SoundManager.Instance.PlaySound("DrinkingPotion");
                 isDrinkingPotion = false;
@@ -49,27 +48,15 @@ public class Potion : MonoBehaviour
                     playerCntl.playerHP = playerCntl.playerMaxHP;
                 StartCoroutine(PotionCoolTimeRoutine());
             }
-            else if(playerCntl.playerHP == playerCntl.playerMaxHP)
-            {
-                Debug.Log("HP°¡ ÀÌ¹Ì ÃÖ´ëÄ¡ÀÓ");
-            }
-            else
-            {
-                Debug.Log("Not enough potion");
-            }
         }
-        text_Count.text = potionCount.ToString();
+        text_Count.text = playerCntl.inventory.healPotionCount.ToString();
     }
-
-    // ¾ÆÀÌÅÛ È¹µæ
-
 
 
     private IEnumerator PotionCoolTimeRoutine()
     {
-        potionCount -= 1;
+        playerCntl.inventory.healPotionCount--;
         coolTime = skillCollDown;
-        Debug.Log(textCoolTime);
         this.textCoolTime.gameObject.SetActive(true);
         var time = this.coolTime;
 
@@ -84,12 +71,10 @@ public class Potion : MonoBehaviour
             if (time <= 0)
             {
                 isDrinkingPotion = true;
-                Debug.Log("¾à»¡±â °¡´É");
                 this.textCoolTime.gameObject.SetActive(false);
                 break;
             }
             yield return null;
         }
-
     }
 }

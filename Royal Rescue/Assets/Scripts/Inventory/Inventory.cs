@@ -35,11 +35,15 @@ public class Inventory : MonoBehaviour
     private Canvas uiCanvas;
     public GameObject useItemTextPrefab;
 
+    [HideInInspector] public int healPotionCount;
+
     private void Awake()
     {
         inventoryWindow.SetActive(false);
         slots = new ItemSlot[uidSlot.Length];
         ResetItemSlots();
+
+        healPotionCount = 5;
     }
     public void ResetItemSlots()
     {
@@ -71,6 +75,12 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(ItemDatas item)
     {
+        if (item.displayName == "힐 포션")
+        {
+            healPotionCount++;
+            return;
+        }
+
         if (item.canStack)
         {
             ItemSlot slotToStackTo = GetItemStack(item);
@@ -104,11 +114,6 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        ThrowItem(item);
-    }
-    private void ThrowItem(ItemDatas item) //구현해야함
-    {
-        
     }
     void UpdateUI()
     {
@@ -182,10 +187,6 @@ public class Inventory : MonoBehaviour
             else if (randNum < 10) i = 2;
 
             switch (selectedItem.item.consumables[i].type) {
-                case ConsumableType.HEAL:
-                    GameDirector.instance.PlayerControl.IncreaseCurHp((int)selectedItem.item.consumables[i].value);
-                    useText = "현재 체력 ";
-                    break;
                 case ConsumableType.POWER:
                     GameDirector.instance.PlayerControl.IncreaseAtk((int)selectedItem.item.consumables[i].value);
                     useText = "공격력 ";
@@ -209,23 +210,9 @@ public class Inventory : MonoBehaviour
         useItemUI.GetComponent<ItemText>().itemText = useText;
         RemoveSelectedItem();
     }
-    public void OnEquipButton()
-    {
 
-    }
-
-    void UnEquip(int index)
-    {
-
-    }
-
-    public void OnUnEquipButton()
-    {
-
-    }
     public void OnDropButton()
     {
-        ThrowItem(selectedItem.item);
         RemoveSelectedItem();
     }
 
@@ -238,15 +225,6 @@ public class Inventory : MonoBehaviour
             ClearSelectItemWindow();
         }
         UpdateUI();
-    }
-
-    public void RemoveItem(ItemDatas item)
-    {
-
-    }
-    public bool HasItems(ItemDatas item, int quantity)
-    {
-        return false;
     }
 
     public void UseGem(ResourceType resourceType) {
