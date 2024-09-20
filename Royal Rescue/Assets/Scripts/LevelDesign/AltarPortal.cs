@@ -45,7 +45,6 @@ public class AltarPortal : MonoBehaviour
     {
         if (canOpenPortal)
         {
-            Debug.Log("다음 스테이지로의 포탈이 열렸습니다.");
             StartCoroutine(PlayPortalAnimation());
             portalTrigger.enabled = true;
         }
@@ -60,6 +59,7 @@ public class AltarPortal : MonoBehaviour
 
         portalTrailEffect.gameObject.SetActive(true);
         portalSparkleEffect.gameObject.SetActive(true);
+        SoundManager.Instance.PlaySound("portal_idle", true, SoundType.BGM);
 
         portalTrailEffect.Play();
         portalSparkleEffect.Play();
@@ -82,6 +82,7 @@ public class AltarPortal : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         portalCam.enabled = IsEnteringAltarPortal = false;
+        SoundManager.Instance.StopLoopSound("portal_idle");
         GameDirector.instance.ShowLoadingScreen();
         StartCoroutine(GameDirector.instance.LoadNextStage());
     }

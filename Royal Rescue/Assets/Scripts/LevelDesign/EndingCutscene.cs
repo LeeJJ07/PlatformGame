@@ -40,6 +40,11 @@ public class EndingCutscene : MonoBehaviour
         playerAnim.Play(AnimationHash.PLAYER_FULLSPIN);
     }
 
+    void PlayPlayerSwordSound()
+    {
+        SoundManager.Instance.PlaySound("AttackSound");
+    }
+
     void PlayPlayerFallEnd()
     {
         playerAnim.Play(AnimationHash.PLAYER_FALL_END);
