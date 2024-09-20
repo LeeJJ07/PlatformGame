@@ -198,6 +198,7 @@ public class MiniBossAI : MonoBehaviour
     public int GetSkill2Damage() { return skill2Damage; }
     IEnumerator DeActive()
     {
+        SoundManager.Instance.PlaySound("MiniBossDie");
         hpbarUi.DeActivateUI();
         yield return new WaitForSeconds(3f);
         gameObject.SetActive(false);
@@ -258,9 +259,9 @@ public class MiniBossAI : MonoBehaviour
         {
             originalColor = material.color;
             material.color = new Color(255, 125, 100, 100);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.06f);
             material.color = originalColor;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.06f);
         }
         takeAttack = false;
     }

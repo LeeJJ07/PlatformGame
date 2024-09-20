@@ -32,6 +32,7 @@ public class CrumblePlatform : MonoBehaviour
         if (!startCrumble && other.gameObject.CompareTag("Player"))
         {
             startCrumble = true;
+            SoundManager.Instance.PlaySound("Crumble");
             platformAnim.Play(AnimationHash.CRUMBLEPLATFORM_SHAKE);
         }
     }

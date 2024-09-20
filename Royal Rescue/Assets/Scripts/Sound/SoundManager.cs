@@ -43,7 +43,7 @@ public class SoundManager : MonoBehaviour
     {
         AudioClip clip = clipsDictionary[clipName];
 
-        if (clip == null) { Debug.LogError(clipName + "이 존재하지 않습니다."); }
+        if (clip == null) { Debug.LogWarning(clipName + "이 존재하지 않습니다."); }
 
         return clip;
     }
@@ -62,13 +62,15 @@ public class SoundManager : MonoBehaviour
                 return;
             }
         }
-
-        Debug.LogWarning(clipName + "을 찾을 수 없습니다.");
     }
 
     public void ClearLoop()
     {
-        loopSounds.Clear(); 
+        foreach (SoundPlayer audioPlayer in loopSounds)
+        {
+            Destroy(audioPlayer.gameObject);
+        }
+        loopSounds.Clear();
     }
     public void PlaySound(string clipName, bool isLoop = false, SoundType type = SoundType.EFFECT)
     {

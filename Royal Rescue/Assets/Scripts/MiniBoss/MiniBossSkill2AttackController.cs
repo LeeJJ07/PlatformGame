@@ -10,6 +10,6 @@ public class MiniBossSkill2AttackController : MonoBehaviour
         if (!other.CompareTag("Player"))
             return;
 
-        GameDirector.instance.PlayerControl.HurtPlayer(miniBoss.GetSkill2Damage());
+        GameDirector.instance.PlayerControl.HurtPlayer(miniBoss.GetSkill2Damage() + Random.Range(-10, 10));
     }
 }

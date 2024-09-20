@@ -6,7 +6,7 @@ using Unity.VisualScripting;
 
 public class UISkillBtn : MonoBehaviour
 {
-    private float coolTime;
+    public float coolTime;
 
     public TMP_Text textCoolTime;
     public GameObject player;
@@ -102,7 +102,13 @@ public class UISkillBtn : MonoBehaviour
         
 
     }
-    
+    public void ResetUi()
+    {
+        coolTime = 0;
+        coolTimeRoutine = null;
+        imgFill.fillAmount = 0;
+        textCoolTime.gameObject.SetActive(false);
+    }
 
 
 }

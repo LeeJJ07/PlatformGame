@@ -6,7 +6,7 @@ public class RangedAttackState : AttackState
 {
     [SerializeField] private GameObject projectile;
 
-    [SerializeField] private float attackSpeed = 1f;
+    [SerializeField] private float attackSpeed = 1.5f;
     float afterShootTime = 0f;
     public override void EnterState()
     {

@@ -61,6 +61,7 @@ public class GameDirector : MonoBehaviour
     public IEnumerator LoadNextStage()
     {
         SetStageLoopBgm(false);
+        SoundManager.Instance.ClearLoop();
 
         ++stageIndex;
         if (stageIndex == stageInfos.Count)
@@ -85,7 +86,6 @@ public class GameDirector : MonoBehaviour
     {
         PlayerControl.transform.SetParent(transform);
         PlayerControl.ResetPlayerStatus();
-        SetStageLoopBgm(false);
         stageIndex = -1;
         SceneManager.LoadScene("TitleScreen", LoadSceneMode.Single);
         SetStageLoopBgm(true);

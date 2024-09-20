@@ -10,6 +10,8 @@ public class FlameThrowerTrap : MonoBehaviour
     [SerializeField] private int damage;
     [SerializeField] private ParticleSystem effect;
     [SerializeField] private GameObject hitEffect;
+    [SerializeField] private bool enableSfx = false;
+    private const float ACTIVATE_DELAY = 3f;
     private float hitTimer;
 
     void OnEnable()
@@ -40,6 +42,8 @@ public class FlameThrowerTrap : MonoBehaviour
 
     IEnumerator FlameThrower()
     {
+        yield return new WaitForSeconds(ACTIVATE_DELAY);
+
         while (gameObject.activeSelf)
         {
             var coll = effect.collision;
@@ -47,6 +51,7 @@ public class FlameThrowerTrap : MonoBehaviour
             hitTimer = 0f;
             effect.Play();
             coll.enabled = true;
+            if (enableSfx) SoundManager.Instance.PlaySound("flamethrower");
             yield return new WaitForSeconds(interval);
 
             hitTimer = 0f;

@@ -1182,23 +1182,23 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3624100848521550685}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0644a0546a65dca41ba499fc4c541400, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 0
-  maxHp: 100
+  maxHp: 750
   walkSpeed: 7
-  runSpeed: 10
+  runSpeed: 9
   playerControl: {fileID: 0}
   startTrasform: {fileID: 4172131224096474963}
   animator: {fileID: 4111837621694349700}
-  skill1Probability: 15
-  skill2Probability: 10
-  skill1Damage: 10
-  skill2Damage: 10
-  baseAttackDamage: 10
+  skill1Probability: 20
+  skill2Probability: 20
+  skill1Damage: 45
+  skill2Damage: 70
+  baseAttackDamage: 30
   skill1Range: 20
   skill2Range: 15
   baseAttackRange: 6
@@ -1209,7 +1209,6 @@ MonoBehaviour:
   hitEffect: {fileID: 5643653902188550112, guid: 140ae681c784a4d409f03a41371ce945, type: 3}
   material: {fileID: 2100000, guid: 2adcd0740dbab9543950e17d5421900e, type: 2}
   DamageTextPrefab: {fileID: 3445122839428053434, guid: d6754630e4fa17f4bbe9a71a58806e8d, type: 3}
-  slashAttackItem: {fileID: 6403366432721289831, guid: 84ed1c246d481ab40b3bbb3554a067af, type: 3}
   hpbarUi: {fileID: 0}
 --- !u!1 &3852976472167282488
 GameObject:

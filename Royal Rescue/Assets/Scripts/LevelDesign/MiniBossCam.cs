@@ -64,6 +64,7 @@ public class MiniBossCam : DoorTrap
     {
         SwitchCamera(mainCamera, bossCamera);
 
+        SoundManager.Instance.PlaySound("MiniBossStartSound");
         yield return new WaitForSeconds(1f);
         SwitchCamera(bossCamera, mainCamera);
         yield return new WaitForSeconds(0.5f);

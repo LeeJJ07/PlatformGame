@@ -1207,6 +1207,7 @@ MonoBehaviour:
   chaseState: {fileID: 0}
   attackState: {fileID: 3374959597766693554}
   deathState: {fileID: 5334547176081078864}
+  isIdle: 0
   isDetect: 0
   isAttack: 0
   detecting: 0
@@ -1247,7 +1248,7 @@ MonoBehaviour:
   hitPoint: {fileID: 0}
   AttackSoundsync: 0
   projectile: {fileID: 2998339043173544459, guid: af932cdfa6174ee4ca3b63cb051301bd, type: 3}
-  attackSpeed: 0.5
+  attackSpeed: 0.75
 --- !u!114 &5334547176081078864
 MonoBehaviour:
   m_ObjectHideFlags: 0

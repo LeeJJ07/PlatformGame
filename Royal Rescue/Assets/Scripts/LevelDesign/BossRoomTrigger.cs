@@ -67,6 +67,7 @@ public class BossRoomTrigger : DoorTrap
         else
             bossDeathCamera.transform.position = new Vector3(boss.transform.position.x - 17f, deathCamPos.y, deathCamPos.z);
 
+        GameDirector.instance.SetStageLoopBgm(false);
         SwitchCamera(mainCamera, bossDeathCamera);
         bossDeathCamAnim.Play(AnimationHash.BOSSROOM_CUTSCENE_BOSS_DEATH);
         yield return new WaitForSeconds(3f);

@@ -38,6 +38,8 @@ public class MiniBossSkill1Attack : INode
         {
             isAttack = true;
             animator.SetTrigger("run");
+
+            SoundManager.Instance.PlaySound("MiniBossRunRoar");
         }
         if (delay || (Mathf.Abs(dirX) < 5f))
         {
@@ -45,6 +47,8 @@ public class MiniBossSkill1Attack : INode
             {
                 transform.eulerAngles = new Vector3(0f, 180f - 90 * dirX / Mathf.Abs(dirX), 0f);
                 animator.SetTrigger("skill1");
+
+                SoundManager.Instance.PlaySound("MiniBossSwing");
                 
             }else if (time > 0.6f && !transform.GetChild(3).gameObject.activeSelf) {
                 transform.GetChild(3).gameObject.SetActive(true);

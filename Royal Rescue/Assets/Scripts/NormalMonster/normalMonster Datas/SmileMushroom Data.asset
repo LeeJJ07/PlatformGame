@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: SmileMushroom Data
   m_EditorClassIdentifier: 
   hp: 70
-  damage: 10
+  damage: 15
   awakeRange: 2
   sightRange: 5
   attackRange: 1.5
   moveSpeed: 2
-  runSpeed: 3
+  runSpeed: 3.5
   detectingAngle: 50
   patrolSound: MonsterChase
   chaseSound: MonsterChase

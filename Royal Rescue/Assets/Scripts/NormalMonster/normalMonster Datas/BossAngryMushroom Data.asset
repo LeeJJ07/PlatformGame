@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d04d0cff343e0df40a0b94c49a1dfe78, type: 3}
+  m_Name: BossAngryMushroom Data
+  m_EditorClassIdentifier: 
+  hp: 300
+  damage: 30
+  awakeRange: 7
+  sightRange: 10
+  attackRange: 3.5
+  moveSpeed: 5
+  runSpeed: 6.5
+  detectingAngle: 50
+  patrolSound: MonsterChase
+  chaseSound: MonsterChase
+  attackSound: MonsterAttack
+  dieSound: MonsterDie

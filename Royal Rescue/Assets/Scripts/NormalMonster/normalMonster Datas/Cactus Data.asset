@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04d0cff343e0df40a0b94c49a1dfe78, type: 3}
   m_Name: Cactus Data
   m_EditorClassIdentifier: 
-  hp: 80
-  damage: 20
-  awakeRange: 3
+  hp: 120
+  damage: 25
+  awakeRange: 4
   sightRange: 5
   attackRange: 1.5
   moveSpeed: 2
-  runSpeed: 3
+  runSpeed: 4
   detectingAngle: 50
   patrolSound: MonsterChase
   chaseSound: MonsterChase
