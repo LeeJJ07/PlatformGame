@@ -32,8 +32,8 @@ public class SettingsMenu : UIMenu
         volumeSliders[(int)SoundType.EFFECT].value = ConvertVolumeToValue(SoundManager.Instance.CurrentSFXVolume);
         base.Start();
 
-        FindMatchingResolution();
         isFullScreen = Screen.fullScreen;
+        FindMatchingResolution();
     }
 
     void OnDisable()
@@ -113,7 +113,7 @@ public class SettingsMenu : UIMenu
         resolutionIndex = Mathf.Clamp(resolutionIndex, MIN_RESOLUTION, MAX_RESOLUTION);
         (int, int) currentResolution = (240 * resolutionIndex, 135 * resolutionIndex);
         resolutionText.text = $"{currentResolution.Item1} x {currentResolution.Item2}";
-        Screen.SetResolution(currentResolution.Item1, currentResolution.Item2, Screen.fullScreen);
+        Screen.SetResolution(currentResolution.Item1, currentResolution.Item2, isFullScreen);
     }
 
     private void CheckExitMenu()

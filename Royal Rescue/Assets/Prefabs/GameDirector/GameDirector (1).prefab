@@ -2157,10 +2157,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -2990,10 +2990,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -6617,6 +6617,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   uiCanvas: {fileID: 2771430953049782395}
   playerUiCanvas: {fileID: 1832487282107713257}
+  playerInventoryCanvas: {fileID: 2630085651747628996}
   loadScreenFade: {fileID: 1398317422201383123}
   loadingScreenCam: {fileID: 7558620901123320077}
   loadscreenFadeAnim: {fileID: 2637093259760955808}
@@ -8062,7 +8063,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5130297143477228180, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       propertyPath: coin
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5130297143477228180, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       propertyPath: coinUI
@@ -9255,6 +9256,18 @@ PrefabInstance:
     - target: {fileID: 1088105372274239260, guid: 2cbc4efc07185c5499bd40ad64e61f1f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1968607871411032420, guid: 2cbc4efc07185c5499bd40ad64e61f1f, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1968607871411032420, guid: 2cbc4efc07185c5499bd40ad64e61f1f, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 1968607871411032420, guid: 2cbc4efc07185c5499bd40ad64e61f1f, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 3601520343686597530, guid: 2cbc4efc07185c5499bd40ad64e61f1f, type: 3}
       propertyPath: m_Name

@@ -55,9 +55,17 @@ public class DisappearingPlatform : MonoBehaviour
         }
         else
         {
-            platformCollider.enabled = (platformState != PlatformState.DISAPPEAR);
+            platformCollider.enabled = (platformState == PlatformState.APPEAR);
+            SetPlatformVisibility(platformState == PlatformState.APPEAR);
             state = PlatformState.DEFAULT;
         }
+    }
+
+    private void SetPlatformVisibility(bool isVisible)
+    {
+        int alphaValue = Convert.ToInt32(isVisible);
+        platformRenderer.materials[0].color = new Color(originalColor1.r, originalColor1.g, originalColor1.b, alphaValue);
+        platformRenderer.materials[1].color = new Color(originalColor2.r, originalColor2.g, originalColor2.b, alphaValue);
     }
 }
 public enum PlatformState { DEFAULT, APPEAR, DISAPPEAR }

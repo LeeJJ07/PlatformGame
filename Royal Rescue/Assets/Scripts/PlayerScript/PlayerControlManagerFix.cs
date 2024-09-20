@@ -154,7 +154,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!isDie)
+        if (AllowUserInput())
         {
             GetInput();
             move();
@@ -713,6 +713,11 @@ public class PlayerControlManagerFix : MonoBehaviour
         return Input.GetKeyDown(KeyCode.I);
     }
 
+    private bool AllowUserInput()
+    {
+        return !isDie && !GameDirector.instance.IsLoadingScreen && !AltarPortal.IsEnteringAltarPortal;
+    }
+
     //inventory 및 items
 
     private void CachePlayerStatus()
@@ -728,7 +733,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         playerHP = playerMaxHP = PLAYER_MAX_HP;
         moveSpeed = ogMoveSpeed;
         playerBasicATK = ogPlayerBasicATK;
-        coin = ogCoin;
+        Coin = ogCoin;
     }
 }
 
