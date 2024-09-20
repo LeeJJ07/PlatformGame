@@ -8,7 +8,6 @@ public class Potion : MonoBehaviour
 {
     public UnityEngine.UI.Image itemImage; // 아이템의 이미지.
     private float coolTime;
-    public int potionCount;//포션 갯수 플레이어에게 받아와야함
 
     public TMP_Text textCoolTime;
     private PlayerControlManagerFix playerCntl;
@@ -39,7 +38,7 @@ public class Potion : MonoBehaviour
     {
         if (Input.GetButtonDown("DrinkingPotion") && isDrinkingPotion)
         {
-            if(potionCount > 0 && playerCntl.playerHP < playerCntl.playerMaxHP)
+            if(playerCntl.inventory.healPotionCount > 0 && playerCntl.playerHP < playerCntl.playerMaxHP)
             {
                 SoundManager.Instance.PlaySound("DrinkingPotion");
                 isDrinkingPotion = false;
@@ -49,25 +48,14 @@ public class Potion : MonoBehaviour
                     playerCntl.playerHP = playerCntl.playerMaxHP;
                 StartCoroutine(PotionCoolTimeRoutine());
             }
-            else if(playerCntl.playerHP == playerCntl.playerMaxHP)
-            {
-                Debug.Log("HP가 이미 최대치임");
-            }
-            else
-            {
-                Debug.Log("Not enough potion");
-            }
         }
-        text_Count.text = potionCount.ToString();
+        text_Count.text = playerCntl.inventory.healPotionCount.ToString();
     }
-
-    // 아이템 획득
-
 
 
     private IEnumerator PotionCoolTimeRoutine()
     {
-        potionCount -= 1;
+        playerCntl.inventory.healPotionCount--;
         coolTime = skillCollDown;
         Debug.Log(textCoolTime);
         this.textCoolTime.gameObject.SetActive(true);
@@ -85,14 +73,10 @@ public class Potion : MonoBehaviour
             if (time <= 0)
             {
                 isDrinkingPotion = true;
-                Debug.Log("약빨기 가능");
                 this.textCoolTime.gameObject.SetActive(false);
                 break;
             }
             yield return null;
         }
-
-        //this.coolTimeRoutine = null;
-
     }
 }
