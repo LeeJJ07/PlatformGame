@@ -39,6 +39,7 @@ public class MiniBossBaseAttack : INode
         if (time == 0f)
         {
             animator.SetTrigger("baseAttack");
+            SoundManager.Instance.PlaySound("MiniBossSwing");
             transform.eulerAngles = new Vector3(0f, 180f - 90 * dirX / Mathf.Abs(dirX), 0f);
         }
         else if(time>0.4f && !transform.GetChild(2).gameObject.activeSelf)

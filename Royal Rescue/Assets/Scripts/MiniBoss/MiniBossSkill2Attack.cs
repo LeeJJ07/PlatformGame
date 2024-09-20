@@ -47,6 +47,7 @@ public class MiniBossSkill2Attack : INode
             transform.GetChild(4).gameObject.transform.localRotation = Quaternion.Euler(0f, -dirX / Mathf.Abs(dirX) * 30f, 0f);
             
             animator.SetTrigger("jump");
+            SoundManager.Instance.PlaySound("MiniBossSkill2Roar");
         }
         time += Time.deltaTime;
         return INode.NodeState.Running;

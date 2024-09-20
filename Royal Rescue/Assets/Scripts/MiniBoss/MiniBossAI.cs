@@ -198,6 +198,7 @@ public class MiniBossAI : MonoBehaviour
     public int GetSkill2Damage() { return skill2Damage; }
     IEnumerator DeActive()
     {
+        SoundManager.Instance.PlaySound("MiniBossDie");
         hpbarUi.DeActivateUI();
         yield return new WaitForSeconds(3f);
         gameObject.SetActive(false);

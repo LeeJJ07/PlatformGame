@@ -264,9 +264,8 @@ public class PlayerControlManagerFix : MonoBehaviour
             }
             else if ((moveVec == Vector3.zero || !isFloor) && isRunning)
             {
-
-                    SoundManager.Instance.StopLoopSound("RunMove");
-                    isRunning = false;
+                SoundManager.Instance.StopLoopSound("RunMove");
+                isRunning = false;
             }
 
             anim.SetBool("Run", moveVec != Vector3.zero && isFloor);
