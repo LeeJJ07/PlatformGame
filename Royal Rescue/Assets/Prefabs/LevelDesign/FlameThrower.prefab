@@ -9826,7 +9826,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interval: 2
   hitInterval: 0.5
-  damage: 2
+  damage: 10
   effect: {fileID: 3585478327762153887}
   hitEffect: {fileID: 1374287034565198861, guid: b25c778e65c5ac348945ae9a992f5556, type: 3}
 --- !u!198 &3585478327762153887

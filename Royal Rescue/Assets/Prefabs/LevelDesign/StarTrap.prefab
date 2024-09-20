@@ -197,7 +197,7 @@ MonoBehaviour:
   hitEffect: {fileID: 1374287034565198861, guid: b25c778e65c5ac348945ae9a992f5556, type: 3}
   horizontalForce: 0
   verticalForce: 0
-  damage: 3
+  damage: 10
 --- !u!65 &6965760382789037262
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 //�����...
@@ -22,6 +23,8 @@ public class BossBehaviour : MonoBehaviour,ITag
     [SerializeField] Transform flamePosition;
     [SerializeField] Collider[] bossColliders;
     [SerializeField] Animator aniController;
+    [SerializeField] GameObject DamageTextPrefab;
+    Canvas uiCanvas;
 
     [Header("보스 인트로 후 딜레이")]
     [SerializeField] float endEntrystateNdelay;
@@ -424,6 +427,7 @@ public class BossBehaviour : MonoBehaviour,ITag
 
         angryLight.SetActive(false);
         flamePrefabsObject.SetActive(false);
+        uiCanvas = GameObject.Find("InGame Canvas").GetComponent<Canvas>();
         playerControl = GameDirector.instance.PlayerControl;
         Bt = new BehaviorTreeRunner(root);
     }
@@ -601,24 +605,37 @@ public class BossBehaviour : MonoBehaviour,ITag
             hitEffectObj.GetComponent<HitEffect>().StartCoroutine("Start");
 
         }
+        
 
         isHit = false;
         bossColliders[1].enabled = false;
+        int dmg = 0;
         switch (tag)
         {
             case "Weapon":
-                hp -= playerControl.GetBasicDamage();
+                dmg = playerControl.GetBasicDamage();
                 //Debug.Log("일반 공격 받음");
                 break;
             case "Bomb":
-                hp -= playerControl.GetBombDamage();
+                dmg = playerControl.GetBombDamage();
                 //Debug.Log("폭탄공격 받음");
                 break;
             case "SlashAttack":
-                hp -= playerControl.GetSlashAttackDamage();
+                dmg = playerControl.GetSlashAttackDamage();
                 //Debug.Log("검기 공격 받음");
                 break;
         }
+        hp -= dmg;
+
+        Vector3 nVec = new Vector3(0, 2.5f, 0);
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position + nVec); // 몬스터의 월드 3d좌표를 스크린좌표로 변환
+        Vector2 localPos = Vector2.zero;
+        GameObject damageUI = Instantiate(DamageTextPrefab) as GameObject;
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.GetComponent<RectTransform>(), screenPos, uiCanvas.worldCamera, out localPos); // 스크린 좌표를 다시 체력바 UI 캔버스 좌표로 변환
+        damageUI.GetComponent<DamageText>().damage = dmg;
+        damageUI.transform.SetParent(uiCanvas.transform, false);
+        damageUI.transform.localPosition = localPos;
+
         if (hpbarUi)
             hpbarUi.ChangeHpValue((int)hp);
         yield return new WaitForSeconds(0.5f);
