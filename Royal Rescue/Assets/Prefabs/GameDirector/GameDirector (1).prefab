@@ -6622,13 +6622,13 @@ MonoBehaviour:
   respawnDelay: 1.5
   stageInfos:
   - stageName: Stage1
-    loopBgm: BlizzardCastle
+    loopBgm: Stage1_bgm
   - stageName: Stage2
-    loopBgm: BlizzardCastle
+    loopBgm: Stage2_bgm
   - stageName: Stage3
-    loopBgm: BlizzardCastle
+    loopBgm: Stage3_bgm
   - stageName: Stage4
-    loopBgm: BossBattle
+    loopBgm: Stage4_bgm
 --- !u!114 &2816153291010540167
 MonoBehaviour:
   m_ObjectHideFlags: 0
