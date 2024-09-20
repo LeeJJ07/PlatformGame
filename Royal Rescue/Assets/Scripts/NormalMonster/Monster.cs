@@ -265,9 +265,9 @@ public class Monster : MonoBehaviour
         Vector3 nVec = new Vector3(0, 2.5f, 0);
         if (gameObject.CompareTag("BeholderMonster"))
             nVec += new Vector3(0, 0.5f, 0);
-        var screenPos = Camera.main.WorldToScreenPoint(transform.position + nVec); // 몬스터의 월드 3d좌표를 스크린좌표로 변환
+        var screenPos = Camera.main.WorldToScreenPoint(transform.position + nVec);
         var localPos = Vector2.zero;
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.GetComponent<RectTransform>(), screenPos, uiCanvas.worldCamera, out localPos); // 스크린 좌표를 다시 체력바 UI 캔버스 좌표로 변환
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.GetComponent<RectTransform>(), screenPos, uiCanvas.worldCamera, out localPos);
 
         GameObject damageUI = Instantiate(DamageTextPrefab) as GameObject;
         damageUI.GetComponent<DamageText>().damage = dmg;

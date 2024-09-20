@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04d0cff343e0df40a0b94c49a1dfe78, type: 3}
   m_Name: Turtle Data
   m_EditorClassIdentifier: 
-  hp: 120
-  damage: 5
+  hp: 160
+  damage: 7
   awakeRange: 0
   sightRange: 5
-  attackRange: 1.5
+  attackRange: 1.55
   moveSpeed: 1
-  runSpeed: 2
+  runSpeed: 3
   detectingAngle: 50
   patrolSound: MonsterChase
   chaseSound: MonsterChase

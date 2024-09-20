@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04d0cff343e0df40a0b94c49a1dfe78, type: 3}
   m_Name: Slime Data
   m_EditorClassIdentifier: 
-  hp: 50
-  damage: 10
+  hp: 70
+  damage: 12
   awakeRange: 0
   sightRange: 5
-  attackRange: 1.5
+  attackRange: 1.25
   moveSpeed: 2
   runSpeed: 2.5
   detectingAngle: 50

@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d04d0cff343e0df40a0b94c49a1dfe78, type: 3}
   m_Name: AngryMushroom Data
   m_EditorClassIdentifier: 
-  hp: 100
-  damage: 15
-  awakeRange: 2
+  hp: 120
+  damage: 20
+  awakeRange: 2.5
   sightRange: 5
   attackRange: 1.5
   moveSpeed: 3

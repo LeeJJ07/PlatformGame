@@ -15,9 +15,10 @@ public class HitPointController : MonoBehaviour
         {
             Vector3 dir = (other.gameObject.transform.position - transform.position).normalized;
             other.gameObject.GetComponent<Rigidbody>().AddForce(dir * 5f, ForceMode.Impulse);
-            
-            GameDirector.instance.PlayerControl.HurtPlayer(monster.getDamage());
-            
+
+
+            int dmg = monster.getDamage() + Random.Range(0, 6);
+            GameDirector.instance.PlayerControl.HurtPlayer(dmg);
         }
     }
 }

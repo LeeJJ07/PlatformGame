@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d04d0cff343e0df40a0b94c49a1dfe78, type: 3}
-  m_Name: SmileMushroom Data
+  m_Name: BossAngryMushroom Data
   m_EditorClassIdentifier: 
-  hp: 70
-  damage: 15
-  awakeRange: 2
-  sightRange: 5
-  attackRange: 1.5
-  moveSpeed: 2
-  runSpeed: 3.5
+  hp: 300
+  damage: 30
+  awakeRange: 7
+  sightRange: 10
+  attackRange: 4
+  moveSpeed: 3
+  runSpeed: 5.5
   detectingAngle: 50
   patrolSound: MonsterChase
   chaseSound: MonsterChase
