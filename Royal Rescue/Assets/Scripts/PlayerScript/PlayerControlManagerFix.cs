@@ -26,7 +26,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     public float hAxis;
     public float vAxis;
     public float dash = 5f;
-    public int skillCount = 5;
+    //public int skillCount = 5;
     public float dashCoolDown;
     public GameObject weapons;
     public GameObject fireBallPrefabs;
@@ -168,7 +168,7 @@ public class PlayerControlManagerFix : MonoBehaviour
                 CheckDash();
             }
 
-            if (skillCount > 0 && !isFbPossible)
+            if (!isFbPossible)
             {
                 if (Input.GetButtonDown("FireBallKey") && !isBombStart)
                 {
@@ -366,7 +366,7 @@ public class PlayerControlManagerFix : MonoBehaviour
 
     public void ThrowBall()
     {
-        if(skillCount > 0 && !isFbPossible)
+        if(!isFbPossible)
         {
             GameObject fBall;
             isFbPossible = true;
@@ -374,17 +374,18 @@ public class PlayerControlManagerFix : MonoBehaviour
             fBall.GetComponent<FireBallControl>().throwForce = Mathf.Lerp(minThrowPower, maxThrowPower, holdTime / maxHoldTime);
             fBall.GetComponent<FireBallControl>().ballDir = isDirRight ? Vector3.right : Vector3.left;
             anim.SetTrigger("FireBallTr");
-            skillCount -= 1;
+            //skillCount -= 1;
             StartCoroutine("CheckFireBall");
 
 
             ClearTrajectory(); // 궤적을 지움
         }
+        /*
         else if (skillCount == 0)
         {
             Debug.Log("횟수를 모두 사용");
             return;
-        }
+        }*/
         
     }
 
@@ -452,8 +453,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     }
     IEnumerator CheckFireBall()
     {
-        Debug.Log("남은 횟수 : " + skillCount);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(10f);
         isFbPossible = false;
         isBombStart = false;
 

@@ -4,18 +4,12 @@ using UnityEngine;
 
 public class SwordWindControl : MonoBehaviour
 {
-    //Rigidbody rigidbody;
     public float throwForce = 20;
     public bool isFireball = false;
     public Vector3 ballDir;
     public int slashDamage = 35;
     public GameObject explosionEffect;
     public GameObject target;
-    // Start is called before the first frame update
-    void Start()
-    {
-        //rigidbody = GetComponent<Rigidbody>();
-    }
     private void Update()
     {
         transform.position += throwForce * ballDir * Time.deltaTime;
@@ -24,12 +18,6 @@ public class SwordWindControl : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         Debug.Log(other.collider.tag);
-        if (other.gameObject.CompareTag("Monster"))
-        {
-           /* EnemyControler enemyHP = other.gameObject.GetComponent<EnemyControler>();
-            enemyHP.health -= slashDamage;
-            Debug.Log("적에게 검기 명중");*/
-        }
         if (other.gameObject.CompareTag("Player"))
         {
             return;

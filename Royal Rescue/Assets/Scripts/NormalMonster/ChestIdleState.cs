@@ -31,6 +31,7 @@ public class ChestIdleState : MonoBehaviour, IState
         monster.GetComponent<Collider>().enabled = true;
         animator.SetBool("isLive", true);
         poisonParticle.Play();
+        SoundManager.Instance.PlaySound("ChestMonster_Burp");
     }
     IEnumerator ActiveExclamation()
     {

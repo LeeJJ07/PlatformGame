@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Potion : MonoBehaviour
 {
-    public UnityEngine.UI.Image itemImage; // ¾ÆÀÌÅÛÀÇ ÀÌ¹ÌÁö.
+    public UnityEngine.UI.Image itemImage; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½.
     private float coolTime;
 
     public TMP_Text textCoolTime;
@@ -17,7 +17,7 @@ public class Potion : MonoBehaviour
     public int skillCollDown;
     private bool isDrinkingPotion = true;
 
-    // ÇÊ¿äÇÑ ÄÄÆ÷³ÍÆ®.
+    // ï¿½Ê¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®.
     [SerializeField]
     private UnityEngine.UI.Text text_Count;
     [SerializeField]
@@ -67,7 +67,6 @@ public class Potion : MonoBehaviour
             this.textCoolTime.text = time.ToString("F1");
 
             var per = time / this.coolTime;
-            //Debug.Log(per);
             this.imgFill.fillAmount = per;
 
             if (time <= 0)

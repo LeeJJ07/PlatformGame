@@ -37996,12 +37996,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5871504914781970716, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
-      propertyPath: trajectoryResolution
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 6016397767505687406, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.1
+      propertyPath: isAttackEnhance
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6844445951288654855, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
       propertyPath: m_AnchorMax.y
@@ -38054,10 +38050,6 @@ PrefabInstance:
     - target: {fileID: 7635015812050295078, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
       propertyPath: m_Name
       value: GameDirector (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 7789183561881017163, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
-      propertyPath: m_ApplyActiveColorSpace
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7935271994323905602, guid: f44244a278364df49a8b00b6cb8b98a2, type: 3}
       propertyPath: m_LocalPosition.x

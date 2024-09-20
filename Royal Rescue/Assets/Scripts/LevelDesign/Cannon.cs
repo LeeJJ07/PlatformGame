@@ -21,6 +21,7 @@ public class Cannon : MonoBehaviour
 
     void FireCannonBall()
     {
+        SoundManager.Instance.PlaySound("Cannonball");
         GameObject ball = Instantiate(cannonBall, spawnPoint.position, cannon.rotation);
         ball.transform.SetParent(transform);
         explosionEffect.Play();

@@ -10,12 +10,13 @@ public class UISkillBtn : MonoBehaviour
 
     public TMP_Text textCoolTime;
     public GameObject player;
-    [SerializeField]private bool skillTimer = false;
-    private Coroutine coolTimeRoutine;
     public GameObject thisSkill;
     public string skillName;
     public Image imgFill;
-    [SerializeField] private float skillCollDown = 3.0f;
+    private int skillCnt;
+    private Coroutine coolTimeRoutine;
+    private float skillCollDown = 10.0f;
+    private float dashCollDown = 1.0f;
 
 
     public void Init()//해당 스크립트 돌아갈 때 상태 초기화
@@ -32,11 +33,6 @@ public class UISkillBtn : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetButtonDown("FireBallKey") && !skillTimer)
-        {
-                skillTimer = true;
-        }
-
         if (Input.GetButtonDown(skillName) && coolTimeRoutine == null)
         {
             if (skillName == "Dash")
@@ -44,12 +40,11 @@ public class UISkillBtn : MonoBehaviour
                 coolTimeRoutine = StartCoroutine(DashCoolTimeRoutine());
             }
         }
-        else if (Input.GetButtonUp(skillName) && coolTimeRoutine == null && skillTimer)
+        else if (Input.GetButtonUp(skillName) && coolTimeRoutine == null)
         {
-            if (skillName == "FireBallKey")
+            if (skillName == "FireBallKey" /*&& GameDirector.instance.PlayerControl.skillCount > 0*/)
             {
                 coolTimeRoutine = StartCoroutine(FbCoolTimeRoutine());
-                StartCoroutine(FbTimerRoutine());
             }
         }
     }
@@ -58,7 +53,7 @@ public class UISkillBtn : MonoBehaviour
     private IEnumerator DashCoolTimeRoutine()
     {
         
-        coolTime = skillCollDown;
+        coolTime = dashCollDown;
         Debug.Log(textCoolTime);
         this.textCoolTime.gameObject.SetActive(true);
         var time = this.coolTime;
@@ -111,11 +106,7 @@ public class UISkillBtn : MonoBehaviour
         
 
     }
-    private IEnumerator FbTimerRoutine()
-    {
-        yield return new WaitForSeconds(3f);
-        skillTimer = false;
-    }
+    
 
 
 }
