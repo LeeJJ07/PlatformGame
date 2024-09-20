@@ -712,7 +712,7 @@ public class PlayerControlManagerFix : MonoBehaviour
         Coin = ogCoin;
         isFbPossible = false;
         isAttackEnhance = false;
-        UiskillCool.GetComponent<UISkillBtn>().ResetUi();
+        if (UiskillCool != null) UiskillCool.GetComponent<UISkillBtn>()?.ResetUi();
     }
 }
 

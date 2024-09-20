@@ -43,7 +43,7 @@ public class SoundManager : MonoBehaviour
     {
         AudioClip clip = clipsDictionary[clipName];
 
-        if (clip == null) { Debug.LogError(clipName + "이 존재하지 않습니다."); }
+        if (clip == null) { Debug.LogWarning(clipName + "이 존재하지 않습니다."); }
 
         return clip;
     }
