@@ -29,5 +29,5 @@ MonoBehaviour:
   rushSpeed: 20
   hitRange: 9.5
   subSequenceDelay: 5
-  playSoundTime: 0
+  playSoundTime: 0.5
   damage: 100
