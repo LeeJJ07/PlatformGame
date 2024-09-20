@@ -92,7 +92,5 @@ public class Potion : MonoBehaviour
             yield return null;
         }
 
-        //this.coolTimeRoutine = null;
-
     }
 }

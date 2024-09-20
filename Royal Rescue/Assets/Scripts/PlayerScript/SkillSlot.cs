@@ -6,13 +6,10 @@ using Unity.VisualScripting;
 
 public class SkillSlot : MonoBehaviour
 {
-    [SerializeField]
-    private UnityEngine.UI.Text text_Count;
-    [SerializeField]
-    private GameObject go_CountImage;
+    [SerializeField]private UnityEngine.UI.Text text_Count;
+    [SerializeField]private GameObject go_CountImage;
     public GameObject player;
     private int fireBallCnt;
-    // Start is called before the first frame update
 
     // Update is called once per frame
     void Update()
