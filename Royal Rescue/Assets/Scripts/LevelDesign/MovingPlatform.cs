@@ -1,8 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
-
-
 public class MovingPlatform : MonoBehaviour
 {
     [SerializeField] float speedX = 1f;
@@ -21,6 +21,41 @@ public class MovingPlatform : MonoBehaviour
         bspin = spinningPlatform != null;
     }
 
+    Coroutine coMove = null;
+    IEnumerator CoMove(PlayerControlManagerFix player)
+    {
+        float prePosX = transform.position.x;
+        while(true)
+        {
+            float posX = prePosX - transform.position.x;
+            player.transform.position = player.transform.position + (Vector3.left * posX);
+            prePosX = transform.position.x;
+
+            yield return null;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.transform.TryGetComponent<PlayerControlManagerFix>(out PlayerControlManagerFix player))
+        {
+            Debug.Log("enter");
+            if(coMove != null) StopCoroutine(coMove);
+            coMove = StartCoroutine(CoMove(player));
+        }
+
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("exit");
+            StopCoroutine(coMove);
+            //coMove = null;
+        }
+    }
+
     void FixedUpdate()
     {
         if ((transform.position - startPos).magnitude >= area)
@@ -34,6 +69,7 @@ public class MovingPlatform : MonoBehaviour
                 spinningPlatform.ChangeDirection();
             }
         }
+
 
         Vector3 speed = new(speedX, speedY, speedZ);
         rb.MovePosition(transform.position + speed * Time.fixedDeltaTime);

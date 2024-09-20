@@ -4328,7 +4328,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImage: {fileID: 0}
-  potionCount: 5
   textCoolTime: {fileID: 2245673010468379962}
   thisSkill: {fileID: 5036276755627548372}
   imgFill: {fileID: 686659361420264862}
@@ -8580,9 +8579,6 @@ PrefabInstance:
     - {fileID: 6071933213773140469, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7054254038125191259, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2674277463108712333}
     - targetCorrespondingSourceObject: {fileID: 273483473495935710, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7789183561881017163}
@@ -8706,27 +8702,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7054254038125191259, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
   m_PrefabInstance: {fileID: 1606022062548415368}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &2674277463108712333
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8623269734687855571}
-  m_Material: {fileID: 13400000, guid: f7e3cf4ba0c9abd459c234e91251478f, type: 2}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.47365856, y: 1.4024549, z: 0.5248105}
-  m_Center: {x: -0.07894611, y: -0.030581713, z: -0.024818689}
 --- !u!114 &8730418631561762099 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8025715749833385659, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
