@@ -66,6 +66,10 @@ public class SoundManager : MonoBehaviour
         Debug.LogWarning(clipName + "을 찾을 수 없습니다.");
     }
 
+    public void ClearLoop()
+    {
+        loopSounds.Clear(); 
+    }
     public void PlaySound(string clipName, bool isLoop = false, SoundType type = SoundType.EFFECT)
     {
         GameObject obj = new GameObject(clipName + "Sound");
