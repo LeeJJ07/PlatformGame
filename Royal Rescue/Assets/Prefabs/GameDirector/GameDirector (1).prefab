@@ -6845,8 +6845,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detailTag: BossHpUI
   hpSlider: {fileID: 8897661870386956386}
+  hpBarColor: {fileID: 6327596733121217890}
   TMPname: {fileID: 2549228387652236397}
   HpbarAniCTRL: {fileID: 6998546988016722504}
+  hpBarColors:
+  - {r: 1, g: 0.89338535, b: 0, a: 1}
+  - {r: 1, g: 0.5641353, b: 0, a: 1}
+  - {r: 1, g: 0, b: 0, a: 1}
 --- !u!95 &6998546988016722504
 Animator:
   serializedVersion: 5

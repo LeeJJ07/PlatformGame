@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,8 +6,12 @@ public class BossHpBarUI : MonoBehaviour,ITag
 {
     [SerializeField] string detailTag;
     [SerializeField] Slider hpSlider;
+    [SerializeField] Image hpBarColor;
     [SerializeField] TextMeshProUGUI TMPname;
     [SerializeField] Animator HpbarAniCTRL;
+    [SerializeField] Color[] hpBarColors;
+    int colorIndex = 0;
+    int hpIndex = 0;
     int maxHp = 1;
     float[] hpColorChangeNum= new float[3];
     string bossName = "";
@@ -29,11 +30,14 @@ public class BossHpBarUI : MonoBehaviour,ITag
             hpSlider = GetComponentInChildren<Slider>();
         if(!TMPname)
             TMPname = GetComponentInChildren<TextMeshProUGUI>();
-
+        if(hpColorChangeNum!=null)
+            colorIndex = hpColorChangeNum.Length;
+        hpIndex = 0;
         this.maxHp = maxHp;
         this.hpColorChangeNum = hpColorChangeNum;
         this.bossName = name;
         hpSlider.value = 1;
+        ChangeHpBarColor(maxHp);
     }
     public void ActivateUI()
     {
@@ -49,8 +53,31 @@ public class BossHpBarUI : MonoBehaviour,ITag
     public void ChangeHpValue(int curHp)
     {
         hpSlider.value = (curHp/ (float)maxHp);
+        ChangeHpBarColor(curHp);
     }
+    void ChangeHpBarColor(int hp)
+    {
+        if (hpColorChangeNum == null)
+            return;
 
+        foreach (Color color in hpBarColors)
+        {
+            if ((hpIndex + 1) >= hpColorChangeNum.Length) break;
+            if (hp <= hpColorChangeNum[hpIndex] && hp > hpColorChangeNum[hpIndex + 1])
+            {
+                hpBarColor.color = color;
+                hpIndex = 0;
+                colorIndex = hpColorChangeNum.Length;
+                return;
+            }
+            colorIndex--;
+            hpIndex++;
+        }
+
+        hpBarColor.color = hpBarColors[hpBarColors.Length-1];
+        colorIndex = hpBarColors.Length;
+        hpIndex = 0;
+    }
     public string GetTag()
     {
         return detailTag;
