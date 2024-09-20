@@ -258,9 +258,9 @@ public class MiniBossAI : MonoBehaviour
         {
             originalColor = material.color;
             material.color = new Color(255, 125, 100, 100);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.06f);
             material.color = originalColor;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.06f);
         }
         takeAttack = false;
     }
