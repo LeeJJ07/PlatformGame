@@ -35,6 +35,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     public GameObject attackIcon;
     public GameObject SkillCharheEft;
     public GameObject SkillPCharheEft;
+    public GameObject UiskillCool;
     public Transform fireBallSpawnPoint;
     [SerializeField] private int jumpPossible = 2;
     private float attackDelay;
@@ -194,11 +195,10 @@ public class PlayerControlManagerFix : MonoBehaviour
                     if (isSkillCharging)
                     {
                         SoundManager.Instance.StopLoopSound("BombCharging");
-                        isSkillCharging = false;
-                        SkillCharheEft.SetActive(false);
-                        SkillPCharheEft.SetActive(false);
+                        isSkillCharging = false;                     
                     }
-
+                    SkillCharheEft.SetActive(false);
+                    SkillPCharheEft.SetActive(false);
                     ThrowBall();
 
                 }
@@ -710,6 +710,9 @@ public class PlayerControlManagerFix : MonoBehaviour
         moveSpeed = ogMoveSpeed;
         playerBasicATK = ogPlayerBasicATK;
         Coin = ogCoin;
+        isFbPossible = false;
+        isAttackEnhance = false;
+        UiskillCool.GetComponent<UISkillBtn>().ResetUi();
     }
 }
 
