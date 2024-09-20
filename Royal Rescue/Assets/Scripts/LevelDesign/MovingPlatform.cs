@@ -39,7 +39,6 @@ public class MovingPlatform : MonoBehaviour
     {
         if (collision.transform.TryGetComponent<PlayerControlManagerFix>(out PlayerControlManagerFix player))
         {
-            Debug.Log("enter");
             if(coMove != null) StopCoroutine(coMove);
             coMove = StartCoroutine(CoMove(player));
         }
@@ -50,7 +49,6 @@ public class MovingPlatform : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("exit");
             StopCoroutine(coMove);
             //coMove = null;
         }
