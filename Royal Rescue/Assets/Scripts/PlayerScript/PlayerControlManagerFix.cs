@@ -98,7 +98,7 @@ public class PlayerControlManagerFix : MonoBehaviour
     private Canvas uiCanvas;
     public GameObject DamageTextPrefab;
 
-    [SerializeField] private int coin = 0; // 코인 갯수
+    [SerializeField] private int coin = 0;
     [SerializeField] private CoinUI coinUI;
 
     public int Coin

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Potion : MonoBehaviour
 {
-    public UnityEngine.UI.Image itemImage; // �������� �̹���.
+    public UnityEngine.UI.Image itemImage;
     private float coolTime;
 
     public TMP_Text textCoolTime;
@@ -17,11 +17,13 @@ public class Potion : MonoBehaviour
     public int skillCollDown;
     private bool isDrinkingPotion = true;
 
-    // �ʿ��� ������Ʈ.
     [SerializeField]
     private UnityEngine.UI.Text text_Count;
     [SerializeField]
     private GameObject go_CountImage;
+
+    private Canvas uiCanvas;
+    public GameObject increaseHealthTextPrefab;
     public void Init()
     {
         this.textCoolTime.gameObject.SetActive(false);
@@ -32,6 +34,7 @@ public class Potion : MonoBehaviour
         playerCntl = GameDirector.instance.PlayerControl;
         this.textCoolTime.gameObject.SetActive(false);
 
+        uiCanvas = GameObject.Find("InGame Canvas").GetComponent<Canvas>();
         Init();
     }
     private void Update()
@@ -42,10 +45,14 @@ public class Potion : MonoBehaviour
             {
                 SoundManager.Instance.PlaySound("DrinkingPotion");
                 isDrinkingPotion = false;
+                HealingText(playerCntl.playerMaxHP - playerCntl.playerHP < 50 ? playerCntl.playerMaxHP - playerCntl.playerHP : 50);
+
                 if (playerCntl.playerHP + 50 <= playerCntl.playerMaxHP)
                     playerCntl.playerHP += 50;
                 else
                     playerCntl.playerHP = playerCntl.playerMaxHP;
+
+                playerCntl.inventory.healPotionCount--;
                 StartCoroutine(PotionCoolTimeRoutine());
             }
         }
@@ -55,7 +62,7 @@ public class Potion : MonoBehaviour
 
     private IEnumerator PotionCoolTimeRoutine()
     {
-        playerCntl.inventory.healPotionCount--;
+        
         coolTime = skillCollDown;
         this.textCoolTime.gameObject.SetActive(true);
         var time = this.coolTime;
@@ -75,6 +82,21 @@ public class Potion : MonoBehaviour
                 break;
             }
             yield return null;
+        }
+    }
+    private void HealingText(int healAmount) {
+        if (Camera.main != null) {
+            Vector3 nVec = new Vector3(0, 1.5f, 0);
+            var screenPos = Camera.main.WorldToScreenPoint(playerCntl.gameObject.transform.position + nVec);
+            var localPos = Vector2.zero;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.GetComponent<RectTransform>(), screenPos, uiCanvas.worldCamera, out localPos); // 스크린 좌표를 다시 체력바 UI 캔버스 좌표로 변환
+
+            GameObject healUI = Instantiate(increaseHealthTextPrefab) as GameObject;
+            healUI.GetComponent<HealText>().healAmount = healAmount;
+            healUI.transform.SetParent(uiCanvas.transform, false);
+            healUI.transform.localPosition = localPos;
+            healUI.GetComponent<HealText>().colorR = 0f;
+            healUI.GetComponent<HealText>().colorB = 0f;
         }
     }
 }

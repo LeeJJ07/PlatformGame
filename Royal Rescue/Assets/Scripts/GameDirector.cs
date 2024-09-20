@@ -61,6 +61,7 @@ public class GameDirector : MonoBehaviour
     public IEnumerator LoadNextStage()
     {
         SetStageLoopBgm(false);
+        SoundManager.Instance.StopLoopSound("RunMove");
 
         ++stageIndex;
         if (stageIndex == stageInfos.Count)
