@@ -24,7 +24,7 @@ public class BossBehaviour : MonoBehaviour,ITag
     [SerializeField] Animator aniController;
 
     [Header("보스 인트로 후 딜레이")]
-    [SerializeField] float EntryDelay;
+    [SerializeField] float endEntrystateNdelay;
 
     [Header("페이즈1 HP조건")]
     [SerializeField] float Phase1HpCondition;
@@ -204,7 +204,7 @@ public class BossBehaviour : MonoBehaviour,ITag
 
         phase1FlameAttackDelay = new NodeDelay(GetIsActiveGetHitAni, SetisDelayTime, Phase1flameAttackInfo.subSequenceDelay,aniController);
         phase1ScreamAttackDelay = new NodeDelay(GetIsActiveGetHitAni, SetisDelayTime, Phase1screamAttackInfo.subSequenceDelay,aniController);
-        phase1EntryafterDelay = new NodeDelay(GetIsActiveGetHitAni, SetisDelayTime, EntryDelay, aniController);
+        phase1EntryafterDelay = new NodeDelay(GetIsActiveGetHitAni, SetisDelayTime, endEntrystateNdelay, aniController);
 
         phase2BasicAttackDelay = new NodeDelay(GetIsActiveGetHitAni, SetisDelayTime, Phase2basicAttackInfo.subSequenceDelay,aniController);
         phase2FlameAttackDelay = new NodeDelay(GetIsActiveGetHitAni, SetisDelayTime, Phase2flameAttackInfo.subSequenceDelay,aniController);
@@ -405,10 +405,10 @@ public class BossBehaviour : MonoBehaviour,ITag
         entryPhase3Sequence.AddNode(checkIncomingPhase3);
         entryPhase3Sequence.AddNode(phase3EntryNode);
 
-        //phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
-        //phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3BasicAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3FlameAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3ScreamAttackSelector);
+        phase3AttackRandomSelector.AddNode(phase3BreathAttackSelector);
         phase3AttackRandomSelector.AddNode(phase3RushAttackSequence);
 
         phase3ActionSelector.AddNode(entryPhase3Sequence);
@@ -540,6 +540,8 @@ public class BossBehaviour : MonoBehaviour,ITag
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, Phase3RushAttackInfo.hitRange);
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(flamePosition.position, new Vector3(5, 5, 1));
     }
     private void OnTriggerEnter(Collider other)
     {

@@ -86,6 +86,28 @@ public class DropObjBehavior : MonoBehaviour,ITag
 
     private void OnTriggerEnter(Collider other)
     {
+        if(other.CompareTag("Player"))
+        {
+            other.GetComponent<PlayerControlManagerFix>().HurtPlayer(damage);
+            if (detailTag == "DropObject")
+            {
+                SoundManager.Instance.PlaySound("RockFallDown");
+            }
+            if (destroyObj)
+            {
+                this.gameObject.SetActive(false);
+            }
+            if (rigid != null)
+            {
+                rigid.isKinematic = false;
+            }
+            if (deactiveWarningZoneObj != null)
+                deactiveWarningZoneObj.SetActive(false);
+
+            isEndDelay = false;
+
+            deactiveWarningZoneObj = null;
+        }
     }
 
     public string GetTag()
