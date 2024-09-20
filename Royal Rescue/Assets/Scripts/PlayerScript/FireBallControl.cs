@@ -36,7 +36,6 @@ public class FireBallControl : MonoBehaviour
         {
             EnemyControler enemyHP = other.gameObject.GetComponent<EnemyControler>();
             enemyHP.health -= bombDamage;
-            Debug.Log("적에게 파이어볼 명중");
         }
         if (other.gameObject.CompareTag("Player"))
         {
