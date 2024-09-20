@@ -4891,6 +4891,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0516a68648980ac41b4c9b2ccb3f1518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coolTime: 0
   textCoolTime: {fileID: 3784793338974477832}
   player: {fileID: 8623269734687855571}
   thisSkill: {fileID: 5525605359373548517}
@@ -6147,6 +6148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0516a68648980ac41b4c9b2ccb3f1518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  coolTime: 0
   textCoolTime: {fileID: 4606461163008209929}
   player: {fileID: 0}
   thisSkill: {fileID: 7222776542431089184}
@@ -8082,6 +8084,10 @@ PrefabInstance:
       propertyPath: attackIcon
       value: 
       objectReference: {fileID: 8133794874097797722}
+    - target: {fileID: 5130297143477228180, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
+      propertyPath: UiskillCool
+      value: 
+      objectReference: {fileID: 5525605359373548517}
     - target: {fileID: 5130297143477228180, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       propertyPath: dashCoolDown
       value: 1
