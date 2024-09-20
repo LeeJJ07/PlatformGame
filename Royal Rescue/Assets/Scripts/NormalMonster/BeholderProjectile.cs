@@ -40,8 +40,7 @@ public class BeholderProjectile : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Instantiate(explosion, transform.position, transform.rotation);
-            player.HurtPlayer(damage);
-            Debug.Log(damage);
+            player.HurtPlayer(damage + Random.Range(0, 6));
             Destroy(gameObject);
         }
     }

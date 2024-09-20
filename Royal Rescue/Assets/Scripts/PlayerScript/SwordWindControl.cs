@@ -17,7 +17,6 @@ public class SwordWindControl : MonoBehaviour
     }
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log(other.collider.tag);
         if (other.gameObject.CompareTag("Player"))
         {
             return;
