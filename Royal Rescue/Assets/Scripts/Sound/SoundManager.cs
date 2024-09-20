@@ -62,8 +62,6 @@ public class SoundManager : MonoBehaviour
                 return;
             }
         }
-
-        Debug.LogWarning(clipName + "을 찾을 수 없습니다.");
     }
 
     public void ClearLoop()
