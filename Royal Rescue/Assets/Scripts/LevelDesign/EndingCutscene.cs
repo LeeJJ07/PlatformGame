@@ -90,8 +90,20 @@ public class EndingCutscene : MonoBehaviour
         princessAnim.Play(AnimationHash.PRINCESS_WALK);
     }
 
+    void PlayDoorOpenSound()
+    {
+        SoundManager.Instance.PlaySound("coffin_open_1");
+        SoundManager.Instance.PlaySound("coffin_open_2");
+    }
+
+    void PlayVictoryBgm()
+    {
+        SoundManager.Instance.PlaySound("Victory", true, SoundType.BGM);
+    }
+
     void LoadTitleScreen()
     {
+        SoundManager.Instance.StopLoopSound("Victory");
         GameDirector.instance.LoadTitleScreen();
     }
 }
