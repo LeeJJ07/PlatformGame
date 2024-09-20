@@ -4893,11 +4893,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textCoolTime: {fileID: 3784793338974477832}
   player: {fileID: 8623269734687855571}
-  skillTimer: 0
   thisSkill: {fileID: 5525605359373548517}
   skillName: FireBallKey
   imgFill: {fileID: 4439810422844160063}
-  skillCollDown: 3
 --- !u!222 &9035328588523703016
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6151,11 +6149,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   textCoolTime: {fileID: 4606461163008209929}
   player: {fileID: 0}
-  skillTimer: 0
   thisSkill: {fileID: 7222776542431089184}
   skillName: Dash
   imgFill: {fileID: 8378828574077587578}
-  skillCollDown: 1
 --- !u!222 &6846899933820087796
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6625,11 +6621,15 @@ MonoBehaviour:
   respawnAnim: {fileID: 7516029536427291897}
   loadScreenDelay: 1.5
   respawnDelay: 1.5
-  stageNames:
-  - Stage1
-  - Stage2
-  - Stage3
-  - Stage4
+  stageInfos:
+  - stageName: Stage1
+    loopBgm: BlizzardCastle
+  - stageName: Stage2
+    loopBgm: BlizzardCastle
+  - stageName: Stage3
+    loopBgm: BlizzardCastle
+  - stageName: Stage4
+    loopBgm: BossBattle
 --- !u!114 &2816153291010540167
 MonoBehaviour:
   m_ObjectHideFlags: 0

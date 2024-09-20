@@ -25,7 +25,8 @@ public class GameDirector : MonoBehaviour
     [SerializeField] private Camera loadingScreenCam;
     [SerializeField] private Animator loadscreenFadeAnim, shroomAnim, respawnAnim;
     [SerializeField] private float loadScreenDelay, respawnDelay;
-    [SerializeField] private List<string> stageNames;
+    [SerializeField] private List<StageInfo> stageInfos;
+    
     private int stageIndex = -1;
 
     void Awake()
@@ -46,9 +47,9 @@ public class GameDirector : MonoBehaviour
     private void SetCurrentStageIndex()
     {
         Scene scene = SceneManager.GetActiveScene();
-        for (int i = 0; i < stageNames.Count; i++)
+        for (int i = 0; i < stageInfos.Count; i++)
         {
-            if (stageNames[i] == scene.name)
+            if (stageInfos[i].stageName == scene.name)
             {
                 stageIndex = i;
                 return;
@@ -59,8 +60,10 @@ public class GameDirector : MonoBehaviour
 
     public IEnumerator LoadNextStage()
     {
+        SetStageLoopBgm(false);
+
         ++stageIndex;
-        if (stageIndex == stageNames.Count)
+        if (stageIndex == stageInfos.Count)
             stageIndex = 0;
 
         AltarControl.ResetAltar();
@@ -68,10 +71,8 @@ public class GameDirector : MonoBehaviour
         PlayerControl.FixatePlayerRigidBody(true);
         SetPlayerInventoryUI(false);
 
-        SoundManager.Instance.StopLoopSound("BlizzardCastle");
-
         yield return new WaitForSeconds(0.1f);
-        var asyncLoadStage = SceneManager.LoadSceneAsync(stageNames[stageIndex], LoadSceneMode.Single);
+        var asyncLoadStage = SceneManager.LoadSceneAsync(stageInfos[stageIndex].stageName, LoadSceneMode.Single);
 
         while (asyncLoadStage.progress < 0.9f)
         {
@@ -84,7 +85,10 @@ public class GameDirector : MonoBehaviour
     {
         PlayerControl.transform.SetParent(transform);
         PlayerControl.ResetPlayerStatus();
+        SetStageLoopBgm(false);
+        stageIndex = -1;
         SceneManager.LoadScene("TitleScreen", LoadSceneMode.Single);
+        SetStageLoopBgm(true);
     }
 
     public void ShowLoadingScreen()
@@ -109,7 +113,7 @@ public class GameDirector : MonoBehaviour
         loadingScreenCam.enabled = false;
         uiCanvas.gameObject.SetActive(false);
         PlayerControl.FixatePlayerRigidBody(false);
-        SoundManager.Instance.PlaySound("BlizzardCastle", true, SoundType.BGM);
+        SetStageLoopBgm(true);
     }
 
     public IEnumerator RespawnScreenTransition()
@@ -145,4 +149,21 @@ public class GameDirector : MonoBehaviour
     {
         Cursor.visible = state;
     }
+
+    public void SetStageLoopBgm(bool isPlaying)
+    {
+        string bgmName = stageIndex == -1 ? "BlizzardCastle" : stageInfos[stageIndex].loopBgm;
+
+        if (isPlaying)
+            SoundManager.Instance.PlaySound(bgmName, true, SoundType.BGM);
+        else
+            SoundManager.Instance.StopLoopSound(bgmName);
+    }
+}
+
+[System.Serializable]
+public class StageInfo
+{
+    public string stageName;
+    public string loopBgm;
 }
