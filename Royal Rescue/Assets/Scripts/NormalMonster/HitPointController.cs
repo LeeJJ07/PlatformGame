@@ -17,7 +17,6 @@ public class HitPointController : MonoBehaviour
             other.gameObject.GetComponent<Rigidbody>().AddForce(dir * 5f, ForceMode.Impulse);
             
             GameDirector.instance.PlayerControl.HurtPlayer(monster.getDamage());
-            Debug.Log(monster.getDamage());
             
         }
     }

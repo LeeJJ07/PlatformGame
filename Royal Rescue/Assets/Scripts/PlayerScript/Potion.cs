@@ -57,7 +57,6 @@ public class Potion : MonoBehaviour
     {
         playerCntl.inventory.healPotionCount--;
         coolTime = skillCollDown;
-        Debug.Log(textCoolTime);
         this.textCoolTime.gameObject.SetActive(true);
         var time = this.coolTime;
 

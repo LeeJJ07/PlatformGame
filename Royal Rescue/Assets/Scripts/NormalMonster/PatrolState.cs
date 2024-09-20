@@ -40,12 +40,9 @@ public class PatrolState : MonoBehaviour, IState
     }
     IEnumerator StartSoundEffect()
     {
-        Debug.Log("PatrolState");
         float soundDelay = 0;
         while(true)
         {
-
-            Debug.Log($"TransitionDelay Patrol");
             if (animator.GetCurrentAnimatorStateInfo(0).IsName("Patrol"))
             {
                 soundDelay = animator.GetCurrentAnimatorStateInfo(0).length;
@@ -55,8 +52,6 @@ public class PatrolState : MonoBehaviour, IState
         }
         while (true) 
         {
-            Debug.Log("PlaySound!");
-
             if (Physics.Raycast(transform.position, Vector3.down, 2f, LayerMask.GetMask("Ground")))
             {
                 if(!isActiveSound) yield break;
