@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class FireBallControl : MonoBehaviour
 {
-    Rigidbody rigidbody;
+    Rigidbody rb;
     public float throwForce = 10.0f;
     public bool isFireball = false;
     public Vector3 ballDir;
@@ -19,8 +19,8 @@ public class FireBallControl : MonoBehaviour
     void Start()
     {
         SoundManager.Instance.PlaySound("BombThrowing");
-        rigidbody = GetComponent<Rigidbody >();
-        rigidbody.AddForce((ballDir + Vector3.up * 1.5f) * throwForce, ForceMode.Impulse);//포물선
+        rb = GetComponent<Rigidbody >();
+        rb.AddForce((ballDir + Vector3.up * 1.5f) * throwForce, ForceMode.Impulse);//포물선
     }
     private void Update()
     {
