@@ -13,6 +13,9 @@ public class RemoveWall : MonoBehaviour
     {
         if (gem.IsDestroyed())
         {
+            SoundManager.Instance.PlaySound("Crumble");
+            SoundManager.Instance.PlaySound("BombExplosion");
+
             gameObject.SetActive(false);
             GameObject effect = Instantiate(particle, transform.parent);
             effect.transform.position = transform.position;
