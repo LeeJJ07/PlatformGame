@@ -15,7 +15,7 @@ MonoBehaviour:
   breathObj: {fileID: 4556307209356250449, guid: 117f0364ce8bd6f498ba497d7f8b46ea, type: 3}
   soundClipName: Boss_BreathAttack
   attackDistance: 10
-  damage: 20
+  damage: 45
   tickDamage: 0.5
   subSequenceDelay: 0.5
   isContinuousParticleAttack: 1
