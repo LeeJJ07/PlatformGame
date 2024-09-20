@@ -8063,7 +8063,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5130297143477228180, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       propertyPath: coin
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5130297143477228180, guid: 9c49223da2fc3b2438bf8e0037a22dab, type: 3}
       propertyPath: coinUI
@@ -9256,6 +9256,18 @@ PrefabInstance:
     - target: {fileID: 1088105372274239260, guid: 2cbc4efc07185c5499bd40ad64e61f1f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1968607871411032420, guid: 2cbc4efc07185c5499bd40ad64e61f1f, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1968607871411032420, guid: 2cbc4efc07185c5499bd40ad64e61f1f, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 1968607871411032420, guid: 2cbc4efc07185c5499bd40ad64e61f1f, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
       objectReference: {fileID: 0}
     - target: {fileID: 3601520343686597530, guid: 2cbc4efc07185c5499bd40ad64e61f1f, type: 3}
       propertyPath: m_Name
