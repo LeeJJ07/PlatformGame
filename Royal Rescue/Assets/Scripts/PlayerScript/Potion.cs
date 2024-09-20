@@ -99,4 +99,14 @@ public class Potion : MonoBehaviour
             healUI.GetComponent<HealText>().colorB = 0f;
         }
     }
+
+    public void ResetPotion()
+    {
+        StopCoroutine(PotionCoolTimeRoutine());
+        coolTime = 0;
+        imgFill.fillAmount = 0;
+        textCoolTime.gameObject.SetActive(false);
+        isDrinkingPotion = true;
+    }
+    
 }
