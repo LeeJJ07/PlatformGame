@@ -15,7 +15,8 @@ public class UISkillBtn : MonoBehaviour
     public Image imgFill;
     private int skillCnt;
     private Coroutine coolTimeRoutine;
-    [SerializeField] private float skillCollDown = 3.0f;
+    private float skillCollDown = 10.0f;
+    private float dashCollDown = 1.0f;
 
 
     public void Init()//해당 스크립트 돌아갈 때 상태 초기화
@@ -41,7 +42,7 @@ public class UISkillBtn : MonoBehaviour
         }
         else if (Input.GetButtonUp(skillName) && coolTimeRoutine == null)
         {
-            if (skillName == "FireBallKey" && GameDirector.instance.PlayerControl.skillCount > 0)
+            if (skillName == "FireBallKey" /*&& GameDirector.instance.PlayerControl.skillCount > 0*/)
             {
                 coolTimeRoutine = StartCoroutine(FbCoolTimeRoutine());
             }
@@ -52,7 +53,7 @@ public class UISkillBtn : MonoBehaviour
     private IEnumerator DashCoolTimeRoutine()
     {
         
-        coolTime = skillCollDown;
+        coolTime = dashCollDown;
         Debug.Log(textCoolTime);
         this.textCoolTime.gameObject.SetActive(true);
         var time = this.coolTime;
