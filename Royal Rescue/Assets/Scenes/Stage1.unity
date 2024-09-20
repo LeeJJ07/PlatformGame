@@ -10297,6 +10297,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 529998552}
     m_Modifications:
+    - target: {fileID: 2508402177466343964, guid: 82befdfe37262e34ebdc4ff57d329d57, type: 3}
+      propertyPath: maxCoinNum
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2508402177466343964, guid: 82befdfe37262e34ebdc4ff57d329d57, type: 3}
+      propertyPath: minCoinNum
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5749906868379211012, guid: 82befdfe37262e34ebdc4ff57d329d57, type: 3}
       propertyPath: m_Name
       value: TreasureChestRuby
