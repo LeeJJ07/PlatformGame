@@ -14,7 +14,7 @@ public class SkillSlot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        fireBallCnt = player.GetComponent<PlayerControlManagerFix>().skillCount;
+        //fireBallCnt = player.GetComponent<PlayerControlManagerFix>().skillCount;
         text_Count.text = fireBallCnt.ToString();
     }
 }

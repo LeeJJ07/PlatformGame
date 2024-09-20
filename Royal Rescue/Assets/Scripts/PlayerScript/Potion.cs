@@ -79,7 +79,6 @@ public class Potion : MonoBehaviour
             this.textCoolTime.text = time.ToString("F1");
 
             var per = time / this.coolTime;
-            //Debug.Log(per);
             this.imgFill.fillAmount = per;
 
             if (time <= 0)
