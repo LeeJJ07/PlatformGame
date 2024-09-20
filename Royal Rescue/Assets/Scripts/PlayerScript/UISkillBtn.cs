@@ -32,7 +32,6 @@ public class UISkillBtn : MonoBehaviour
     }
     void Update()
     {
-        skillCnt = player.GetComponent<PlayerControlManagerFix>().skillCount;
         if (Input.GetButtonDown(skillName) && coolTimeRoutine == null)
         {
             if (skillName == "Dash")
@@ -42,7 +41,7 @@ public class UISkillBtn : MonoBehaviour
         }
         else if (Input.GetButtonUp(skillName) && coolTimeRoutine == null)
         {
-            if (skillName == "FireBallKey" && skillCnt > 0)
+            if (skillName == "FireBallKey" && GameDirector.instance.PlayerControl.skillCount > 0)
             {
                 coolTimeRoutine = StartCoroutine(FbCoolTimeRoutine());
             }
