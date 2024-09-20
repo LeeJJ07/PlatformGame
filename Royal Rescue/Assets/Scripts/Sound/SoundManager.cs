@@ -68,7 +68,11 @@ public class SoundManager : MonoBehaviour
 
     public void ClearLoop()
     {
-        loopSounds.Clear(); 
+        foreach (SoundPlayer audioPlayer in loopSounds)
+        {
+            Destroy(audioPlayer.gameObject);
+        }
+        loopSounds.Clear();
     }
     public void PlaySound(string clipName, bool isLoop = false, SoundType type = SoundType.EFFECT)
     {
